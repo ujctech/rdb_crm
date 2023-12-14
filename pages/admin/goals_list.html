@@ -1,0 +1,176 @@
+
+
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <a class="btn btn-primary" href="#/goals_add" style="margin:10px;" ng-if="create_rights">Add Goals</a>
+</div>
+<div class="clearfix"></div>
+
+<div class="row" id="goals" style="margin-top:115px;" ng-if="view_rights">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#goalstab" data-toggle="tab">Goals</a></li>
+                </ul>
+                <div class="box box-primary" style="border-top:0px;border-radius:0px;" id="goalstable">
+                    <!--div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="display:none;">
+                                <h4 class="panel-title">
+                                    <!--a href="javascript:void(0)" class="btn" data-toggle="collapse" data-target="#collapse1" style="float:right;">X</a-->
+                                <!--/h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse" >
+                                <div class="panel-body">
+                                    <div id="goalsadd" >
+                                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="category">Category<span class="required">*</span></label>
+                                                        <select  class="select2 form-control" id="category" name="category" select2 ng-model="goal.category" data-placeholder="Select category" style="width:100%;" required>
+                                                            <option value="Bank Tender">Bank Tender</option>
+                                                            <option value="Bank Tender">Brokers Enquiry Posting</option>
+                                                            <option value="Client Inspection">Client Inspection</option>
+                                                            <option value="Data Calling & Assign">Data Calling & Assign</option>
+                                                            <option value="Deal">Deal</option>
+                                                            <option value="Direct Properties">Direct Properties</option>
+                                                            <option value="Enquiries">Enquiries</option>
+                                                            <option value="New Client Meeting">New Client Meeting</option>
+                                                            <option value="Old Client Meeting">Old Client Meeting</option>
+                                                            <option value="Old Enquiry Upation">Old Enquiry Upation</option>
+                                                            <option value="Other Work ">Other Work </option>
+                                                            <option value="Portals Posting ">Portals Posting </option>
+                                                            <option value="Properties">Properties</option>
+                                                            <option value="Site Visit">Site Visit</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+												<div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="user_id">User Name<span class="required">*</span></label>
+                                                        <select class="select2 form-control"  id = "user_id" select2 ng-model="goal.user_id" ng-options="user.user_id as user.name for user in users" style="width:100%;" required>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="goal_achieve">Goals to Achieve</label>
+                                                        <input type="text" class="form-control numbers" id="goal_achieve" name="goal_achieve"  placeholder="Goal to achieve" ng-model="goal.goal_achieve"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" id="addition">
+                                                        <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(goal)" id="add-new-btn" ng-click="goals_add(goal)" ng-if="hasPermissions.includes('Create')">Save </button>
+                                                    </div>
+                                                    <div class="form-group" id="modification">
+                                                        <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(goal)" id="add-new-btn" ng-click="goals_update(goal)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                                        <button class="btn btn-danger" ng-click="goals_delete(goal)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+                                                    </div>
+                                                    <a href="javascript:void(0)" class="btn" data-toggle="collapse" data-target="#collapse1">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div-->
+                </div>   
+                <div class="tab-content">
+                    <div class="tab-pane active" id="goalstab">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-striped" datatable-setup="" data-page-length='10'>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>User Name</th>
+                                        <th>Goal Category</th>
+                                        <th>Goal Sub Category</th>
+                                        <th>FY Year</th>
+                                        <th>Goals Jan</th>
+                                        <th>Goals Feb</th>
+                                        <th>Goals Mar</th>
+                                        <th>Goals Apr</th>
+                                        <th>Goals May</th>
+                                        <th>Goals Jun</th>
+                                        <th>Goals Jul</th>
+                                        <th>Goals Aug</th>
+                                        <th>Goals Sep</th>
+                                        <th>Goals Oct</th>
+                                        <th>Goals Nov</th>
+                                        <th>Goals Dec</th>
+                                        <th>Goals Per</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="goal in listgoals">
+                                        <td><a href="#/goals_edit/{{goal.goal_id}}" class="btn btn-default btn-sm" ng-if="update_rights"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                        <td>{{goal.username}}</td>
+                                        <td>{{goal.goal_category}}</td>
+                                        <td>{{goal.goal_sub_category}}</td>
+                                        <td>{{goal.fy_year}}</td>
+                                        <td>{{goal.goal_jan}}</td>
+                                        <td>{{goal.goal_feb}}</td>
+                                        <td>{{goal.goal_mar}}</td>
+                                        <td>{{goal.goal_apr}}</td>
+                                        <td>{{goal.goal_may}}</td>
+                                        <td>{{goal.goal_jun}}</td>
+                                        <td>{{goal.goal_jul}}</td>
+                                        <td>{{goal.goal_aug}}</td>
+                                        <td>{{goal.goal_sep}}</td>
+                                        <td>{{goal.goal_oct}}</td>
+                                        <td>{{goal.goal_nov}}</td>
+                                        <td>{{goal.goal_dec}}</td>
+                                        <td>{{goal.goal_per}}</td>
+                                        
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>User Name</th>
+                                        <th>Goal Category</th>
+                                        <th>Goal Sub Category</th>
+                                        <th>FY Year</th>
+                                        <th>Goals Jan</th>
+                                        <th>Goals Feb</th>
+                                        <th>Goals Mar</th>
+                                        <th>Goals Apr</th>
+                                        <th>Goals May</th>
+                                        <th>Goals Jun</th>
+                                        <th>Goals Jul</th>
+                                        <th>Goals Aug</th>
+                                        <th>Goals Sep</th>
+                                        <th>Goals Oct</th>
+                                        <th>Goals Nov</th>
+                                        <th>Goals Dec</th>
+                                        <th>Goals Per</th>
+                                        
+                                    </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #addition
+    {
+        display:block;
+    }
+    #modification
+    {
+        display:none;
+    }
+</style>
+
+
+

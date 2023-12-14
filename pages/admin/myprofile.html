@@ -1,0 +1,166 @@
+<div class="mainheader" style="margin-top:45px;position:fixed;width:100%;">
+    </div>
+    <div class="clearfix"></div>
+
+<div id="employee_info" style="padding:10px;border-top:0px;border-radius:0px;">
+	<form  ng-repeat="employee in datamyprofile" novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="employee_data">
+			<div class="col-md-12">
+				<div class="box box-primary" style="background: #ffffff;">
+					<div class="box-header">
+						<h3 class="box-title">My Profile</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="salu">Title</label>
+                                                    <select class="select2 form-control"  id="salu" name="salu" ng-model="employee.salu"  data-placeholder="Select Salu" style="width:100%;">
+                                                        <option value="Mr.">Mr.</option>
+                                                        <option value="Mrs." >Mrs.</option>
+                                                        <option value="Ms." >Ms.</option>
+                                                        <option value="Dr." >Dr.</option>
+                                                        <option value="Mohd.." >Mohd.</option>
+                                                        <option value="Cmdr." >Cmdr.</option>
+                                                        <option value="Capt." >Capt.</option>
+                                                        <option value="Maj." >Maj.</option>
+                                                        <option value="Col." >Col.</option>
+                                                        <option value="Flt.Lt." >Flt.Lt.</option>
+                                                        <option value="Prof." >Prof.</option>
+                                                        <option value="Brig." >Brig.</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="fname">First Name</label>
+                                                    <input type="text" class="form-control" id="fname" name="fname"  placeholder="First Name" ng-model="employee.fname"  required  />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="lname">Last Name</label>
+                                                    <input type="text" class="form-control" id="lname" name="lname"  placeholder="Last Name" ng-model="employee.lname"  required  />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-controller="SelectBranch_Office">
+                                            <label for="bo_id">Branch Office</label>
+                                            <select class="select2 form-control" ng-model="employee.bo_id" ng-options="branch_office.bo_id as branch_office.bo_name for branch_office in branch_offices"  disabled   style="width:100%;">
+                                                <option value="" disabled selected>Select Branch Office</option>
+                                            </select>
+                                        </div>  
+                                        <div class="form-group">
+                                            <label for="company_name">Company Name</label>
+                                            <input type="text" class="form-control" id="company_name" name="company_name"  placeholder="Company Name" ng-model="employee.company_name" disabled />
+                                        </div>
+                                                
+                                        <div class="form-group">
+                                            <label for="mobile_no">Mobile No</label>
+                                            <input type="text" class="form-control" id="mobile_no" name="mobile_no"  placeholder="Mobile No" ng-model="employee.mobile_no"  />
+                                        </div>
+                                                
+                                        <div class="form-group">
+                                            <label for="alt_mobile_no">Alternate Mobile No</label>
+                                            <input type="text" class="form-control" id="alt_mobile_no" name="alt_mobile_no"  placeholder="Alternate Mobile No" ng-model="employee.alt_mobile_no"  />
+                                        </div>
+                                                
+                                        <div class="form-group">
+                                            <label for="off_phone">Off Phone</label>
+                                            <input type="text" class="form-control" id="off_phone" name="off_phone"  placeholder="Off Phone" ng-model="employee.off_phone"  />
+                                        </div>
+                                                
+                                        <div class="form-group">
+                                            <label for="off_email">Off Email</label>
+                                            <input type="text" class="form-control" id="off_email" name="off_email"  placeholder="Off Email" ng-model="employee.off_email" required/>
+                                        </div>
+                                        <div class="form-group" ng-controller="SelectEmployee">
+                                            <label for="manager_id">Manager</label>
+                                            <select class="select2 form-control" ng-model="employee.manager_id" ng-options="employee.emp_id as employee.name for employee in employees" disabled  style="width:100%;" >
+                                                <option value="" disabled selected>Select Manager</option>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">                                                
+                                                <div class="form-group">
+                                                    <label for="doj">Date of Joining</label><div class="input-group date" id="doj" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="employee.doj" disabled>
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">                                                 
+                                                <div class="form-group">
+                                                    <label for="dob">Date of Birth</label><div class="input-group date" id="dob" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="employee.dob" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                
+                                        <div class="form-group">
+                                            <label for="allowed_ip">Allowed IP</label>
+                                            <textarea class="form-control" id="allowed_ip" name="allowed_ip"  placeholder="Allowed IP" ng-model="employee.allowed_ip" disabled></textarea>
+                                        </div>
+                                                
+                                        <div class="form-group">
+                                            <label for="mobile_device_id">Mobile Device ID</label>
+                                            <input type="text" class="form-control" id="mobile_device_id" name="mobile_device_id"  placeholder="Mobile Device ID" ng-model="employee.mobile_device_id" disabled />
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(employee)" id="add-new-btn" ng-click="myprofile_update(employee)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                            <a href="#/home" class="btn">Cancel</a>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+
+        $('.textarea').wysihtml5();
+
+    });
+</script>
+
+<style>
+    .mainheader{
+      background-color:#cecece;
+      z-index:1000;
+      height:70px;
+      padding:10px;
+    }
+    #employee_info{
+        margin: 5px;
+        background-color:#f1f1f1;
+      margin-top: 115px;
+    }
+
+    @media (max-width:991px){
+      .mainheader{
+        background-color:transparent;
+        z-index:0;
+        height:0px;
+        padding:0px;
+    }
+    #employee_info{
+        margin: 0px;
+        background-color:#ffffff;
+      margin-top: 40px;
+    }
+
+}
+</style>

@@ -1,0 +1,7 @@
+<section class="sidebar">
+    <ul class="sidebar-menu" ng:controller="MenuCtrl">
+        <li class="treeview" ng:repeat="menu in menus">
+            <a href='#/{{ menu.menu_link }}'><i class="fa fa-edit"></i><span>{{ menu.menu_title }}</span><i class="fa fa-angle-left pull-right"></i></a>
+        </li>
+    </ul>
+</section>

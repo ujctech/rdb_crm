@@ -1,0 +1,85 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" ng-if="view_rights">
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+        <div class="row">
+             <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <div class="input-group date" id="start_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="attendancedata.start_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <div class="input-group date" id="end_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="attendancedata.end_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <!--div class="col-md-4">
+                <div class="form-group">
+                    <label for="user_id">User Name</label>
+                    <select class="select2 form-control"  id = "user_id" select2 ng-model="attendancedata.user_id" ng-options="user.user_id as user.name for user in listusers" style="width:100%;" >
+                    </select>
+                </div>
+            </div-->
+            <div class="col-md-4" style="margin-top:25px;">
+                <button class="btn btn-primary" id="add-new-btn" ng-click="getdailyattendance(attendancedata)">Go</button>
+            </div>
+        </div>
+    </form>
+    
+</div>
+<div class="clearfix"></div>
+
+
+<div class="box boxpadding" id="properties" style="border-top:0px;" ng-if="view_rights">
+    <div class="box-header">
+        
+    </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#attendancetab" data-toggle="tab" >Attendance</a></li>
+        </ul>
+        <div style="right:32px;margin-top:-30px;font-size:16px;position:absolute;">[A-Absent] , [P-Present] , [P [L] - Late Mark], [HDP - Half Day],  [WO - Weekly off] ,  [WOP - Weekly off Present], [H - Holiday], [HP - Holiday Present]</div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="attendancetab">   
+                <div class="box-body table-responsive">
+                    <div id="attendance_div" class="html_content"  compile-html="attendanceHtml"></div>
+                    <!--table class="table table-bordered table-striped" datatable-setup=""  >
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Date</th>
+                                <th>Logged in</th>
+                                <th>Logged out</th>
+                                <th>IP Address</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <tr ng-repeat="attendance in attendancelist">
+                                <td>{{attendance.emp_name}}</a></td>
+                                <td>{{attendance.log_date}}</td>
+                                <td>{{attendance.logged_in_datetime}}</td>
+                                <td>{{attendance.logged_out_datetime}}</td>
+                                <th>{{attendance.ip_address}}</th>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Date</th>
+                                <th>Logged in</th>
+                                <th>Logged out</th>
+                                <th>IP Address</th>
+                            </tr>
+                        </tfoot>
+                    </table-->    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

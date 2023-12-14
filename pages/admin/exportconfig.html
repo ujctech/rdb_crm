@@ -1,0 +1,142 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+        
+        </div>
+        <div class="clearfix"></div>
+<div class="box"  style="margin:20px;padding:10px;width:97%;margin-top:115px;" ng-if="hasPermissions.includes('View')">
+
+    <div class="box-header">
+
+        <h3 class="box-title">Export Configurations</h3> 
+
+    </div>
+
+    <aside class="right-side">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="col-md-8">
+
+                    <div class="form-group">
+
+                        <label for="table_name">Select Table</label>
+
+                        <select class="selectpicker form-control" ng-model="table_name" ng-options="tablelist.table_name as tablelist.table_name for tablelist in tablelists">
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <a class="btn btn-primary" ng-click="showcolumns(table_name)" style="margin-top:22px;">Show Columns</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+        <div class="row" id="show">
+            <div class="col-md-12">
+
+                <div class="box-body table-responsive">
+
+                    <table class="table table-bordered table-striped" ng-if="columnlists.length"><!-- datatable-setup="">-->
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Column Name</th>
+                                <th>Data Type</th>
+                                <th style="text-align:right">Width</th>
+                                <th>Column Heading</th>
+                                <th>Required Field</th>
+                                <th>Show On Form</th>
+
+                            </tr>
+
+                        </thead>
+
+                            <tbody>
+
+                                <tr ng-repeat="columnlist in columnlists">
+
+                                    <td>{{columnlist.column_name}}</td>
+
+                                    <td>{{columnlist.data_type}}</td>
+
+                                    <td  style="text-align:right">{{columnlist.character_maximum_length}}</td>
+                                    <td>
+
+                                        <input type="text" class="form-control" id="column_heading" name="column_heading"  placeholder="Column Heading" ng-model="columnlist.column_heading" ng-change="update_exportdirect('column_heading',columnlist.report_fields_id,columnlist.column_heading)" ng-model-options="{updateOn: 'blur'}"/>
+
+                                    </td>
+                                    <td>
+
+                                        <select class="selectpicker form-control" id="required_field" name="required_field" ng-model="columnlist.required_field" ng-change="update_exportdirect('required_field',columnlist.report_fields_id,columnlist.required_field)">
+
+                                            <option value="No">No</option>
+
+                                            <option value="Yes">Yes</option>
+
+                                        </select>
+
+                                    </td>
+
+                                    <td>
+
+                                        <select class="selectpicker form-control" id="show_on_form" name="show_on_form" ng-model="columnlist.show_on_form" ng-change="update_exportdirect('show_on_form',columnlist.report_fields_id,columnlist.show_on_form)">
+
+                                            <option value="No">No</option>
+
+                                            <option value="Yes">Yes</option>
+
+                                        </select>
+
+                                    </td>                                  
+
+                                </tr>
+
+                            </tbody>
+
+                        <tfoot>
+
+                            <tr>
+
+                                <th>Column Name</th>
+
+                                <th>Data Type</th>
+
+                                <th>Width</th>
+
+                                <th>Element Type</th>
+
+                                <th>Column Heading</th>
+
+                                <th>Link Table</th>
+
+                                <th>Required Field</th>
+
+                                <th>Show On Form</th>
+
+                            </tr>
+
+                        </tfoot>
+
+                    </table>    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+</div>

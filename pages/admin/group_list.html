@@ -1,0 +1,52 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <!--<a class="btn btn-primary" href="#/group_add" style="margin:10px;" >Add Group</a>-->
+    <a ng-if="hasRoles.includes('Sub Admin')" class="btn btn-primary" href="" style="margin:10px;" >Add Group</a>
+    <a ng-if="!(hasRoles.includes('Sub Admin'))" class="btn btn-primary" href="#/group_add" style="margin:10px;">Add Group</a>
+</div>
+<div class="clearfix"></div>
+<div class="row" id="des" style="margin-top:115px;">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#teamstab" data-toggle="tab">Groups</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="teamstab">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-striped" datatable-setup="" data-page-length='10'>
+                                <thead>
+                                    <tr>
+                                        <th>Group </th>
+                                        <th>Description </th>
+                                        <th>Teams </th>
+                                        <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="group in groups">
+                                        <td>{{group.group_name}}</td>
+                                        <td>{{group.description}}</td>
+                                        <td>{{group.teams}}</td>
+                                        <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/group_edit/{{group.group_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Group </th>
+                                        <th>Description </th>
+                                        <th>Teams </th>
+                                        <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

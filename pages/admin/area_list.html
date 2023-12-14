@@ -1,0 +1,71 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;" >Add Area</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/area_add" style="margin:10px;" >Add Area</a>
+    <!--<a class="btn btn-primary" href="#/area_add" style="margin:10px;" >Add Area</a>-->
+    <a class="btn btn-primary" href="javascript:void(0)"  onclick="tableToExcel('areastab', 'W3C Example Table')" style="margin:10px;" >Excel</a>
+</div>
+<div class="clearfix"></div>
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:114px;" >
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#areastab" data-toggle="tab">Areas</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="areastab">
+                <div class="box-body table-responsive">
+                <table class="table table-bordered table-striped" datatable-setup=""  data-page-length='10'>
+                    <thead>
+                        <tr>
+                            <th>Area ID</th>
+                            <th>Area</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Country</th>
+                            <th ng-if="!(hasRoles.includes('Sub Admin'))" style="width:10px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="area in areas">
+                            <td>{{area.area_id}}</td>
+                            <td>{{area.area_name}}</td>
+                            <td>{{area.city}}</td>
+                            <td>{{area.state}}</td>
+                            <td>{{area.country}}</td>
+                            <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/area_edit/{{area.area_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th style="width:60px;">Area ID</th>
+                            <th>Area</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Country</th>
+                            <th ng-if="!(hasRoles.includes('Sub Admin'))" style="width:10px;"></th>
+                        </tr>
+                    </tfoot>
+                </table>    
+            </div>
+        </div>
+    </div>
+</div>
+ </div>
+<script>
+ var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    var link = document.createElement("a");
+    link.download = "export.xls";
+    link.href = uri + base64(format(template, ctx))
+    link.click();
+    //window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+</script>
+
+

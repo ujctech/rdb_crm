@@ -1,0 +1,1137 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+        <a href="javascript:void(0);" ng-click="pagenavigation( 'next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+    </div>
+    <div style="color:#df1212;font-size:15px;position:absolute;width: 100%;text-align: center;"><span>Target Achieved:{{goals_achieved}}({{goals_to_achieve}})</span><span style="margin-left:10px;">Achieved Per:{{target_achieved}}%({{goal_per_to_get}}%)</span><span style="margin-left:10px;">Eligibile for Incentive ?:{{eligibility}} </span></div>
+	<a class="btn btn-primary" href="#/agreement_add/direct/0" style="margin:10px;margin-right:2px;" ng-if="create_rights">Create Agreement</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" ng-click="audit_trail();" ng-if="hasRoles.includes('Admin')">Audit Trail</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" ng-click="batch_update();" ng-if="hasRoles.includes('Admin')">Batch Update</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" data-toggle="modal"  ng-click="export()" ng-if="hasRoles.includes('Admin')">Export</a><!--data-target="#exportdetails"-->
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" ng-click="import_properties()" ng-if="hasRoles.includes('Admin')">Import</a>
+    
+</div>
+<div class="clearfix"></div>
+
+<div class="box" id="properties" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:114px;" ng-if="view_rights">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#agreement_open" data-toggle="tab">Open Agreements &nbsp;&nbsp; {{agreement_open_count}}</a></li>
+            <li ><a data-target="#agreement_completed" data-toggle="tab">Completed Agreements &nbsp;&nbsp; {{agreement_completed_count}}</a></li>
+           <!--  <li style="border-top-color: #f3f0f0;"><a data-target="#myproperties" data-toggle="tab">Properties For Transaction</a></li>
+            <li style="border-top-color: #f3f0f0;"><a data-target="#myenquiries" data-toggle="tab">Enquiries For Transaction</a></li> -->
+            <li ><a data-target="#myactivities" data-toggle="tab">Acitivities For Transaction</a></li>
+        </ul>
+        <div class="tab-content">
+            
+            <div class="right-side"  style="text-align:right;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox hidden-xs hidden-sm" style="margin-top:-30px;margin-left:7px;position:absolute;">
+                <label>
+                    <input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All
+                </label>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                        <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_for">Agreement For</label>
+                                           <select class="select2 form-control"  id="agreement_for" name="agreement_for" select2filter ng-model="searchdata.agreement_for"  data-placeholder="Select agreement_for" style="width:100%;" >
+                                                    <option value="Sale">Sale</option>
+                                                    <option value="Lease" >Lease</option>
+                                                    <option value="Sale Under Contructions" >Sale Under Contructions</option>
+                                                    <option value="Sale Preleased" >Sale  Preleased</option>
+                                               </select>
+                                       </div> 
+                                   </div>
+                                   <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="teams">Teams</label>
+                                        <select class="select2 form-control" multiple="multiple"  id = "teams" select2filter ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams,0)">
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="sub_teams">Sub Teams</label>
+                                            <select class="select2 form-control" multiple="multiple" select2filter   id = "sub_teams"  ng-model="searchdata.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"  style="width:100%;" ng-change="select_assign_to(searchdata.teams,searchdata.sub_teams)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="assign_to">Assign to</label>
+                                            <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2filter  ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+
+                                   <div class="col-md-2" >
+                                       <div class="form-group">
+                                           <label for="client_id">Owner</label>
+                                           <select class="select2 form-control" select2filter  ng-model="searchdata.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;" multiple="multiple">
+                                           
+                                           </select>
+                                       </div>
+                                   </div>
+
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="broker_id">Broker</label>
+                                           
+                                           <select class="select2 form-control" select2filter  ng-model="searchdata.broker_id" ng-options="contact.contact_id as contact.name for contact in brokers" style="width:100%;" multiple="multiple">
+                                              
+                                           </select>
+                                       </div>
+                                   </div>
+                                   
+                              </div>
+                           </div>
+
+                           <div class="row">
+                               <div class="col-md-12">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="property_id">Property ID</label>
+                                        <a href="javascript:void(0)" class="btn" style="color:#ff000c;float:right;padding:0px;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                        <select class="select2 form-control" select2filter  multiple="multiple" ng-model="searchdata.property_id" id= "property_id" name= "property_id" ng-options="property_id.property_id as property_id.property_id for property_id in property_ids" style="width:100%;"></select>
+                                    </div>
+                                </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="project_id">Project ID</label>
+                                           <!--input type="text" class="form-control numbers" id="project_id" name="project_id"  placeholder="Project ID" ng-model="searchdata.project_id" /-->
+                                           <select class="select2 form-control" select2filter  multiple="multiple" ng-model="searchdata.project_id" id= "project_id" name= "project_id" ng-options="project_id.project_id as project_id.project_id for project_id in project_ids" style="width:100%;"></select>
+
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="enquiry_id">Enquiry ID</label>
+                                           <!--input type="text" class="form-control numbers" id="enquiry_id" name="enquiry_id"  placeholder="Property ID" ng-model="searchdata.enquiry_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                           <select class="select2 form-control" select2filter  multiple="multiple" ng-model="searchdata.enquiry_id" id= "enquiry_id" name= "enquiry_id" ng-options="project_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_id">Agreement ID</label>
+                                           <!--input type="text" class="form-control numbers" id="activity_id" name="activity_id"  placeholder="ACtivity ID" ng-model="searchdata.activity_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                           <select class="select2 form-control" select2filter  multiple="multiple" ng-model="searchdata.agreement_id" id= "agreement_id" name= "agreement_id" ng-options="agreement_id.agreement_id as agreement_id.agreement_id for agreement_id in agreement_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_from">Created Date from</label>
+                                           <div class="input-group date" id="created_date_from" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_to">To</label>
+                                           <div class="input-group date" id="created_date_to" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   
+                                   <!--div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="enquiry_id">Enquiry</label>
+                                           <select class="select2 form-control" select2 ng-model="searchdata.enquiry_id" ng-options="enquiry.enquiry_id as enquiry.enquiry_title for enquiry in selectenquiries"  style="width:100%;" ng-change="GetProperties(activity.enquiry_id);">
+                                               <option value="" disabled selected>Select Enquiry</option>
+                                           </select>
+                                        </div>
+                                   </div-->
+                               </div>
+                           </div>
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_from">Deal Date From</label>
+                                            <div class="input-group date" id="deal_date_from" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_from" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_to">Deal Date To</label>
+                                            <div class="input-group date" id="deal_date_to" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_to" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="proptype">Property Type</label>
+                                            <select class="select2 form-control"  id="proptype" name="proptype" ng-model="searchdata.proptype" data-placeholder="Select Property type" style="width:100%;">
+                                                <option value="residential" selected="selected">Residential</option>
+                                                <option value="commercial" >Commercial</option>
+                                                <option value="retail" >Retail</option>
+                                                <option value="pre-leased" >Pre-leased</option>
+                                                <option value="others" >Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="property_for">Property For</label>
+                                            <select class="select2 form-control"  id="property_for" name="property_for" ng-model="searchdata.property_for" data-placeholder="Select property_for" style="width:100%;">
+                                                <option value="Sale" selected="selected">Sale</option>
+                                                <option value="Rent/Lease" >Rent/Lease</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           <div class="row">
+                               <div class="col-md-12">
+                                   
+                                   <div class="col-md-2" style="margin-top:25px;">        
+                                       <div class="form-group">
+                                           <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_agreement(searchdata,'form')">Search Now </button>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                           <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                       <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane  active" id="agreement_open">
+                <div class="box-body table-responsive">                    
+                    <table class="table"> <!--table-bordered table-striped"   >-->
+                        <tbody>
+                            <tr ng-repeat="agreement in agreements"  style="height:260px;min-height:260px;">
+                                <td style="width:100%">
+                                    <div class="row">
+                                        <div class="col-md-3" style="min-width:250px;">
+                                            <img src="dist/img/no_image.jpg" ng-if="agreement.filenames==null " style="width:245px; height:185px;" /> 
+                                            <img src="api/v1/uploads/property/thumb/{{agreement.filenames}}" ng-if="agreement.filenames!=null " style="width:245px; height:185px;" /> 
+                                            <br>
+                                            <div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{agreement.agreement_id}}"/></label>
+                                                <span ng-if="agreement.modified_date!='00-00-0000 00:00' " style="vertical-align: super;" >Last Updated:{{agreement.modified_date}}</span><span ng-if="agreement.modified_date=='00-00-0000 00:00'"  style="vertical-align: super;">Created On:{{agreement.created_date}}</span></div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <a class="ex1" href="#/agreement_edit/{{agreement.agreement_id}}" target="_blank">
+                                                <p style="font-size:20px;color:#2b57a0; margin-top:5px;">
+                                                    <span ng-if="agreement.project_name">{{agreement.project_name}}</span>
+                                                    <span ng-if="!agreement.project_name">{{agreement.building_name}}</span>
+                                                    <span ng-if="agreement.bedrooms>0">{{agreement.bedrooms}}BHK &nbsp;</span>{{agreement.propsubtype}} for {{agreement.property_for}}
+                                                </p>
+                                            </a>
+                                            <p>{{agreement.area}}</p>
+                                            <p>{{agreement.city}}</p>
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Assigned To:</span>{{agreement.assign_to}}    <span style="font-size:14px;line-height:normal;margin-right:5px;text-overflow: ellipsis;">Teams:</span>{{agreement.teams}}</p>
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Agreement From:</span>{{agreement.agreement_from_date}} till {{agreement.agreement_till_date}} </p>
+                                            
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Agreement Value:</span>{{agreement.agreement_value}}&nbsp;{{agreement.agreement_value_para}} </p>
+
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Price:</span>{{agreement.exp_price}}&nbsp;{{agreement.exp_price_para}}<span style="font-size:14px;line-height:normal;margin-right:5px;">&nbsp;Total Area:</span>&nbsp;{{agreement.sale_area}}&nbsp;{{agreement.pro_sale_para}}<span style="font-size:14px;line-height:normal;margin-right:5px;">&nbsp;Carpet Area:</span>&nbsp;{{agreement.carp_area}}&nbsp;{{agreement.carp_area_para}}</p>
+
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Total Brokerage:</span>{{agreement.total_brokerage}}</p>
+
+                                            
+                                            
+
+
+
+                                            <p>{{agreement.locality}} <span class="dot">.</span><span style="font-size:14px;line-height:normal;margin-right:5px;" ng-if="agreement.rera_num"> Rera No.: {{agreement.rera_num}}  &nbsp;</span><span class="dot">.</span>&nbsp; <span style="font-size:14px;line-height:normal;margin-right:5px;"  ng-if="agreement.possession_date && agreement.possession_date!='00-00-0000'"> Possession Date:&nbsp;&nbsp;{{agreement.possession_date}}</span></p> 
+
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Property Type:</span style="font-size:16px;font-weight:bold;">{{agreement.proptype}}</p>
+                                            
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <a class="ex1" href="#/agreement_edit/{{agreement.agreement_id}}" target="_blank"><p style="font-size:16px;text-align:center;color: #2b57a0;" >Agreement ID:{{agreement.agreement_id}}</p></a>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Owner:{{agreement.dev_owner}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{agreement.mob_no}}</p>
+                                            <p style="font-size:16px;text-align:center;">Brokerage:{{agreement.seller_brokerage}}</p>
+                                            <a class="ex1" href="#/properties_edit/{{agreement.property_id}}" target="_blank"><p style="font-size:16px;text-align:center;">Property ID:{{agreement.property_id}}</p></a>
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <p style="font-size:16px;text-align:center;color: #2b57a0;">Deal Date:{{agreement.deal_date}}</p>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Buyer:{{agreement.buyer}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{agreement.buyer_mob_no}}</p>
+                                            <p style="font-size:16px;text-align:center;">Brokerage:{{agreement.buyer_brokerage}}</p>
+                                            <a class="ex1" href="#/enquiries_edit/{{agreement.enquiry_id}}" target="_blank"><p style="font-size:16px;text-align:center;">Enquiry ID:{{agreement.enquiry_id}}</p></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;">
+                                            <div style="position: absolute;right:10px;">
+                                                <div style="width: 100px;
+                                                background-color: #df1212;
+                                                color: #ffffff;
+                                                height: 35px;
+                                                padding: 5px;
+                                                font-size: 16px;margin-right: 110px;margin-top:5px;" ng-if="eligibility=='No' && agreement.eligible_for_incentive!='Yes' ">Not Eligibile</div>
+
+                                                <div style="width: 100px;
+                                                background-color: #df1212;
+                                                color: #ffffff;
+                                                height: 35px;
+                                                padding: 5px;
+                                                font-size: 16px;background-color:#03af4b;margin-right: 110px;margin-top:5px;" ng-if="eligibility=='Yes' || agreement.eligible_for_incentive=='Yes'">Eligibile</div>
+                                            </div>
+                                            <div class="col-md-10" style="padding-top:5px;">
+                                                
+                                                <p> <span style="font-size:20px;line-height:normal;margin-right:5px;color:#0904f8;float:left;"> Agreement Stage:-</span> <span style="color:#0904f8;font-size:20px;float:left;margin-top:5px;">{{agreement.agreement_stage}}</span>
+                                                <div ng-if="hasRoles.includes('Admin')" style="float:left;margin-top:-10px;margin-left:10px;">
+                                                    <select ng-if="agreement.agreement_for=='Lease'" ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_lease" style="width:60%;margin-top:5px;" ng-change="change_agreement_stage_only(agreement.agreement_stage,agreement.agreement_id)">
+                                                    <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </select>
+                                                
+                                                    <select  ng-if="agreement.agreement_for=='Sale'"  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_sale" style="width:60%;" ng-change="change_agreement_stage_only(agreement.agreement_stage,agreement.agreement_id)">
+                                                        <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </select>
+                                                    
+                                                    <select  ng-if="agreement.agreement_for=='Sale Under Contructions' "    ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_sale_uc" style="width:60%;" ng-change="change_agreement_stage_only(agreement.agreement_stage,agreement.agreement_id)">
+                                                        <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </select>
+
+                                                    <select ng-if="agreement.agreement_for=='Sale Preleased' "  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_prelease" style="width:60%;" ng-change="change_agreement_stage_only(agreement.agreement_stage,agreement.agreement_id)">
+                                                        <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </select>
+                                                </div>
+                                                </p>
+                                                </div>
+                                                <div class="col-md-2" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" href="#/agreement_edit/{{agreement.agreement_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" ng-if="update_rights" target="_blank"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+            </div>
+            <div class="tab-pane" id="agreement_completed">
+                <div class="box-body table-responsive">
+                    
+                    <table class="table"> <!--table-bordered table-striped"   >-->
+                        <tbody>
+                            <tr ng-repeat="agreement in agreements_completed"  style="height:260px;min-height:260px;">
+                                <td style="width:100%">
+                                    <div class="row">
+                                        <div class="col-md-3" style="min-width:250px;">
+                                            <img src="dist/img/no_image.jpg" ng-if="agreement.filenames==null " style="width:245px; height:185px;" /> 
+                                            <img src="api/v1/uploads/property/thumb/{{agreement.filenames}}" ng-if="agreement.filenames!=null " style="width:245px; height:185px;" /> 
+                                            <br>
+                                            <div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{agreement.agreement_id}}"/></label>
+                                                <span ng-if="agreement.modified_date!='00-00-0000 00:00' " style="vertical-align: super;" >Last Updated:{{agreement.modified_date}}</span><span ng-if="agreement.modified_date=='00-00-0000 00:00'"  style="vertical-align: super;">Created On:{{agreement.created_date}}</span></div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <a class="ex1" href="#/agreement_edit/{{agreement.agreement_id}}" target="_blank">
+                                                <p style="font-size:20px;color:#2b57a0; margin-top:5px;">
+                                                    <span ng-if="agreement.project_name">{{agreement.project_name}}</span>
+                                                    <span ng-if="!agreement.project_name">{{agreement.building_name}}</span>
+                                                    <span ng-if="agreement.bedrooms>0">{{agreement.bedrooms}}BHK &nbsp;</span>{{agreement.propsubtype}} for {{agreement.property_for}}
+                                                </p>
+                                            </a>
+                                            <p>{{agreement.area}}</p>
+                                            <p>{{agreement.city}}</p>
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Assigned To:</span>{{agreement.assign_to}}    <span style="font-size:14px;line-height:normal;margin-right:5px;text-overflow: ellipsis;">Teams:</span>{{agreement.teams}}</p>
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Agreement From:</span>{{agreement.agreement_from_date}} till {{agreement.agreement_till_date}} </p>
+                                            
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Agreement Value:</span>{{agreement.agreement_value}}&nbsp;{{agreement.agreement_value_para}} </p>
+
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Price:</span>{{agreement.exp_price}}&nbsp;{{agreement.exp_price_para}}<span style="font-size:14px;line-height:normal;margin-right:5px;">&nbsp;Total Area:</span>&nbsp;{{agreement.sale_area}}&nbsp;{{agreement.pro_sale_para}}<span style="font-size:14px;line-height:normal;margin-right:5px;">&nbsp;Carpet Area:</span>&nbsp;{{agreement.carp_area}}&nbsp;{{agreement.carp_area_para}}</p>
+
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Total Brokerage:</span>{{agreement.total_brokerage}}</p>
+
+                                            
+                                            
+
+
+
+                                            <p>{{agreement.locality}} <span class="dot">.</span><span style="font-size:14px;line-height:normal;margin-right:5px;" ng-if="agreement.rera_num"> Rera No.: {{agreement.rera_num}}  &nbsp;</span><span class="dot">.</span>&nbsp; <span style="font-size:14px;line-height:normal;margin-right:5px;"  ng-if="agreement.possession_date && agreement.possession_date!='00-00-0000'"> Possession Date:&nbsp;&nbsp;{{agreement.possession_date}}</span></p> 
+
+                                            <p><span style="font-size:14px;line-height:normal;margin-right:5px;">Property Type:</span style="font-size:16px;font-weight:bold;">{{agreement.proptype}}</p>
+                                            
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <a class="ex1" href="#/agreement_edit/{{agreement.agreement_id}}" target="_blank"><p style="font-size:16px;text-align:center;color: #2b57a0;">Agreement ID:{{agreement.agreement_id}}</p></a>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Owner:{{agreement.dev_owner}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{agreement.mob_no}}</p>
+                                            <p style="font-size:16px;text-align:center;">Brokerage:{{agreement.seller_brokerage}}</p>
+                                            <a class="ex1" href="#/properties_edit/{{agreement.property_id}}" target="_blank"><p style="font-size:16px;text-align:center;">Property ID:{{agreement.property_id}}</p></a>
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <p style="font-size:16px;text-align:center;color: #2b57a0;">Deal Date:{{agreement.deal_date}}</p>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Buyer:{{agreement.buyer}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{agreement.buyer_mob_no}}</p>
+                                            <p style="font-size:16px;text-align:center;">Brokerage:{{agreement.buyer_brokerage}}</p>
+                                            <a class="ex1" href="#/enquiries_edit/{{agreement.enquiry_id}}" target="_blank"><p style="font-size:16px;text-align:center;">Enquiry ID:{{agreement.enquiry_id}}</p></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;">
+                                            <div style="position: absolute;right:10px;">
+                                                <div style="width: 100px;
+                                                background-color: #df1212;
+                                                color: #ffffff;
+                                                height: 35px;
+                                                padding: 5px;
+                                                font-size: 16px;margin-right: 110px;margin-top:5px;" ng-if="eligibility=='No' && agreement.eligible_for_incentive!='Yes' ">Not Eligibile</div>
+
+                                                <div style="width: 100px;
+                                                background-color: #df1212;
+                                                color: #ffffff;
+                                                height: 35px;
+                                                padding: 5px;
+                                                font-size: 16px;background-color:#03af4b;margin-right: 110px;margin-top:5px;" ng-if="eligibility=='Yes' || agreement.eligible_for_incentive=='Yes' ">Eligibile</div>
+                                                </div>
+                                            <div class="col-md-10" style="padding-top:5px;">
+                                                
+                                                <p> <span style="font-size:20px;line-height:normal;margin-right:5px;color:#0904f8;"> Agreement Stage:-</span> <span style="color:#0904f8;font-size:20px;">{{agreement.agreement_stage}}</span>
+
+                                                    <!--select ng-if="agreement.agreement_for=='Lease'" select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_lease" style="width:60%;" ng-change="change_agreement_stage(agreement.agreement_stage,agreement.agreement_id)">
+                                                    <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </!--select>
+                                                
+                                                    <select  ng-if="agreement.agreement_for=='Sale'"  select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_sale" style="width:60%;" ng-change="change_agreement_stage(agreement.agreement_stage,agreement.agreement_id)">
+                                                        <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </select>
+                                                    
+                                                    <select  ng-if="agreement.agreement_for=='Sale Under Contructions' "  select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_sale_uc" style="width:60%;" ng-change="change_agreement_stage(agreement.agreement_stage,agreement.agreement_id)">
+                                                        <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </select>
+
+                                                    <select-- ng-if="agreement.agreement_for=='Sale Preleased' " select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_prelease" style="width:60%;" ng-change="change_agreement_stage(agreement.agreement_stage,agreement.agreement_id)">
+                                                        <option value="" disabled selected>Select Agreement Stage</option>
+                                                    </select-->
+                                            
+                                                </p>
+                                                </div>
+                                                <div class="col-md-2" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" href="#/agreement_edit/{{agreement.agreement_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" ng-if="update_rights" target="_blank"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+            </div>
+            <div class="tab-pane" id="myactivities">
+                <!--a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions">More Search  &nbsp;<i class="fa fa-angle-down"></i></!--a-->
+                <!--div-- class="panel-group">
+                                <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                                <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="status">Status</label>
+                                                   <select class="select2 form-control"  id="status" name="status" select2 ng-model="searchdata.status"  data-placeholder="Select status" style="width:100%;" ng-init="activity.status='Open' " multiple="multiple">
+                                                           <option value="Open">Open</option>
+                                                           <option value="Completed" >Completed</option>
+                                                           <option value="Cancelled" >Cancelled</option>
+                                                       </select>
+                                               </div> 
+                                           </div>
+                                           
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="assign_to">Assign to</label>
+                                                   <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                                   </select>
+                                               </div>
+                                           </div>
+
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="teams">Teams</label>
+                                                   <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;">
+                                                   </select>
+                                               </div>
+                                           </div>
+
+                                           <div class="col-md-2" >
+                                               <div class="form-group">
+                                                   <label for="client_id">Owner</label>
+                                                   <select class="select2 form-control" select2 ng-model="searchdata.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;" multiple="multiple">
+                                                   
+                                                   </select>
+                                               </div>
+                                           </div>
+
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="broker_id">Broker</label>
+                                                   <a href="javascript:void(0)" class="btn" style="color:#ff000c;float:right;padding:0px;" ng-click="resetForm()">Clear Filters</a>
+                                                   <select class="select2 form-control" select2 ng-model="searchdata.broker_id" ng-options="contact.contact_id as contact.name for contact in brokers" style="width:100%;" multiple="multiple">
+                                                      
+                                                   </select>
+                                               </div>
+                                           </div>
+                                      </div>
+                                   </div>
+
+                                   <div class="row">
+                                       <div class="col-md-12">
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="property_id">Property ID</label>
+                                                   <!--input type="text" class="form-control numbers" id="property_id" name="property_id"  placeholder="Property ID" ng-model="searchdata.property_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                                   
+                                                   <!--select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.property_id" id= "property_id" name= "property_id" ng-options="property_id.property_id as property_id.property_id for property_id in property_ids" style="width:100%;"></!--select>
+
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="project_id">Project ID</label>
+                                                   <!--input type="text" class="form-control numbers" id="project_id" name="project_id"  placeholder="Project ID" ng-model="searchdata.project_id" /-->
+                                                   <!--select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.project_id" id= "project_id" name= "project_id" ng-options="project_id.project_id as project_id.project_id for project_id in project_ids" style="width:100%;"></!--select>
+
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="enquiry_id">Enquiry ID</label>
+                                                   <!--input type="text" class="form-control numbers" id="enquiry_id" name="enquiry_id"  placeholder="Property ID" ng-model="searchdata.enquiry_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                                   <!--select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.enquiry_id" id= "enquiry_id" name= "enquiry_id" ng-options="project_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids" style="width:100%;"></!--select>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="agreement_id">Agreement ID</label>
+                                                   <!--input type="text" class="form-control numbers" id="activity_id" name="activity_id"  placeholder="ACtivity ID" ng-model="searchdata.activity_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                                   <!--select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.agreement_id" id= "agreement_id" name= "agreement_id" ng-options="agreement_id.agreement_id as agreement_id.agreement_id for agreement_id in agreement_ids" style="width:100%;"></!--select>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2">       
+                                               <div class="form-group">
+                                                   <label for="created_date_from">Created Date from</label>
+                                                   <div class="input-group date" id="created_date_from" date-directive="">
+                                                       <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2">       
+                                               <div class="form-group">
+                                                   <label for="created_date_to">To</label>
+                                                   <div class="input-group date" id="created_date_to" date-directive="">
+                                                       <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                                       <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2">       
+                                            <div class="form-group">
+                                                <label for="deal_date">Deal Date</label>
+                                                <div class="input-group date" id="deal_date" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="searchdata.deal_date" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                           <!--div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="enquiry_id">Enquiry</label>
+                                                   <select class="select2 form-control" select2 ng-model="searchdata.enquiry_id" ng-options="enquiry.enquiry_id as enquiry.enquiry_title for enquiry in selectenquiries"  style="width:100%;" ng-change="GetProperties(activity.enquiry_id);">
+                                                       <option value="" disabled selected>Select Enquiry</option>
+                                                   </select>
+                                                </div>
+                                           </div-->
+                                       <!--/div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-md-12">
+                                           
+                                           <div class="col-md-2" style="margin-top:25px;">        
+                                               <div class="form-group">
+                                                   <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_agreement(searchdata,'form')">Search Now </button>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2" style="margin-top:25px;">       
+                                               <div class="form-group">
+                                                   <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2" style="margin-top:25px;">       
+                                               <div class="form-group">
+                                               <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()">Clear Filters</a>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                            </div>
+                                </form>
+                                </div>
+                </!--div-->
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <table class="table table-bordered table-striped" datatable-setupnosort="">
+                        <thead>
+                            <tr>
+                                <th>Activity ID</th>
+                                <th>DealDone Date</th>
+                                <th>Property ID</th>
+                                <th>Property Client</th>
+                                <th>Enquiry ID</th>
+                                <th>Enquiry Client</th>
+                                <th>Assigned To</th>
+                                <th>Status</th>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="activity in activities">
+                                 <td>{{activity.activity_id}}</td>
+                                <td>{{activity.end_date}}</td>
+                                <td>{{activity.property_id}}</td>
+                                <td>{{activity.client}}</td>
+                                <td>{{activity.enquiry_id}}</td>
+                                <td>{{activity.enclient}}</td>
+                                <td>{{activity.assign_to}}</td>
+                                <td>{{activity.status}}</td>
+                                <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/agreement_add/activity/{{activity.activity_id}}" class="btn btn-default btn-sm" title="Add Agreement Details"  target="_blank"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Activity ID</th>
+                                <th>DealDone Date</th>
+                                <th>Property ID</th>
+                                <th>Property Client</th>
+                                <th>Enquiry ID</th>
+                                <th>Enquiry Client</th>
+                                <th>Assigned To</th>
+                                <th>Status</th>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+            <!--div class="tab-pane" id="myproperties">
+                <div class="box-body table-responsive">
+                    <table class="table"> <!--table-bordered table-striped"   >-->
+                        <!--tbody>
+                            <tr ng-repeat="dealclose in dealclosed "  style="height:260px;min-height:260px;">
+                                <td style="width:100%">
+                                    <div class="row">
+                                        <div class="col-md-3" style="min-width:250px;">
+                                            <div class="cornerno" ng-if="dealclose.properties_count>0">{{dealclose.properties_count}}</div>
+                                            <div class="prostatus">{{dealclose.con_status}}</div>
+                                            <img src="dist/img/no_image.jpg" ng-if="dealclose.filenames==null " style="width:245px; height:185px;" /> 
+                                            <img src="api/v1/uploads/property/{{dealclose.filenames}}" ng-if="dealclose.filenames!=null " style="width:245px; height:185px;" /> 
+                                            <br>
+                                            <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{dealclose.property_id}}"/></label></div>
+                                            <p >Posted:&nbsp; 2 months ago &nbsp;&nbsp;&nbsp;</p><!-- Edited:&nbsp; a month ago </p>-->
+                                        <!--/div>
+                                        <div class="col-md-7">
+                                            <p style="font-size:20px;color:#ff0000;margin-top:5px;">{{dealclose.project_name}}:{{dealclose.propsubtype}} for {{dealclose.property_for}}</p>
+                                            <p>{{dealclose.area}}</p>
+                                            <p>{{dealclose.city}}</p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Assigned To:</span>{{dealclose.assign_to}} </P>
+                                            <p>   <span style="font-weight:bold;margin-right:5px;text-overflow: ellipsis;">Teams:</span>{{dealclose.teams}}</p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Project Contact:</span>{{dealclose.project_contact}} </p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Price:</span>{{dealclose.exp_price}}&nbsp;<span style="font-weight:bold;margin-right:5px;">&nbsp;Total Area:</span>&nbsp;{{dealclose.sale_area}}<span style="font-weight:bold;margin-right:5px;">&nbsp;Carpet Area:</span>&nbsp;{{dealclose.carp_area}}</p>
+                                            <p>{{dealclose.locality}} <span class="dot">.</span> Rera No.: {{dealclose.rera_num}}  <span class="dot">.</span> Possession Date:{{dealclose.possession_date}} <span class="dot">.</span> {{dealclose.con_status}}</p>
+                                            
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <p style="font-size:16px;text-align:center;color:#ff0000">Property ID:{{dealclose.property_code}}</p>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Owner:{{dealclose.dev_owner}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{dealclose.owner_mobile}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;">
+                                            <div class="col-md-3">
+                                                    
+                                             </div>
+                                             <div class="col-md-9" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" href="#/agreement_add/property/{{dealclose.property_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" ng-if="create_rights">Add Agreement Details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+            </div>
+            <div class="tab-pane" id="myenquiries">
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <div class="checkbox" style="margin-left:7px;position:absolute;"><label><input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All</label></div>
+                    <table class="table" style="margin-top:40px;">
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="enquiry in enquiries">
+                                <td style="width:100%">
+                                    <div class="row" style="border-bottom:1px solid #959191;padding:0px;margin-left:0px;margin-right:0px;">
+                                        <div class="col-md-6" style="min-width:250px;padding-left:0px;">
+                                            <div class="col-md-1" style="padding-left:0px;">
+                                                <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{enquiry.enquiry_id}}"/></label></div>
+                                            </div>
+                                            <div class="col-md-11" style="margin-top:8px;">
+                                                <p style="font-size:16px;color:blue;"><span style="background-color:#f72424;padding:3px;color:#ffffff;font-size:12px;min-width:25px;">{{enquiry.priority}}</span>&nbsp;&nbsp;<span>Looking to Buy / Rent : {{enquiry.enquiry_type}}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p>Status</p>
+                                            <p style="font-weight:bold;font-size:14px;color:#5db101;">{{enquiry.status}}</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p>Edited</p>
+                                            <p style="font-weight:bold;font-size:14px;">{{enquiry.modified_date}}</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p>Enquiry ID</p>
+                                            <p style="font-weight:bold;font-size:14px;">{{enquiry.enquiry_id}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-8">
+                                            <p><span>Budget Range</span><span style="margin-left:60px;">Preferred City</span><span style="margin-left:60px;">Bedrooms</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;min-width:40px;"> {{enquiry.budget_range1}}-{{budget_range2}}</span><span style="margin-left:125px;font-weight:bold;">{{enquiry.preferred_city}}</span><span style="margin-left:60px;font-weight:bold;">{{enquiry.bedrooms}}</span></p>
+                                            <p>Preferred Locality <span style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.preferred_locality}}</span></p>
+                                            <p>Preferred Area <span style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.preferred_area}}</span></p>
+                                            <p>Possession Status: <span style="font-weight:bold;font-size:14px;margin-left:10px;"> {{enquiry.con_status}}</span></p>
+                                            <p><span style="float:left;">Assigned To:<span style="font-size:14px;font-weight:bold;margin-left:10px;"> {{enquiry.assigned}}</span></span><span style="float:right;margin-right:20px;"><span style="font-size:14px;margin-left:10px;"> Teams:</span><span style="font-weight:bold;">{{enquiry.team}}</span></span></p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div style="font-size: 27px;text-align: center;background-color: #f72424;color: #ffffff;border-radius: 19px;width: 40px;height: 40px;">{{enquiry.client_first_char}}</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p style="font-size:16px;">Client:</p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiry.client_name}}</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiry.client_mob}}</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiry.client_email}}</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="col-md-3">
+                                                <p style="font-size:20px;margin-top:12px;">Matching Enquiries</p>
+                                                </div>
+                                                <div class="col-md-9" >
+                                                    <div style="float:right;">
+                                                        <a class="btn btn-primary" href="#/agreement_add/enquiry/{{enquiry.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;">Add Agreement Details</a>
+                                                    </div>  
+                                                </div>
+                                            </div> 
+                                        </div>
+    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+            </div-->
+            
+
+            
+        </div>
+    </div>
+</div>
+
+
+<div id="upload" >
+    <form novalidate name="UAddNewForm" id="Uadd-new-form" role="form" autocomplete="off" >
+        <div class="row" >
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Import Properties Data</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" >
+                                    <input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" required>
+                                    <input type="hidden" name="file_name" id="file_name" value="" ng-model="convertdata.file_name" />
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" ng-disabled="UAddNewForm.$invalid || isUnchanged(convertdata)" id="Uadd-new-btn" ng-click="uploadproperty_data(convertdata)">Import</button>
+                                    <a href="#/properties_list" class="btn">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="exportdetails" class="modal" role="dialog">
+    <div class="modal-dialog" style="width:50%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <div class="radio">
+                                    
+                                    <label>
+                                        <input type="radio" name="option_value" id="option_value" value="current_page" ng-model="option_value">
+                                        Current Page
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="option_value" id="option_value" value="selected" ng-model="option_value" checked="checked" >
+                                        Selected
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="option_value" id="option_value" value="all_records" ng-model="option_value">
+                                        All Records
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" ng-click="exportdata()">Export</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Un-Selected Columns</p>
+                        <ul class="todo-list" style="height:325px;overflow-y:auto;overflow-x:hidden;border: 1px solid #d8cfcf;font-size:14px;">
+                            <li ng-repeat="unselected_field in unselected_fields" class="callout callout-info" style="background-color: #ffffff !important; color:#000000;border-right:4px solid rgb(236, 9, 9);border-left:none;font-size:16px;font-weight:none;" ng-click="reportfieldsselect(unselected_field.report_fields_id,'select')">
+                                <div class="row " style="color:#000000 !important;">
+                                    <div class="col-md-12">
+                                        <span class="text">{{unselected_field.column_heading}}</span>
+                                        <span style="float:right;"><i class="fa fa-forward"></i></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6"  >
+                        <p>Selected Columns</p>
+                        <ul class="todo-list" style="height:325px;overflow-y:auto;overflow-x:hidden;border: 1px solid #d8cfcf;font-size:14px;">
+                            <li ng-repeat="selected_field in selected_fields" class="callout callout-info" style="background-color: #ffffff !important; color:#000000;border-left:4px solid rgb(236, 9, 9);font-size:16px;font-weight:none;" ng-click="reportfieldsselect(selected_field.report_fields_id,'unselect')">
+                                <div class="row " style="color:#000000 !important;">
+                                    <div class="col-md-12">
+                                        <span><i class="fa fa-backward"></i></span> 
+                                        <span class="text">{{selected_field.column_heading}}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" ng-click="exportdata()">Export</button>
+                            <button class="btn btn-primary" ng-click="configurecolumns()">Configure Columns</button>
+                        </div>
+                    </div>
+                </div>
+            </div-->
+        </div>
+    </div>
+</div>  
+<style>
+    .modal-dialog {
+    
+        width:25%;
+    }
+
+    #upload
+    {
+        display: none;    
+    }
+    
+    p
+    {
+        line-height: 0.9;
+        font-size:16px;
+    }
+    table tr
+    {
+        margin-bottom:20px;
+        box-shadow: 0 0 12px rgba(0,0,0,.09);
+    }
+    .dot
+    {
+        font-size:20px;
+    }
+    .nav-tabs-custom {
+        margin-bottom: 20px;
+        background: #efefef;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        border-radius: 0px;
+    }
+
+    .nav-tabs-custom>.nav-tabs>li.active {
+        border-top-color: #f3f0f0;
+    }
+
+    .bottom-button
+    {
+        position:absolute;
+        margin-top:151px;
+        background-color:#d8d8d8;
+        width:99%;
+
+    }
+    .cornerno
+    {
+        background-color: #ff0000;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 3px;
+        padding-left: 8px;
+        margin-left: 220px;
+    }
+    .prostatus {
+        background-color: #3362e6;
+        width: 152px;
+        height: 22px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 2px;
+        padding-left: 8px;
+        margin-top: 145px;
+        font-size: 12px;
+    }
+    div.dataTables_wrapper div.dataTables_filter {
+     /*text-align: left;*/ 
+    }
+    div.dataTables_wrapper div.dataTables_filter input 
+    {
+        width: 387px;
+    }
+
+</style>
+    
+<script>
+    $("#file-1").fileinput({
+        uploadAsync: false,
+        showUpload: false,
+        uploadUrl: './api/v1/uploadproperty_files',
+        allowedFileExtensions : ['csv','xls','xlsx'],
+        overwriteInitial: false,
+        maxFileSize: 1500000,
+        maxFilesNum: 1,
+        maxFileCount:1,
+        slugCallback: function(filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    }).on("filebatchselected", function(event, files) 
+    {
+        $("#file-1").fileinput("upload");
+    });
+    
+    $('#file-1').on('fileloaded', function(event, file, previewId, index, reader) {
+        $("#file_name").val(file.name);
+        console.log("fileloaded");
+    });
+</script>
+    
+
+
+<!--
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Agreements</h3> 
+    </div>
+    <aside class="right-side">
+        <a class="btn btn-primary" href="#/agreement_add" style="margin:10px;" >Add Agreement</a>
+    </aside>
+    <div class="box-body table-responsive">
+        <table class="table table-bordered table-striped" datatable-setup=""  >
+            <thead>
+                <tr>
+                    <th>agreementID</th> 
+                    <th>propertyID</th>
+                    <th>Property Name</th>
+                    <th>Property Type</th>
+                    <th>Buyer / Tennant</th>
+                    <th>Developer</th>
+                    <th>Buyer Mobile No</th>
+                    <th>Buyer Off Phone</th>
+                    <th>Owner / Landlord</th>
+                    <th>Owner Mobile No</th>
+                    <th>Owner Off Phone</th>
+                    <th>Transaction Type</th>
+                    <th>Deal Date</th>
+                    <th>Shifting Date</th>
+                    <th>Agreement From Date</th>
+                    <th>Agreement Till Date</th>
+                    <th>Rent</th>
+                    <th>Buyer Brokerage</th> 
+                    <th>Seller Brokerage</th>
+                    <th>Our Brokerage</th>
+                    <th>Principal Brokerage Received</th>
+                    <th>Principal Brokerage Pending</th>
+                    <th>Rent Due Date</th>
+                    <th>Send Rent Due Reminder SMS</th>
+                    <th>Is Active</th>
+                    <th>Assigned To</th>
+                    <th>Teams</th>
+                </tr>
+            </thead>
+             <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.username}}</td>
+                    <td>{{user.bo_name}}</td>
+                    <td>{{user.role}}</td>
+                    <td><a href="#/user_edit/{{user.user_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>agreementID</th> 
+                    <th>propertyID</th>
+                    <th>Property Name</th>
+                    <th>Property Type</th>
+                    <th>Buyer / Tennant</th>
+                    <th>Developer</th>
+                    <th>Buyer Mobile No</th>
+                    <th>Buyer Off Phone</th>
+                    <th>Owner / Landlord</th>
+                    <th>Owner Mobile No</th>
+                    <th>Owner Off Phone</th>
+                    <th>Transaction Type</th>
+                    <th>Deal Date</th>
+                    <th>Shifting Date</th>
+                    <th>Agreement From Date</th>
+                    <th>Agreement Till Date</th>
+                    <th>Rent</th>
+                    <th>Buyer Brokerage</th> 
+                    <th>Seller Brokerage</th>
+                    <th>Our Brokerage</th>
+                    <th>Principal Brokerage Received</th>
+                    <th>Principal Brokerage Pending</th>
+                    <th>Rent Due Date</th>
+                    <th>Send Rent Due Reminder SMS</th>
+                    <th>Is Active</th>
+                    <th>Assigned To</th>
+                    <th>Teams</th>
+                </tr>
+            </tfoot>
+        </table>    
+    </div>
+</div>-->
+
+<style>
+    #pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+
+</style>

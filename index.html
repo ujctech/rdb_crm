@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>RD Brothers | Main</title> 
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons --> 
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/toaster.css">
+
+  <!--link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css"-->
+
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="dist/css/bootstrap-datetimepicker.min.css">
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+
+  <!-- Select2 -->
+   <link rel="stylesheet" href="dist/css/select2.css">
+   <!--<link rel="stylesheet" href="dist/css/select.min.css">-->
+
+   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+
+   <link href="dist/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link href="dist/css/star-rating.css" rel="stylesheet">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect. -->
+  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="dist/css/flexslider.css">
+
+  <link rel="stylesheet" href="dist/css/ng-image-gallery.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        <!--<link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Helvetica+Neue">-->
+
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue fixed " ng-app="myApp">
+<div class="wrapper" ng-cloak>
+
+  <!-- Main Header -->
+  <header class="main-header" >
+
+    <!-- Logo -->
+    <!-- Logo -->
+    <a href="#/{{goindex}}" class="logo" id="biglogo"  ng-show="authenticated"  > 
+        <img src="dist/img/logo.png" id="logobig" />
+      </a>
+      <!--a href="index.html" class="logo hidden-xs hidden-sm" id="logologin" style="height:50px; background-color: #fff;">
+        <img src="dist/img/logo.png" style="height:48px;" />
+      </a-->
+      
+      <nav class="navbar navbar-static-top  hidden-xs hidden-sm" role="navigation" style="background:#ffffff;" id="navlogin" ng-show="authenticated">
+        </nav>
+        <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top navheight" role="navigation" style="background:#d2aa4b;" ng-show="authenticated" >
+      <!-- Sidebar toggle button-->
+      <!--a href="javascript:void(0)" class="sidebar-toggle" data-toggle="push-menu" role="button"> <!--ng-click="logochange()" ng-controller="LogoChange"-->
+        <!--span class="sr-only">Toggle navigation</span>
+      </a-->
+      
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu" id="myTopnav"  style="float: left;/*margin-left:45px;*/z-index:1200;">
+        <a href="javascript:void(0);" class="icon icons"  style="color: white; padding: 15px;" onclick="myFunction()">
+            <i class="fa fa-bars"></i> 
+          </a>
+          <div style="width:50px;background:#222d32;float:left;margin-top:-13px;height:50px;"></div>
+          <div class="dropdown">
+             <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_alerts_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-bell"></i>&nbsp; ALERTS</a>
+            <div class="dropdown-content">
+              <a href="#/showalerts_list" onclick="myFunction()">Alerts</a>
+              <a href="#/goals_report/direct" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('goals_report_view')">Goal Sheet</a>
+              <a href="#/task_list" onclick="myFunction()">Tasks</a>
+              <a href="#/99acres_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('99_acres_view')">99 Acres</a>
+              <!--<a href="#/weblead_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasRoles.includes('User') || hasPermissions.includes('weblead_view')">Website Leads</a>-->
+               <a href="#/weblead_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('weblead_view')">Website Leads</a>
+              <a href="#/callinghistory" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('calling_history_view')">Calling History</a>
+            </div>
+          </div>
+          <div class="dropdown" style="border-left: 1px solid #ffffff;">
+              <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_projects_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-building"></i>&nbsp; PROJECTS</a>
+              <div class="dropdown-content">
+                <a href="#/project_list/0" onclick="myFunction()">Projects</a>
+              </div>
+          </div>
+          <div class="dropdown" style="border-left: 1px solid #ffffff;">
+              <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_properties_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-key"></i>&nbsp; PROPERTIES</a>
+              <div class="dropdown-content">
+                <a href="#/properties_list/residential/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_residential_view')">Residential</a>
+                <a href="#/properties_list/commercial/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_commercial_view')">Commercial</a>
+                 <a href="#/properties_list/retail/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_retail_view')">Retail</a>
+                <a href="#/properties_list/pre-leased/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_preleased_view')">Pre-leased</a>
+               <!-- <a href="#/properties_list/outright">Outright</a>-->
+               
+                <a href="#/properties_list/others/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_others_view')">Others</a>
+              </div>
+          </div>
+          <div class="dropdown" style="border-left: 1px solid #ffffff;">
+              <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_enquiries_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-envelope-o"></i>&nbsp; ENQUIRIES</a>
+              <div class="dropdown-content">
+                <a href="#/enquiries_list/residential/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_residential_menu_view')">Residential</a>
+                <a href="#/enquiries_list/commercial/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_commercial_menu_view')">Commercial</a>
+                <a href="#/enquiries_list/retail/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_retail_menu_view')">Retail</a>
+                <a href="#/enquiries_list/pre-leased/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_pre_leased_menu_view')">Pre-leased</a>
+                <a href="#/enquiries_list/others/0/0" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_others_menu_view')">Others</a>
+              </div>
+          </div>
+          <div class="dropdown" style="border-left: 1px solid #ffffff;">
+              <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_activities_view') || hasRoles.includes('Sub Admin')"><i class="fa  fa-calendar-check-o"></i>&nbsp; ACTIVITIES</a>
+              <div class="dropdown-content">
+                <a href="#/activity_list/direct/0" onclick="myFunction()">Activity</a>
+                
+
+              </div>
+          </div>
+          <div class="dropdown hidden-xs hidden-sm" style="border-left: 1px solid #ffffff;">
+              <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_transactions_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-arrows"></i>&nbsp; TRANSACTIONS</a>
+              <div class="dropdown-content">
+                <a href="#/agreement_list/direct" onclick="myFunction()">Agreements</a>
+                <a href="#/collections" onclick="myFunction()">Collections</a>
+                <a href="#/account_list">Accounts</a>
+                <a href="#/contributions">Contributions</a>
+                <a href="#/voucher_list">Vouchers</a>
+              </div>
+          </div>
+          
+          <div class="dropdown" style="border-left: 1px solid #ffffff;">
+              <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_contacts_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-phone"></i>&nbsp; CONTACTS</a>
+              <div class="dropdown-content">
+                <a href="#/contacts_list/developer" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_developers_view')">Developers</a>
+                <a href="#/contacts_list/broker" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_brokers_view')">Brokers</a>
+                <a href="#/contacts_list/client" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_clints_view')">Clients</a>
+                <a href="#/referrals_list/client" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_ref_clint_view')">Referrals - Client</a>
+                <a href="#/referrals_list/Broker" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_ref_broker_view')">Referrals - Broker</a>
+                <a href="#/referrals_list/Properties" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_ref_properties_view')">Referrals - Properties</a>
+                <a href="#/referrals_property" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_property_data_view')">Property Data</a>
+                <a href="#/contacts_list/target" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_target_list_view')">Target List</a>
+              </div>
+          </div>
+          
+          <div class="dropdown hidden-xs hidden-sm" style="border-left: 1px solid #ffffff;" >
+              <a class="dropbtn" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_setup_view') || hasRoles.includes('Sub Admin')" href="#/setup" onclick="myFunction()" style="color:#ffffff;"><i class="fa fa-cog"></i>&nbsp; SETUP</a>
+              <!--div class="dropdown-content" >
+                  <a href="#/document_list" onclick="myFunction()"  ng-if="hasRoles.includes('Admin') || hasRoles.includes('Human Resource')">Documents</a>
+                  <!--a href="#/country_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Countries</a>
+                  <a href="#/state_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">States</a-->
+                  <!--a href="#/city_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Cities</a>
+                  <a href="#/area_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Areas</a>
+                  <a href="#locality_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Localities / Street</a>
+                  <a href="#/branch_office_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Branch Office</a>
+                  <a href="#/employee_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasRoles.includes('Human Resource')">Employee</a>
+                  <a href="#/attendance" onclick="myFunction()" ng-if="hasRoles.includes('Admin') || hasRoles.includes('Human Resource')">Attendance</a>
+                  <a href="#/designation_list" onclick="myFunction()"  ng-if="hasRoles.includes('Admin') || hasRoles.includes('Human Resource')">Designation</a>
+                  <a href="#/user_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Users Role</a>
+                  <a href="#/group_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Groups</a>
+                  <a href="#/teams_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Teams</a>
+                  <a href="#/role_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Roles</a>
+                  <a href="#/permission_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Permissions</a>
+                  <a href="#/dropdowns_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Drop Down Option</a>
+                  <a href="#/mail_template_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Mail Template</a>
+                  <a href="#/sms_template_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">SMS Template</a>
+                  <a href="#/exportconfig" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Export Config</a>
+                  <a href="#/goals_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Goals</a>
+                  <a href="#/email_accounts_list" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Email Accounts</a>
+              </-->
+          </div>
+          
+            <a style="position: absolute;
+                right: 195px;
+                top: 11px;
+                font-size: 20px;
+                color: #fff;" href="#/searchall" title="Search"  alt="Search">
+                  <i class="fa fa-search"></i>
+              </a>
+          <div style="position: absolute;right:15px;margin-top:-23px;" class="hidden-sm hidden-xs">
+            <div class="dropdown" style="padding-left: 10px;">
+                <a class="dropbtn" href="javascript:void(0)" style="padding:0px;" ><span class="nowrapping" style="width:15px;display:inline-block;width:110px;">{{ emp_name }}</span>
+                  <img src="dist/img/no_image.jpg" ng-if="emp_image==null " style="width:40px; height:40px;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+                  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);border:1px solid #6c6a6a;margin-top:-15px;border-radius:20px;" /> 
+                  <img src="api/v1/uploads/employee/{{emp_image}}" ng-if="emp_image!=null " style="width:40px; height:40px;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+                  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);border:1px solid #6c6a6a;margin-top:-15px;border-radius:20px;" /> </a>
+                  
+
+                 <!--img src="dist/img/no_image.jpg" style="height:20px;"/></a-->
+                <div class="dropdown-content" style="margin-top:-5px;">
+                  <a href="#/myprofile" >My Profile</a>
+                  <a href="#/showdocuments" >Documents</a>
+                  <a href="#/change_password" >Change Password</a>
+                  <a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()">Logout</a>
+                </div>
+                
+            </div>
+            
+              
+            <!--div class="dropdown">
+              <a class="dropbtn" href="javascript:void(0)">
+                  <i class="fa fa-search"></i>
+              </a>
+              <div class="dropdown-content">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="find_what" name="find_what"  placeholder="Find ?" ng-model="find_what" /> 
+                  <div class="input-group-addon">
+                      <a href="javascript:void(0)" ng-click="find_data(find_what)">Go</a>
+                  </div>
+              </div>
+              </div>
+            </div-->
+            <br>
+           <!--  <span style="margin: 0 0 5px 2px;padding-left: 10px; line-height: 1.9em;float:none;font-size:14px;"><a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()" style="background-color:#000000;color:#ffffff;padding: 3px;">Logout</a></span> -->
+          </div>
+          <div class="dropdown hidden-lg hidden-xl" id="navloginmenu" >
+            <a class="dropbtn" href="javascript:void(0)">
+                <i class="fa fa-user"></i>&nbsp; <span class="nowrapping" style="width:15px;display:inline-block;width:110px;">{{ emp_name }}</span> 
+            </a>
+            <div class="dropdown-content">
+                <a href="#/myprofile" onclick="myFunction()">My Profile</a>
+                <a href="#/change_password" onclick="myFunction()">Change Password</a>
+                <a href="javascript:void(0)" onclick="myFunction()" ng-controller="authCtrl" ng-click="logout()">Logout</a>
+            </div>
+          </div>
+
+          
+
+
+       
+          <!-- <div style="float:right;position:absolute;margin-top:12px;right:0px;">
+                <div class="dropdown" >
+                    <a class="dropbtn" href="javascript:void(0)" style="background-color: #cecece;color: #000000;height: 20px;padding: 0px;">
+                        <span style="margin: 0 0 5px 0;
+                        line-height: 1.9em;float:none;font-size:18px;">{{ emp_name }} 
+                        <img src="dist/img/andy.jpg" style="height:21px;"/></span>
+                    </a>
+                    <div class="dropdown-content" style="margin-top:-5px;">
+                        <a href="#/myprofile" >My Profile</a>
+                        <a href="#/change_password" >Change Password</a>
+                        <a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()">Logout</a>
+                    </div>
+                </div>
+
+         <br>
+            
+             <span  style="margin: 0 0 5px 0;
+             line-height: 1.2em;"><a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()" style="background-color:#000000;color:#ffffff;padding:3px;">Logout</a></span>
+         </div> -->
+      </div>
+        <!--div class="container-fluid" style="background-color:#cecece; height: 66px;margin-top: 50px;display:none;">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                 <div style="float:right;">
+                        <div class="dropdown" >
+                            <a class="dropbtn" href="javascript:void(0)" style="background-color: #cecece;color: #000000;height: 20px;padding: 0px;">
+                                <span style="margin: 0 0 5px 0;
+                                line-height: 1.9em;float:none;font-size:18px;">{{ emp_name }} 
+                                <img src="dist/img/andy.jpg" style="height:21px;"/></span>
+                            </a>
+                            <div class="dropdown-content" style="margin-top:-5px;">
+                                <a href="#/myprofile" >My Profile</a>
+                                <a href="#/change_password" >Change Password</a>
+                                <a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()">Logout</a>
+                            </div>
+                        </div>
+
+                 </br>
+                    <span  style="margin: 0 0 5px 0;
+                     line-height: 1.0em;font-size:13px;">{{ bo_name }}</span>
+                </br> 
+                     span  style="margin: 0 0 5px 0;
+                     line-height: 1.2em;"><a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()" style="background-color:#000000;color:#ffffff;padding:3px;">Logout</a></span>
+                 </div>
+            </div>
+        </div-->
+    </nav>
+  </header>
+  <div id="mobile_header" ng-show="authenticated"  >
+    <span style="font-size:25px;cursor:pointer;color:#ffffff;padding:10px;" onclick="openNav()"  ng-show="authenticated" ><i class="fa fa-bars"></i> <!--&#9776;--></span>
+      <a href="#/{{goindex}}" ng-show="authenticated"  > 
+        <img src="dist/img/logo.png" style="width:45px;height:40px;padding:5px;background:#ffffff;"/>
+      </a>
+      <div style="float: right;margin:5px;">
+        <div class="dropdown">
+            <a class="dropbtn" href="javascript:void(0)" style="background-color:transparent;"  ng-show="authenticated">
+            <span class="nowrapping" style="width:15px;display:inline-block;width:110px;font-size:15px;">{{ emp_name }}</span>
+              <img src="dist/img/no_image.jpg" ng-if="emp_image==null " style="width:30px; height:30px;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+              box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);border:1px solid #6c6a6a;margin-top:-10px;border-radius:20px;" /> 
+              
+              <img src="api/v1/uploads/employee/{{emp_image}}" ng-if="emp_image!=null " style="width:30px; height:30px;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+              box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);border:1px solid #6c6a6a;margin-top:-10px;border-radius:20px;" />
+            </a>
+            <div class="dropdown-content">
+                <a href="#/myprofile" onclick="closesub_menu()">My Profile</a>
+                <a href="#/showdocuments"  onclick="closesub_menu()">Documents</a>
+                <a href="#/change_password"  onclick="closesub_menu()">Change Password</a>
+                <a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()">Logout</a>
+            </div>
+          </div>
+      </div>
+
+
+    <div id="mySidenav" class="sidenav">
+      <a href="#/{{goindex}}" ng-show="authenticated"  > 
+        <img src="dist/img/logo.png" style="width:250px;height:110px;padding:5px;background:#ffffff;"/>
+      </a>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      
+      <!--div class="dropdown">
+        <a class="dropbtn"><i class="fa fa-bell"></i>&nbsp; ALERTS</a>
+        <div class="dropdown-content">
+          <a href="#/showalerts_list" onclick="myFunction()">Alerts</a>
+          <a href="#/goals_report/direct" onclick="myFunction()" ng-if="hasRoles.includes('Admin')">Goal Sheet</a>
+        </div>
+      </div-->
+      <ul class="sidenav_menu" >
+        <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_projects_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-building"></i>&nbsp; PROJECTS</li>
+        <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('project_view') || hasRoles.includes('Sub Admin')"><a href="#/project_list/0" onclick="closeNav()">Projects</a></li>
+        <hr ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_properties_view') || hasRoles.includes('Sub Admin')">
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_properties_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-key"></i>&nbsp; PROPERTIES</li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_residential_view') || hasRoles.includes('Sub Admin')"><a href="#/properties_list/residential/0/0" onclick="closeNav()">Residential</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_commercial_view') || hasRoles.includes('Sub Admin')"><a href="#/properties_list/commercial/0/0" onclick="closeNav()">Commercial</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_retail_view') || hasRoles.includes('Sub Admin')"><a href="#/properties_list/retail/0/0" onclick="closeNav()">Retail</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_preleased_view') || hasRoles.includes('Sub Admin')"><a href="#/properties_list/pre-leased/0/0" onclick="closeNav()">Pre-leased</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('properties_others_view') || hasRoles.includes('Sub Admin')"><a href="#/properties_list/others/0/0" onclick="closeNav()">Others</a></li>
+       <hr ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_enquiries_view') || hasRoles.includes('Sub Admin')">
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_enquiries_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-envelope-o"></i>&nbsp; ENQUIRIES</li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_residential_menu_view') || hasRoles.includes('Sub Admin')"><a href="#/enquiries_list/residential/0/0" onclick="closeNav()">Residential</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_commercial_menu_view') || hasRoles.includes('Sub Admin')"><a href="#/enquiries_list/commercial/0/0" onclick="closeNav()">Commercial</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_retail_menu_view') || hasRoles.includes('Sub Admin')"><a href="#/enquiries_list/retail/0/0" onclick="closeNav()">Retail</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_pre_leased_menu_view') || hasRoles.includes('Sub Admin')"><a href="#/enquiries_list/pre-leased/0/0" onclick="closeNav()">Pre-leased</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('enquiries_others_menu_view') || hasRoles.includes('Sub Admin')"><a href="#/enquiries_list/others/0/0" onclick="closeNav()">Others</a></li>
+       <hr ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_activities_view') || hasRoles.includes('Sub Admin')">
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_activities_view') || hasRoles.includes('Sub Admin')"><i class="fa  fa-calendar-check-o"></i>&nbsp; ACTIVITIES</li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('activity_view') || hasRoles.includes('Sub Admin')"><a href="#/activity_list/direct/0" onclick="closeNav()">Activity</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('task_view') || hasRoles.includes('Sub Admin')"><a href="#/task_list" onclick="closeNav()">Tasks</a></li>
+       <hr ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_contacts_view') || hasRoles.includes('Sub Admin')">
+       <!--li><i class="fa fa-arrows"></i>&nbsp; TRANSACTIONS</li>
+       <li><a href="#/agreement_list" onclick="closeNav()">Agreements</a></li>
+       <li><a href="#/collections" onclick="closeNav()">Collections</a></li> 
+       <li><a href="#/account_list"  onclick="closeNav()">Accounts</a></li>
+       <li><a href="#/contributions" onclick="closeNav()">Contributions</a></li>
+       <li><a href="#/voucher_list" onclick="closeNav()">Vouchers</a></li>
+       <hr-->
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_contacts_view') || hasRoles.includes('Sub Admin')"><i class="fa fa-phone"></i>&nbsp; CONTACTS</li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_developers_view') || hasRoles.includes('Sub Admin')"><a href="#/contacts_list/developer" onclick="closeNav()" ng-if="hasRoles.includes('Admin')">Developers</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_brokers_view') || hasRoles.includes('Sub Admin')"><a href="#/contacts_list/broker" onclick="closeNav()">Brokers</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_clints_view') || hasRoles.includes('Sub Admin')"><a href="#/contacts_list/client" onclick="closeNav()">Clients</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_ref_clint_view') || hasRoles.includes('Sub Admin')"><a href="#/referrals_list/client" onclick="closeNav()">Referrals - Client</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_ref_broker_view') || hasRoles.includes('Sub Admin')"><a href="#/referrals_list/Broker" onclick="closeNav()">Referrals - Broker</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_ref_properties_view') || hasRoles.includes('Sub Admin')"><a href="#/referrals_list/Properties" onclick="closeNav()">Referrals - Properties</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_property_data_view') || hasRoles.includes('Sub Admin')"><a href="#/referrals_property" onclick="closeNav()">Property Data</a></li>
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('contacts_target_list_view') || hasRoles.includes('Sub Admin')"><a href="#/contacts_list/target" onclick="closeNav()">Target List</a></li>
+       <hr ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_setup_view') || hasRoles.includes('Sub Admin')">
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_setup_view') || hasRoles.includes('Sub Admin')"><a href="#/setup" onclick="closeNav()" style="color:#ffffff;padding-left:0px;"><i class="fa fa-cog"></i>&nbsp; SETUP</a></li>
+       <hr ng-if="hasRoles.includes('Admin') || hasPermissions.includes('mobile_sidebar_menu_logout_view') || hasRoles.includes('Sub Admin')">
+       <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('mobile_sidebar_menu_logout_view') || hasRoles.includes('Sub Admin')"><a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()" style="color:#ffffff;padding-left:0px;"><i class="fa fa-sign-out"></i>&nbsp; LOGOUT</a></li>
+        </ul>
+        
+      </div>
+      
+
+    </div>
+
+<!--div>
+  <ul ng-show="authenticated" id="left_menu">
+    <a class="dropbtn"><li><i class="fa fa-bell"></i></li></a>
+    <a class="dropbtn" ><li><i class="fa fa-building"></i></li></a>
+    <a class="dropbtn"><li><i class="fa fa-key"></i></li></a>
+    <a class="dropbtn"><li><i class="fa fa-envelope-o"></i></li></a>
+    <a class="dropbtn"><li><i class="fa  fa-calendar-check-o"></li></a>
+    <a class="dropbtn"><li><i class="fa fa-arrows"></i></li></a>
+    <a class="dropbtn"><li><i class="fa fa-phone"></i></li></a>
+    <a class="dropbtn" href="#/setup" onclick="myFunction()" style="color:#ffffff;"><li><i class="fa fa-cog"></i></li></a>
+  </ul>
+    
+</div>
+<style>
+  #left_menu
+  {
+    list-style: none;
+    color:#ffffff;
+    font-size:18px;
+    float:left;
+    position: absolute;
+    width:50px;
+  }
+</style-->
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar" style="" ng-show="authenticated">
+    <ul ng-show="authenticated" id="left_menu">
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_alerts_view') || hasRoles.includes('Sub Admin')" href="#/goals_report/direct" title="Goals Report"><li><i class="fa fa-bell"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_projects_view') || hasRoles.includes('Sub Admin')" href="#/project_list/0" title="Projects"><li><i class="fa fa-building"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_properties_view') || hasRoles.includes('Sub Admin')" href="#/properties_list/residential/0/0" title="Properties"><li><i class="fa fa-key"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_enquiries_view') || hasRoles.includes('Sub Admin')" href="#/enquiries_list/residential/0/0" title="Enquiries"><li><i class="fa fa-envelope-o"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_activities_view') || hasRoles.includes('Sub Admin')" href="#/activity_list/direct/0" title="Activities"><li><i class="fa fa-calendar-check-o"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_transactions_view') || hasRoles.includes('Sub Admin')" href="#/task_list" title="Tasks"><li><i class="fa fa-calendar-check-o"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_transactions_view') || hasRoles.includes('Sub Admin')" href="#/agreement_list/direct" title="Agreement"><li><i class="fa fa-arrows"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_contacts_view') || hasRoles.includes('Sub Admin')" href="#/contacts_list/clients" title="Contacts"><li><i class="fa fa-phone"></i></li></a>
+      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_setup_view') || hasRoles.includes('Sub Admin')" href="#/setup" style="color:#ffffff;" title="Setup"><li><i class="fa fa-cog"></i></li></a>
+    </ul>
+  </aside>
+  <style>
+    #left_menu
+    {
+      color:#ffffff;
+      width:50px;
+      float:left;
+      list-style:none;
+      padding:15px;
+
+    }
+    #left_menu a{
+      color:#ffffff;
+      font-size:20px;
+    }
+    #left_menu li{
+      margin-bottom:20px;
+      background: #fff;
+color: #d2aa4b;
+border-radius: 16px;
+font-size: 20px;
+width: 30px;
+height: 30px;
+padding-left: 6px;
+
+    }
+  </style>
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <!--section class="sidebar"  style="background:#ffffff;">
+      <!-- Sidebar Menu -->
+      <!--ul class="sidebar-menu" data-widget="tree" style="margin-top: 19px;">
+          <li class="treeview" style="background-color: #d2aa4b;display:block;">
+              <a href="#"><span>&nbsp; New</span>
+              </a>
+              <ul class="treeview-menu" style="display:block;">
+                <li><a href="#/project_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Projects</a></li>
+            <li class="treeview"><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Properties
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+            </a>
+            <ul class="treeview-menu" style="display:block;">
+                <li><a href="#/properties_add/residential">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Residential</a></li>
+                <li class="treeview"><a href="#/properties_add/commercial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Commercial
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                  <ul class="treeview-menu">
+                <li><a href="#/properties_add/commercial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Commercial</a></li>
+                <li><a href="#/properties_add/retail">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Retail</a></li>
+                <li><a href="#/properties_add/pre-leased">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Pre-leased</a></li>
+                <!--<li style="background-color:#ffe5e5;"><a href="#/properties_add/outright">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Outright</a>
+                </li>-->
+                
+                <!--li><a href="#/properties_add/others">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Others</a>
+                </li>
+               
+                  </ul>
+                </li>
+               
+            </ul>
+            </li>
+            <li class="treeview" style="display:block;">
+                    <a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enquiries
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#/enquiries_add/residential">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Residential</a></li>
+                <li class="treeview"><a href="#/enquiries_add/commercial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Commercial
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                  <ul class="treeview-menu">
+                <li><a href="#/enquiries_add/commercial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Commercial</a></li>
+                <li><a href="#/enquiries_add/retail">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Retail</a></li>
+                 <li><a href="#/enquiries_add/pre-leased">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Pre-leased</a></li>
+                <li><a href="#/enquiries_add/others">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Others</a></li>
+               
+                  </ul>
+                </li>
+                
+                
+              </ul>
+          </li>
+          <li class="treeview" style="display:block;">
+              <a href="#"><span>&nbsp; Activities</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#/activity_list/direct/0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Activities List</a></li>
+              </ul>
+          </li>
+          <li class="treeview" style="display:block;">
+              <a href="#"><span>&nbsp; Transactions</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#/agreement_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Agreements</a></li>
+                <li><a href="#/collections">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Collections</a></li>
+                <li><a href="#/account_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Accounts</a></li>
+              </ul>
+          </li>
+           <li class="treeview" style="display:block;">
+              <a href="#"><span>&nbsp; Contacts</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#/contacts_list/developer">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Developers</a></li>
+                <li><a href="#/contacts_list/broker">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Brokers</a></li>
+                <li><a href="#/contacts_list/client">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Clients</a></li>
+                <li><a href="#/contacts_list/referral">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Referrals</a></li>
+                <li><a href="#/contacts_list/target">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Target List</a></li>
+              </ul>
+          </li>
+           <li class="treeview" style="display:block;" ng-if="hasRoles.includes('Admin')">
+              <a href="#"><span>&nbsp; Setups</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="#/document_list" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Documents</a></li>
+                <li><a href="#/country_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Countries</a></li>
+                <li><a href="#/state_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;States</a></li>
+                <li><a href="#/city_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Cities</a></li>
+                <li><a href="#/area_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Areas</a></li>
+                <li><a href="#/locality_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Localities / Street</a></li>
+                <li><a href="#/branch_office_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Branch Office</a></li>
+                <li><a href="#/employee_list" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Employee</a></li>
+                <li><a href="#/user_list" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Users Role</a></li>
+                <li><a href="#/group_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Groups</a></li>
+                <li><a href="#/teams_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Teams</a></li>
+                <li><a href="#/role_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Roles</a></li>
+                <li><a href="#/permission_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Permissions</a></li>
+                <li><a href="#/alerts_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Alerts</a></li>
+                <li><a href="#/dropdowns_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Drop Down Options</a></li>
+
+                <li><a href="#/mail_template_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Mail Template</a></li>
+                <li><a href="#/exportconfig">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Export Config</a></li>
+                <li><a href="#/goals_list">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;Goals</a></li>
+              </ul>
+          </li>
+
+          </ul> 
+        </li>
+        
+          
+         
+          
+          
+         
+      </ul>
+      
+
+      <!-- /.sidebar-menu -->
+    <!--/section>
+    <!-- /.sidebar -->
+  <!--/aside-->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!--section class="content-header"  ng-show="authenticated" >
+        <div class="container-fluid" style="background-color:#cecece; height: 70px;">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                 <div style="float:right;">
+                     
+
+                        <div class="dropdown" >
+                            <a class="dropbtn" href="javascript:void(0)" style="background-color: #cecece;color: #000000;height: 20px;padding: 0px;">
+                                <span style="margin: 0 0 5px 0;
+                                line-height: 1.9em;float:none;font-size:18px;">{{ emp_name }} 
+                                <img src="dist/img/andy.jpg" style="height:21px;"/></span>
+                            </a>
+                            <div class="dropdown-content" style="margin-top:-5px;">
+                                <a href="#/myprofile" >My Profile</a>
+                                <a href="#/change_password" >Change Password</a>
+                                <a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()">Logout</a>
+                            </div>
+                        </div>
+
+                 </br>
+                      <span  style="margin: 0 0 5px 0;
+                     line-height: 1.0em;font-size:13px;">{{ bo_name }}</span>
+                </br>
+                     span  style="margin: 0 0 5px 0;
+                     line-height: 1.2em;"><a href="javascript:void(0)" ng-controller="authCtrl" ng-click="logout()" style="background-color:#000000;color:#ffffff;padding:3px;">Logout</a></span>
+                 </div>
+            </div>
+        </div>
+    </section-->
+    
+           
+    <!-- Main content -->
+    <section class="content container-fluid" >
+        <div class="loader" ng-show="loading"></div>
+        
+        <div data-ng-view="" class="slide-animation" style="margin-bottom:90px;min-height:700px;">
+            </div>
+
+    </section>
+    <toaster-container toaster-options="{'time-out': 2000}"></toaster-container>
+    <!-- /.content -->
+  </div>
+    <!--<div data-ng-view="" class="slide-animation" style="margin-bottom:90px;min-height:500px;" id="forlogin" >
+    </div>-->
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <!-- <footer class="main-footer">
+      <div class="row">
+          <div class="col-lg-8">
+              <div class="col-lg-6">
+                  <div class="col-lg-4"><a href="http://sqft.co.in/contact-us">Contact Us</a></div>
+                  <div class="col-lg-4"><a href="#">Sitemap</a></div>
+                  <div class="col-lg-4"><a href="http://sqft.co.in/disclaimer">Disclaimer</a></div>
+              </div>
+              <div class="col-lg-6 social-icon">
+                  <div class="col-lg-1">
+                      <a target="_blank" href="https://www.facebook.com/pages/Square-Feet-Property-Consultant-Pvt-Ltd/232533296802953">
+                          <img class="responsive-img" src="dist/img/facebook_icon_n.png">
+                      </a>
+                  </div>
+                  <div class="col-lg-1">
+                      <a target="_blank" href="https://twitter.com/SQUAREFEET26">
+                          <img class="responsive-img" src="dist/img/twitter_icon_n.png">
+                      </a>
+                  </div>
+                  <div class="col-lg-1">
+                      <a target="_blank" href="https://www.linkedin.com/company/square-feet-property-consultants-pvt-ltd?trk=nmp_rec_act_company_photo">
+                          <img class="responsive-img" src="dist/img/linkedin_icon_n.png">
+                      </a>
+                  </div>
+                  <div class="col-lg-1">
+                      <a target="_blank" href="#">
+                          <img class="responsive-img" src="dist/img/blog_icon_n.png">
+                      </a>
+                  </div>
+                  <div class="col-lg-1">
+                      <a target="_blank" href="#">
+                          <img class="responsive-img" src="dist/img/gplus_icon_n.png">
+                      </a>
+                  </div>
+                  <div class="col-lg-1">
+                      <a target="_blank" href="https://www.youtube.com/channel/UCQ-8SCnGMUdyvJruGRUOvLw/videos">
+                          <img class="responsive-img" src="dist/img/youtube_icon_n.png">
+                      </a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4 text-right">
+              Copyrights @ Square Feet 2018
+          </div>
+      </div>
+  </footer> -->
+  <input type="hidden" id="logged_user_id" name="logged_user_id" ng-model="logged_user_id" style="width:0px;"/>
+  <input type="hidden" id="logged_team_id" name="logged_team_id" ng-model="logged_team_id" style="width:0px;"/>
+  <input type="hidden" id="permission_string" name="permission_string" style="width:0px;" value="0"/>
+</div>
+<!--div id="reminders" ng-controller="Reminders">
+  <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;">Reminder<a  href="javascript:void(0)" ng-click="close_reminders()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a></div>
+  <div clas="row">
+      <div class="col-md-12">
+        <!--div class="html_content" id="reminder_list" compile-html="trustedHtml_reminders"></div-->
+        <!--div style="overflow-y:auto;height:385px;">
+          <table class="table table-bordered table-striped">
+            <tr>
+              <td style="width:25%;">ID</td>
+              <td style="width:25%;">Client</td>
+              <td style="width:25%;">Start</td>
+              <td style="width:25%;">End</td></tr>
+            </tr> 
+            <tr ng-repeat="reminder in reminders_list">
+              <td style="width:25%;">ACTIVITYID_{{reminder.activity_id}}</td>
+              <td style="width:25%;">{{reminder.client_name}}</td>
+              <td style="width:25%;">{{reminder.activity_start}}</td>
+              <td style="width:25%;">{{reminder.activity_end}}</td></tr>
+          </table>
+      </div>
+  </div>
+</div-->
+
+<!--img src="" id="map_image" class="page_view_img" /-->
+
+<!-- ./wrapper -->
+
+
+<style>
+    #logobig
+    {
+        width:100%;padding:3px;
+    }
+    
+.skin-blue .main-header .logo:hover {
+         background-color: #fff; 
+}
+    #navlogin{
+        display:none;
+    }
+    #forlogin{
+        display:none;
+    }
+    #logologin{
+        display:none;
+    }
+    .main-header
+    {
+      background:#ffffff;
+    }
+    .main-header .logo
+    {
+      padding:0px;
+      line-height: 0px;
+      height:114px;
+      
+    }
+    .skin-blue .main-header .logo {
+      background-color: #ffffff;
+      color: #fff;
+     /* border-bottom: 0px solid #d6c3c3; */
+      height: 116px;
+    }
+
+    .main-header
+    {
+      /*max-height: 114px;*/
+    }
+    .sidebar
+    {
+      padding-top:50px;
+      font-size:16px;
+    }
+    .sidebar a
+    {
+      color:#000000;
+    }
+    .main-sidebar
+    {
+      /*background:#ffffff;
+      width:50px;*/
+      background-color:#9a9a9b;width:50px;
+    }
+    .skin-blue .sidebar a
+    {
+      color:#fff;
+      border-bottom:2px solid #d2aa4b;
+    }
+    .skin-blue .sidebar-menu>li>.treeview-menu
+    {
+      color:#000000;
+      background:#ffffff;
+      
+    }
+    .skin-blue .sidebar a:hover
+    {
+      color:#9a9a9b;
+    }
+
+    .skin-blue .sidebar a:focus
+    {
+      color:#9a9a9b;
+    }
+
+    .skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li.menu-open>a
+
+    {
+
+      color:#fff;
+      background:#d2aa4b;
+    }
+    .skin-blue .sidebar-menu .treeview-menu>li>a
+    {
+      color:#000000;
+      /*background:#f1c1c1;*/
+      border-bottom:1px solid #d2aa4b;
+      font-size:16px;
+    }
+
+    .skin-blue .sidebar-menu .treeview-menu>li.active>a, .skin-blue .sidebar-menu .treeview-menu>li>a:hover
+    {
+      color:#000;
+      background:#9a9a9b;
+    }
+
+    
+    .content-header
+    {
+      border-bottom: 0px solid #d6c3c3;
+      padding:0px;
+    }
+    .content-wrapper {
+    
+      background-color: #ffffff;
+     
+    }
+    .modal
+    {
+        z-index:9000;
+    }
+    
+    .modal-open .select2-drop-mask {
+        z-index: 10051;
+    }
+
+    .modal-open .select2-dropdown {
+        z-index: 10052;
+    }
+
+    .modal-open .select2-search {
+        z-index: 10053;
+    }
+
+    .select2-dropdown {
+        z-index: 900;
+    }
+
+    
+    
+
+    .container-fluid
+    {
+      background:#ffffff;
+    }
+    .dropbtn {
+        background-color: #d2aa4b;
+        color: white;
+        padding: 10px;
+        font-size: 15px;
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #ffffff;
+        min-width: 160px;
+       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius:3px;
+        border:1px solid #dfdede;
+        margin-top:5px;
+        color: #000000;
+    }
+
+
+    .nav-tabs-custom>.nav-tabs>li.active>a, .nav-tabs-custom>.nav-tabs>li.active:hover>a
+    {
+      color:#2b57a0;
+    }
+
+
+    .dropdown-content a {
+        color: black;
+        padding: 5px 11px;
+        text-decoration: none;
+        display: block;
+        
+    }
+
+    .dropdown-content a:hover {background-color: #9a9a9b;border-radius:3px;}
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+        
+    }
+    .dropdown a:hover
+    {
+        color:#ffffff;
+    }
+    .dropbtn a:hover
+    {
+        color:#ffffff;
+    }
+
+    .main-header 
+    {
+        max-height: 50px;
+    }
+
+    .main-header .navbar-custom-menu, .main-header .navbar-right
+    {
+    margin-right:70px;
+    margin-top:13px;
+    }
+    .treeview-menu
+    {
+    padding-left:0px;
+
+    }
+
+    .btn-primary
+    {
+        border-radius: 0px;
+        background-color: #8eb2cc;
+        border: #8eb2cc;
+    }
+
+    .btn-primary:hover
+    {
+        background-color: #2b57a0;
+        border: #2b57a0;
+    }
+
+    .btn-primary:focus
+    {
+        background-color:#2b57a0;
+        border: #2b57a0;
+    }
+
+    .box
+    {
+        border-top: 3px solid #2b57a0;
+    }
+
+    .box.box-primary {
+        border-top-color: #2b57a0;
+    }
+
+    .nav-tabs-custom>.nav-tabs>li.active {
+        border-top-color: #2b57a0;
+    }
+
+    .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+        
+        background-color: #2b57a0;
+        border-color: #2b57a0;
+    }
+
+    .btn-primary.focus, .btn-primary:focus
+    {
+        background-color: #2b57a0;
+        border-color: #2b57a0;
+    }
+    .content{
+        margin-top:0px;
+        min-height:700px;
+        background-color:#ffffff;
+        padding:0px;
+    }
+
+    .fixed .content-wrapper, .fixed .right-side {
+        padding-top: 0px;
+    }
+
+
+    .loader {
+        border: 6px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 6px solid blue;
+        border-right: 6px solid green;
+        border-bottom: 6px solid red;
+        width: 40px;
+        height: 40px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -32px; /* -1 * image width / 2 */
+        margin-top: -32px;  /* -1 * image height / 2 */
+        display: block; 
+
+      }
+      
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+.treeview-menu .treeview-menu
+{
+  padding-left: 0px;
+}
+    /*div
+{
+ line-height:15px;
+}
+input:valid
+{
+ border:solid green 1px;
+}
+input:invalid 
+{
+    border:1px solid red; 
+}
+input:required 
+{
+    border:1px solid #00a2d1; 
+}
+    
+
+select:required 
+{
+    border:1px solid #00a2d1; 
+}*/
+        .numbers
+         {
+             text-align:right;
+         }
+         .numbers_red
+         {
+             text-align:right;
+             color:red;
+             
+         }
+         
+         .text-red
+         {
+            color:red;   
+         }
+         .totals
+         {
+             text-align:right;
+             font-weight: bold;
+             font-size:15px;
+         }
+         .totals_red
+         {
+             text-align:right;
+             font-weight: bold;
+             font-size:15px;
+             color:red;
+         }
+         .group_heads
+         {
+             
+            font-weight: bold;
+             font-size:17px; 
+         }
+         .required
+         {
+            color: red;
+            font-size:14px;
+            padding-left: 10px;
+         }
+         
+         .form_bg 
+         {
+            background-color: #FDF9F9;
+            color: #666;
+            padding: 20px;
+            position: absolute;
+            border: 1px solid #fff;
+            margin: auto;
+            right: 0px;
+            width: 620px;
+            height: 580px;
+            -webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+            z-index: 99999;
+            position: absolute;
+        }
+
+        input:valid
+        {
+            border:solid green 1px;
+        }
+        input:invalid 
+        {
+            border:3px solid red; 
+        }
+        input:required:valid
+        {
+            border:solid green 1px;
+        }
+        input:required:invalid 
+        {
+            border:3px solid red; 
+        }
+        input:required 
+        {
+            border:1px solid #00a2d1; 
+        }
+        
+        .content-wrapper, .main-footer
+        {
+          margin-left:50px;
+        }
+        select:valid
+        {
+            border:solid green 1px;
+        }
+        select:invalid 
+        {
+            border:3px solid red; 
+        }
+        select:required 
+        {
+            border:1px solid #00a2d1; 
+        }
+        textarea:valid
+        {
+            border:solid green 1px;
+        }
+        textarea:invalid 
+        {
+            border:3px solid red; 
+        }
+        textarea:required 
+        {
+            border:1px solid #00a2d1; 
+        }
+
+        .nav-tabs-custom > .nav-tabs > li > a
+        {
+          color:#ffffff;
+        }
+        
+        .nav-tabs-custom>.nav-tabs>li {
+            background-color:#8ab0d5;
+        }
+
+        .nav-tabs-custom>.nav-tabs>li:hover {
+            background-color:#2b57a0;
+        }
+.inwords
+{
+  color:#2b57a0;
+}
+        .panel-group .panel {
+            margin-bottom: 0;
+            border-radius: 0px;
+        }
+        .panel-default {
+            border-color: #ffffff;
+        }
+
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
+
+.skin-blue .main-header #biglogo{
+  /*padding-top: 14px;*/
+}     
+
+#logologin{
+    left: 0px;
+    height:50px; 
+}
+
+
+
+
+.dropdown, .icon {
+  /*float: left;
+  display: block;*/
+  color: #ffffff;
+  text-align: left;
+  text-decoration: none;
+  /*background-color: #ff0000;
+  font-size: 17px;*/
+}
+.icons {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  float: right;
+  padding-bottom: 16px;
+  background-color: #ff0000;
+}
+ .navheight{
+    min-height: 50px; 
+    height: 50px;
+  }
+
+  .nowrapping
+  {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #biglogo
+  {
+    position: absolute;
+    /*right: 0px;*/
+    z-index: 8000;
+    width: 50px;
+    height: 50px;
+  }
+
+  .main-header .navbar
+  {
+    margin-left:0px;
+  }
+@media screen and (max-width: 991px) {
+  .skin-blue .main-header #biglogo{
+    padding-top: 0px;
+    height: 50px;
+  }
+  #logobig{
+    height: 50px;
+  }
+  .sidebar-toggle{
+    position: absolute;
+    right: 50px;
+  }
+
+
+  .navbar-custom-menu .dropdown:not(:first-child) {
+    display: none;
+  }
+  .dropdown-content{
+    position: relative;
+    border-radius:0px;
+  }
+  .navbar-custom-menu {
+    padding-top: 50px;
+    position: absolute;
+    right: 0px;
+  }
+  .main-header .navbar-custom-menu
+    {
+    margin-right:0px;
+    margin-top:0px;
+    }
+  .navbar-custom-menu .icon {
+    display: block;
+  }
+  
+
+}
+@media screen and (max-width: 991px) {
+  .navbar-custom-menu.responsive .dropdown {
+    float: none;
+    display: block;
+    text-align: left;
+    padding-top: 8px;
+    color: #ffffff;
+    border: 1px solid #ffffff; 
+    background-color: #ff0000;
+    width: 160px;
+  }
+.navbar-custom-menu.responsive .dropdown a i {
+    padding-bottom: 8px;
+  }
+
+  .navheight{
+    min-height: 50px; 
+    height: 0px;
+  }
+}
+.showbullet
+{
+  /*display: list-item;
+  list-style-type: disc;
+  list-style-position: inside;*/
+}       
+.showbullet:before{
+content: '\2022';
+font-size:23px;
+padding:5px;
+}
+    /*#reminders
+    {
+        position:fixed;
+        top:25%;
+        left:32%;
+        background-color:#ffffff;
+        width:40%;
+        height:350px;
+        display:none;
+        z-index:9000;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        /*border:1px solid #f0d2d2;
+    }*/
+  </style>
+<script>
+  var dt = new Date();
+console.log(dt);
+</script>
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<!--script src="bower_components/jquery/dist/jquery.min.js"></script-->
+<script src="dist/js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="dist/js/angular.min.js"></script>
+<script src="dist/js/angular-route.min.js"></script>
+<script src="dist/js/angular-animate.min.js" ></script>
+
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="dist/js/ui-bootstrap-tpls-0.13.0.min.js"></script>
+
+<!-- Select2 -->
+<script src="dist/js/select2.full.min.js"></script>
+<!--<script src="dist/js/select.min.js"></script>
+<script src="dist/js/select-tpls.min.js"></script>-->
+
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="dist/js/ckeditor/ckeditor.js"></script>
+
+
+<script src="dist/js/moment.js"></script>
+<script src="dist/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="dist/js/toaster.js"></script>
+<script src="dist/js/jquery.flexslider.js"></script>
+
+<script src="dist/js/ng-image-gallery.min.js"></script>
+
+
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<!--script src="DataTables/DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="DataTables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js"></script-->
+
+<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+
+<script src="dist/js/fileinput.js?8657948122131212612128617840956" type="text/javascript"></script>
+
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+
+<script src="bower_components/chart.js/Chart.js"></script>
+<script src="bower_components/chart.js/angular-chart.js"></script>
+
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<script src="dist/js/star-rating.js" type="text/javascript"></script>
+<script type="text/javascript" src="dist/js/jquery.easy-ticker.js"></script>
+
+<script>
+
+      /*document.write("<script type='text/javascript' src='app/app.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/data.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/directives.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/authCtrl.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/main_controller.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/properties_controller.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/enquiries_controller.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/contacts_controller.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/projects_controller.js?v=" + Date.now() + "'><\/script>");*/
+
+
+</script>
+<script src="app/app.js?98596048345352312354544554125531111905684019865904" type="text/javascript"></script>
+<script src="app/data.js"></script>
+<script src="app/directives.js?10199425323312244465443311531311245164564124545121214532116631200"></script>
+<script src="app/authCtrl.js?10190812645452132342346545444211112456451612454512213121200"></script>
+<script src="app/main_controller.js?60661254512235324315526111454544464645161214545223378900" type="text/javascript"></script>
+<script src="app/properties_controller.js?6041523235243266116114542134645645163454515232362678900" type="text/javascript"></script>
+<script src="app/enquiries_controller.js?60612112342354125555161145544246456456134545223231678900" type="text/javascript"></script>
+
+<script src="app/contacts_controller.js?60668111232325435656555161116614544664565212322678900" type="text/javascript"></script>
+
+<script src="app/projects_controller.js?6066813423232351434515551616656565121244646111313122678900" type="text/javascript"></script>
+<script src="app/hrms.js?60668134134121211133122676223524355611555615566556655681900" type="text/javascript"></script>
+
+<script>
+function myFunction() {
+    /*var x = document.getElementById("myTopnav");
+    if (x.className === "navbar-custom-menu") {
+        x.className += " responsive";
+    } else {
+        x.className = "navbar-custom-menu";
+    }*/
+}
+</script>
+
+
+<style>
+/* ADDITIONS on 12/04/2021*/
+#mobile_header
+{
+  display:none;
+
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #d2aa4b;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  /*padding: 8px 8px 8px 32px;*/
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav hr
+{ 
+  margin-top:5px;
+  margin-bottom:5px;
+
+}
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 36px;
+  /*margin-left: 50px;*/
+}
+
+.top_fixed
+{
+  background-color:#cecece;
+  margin-top:45px;
+  height:75px;
+  position:fixed;
+  z-index:1000;
+  width:100%;
+  padding:10px;
+
+}
+.sub_menu
+{
+  background-color: #fff;
+  margin-top: 5px;
+  height: 100px;
+  position: absolute;
+  z-index: 5003;
+  width: 164px;
+  padding: 10px;
+  color: #000000;
+  right: 0px;
+  display:none;
+  -webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+}
+.sub_menu a{
+  color:#000000;
+  font-size:15px;
+}
+.sub_menu ul{
+  padding-left:5px;
+}
+.sub_menu li{
+  list-style-type: none;
+}
+.sidenav_menu
+{
+  list-style-type: none;color:#ffffff;height:650px;overflow-x: auto;
+  padding-left:0px;
+
+}
+.sidenav_menu li
+{
+  padding-left:5px;
+  font-size:18px;
+}
+.sidenav_menu a 
+{
+  color:#ffffff;
+  padding-left:20px;
+}
+.main-sidebar
+    {
+      background-color:#9a9a9b;width:50px;
+    }
+    .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
+      background-color:#9a9a9b;
+    }
+@media screen and (max-width: 991px)  {
+
+header
+{
+  display:none;
+}
+#mobile_header
+{
+  display: block;
+  position:fixed;
+  width:100%;
+  height:45px;
+  background-color:#d2aa4b;
+  z-index:5000;
+}
+
+.sidenav {padding-top: 0px;}
+.sidenav a {font-size: 18px;}
+
+.top_fixed
+{
+  position: relative;
+  height: 285px;
+}
+
+#reminders
+{
+  left:2%;
+  width:96%;
+}
+
+#topsheet
+{
+  margin-top:5px;
+}
+.fixed .content-wrapper, .fixed .right-side {
+  margin-left:0px;
+}
+.main-sidebar
+    {
+      display: none;
+    }
+}
+</style>
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+function opensub_menu()
+{
+  if ($('.sub_menu').css('display') == 'block')
+  {
+    $(".sub_menu").css("display","none");
+  }
+  else{
+    $(".sub_menu").css("display","block");
+  }
+  
+}
+
+function closesub_menu()
+{
+  $(".sub_menu").css("display","none");
+}
+</script>
+
+
+</body>
+</html>

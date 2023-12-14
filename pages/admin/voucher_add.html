@@ -1,0 +1,204 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		 
+</div>
+<div class="clearfix"></div>
+<div id="agreement_info" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" ng-if="create_rights">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="voucher_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Voucher</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#voucher" data-toggle="tab">voucher</a></li>
+										<li><a data-target="#cheques" data-toggle="tab">Cheque Details</a></li>
+										<li><a data-target="#vouchers" data-toggle="tab">Voucher Details</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="voucher">
+											<div class="row">
+												<div class="col-md-6"  style="padding-left: 0px;">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="agreement_id">Agreement ID<span class="required">*</span></label>
+															<select class="select2 form-control" id="agreement_id" name="agreement_id" ng-model="voucherdata.agreement_id" ng-options="agreement.agreement_id as agreement.agreement_title for agreement in agreements" ng-change="getcontributionids(voucherdata.agreement_id)" required style="width:100%;">
+															</select>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="contributions_id">Contribution ID<span class="required">*</span></label>
+															<select class="select2 form-control"  id="contributions_id" name="contributions_id"  ng-model="voucherdata.contributions_id" ng-options="contribution.agreement_details_id as contribution.contributions_title for contribution in contributions" required   style="width:100%;" ng-change="getemployeeids(voucherdata.contributions_id)">
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="user_id">Employee Name<span class="required">*</span></label>
+														<select class="select2 form-control" id="user_id" name="user_id"  ng-model="voucherdata.user_id" ng-options="employee.user_id as employee.name for employee in employees"  required style="width:100%;">
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6"  style="padding-left: 0px;">
+													<div class="col-md-6">	     
+														<div class="form-group">
+															<label for="amount">Amount<span class="required">*</span></label>
+															<input type="text" class="form-control numbers" id="amount" name="amount"  placeholder="Amount" ng-model="voucherdata.amount"  required  />
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="transaction_date">Transaction Date<span class="required">*</span></label><div class="input-group date" id="transaction_date" date-directive="">
+															<input class="form-control" type="text" ng-model="voucherdata.transaction_date" required>
+															<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6" style="padding-left: 0px;">
+													
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="payment_type">Payment Type<span class="required">*</span></label>
+															<select class="select2 form-control" select2 ng-model="voucherdata.payment_type" id="voucherdata.payment_type" name="voucherdata.payment_type"  ng-options="dropdown.value as dropdown.display_value for dropdown in payment_typelist" style="width:100%;" required></select>
+														</div>
+													</div>
+												</div>
+											</div>			
+											
+										</div>
+										<div class="tab-pane" id="cheques">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="instrument_no">Instrument No</label>
+														<input type="text" class="form-control" id="instrument_no" name="instrument_no"  placeholder="Instrument No" ng-model="voucherdata.instrument_no"  />
+													</div>
+													<div class="form-group" ng-if="voucherdata.payment_type=='Cheque'">
+														<label for="cheque_no">Cheque No<span class="required">*</span></label>
+														<input type="text" class="form-control" id="cheque_no" name="cheque_no"  placeholder="Cheque No" ng-model="voucherdata.cheque_no" required />
+													</div>
+													<div class="form-group"  ng-if="voucherdata.payment_type=='Cheque'">
+														<label for="cheque_date">Cheque Date<span class="required">*</span></label><div class="input-group date" id="cheque_date" date-directive="">
+														<input class="form-control" type="text" ng-model="voucherdata.cheque_date" required>
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+
+													<div class="form-group" ng-if="voucherdata.payment_type!='Cheque'">
+														<label for="cheque_no">Cheque No</label>
+														<input type="text" class="form-control" id="cheque_no" name="cheque_no"  placeholder="Cheque No" ng-model="voucherdata.cheque_no"  />
+													</div>
+													<div class="form-group"  ng-if="voucherdata.payment_type!='Cheque'">
+														<label for="cheque_date">Cheque Date</label><div class="input-group date" id="cheque_date" date-directive="">
+														<input class="form-control" type="text" ng-model="voucherdata.cheque_date" >
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="drawn_on">Drawn On</label>
+														<input type="text" class="form-control" id="drawn_on" name="drawn_on"  placeholder="Drawn On" ng-model="voucherdata.drawn_on"  />
+													</div>
+															
+													<div class="form-group">
+														<label for="branch">Branch</label>
+														<input type="text" class="form-control" id="branch" name="branch"  placeholder="Branch" ng-model="voucherdata.branch"  />
+													</div>
+															
+													<div class="form-group">
+														<label for="cheque_status">Cheque Status</label>
+														<select class="select2 form-control" select2 ng-model="voucherdata.cheque_status" id="cheque_status" name="cheque_status" ng-options="dropdown.value as dropdown.display_value for dropdown in cheque_statuslist" style="width:100%;"></select>
+															
+													</div>        
+													<div class="form-group">
+														<label for="comments">Comments</label>
+														<textarea class="form-control" id="comments" name="comments"  placeholder="Comments" ng-model="voucherdata.comments" ></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="tab-pane" id="vouchers">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="voucher_no">Voucher No</label>
+														<input type="text" class="form-control" id="voucher_no" name="voucher_no"  placeholder="Voucher No" ng-model="voucherdata.voucher_no"  />
+													</div>
+													
+													<div class="form-group">
+														<label for="voucher_date">Voucher Date</label><div class="input-group date" id="voucher_date" date-directive="">
+														<input class="form-control" type="text" ng-model="voucherdata.voucher_date" >
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+													<div class="form-group" ng-controller="SelectUsers">
+														<label for="assign_to">Assign to<span class="required">*</span></label>
+														<select class="select2 form-control" multiple="multiple"  id = "assign_to" name = "assign_to" select2new ng-model="voucherdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" required>
+															<!--option value="" disabled selected>Select Assign to</option-->
+														</select>
+													</div>
+													<div class="form-group" ng-controller="SelectTeams">
+														<label for="teams">Teams<span class="required">*</span></label>
+														<div class="input-group">
+															<select class="select2 form-control" multiple="multiple"  id = "teams" name = "teams" select2new ng-model="voucherdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required>
+																<!--option value="" disabled selected>Select Team</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addteam" ng-click="Addteam()"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group" ng-controller="Sub_Teams_List_Ctrl">
+														<label for="sub_teams">Sub Teams<span class="required">*</span></label>
+														<div class="input-group">
+															<select class="select2 form-control" multiple="multiple"  id = "sub_teams" select2new  name = "subteams" ng-model="voucherdata.subteams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"   style="width:100%;" required>
+																<!--option value="" disabled selected>Select Team</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addsubteam" ng-click="AddSubteam()"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>						                         
+										
+									</div>
+								</div>
+								<div class="form-group">
+									<!---->
+									<button class="btn btn-primary"  id="add-new-btn" ng-disabled="AddNewForm.$invalid || isUnchanged(voucherdata)" ng-click="voucher_add_new(voucherdata)">Save </button>
+									<a href="#/voucher_list" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+</script>

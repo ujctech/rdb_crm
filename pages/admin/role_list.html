@@ -1,0 +1,84 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+        
+    <!--<a class="btn btn-primary" href="#/role_add" style="margin:10px;">Add Role</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;">Add Role</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/role_add" style="margin:10px;">Add Role</a>
+    <!--<a href="javascript:void(0)" style="float:right;margin-right:20px;" ng-click="import_enquiries()">Import</a>-->
+
+</div>
+<div class="clearfix"></div>
+<div class="row" id="des" style="margin-top:115px;">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="box-header">
+                <h3 class="box-title">Roles</h3>                                    
+            </div>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#rolestab" data-toggle="tab" >Roles</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="rolestab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="role_id">Select Role</label>
+                                    <select class="select2 form-control" select2  id = "roles" ng-model="role_id" ng-options="role.role_id as role.role for role in rolesRecords" style="width:100%;" ng-change="getroles(role_id)">
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/role_edit/{{role_id}}" class="btn btn-default btn-sm" style="margin-top:25px;"><i class="glyphicon glyphicon-pencil"></i></a>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive">
+                            <div compile-html="trustedHtml_roles"></div>
+                            <!--table class="table table-bordered table-striped" datatable-setup="" data-page-length='10'>
+                                <thead>
+                                    <tr>
+                                        <th>Permissions</th>
+                                        <th>Create</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                        <th>View</th>
+                                        <th>Export</th>
+                                        <th>Comments</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="permission in permissions">
+                                        <td>{{permission.permission}}</td>
+                                        <td><label><input type="checkbox" class="check_element" name="action_create" id="action_create" ng-model="permission.action_create" style="width:20px;height:20px;"  ng-change="update_role_details('action_create',permission_id,permission.action_create)" value="{{permission.action_create}}" checklist-model="permission.action_create"/></label></td>
+
+                                        <td><label><input type="checkbox" class="check_element" name="action_update" id="action_update" ng-model="permission.action_update" style="width:20px;height:20px;" checked="permission.action_update" value="{{permission.action_update}}"/></label></td>
+
+                                        <td><div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="action_delete" id="action_delete" ng-model="permission.action_delete" style="width:20px;height:20px;" value="{{permission.action_delete}}"  checklist-model="permission.action_delete"/></label></div></td>
+
+                                        <td><div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="action_view" id="action_view" ng-model="permission.action_view" style="width:20px;height:20px;" value="{{permission.action_view}}"/></label></div></td>
+
+                                        <td><div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="action_export" id="action_export" ng-model="permission.action_export" style="width:20px;height:20px;" value="{{permission.action_export}}"/></label></div></td>
+                                        <td>
+                                            <textarea class="form-control" id="comments" name="comments" placeholder="comments" ng-model="permission.comments"></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Permissions</th>
+                                        <th>Create</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                        <th>View</th>
+                                        <th>Export</th>
+                                        <th>Comments</th>
+                                    </tr>
+                                </tfoot>
+                            </table-->    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

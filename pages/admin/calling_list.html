@@ -1,0 +1,102 @@
+<div class="box" id="calling_list_div">
+    <div class="box-header">
+        <h3 class="box-title">Calling</h3> 
+    </div>
+    <aside class="right-side">
+        <!--a class="btn btn-primary" href="#/visit_add" style="margin:10px;" >Add Visit</a-->
+    </aside>
+    <div class="box-body table-responsive">
+        <table class="table table-bordered table-striped" datatable-nosortsetup=""  >
+            <thead>
+                <tr>
+                    <th>Called Number</th>
+                    <th>Call Start</th>
+                    <th>Call End</th>
+                    <th>Call To</th>
+                    <th>Organisation</th>
+                    <th>Name</th>
+                    <th>Mobile No</th>
+                    <th>Email</th>
+                    <th>Next Date</th>
+                    <th>Called By</th>
+                    <th></th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr ng-repeat="call in calls">
+                    <td>{{call.called_number}}</td>
+                    <td>{{call.call_start}}</td>
+                    <td>{{call.call_end}}</td>
+                    <td>{{call.call_to}}</td>
+                    <td>{{call.organisation}}</td>
+                    <td>{{call.name}}</td>
+                    <td>{{call.mob_no}}</td>
+                    <td>{{call.email}}</td>
+                    <td>{{call.next_date}}</td>
+                    <td>{{call.called_by}}</td>
+                    <td><a href="javascript:void(0)" class="btn btn-default btn-sm" title="Send Messages" alt="Send Messages" ng-click="send_message(call.calling_id,call.mob_no,call.email)"><i class="glyphicon glyphicon-envelope"></i></a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Called Number</th>
+                    <th>Call Start</th>
+                    <th>Call End</th>
+                    <th>Call To</th>
+                    <th>Organisation</th>
+                    <th>Called to</th>
+                    <th>Mobile No</th>
+                    <th>Email</th>
+                    <th>Next Date</th>
+                    <th>Called By</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>    
+    </div>
+</div>
+<div id="sendmessages">
+	<p>Mobile Number:{{mob_no}}</p>
+	<p>Email:{{email}}</p>
+	<div class="form-group">
+		<label for="message_to_send">Message to Send</label>
+		<textarea class="form-control" id="message_to_send" name="message_to_send"  placeholder="Message to Send" ng-model="message_to_send" rows="5"></textarea>
+	</div>
+	<ul style="padding:0px;">
+		<a href="javascript:void(0)" ng-click="whatsapp_message(message_to_send)"><li  class="li_box"><p><i class="glyphicon glyphicon-envelope"></i></p><p style="font-size:18;">Whatsapp Message</p></li></a>
+		<a href="javascript:void(0)" ng-click="email_message(message_to_send)"><li  class="li_box"><p><i class="glyphicon glyphicon-envelope"></i></p><p style="font-size:18;">Send Email</p></li></a>
+	</ul>
+	<a href="javscript:void(0)" class="btn" style="margin-top:30px;" ng-click="goto_callinglist()">Go to Calling List</a>
+
+</div>
+<p style="margin-top:10px;">{{system_message}}</p>
+<style>
+	#sendmessages
+	{
+		display:none;
+	}
+	.li_box
+        {
+            width:20%;
+            float:left;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background: #acea7e;
+            color:#0c1d00;
+            font-size:17px;
+            height:90px;
+            list-style-type: none;
+            border: 1px solid #8eb770;
+            text-align:center;
+            margin:3px;
+            padding:10px;
+            -webkit-box-shadow: 0 16px 16px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 16px 16px rgba(0, 0, 0, 0.5);
+        }
+        .li_box a{
+            color:#0c1d00;
+            
+        }
+</style>

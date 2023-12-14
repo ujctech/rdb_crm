@@ -1,0 +1,112 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		 
+</div>
+<div class="clearfix"></div>
+<div id="agreement_info" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;"><!-- ng-if="create_rights"-->
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="contributions_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Edit Contributions</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#contributions" data-toggle="tab">Contribution Details</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="contributions">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="agreement_id">Agreement ID</label>
+														<input type="text" class="form-control" id="agreement_id" name="agreement_id"  placeholder="agreement_id" ng-model="contributionsdata.agreement_id" readonly="true" />
+													</div>
+														
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="contribution_by">Contribution By</label>
+														<input type="text" class="form-control" id="contribution_by" name="contribution_by"  placeholder="Contribution by" ng-model="contributionsdata.contribution_by" readonly="true" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="contribution_to">Employee Name</label>
+														<select class="select2 form-control" id="contribution_to" name="contribution_to"  ng-model="contributionsdata.contribution_to" ng-options="user.user_id as user.name for user in users"  style="width:100%;">
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">     
+													<div class="form-group">
+														<label for="contribution_per">Contribution Per</label>
+														<input type="text" class="form-control numbers" id="contribution_per" name="contribution_per"  placeholder="Contribution Per" ng-model="contributionsdata.contribution_per"  />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">     
+													<div class="form-group">
+														<label for="contribution_amount">Contribution Amount<span class="required">*</span></label>
+														<input type="text" class="form-control numbers" id="contribution_amount" name="contribution_amount"  placeholder="Contribution Amount" ng-model="contributionsdata.contribution_amount"  required  />
+													</div>
+												</div>
+											</div>
+											<div class="row" ng-if="hasRoles.includes('CRM Manager') || hasRoles.includes('Admin')">
+												<div class="col-md-6"> 
+													<div class="form-group">
+														<label for="payment_approved">Payment Approved</label>
+														<select class="select2 form-control"  id="payment_approved" name="payment_approved" select2 ng-model="contributionsdata.payment_approved"  data-placeholder="Payemnt approved" style="width:100%;" >
+															<option value="Yes">Yes</option>
+															<option value="No" >No</option>
+														</select>
+													</div> 
+												</div>
+											</div>
+											<div class="row" ng-if="hasRoles.includes('CRM Manager') || hasRoles.includes('Admin')|| hasRoles.includes('Accountant')" >
+												<div class="col-md-6"> 
+													<div class="form-group">
+														<label for="amount_paid">Amount Paid</label>
+														<select class="select2 form-control"  id="amount_paid" name="amount_paid" select2 ng-model="contributionsdata.amount_paid"  data-placeholder="Payemnt approved" style="width:100%;" >
+															<option value="Yes">Yes</option>
+															<option value="No" >No</option>
+														</select>
+													</div> 
+												</div>
+											</div>
+												
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" id="add-new-btn" ng-click="contributions_update(contributionsdata)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+									<button class="btn btn-danger" ng-click="contributions_delete(contributionsdata)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+									<a href="#/contributions" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+</script>

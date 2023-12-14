@@ -1,0 +1,205 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		 
+</div>
+<div class="clearfix"></div>
+<div id="agreement_info" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" ng-if="update_rights">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="expense_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Edit Expense</h3> 
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#expense" data-toggle="tab">Expense</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="expense">
+											<div class="row">
+												<div class="col-md-4">
+													<div class="row">
+														<div class="col-md-6">	     
+															<div class="form-group">
+																<label for="expense_type">Expense Type<span class="required">*</span></label>
+																<select class="select2 form-control"  id="expense_type" name="expense_type" select2 ng-model="expensedata.expense_type"  data-placeholder="Select Expense Type" style="width:100%;" ng-init="expensedata.expense_type='Expenses'">
+																	<option value="Expenses" >Expenses</option>
+																	<option value="Advance" >Advance</option>
+																	<option value="Refund" >Refund</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="expense_head_id">Expense Head<span class="required">*</span></label>
+																<select class="select2 form-control" id="expense_head_id" name="expense_head_id"  ng-model="expensedata.expense_head_id" ng-options="expense_head.expense_head_id as expense_head.expense_title for expense_head in expense_heads"  required style="width:100%;" ng-change="select_expense_sub_type(expensedata.expense_head_id)">
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<label for="expense_sub_type_id">Expense Sub Type<span class="required">*</span></label>
+																<select class="select2 form-control" id="expense_sub_type_id" name="expense_sub_type_id"  ng-model="expensedata.expense_sub_type_id" ng-options="expense_head.expense_sub_type_id as expense_head.expense_sub_title for expense_head in expense_sub_types"  required style="width:100%;">
+																</select>																																			
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="expense_no">Voucher No</label>
+																<input type="text" class="form-control" id="expense_no" name="expense_no"  placeholder="Voucher No" ng-model="expensedata.expense_no"  />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="expense_date">Voucher Date<span class="required">*</span></label><div class="input-group date" id="expense_date" date-directive="">
+																<input class="form-control" type="text" ng-model="expensedata.expense_date" required>
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="user_id">Employee Name<span class="required">*</span></label>
+																<select class="select2 form-control" id="user_id" name="user_id"  ng-model="expensedata.user_id" ng-options="employee.user_id as employee.name for employee in employees"  required style="width:100%;" ng-change="selectteamfromid(expensedata.user_id)">
+																</select>
+															</div>
+														</div>
+														<div class="col-md-6">	     
+															<div class="form-group">
+																<label for="amount">Amount<span class="required">*</span></label>
+																<input type="text" class="form-control numbers" id="amount" name="amount"  placeholder="Amount" ng-model="expensedata.amount"  required  />
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="teams">Teams<span class="required">*</span></label>
+																<select class="select2 form-control" select2 id = "teams" ng-model="expensedata.teams" ng-options="team.team_id as team.team_name for team in teams" style="width:100%;" required>
+																</select>                   
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="sub_teams">Sub Teams<span class="required">*</span></label>
+																<select class="select2 form-control" select2 id="sub_teams" ng-model="expensedata.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list" style="width:100%;" required>
+																</select>                   
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6" ng-if="(hasRoles.includes('Admin') || hasPermissions.includes('payment_status') || hasRoles.includes('Accountant'))">
+															<div class="form-group">
+															<label for="payment_status">Payment Status<span class="required">*</span></label>
+															<select class="select2 form-control" id="payment_status" name="payment_status" select2 ng-model="expensedata.payment_status" data-placeholder="Select Payment Status" style="width:100%;" ng-init="expensedata.payment_status='Unpaid'" ng-readonly="false">
+																<option value="Paid">Paid</option>
+																<option value="Unpaid">Unpaid</option>
+															</select>
+															</div>
+													    </div>
+														<div class="col-md-6" ng-if="!hasPermissions.includes('Admin') || !hasPermissions.includes('payment_status') || !hasRoles.includes('Accountant'))">
+															<div class="form-group">
+															  <label for="payment_status">Payment Status<span class="required">*</span></label>
+															  <select class="select2 form-control" id="payment_status" disabled name="payment_status" select2 ng-model="expensedata.payment_status" data-placeholder="Select Payment Status" style="width:100%;" ng-init="expensedata.payment_status='Unpaid'" ng-readonly="true">
+																<option value="Paid">Paid</option>
+																<option value="Unpaid">Unpaid</option>
+															  </select>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+														<div class="form-group">
+															<label for="comments">Remarks</label>
+															<textarea class="form-control" id="comments" name="comments"  placeholder="Remarks" ng-model="expensedata.comments"></textarea>
+														</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="file_documents">Documents</label>
+														<input id="file_documents" name="file_documents[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+														<input type="hidden" name="file_name_documents" id="file_name_documents" value="" ng-model="expensedata.file_name_documents" />
+													</div>
+												</div>
+												<div class="col-md-4">
+													<table class="table">
+														<thead>
+															<tr style="display:none;">
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="expense_document in expense_documents">
+																<td style="width:100%">
+																	<img src="dist/img/no_image.jpg" ng-if="expense_document.filenames==null " style="width:245px; height:185px;" /> 
+			
+																	<a href="javascript:void();" class="btn btn-default btn-sm" style="position:absolute;" title="Remove Image" alt="Remove Image" ng-click="removeimage(expense_document.attachment_id)"><i class="glyphicon glyphicon-trash" style="font-size:20px;"></i></a> 
+			
+																	<a href="api/v1/uploads/expense_docs/{{expense_document.filenames}}" title="Download or View File" alt="Download or View File" target="_blank"> <img src="api/v1/uploads/expense_docs/{{expense_document.filenames}}" ng-if="expense_document.filenames!=null " style="width:245px; height:185px;" /><p style="position:absolute;margin-left:50px;" >{{expense_document.filenames}}</p> </a>
+																	
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" id="add-new-btn" ng-click="expense_update(expensedata)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+									<button class="btn btn-danger" ng-click="expense_delete(expensedata)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+									<a href="#/expense_list" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();	
+
+	});
+</script>
+
+<script>
+    $( document ).ready(function() {
+	    
+        $("#file_documents").fileinput({
+            uploadAsync: false,
+            showUpload: false,
+            uploadUrl: './api/v1/expense_uploads',
+            allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','pptx','pdf','docx','xlsx'],
+            overwriteInitial: false,
+            maxFileSize: 1500000,
+            maxFilesNum: 25,
+            maxFileCount:100,
+            slugCallback: function(filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+
+        $('#file_documents').on('fileloaded', function(event, file, previewId, index, reader) {
+            $("#file_name_documents").val(file.name);
+            console.log("fileloaded");
+        });
+
+    });
+</script>

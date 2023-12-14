@@ -1,0 +1,71 @@
+<div class="tab-pane" id="office">
+    <div class="row">
+        <div claass="col-md-6">
+            <div class="form-group" ng-controller="SelectTeams">
+                <label for="teams">Teams<span class="required">*</span></label>
+                <select class="select2 form-control" multiple="multiple"  id = "teams" name = "teams" select2 ng-model="property.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required>
+                </select>
+            </div>
+            <p class="required" ng-if="AddNewForm.teams.$invalid">Invalid or Empty Team</p>
+        </div>
+    </div>
+    <div class="row">
+        <div claass="col-md-6">
+            <div class="form-group" ng-controller="SelectUsers">
+                <label for="assign_to">Assign to<span class="required">*</span></label>
+                <select class="select2 form-control" multiple="multiple"  id = "assign_to" name = "assign_to" select2 ng-model="property.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" required>
+                </select>
+            </div>
+            <p class="required" ng-if="AddNewForm.assign_to.$invalid">Invalid or Empty Assign to</p>
+        </div>
+    </div>
+    <div class="row">
+        <div claass="col-md-6">
+            <div class="form-group">
+                <label for="source_channel">Source Channel <span class="required">*</span></label>
+                <div class="input-group">
+                    <select class="select2 form-control" multiple="multiple" select2 required ng-model="property.source_channel" id="source_channel" name="source_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in client_sources" style="width:100%;" ng-change="change_sub_source(property.source_channel)" >
+                    <!--option value="" disabled selected>Select</option-->
+                    </select>
+                    <div class="input-group-addon">
+                    <a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('CLIENT_SOURCE')"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p class="required" ng-if="AddNewForm.source_channel.$invalid">Invalid or Empty Source Channel</p>
+        </div>
+    </div>
+    <div class="row">
+        <div claass="col-md-6">
+            <div class="form-group">
+                <label for="subsource_channel">Sub source Channel</label>
+                <div class="input-group">
+                    <select class="select2 form-control" multiple="multiple" select2 name="subsource_channel" id="subsource_channel" ng-model="property.subsource_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in sub_sources" style="width:100%;">
+                    </select>
+                    <div class="input-group-addon">
+                        <a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('SUB_SOURCE')"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <p class="required" ng-if="AddNewForm.subsource_channel.$invalid">Invalid or Empty Sub Source Channel</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div claass="col-md-6">
+            <div class="form-group">
+                <label for="proj_status">Property Status<span class="required">*</span></label>
+                <div class="input-group">
+                    <select class="select2 form-control" select2  ng-model="property.proj_status" required ng-options="dropdown.value as dropdown.display_value for dropdown in prop_statuss" style="width:100%;" id="proj_status" ng-init="property.proj_status='Available'">
+                        <option value="" disabled selected>Select</option>
+                    </select>
+                    
+                    <div class="input-group-addon">
+                        <a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('PROP_STATUS')"><i class="fa fa-plus"></i></a>
+                    </div>
+                    
+                </div>
+            </div>
+            <p class="required" ng-if="AddNewForm.subsource_channel.$invalid">Invalid or Empty Sub Source Channel</p>
+        </div>
+    </div>
+</div>

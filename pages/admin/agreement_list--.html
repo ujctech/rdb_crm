@@ -1,0 +1,461 @@
+<div class="box" id="properties" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" style="border-top-color: #f3f0f0;"><a data-target="#myproperties" data-toggle="tab">My Properties</a></li>
+            <li style="border-top-color: #f3f0f0;"><a data-target="#myenquiries" data-toggle="tab">My Enquiries</a></li>
+            <li style="border-top-color: #f3f0f0;"><a data-target="#myactivities" data-toggle="tab">My Acitivities</a></li>
+            <li style="border-top-color: #f3f0f0;"><a data-target="#agreement" data-toggle="tab">Agreements</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="myproperties">
+                <div class="box-body table-responsive">
+                    <table class="table"> <!--table-bordered table-striped"   >-->
+                        <tbody>
+                            <tr ng-repeat="dealclose in dealclosed "  style="height:260px;min-height:260px;">
+                                <td style="width:100%">
+                                    <div class="row">
+                                        <div class="col-md-3" style="min-width:250px;">
+                                            <div class="cornerno" ng-if="dealclose.properties_count>0">{{dealclose.properties_count}}</div>
+                                            <div class="prostatus">{{dealclose.con_status}}</div>
+                                            <img src="dist/img/no_image.jpg" ng-if="dealclose.filenames==null " style="width:245px; height:185px;" /> 
+                                            <img src="api/v1/uploads/property/{{dealclose.filenames}}" ng-if="dealclose.filenames!=null " style="width:245px; height:185px;" /> 
+                                            <br>
+                                            <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{dealclose.property_id}}"/></label></div>
+                                            <p >Posted:&nbsp; 2 months ago &nbsp;&nbsp;&nbsp;</p><!-- Edited:&nbsp; a month ago </p>-->
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p style="font-size:20px;color:#ff0000;margin-top:5px;">{{dealclose.project_name}}:{{dealclose.propsubtype}} for {{dealclose.property_for}}</p>
+                                            <p>{{dealclose.area}}</p>
+                                            <p>{{dealclose.city}}</p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Assigned To:</span>{{dealclose.assign_to}}    <span style="font-weight:bold;margin-right:5px;text-overflow: ellipsis;">Teams:</span>{{dealclose.teams}}</p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Project Contact:</span>{{dealclose.project_contact}} </p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Price:</span>{{dealclose.exp_price}}&nbsp;<span style="font-weight:bold;margin-right:5px;">&nbsp;Total Area:</span>&nbsp;{{dealclose.sale_area}}<span style="font-weight:bold;margin-right:5px;">&nbsp;Carpet Area:</span>&nbsp;{{dealclose.carp_area}}</p>
+                                            <p>{{dealclose.locality}} <span class="dot">.</span> Rera No.: {{dealclose.rera_num}}  <span class="dot">.</span> Possession Date:{{dealclose.possession_date}} <span class="dot">.</span> {{dealclose.con_status}}</p>
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <p style="font-size:16px;text-align:center;color:#ff0000">Property ID:{{dealclose.property_code}}</p>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Owner:{{dealclose.dev_owner}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{dealclose.owner_mobile}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;">
+                                            <div class="col-md-3">
+                                                    
+                                             </div>
+                                             <div class="col-md-9" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" href="#/agreement_add/property/{{dealclose.property_id}}" style="margin:10px;margin-right:2px;margin-top:6px;">Add Agreement Details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+            </div>
+            <div class="tab-pane" id="myenquiries">
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <div class="checkbox" style="margin-left:7px;position:absolute;"><label><input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All</label></div>
+                    <table class="table" style="margin-top:40px;">
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="enquiry in enquiries">
+                                <td style="width:100%">
+                                    <div class="row" style="border-bottom:1px solid #959191;padding:0px;margin-left:0px;margin-right:0px;">
+                                        <div class="col-md-6" style="min-width:250px;padding-left:0px;">
+                                            <div class="col-md-1" style="padding-left:0px;">
+                                                <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{enquiry.enquiry_id}}"/></label></div>
+                                            </div>
+                                            <div class="col-md-11" style="margin-top:8px;">
+                                                <p style="font-size:16px;color:blue;"><span style="background-color:#f72424;padding:3px;color:#ffffff;font-size:12px;min-width:25px;">{{enquiry.priority}}</span>&nbsp;&nbsp;<span>Looking to Buy / Rent : {{enquiry.enquiry_type}}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p>Status</p>
+                                            <p style="font-weight:bold;font-size:14px;color:#5db101;">{{enquiry.status}}</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p>Edited</p>
+                                            <p style="font-weight:bold;font-size:14px;">{{enquiry.modified_date}}</p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p>Enquiry ID</p>
+                                            <p style="font-weight:bold;font-size:14px;">{{enquiry.enquiry_id}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-8">
+                                            <p><span>Budget Range</span><span style="margin-left:60px;">Preferred City</span><span style="margin-left:60px;">Bedrooms</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;min-width:40px;"> {{enquiry.budget_range1}}-{{budget_range2}}</span><span style="margin-left:125px;font-weight:bold;">{{enquiry.preferred_city}}</span><span style="margin-left:60px;font-weight:bold;">{{enquiry.bedrooms}}</span></p>
+                                            <p>Preferred Locality <span style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.preferred_locality}}</span></p>
+                                            <p>Preferred Area <span style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.preferred_area}}</span></p>
+                                            <p>Possession Status: <span style="font-weight:bold;font-size:14px;margin-left:10px;"> {{enquiry.con_status}}</span></p>
+                                            <p><span style="float:left;">Assigned To:<span style="font-size:14px;font-weight:bold;margin-left:10px;"> {{enquiry.assigned}}</span></span><span style="float:right;margin-right:20px;"><span style="font-size:14px;margin-left:10px;"> Teams:</span><span style="font-weight:bold;">{{enquiry.team}}</span></span></p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div style="font-size: 27px;text-align: center;background-color: #f72424;color: #ffffff;border-radius: 19px;width: 40px;height: 40px;">{{enquiry.client_first_char}}</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p style="font-size:16px;">Client:</p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiry.client_name}}</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiry.client_mob}}</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiry.client_email}}</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="col-md-3">
+                                                <p style="font-size:20px;margin-top:12px;">Matching Enquiries</p>
+                                                </div>
+                                                <div class="col-md-9" >
+                                                    <div style="float:right;">
+                                                        <a class="btn btn-primary" href="#/agreement_add/enquiry/{{enquiry.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;">Add Agreement Details</a>
+                                                    </div>  
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+            </div>
+            <div class="tab-pane" id="myactivities">
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <table class="table table-bordered table-striped" datatable-setupnosort="">
+                        <thead>
+                            <tr>
+                                <th>Activity Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Enquiry</th>
+                                <th>Client</th>
+                                <th>Developer</th>
+                                <th>Broker</th>
+                                <th>Target List</th>
+                                <th>Properties</th>
+                                <th>Teams</th>
+                                <th>Assign To</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="activity in activities">
+                                <td>{{activity.activity_type}}</td>
+                                <td>{{activity.start_date}}</td>
+                                <td>{{activity.end_date}}</td>
+                                <td>{{activity.status}}</td>
+                                <td>{{activity.enquiry}}</td>
+                                <td>{{activity.client}}</td>
+                                <td>{{activity.developer}}</td>
+                                <td>{{activity.broker}}</td>
+                                <td>{{activity.target_list}}</td>
+                                <td>{{activity.properties}}</td>
+                                <td>{{activity.teams}}</td>
+                                <td>{{activity.assign_to}}</td>
+                                <td><a href="#/agreement_add/activity/{{activity.activity_id}}" class="btn btn-default btn-sm" title="Add Agreement Details"><i class="glyphicon glyphicon-pencil"></i></button></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Activity Type</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Enquiry</th>
+                                <th>Client</th>
+                                <th>Contact</th>
+                                <th>Properties</th>
+                                <th>Location</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+
+            <div class="tab-pane" id="agreement">
+                <div class="box-body table-responsive">
+                    <table class="table"> <!--table-bordered table-striped"   >-->
+                        <tbody>
+                            <tr ng-repeat="agreement in agreements"  style="height:260px;min-height:260px;">
+                                <td style="width:100%">
+                                    <div class="row">
+                                        <div class="col-md-3" style="min-width:250px;">
+                                            <div class="prostatus">{{agreement.con_status}}</div>
+                                            <img src="dist/img/no_image.jpg" ng-if="agreement.filenames==null " style="width:245px; height:185px;" /> 
+                                            <img src="api/v1/uploads/property/{{agreement.filenames}}" ng-if="agreement.filenames!=null " style="width:245px; height:185px;" /> 
+                                            <br>
+                                            <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{agreement.agreement_id}}"/></label></div>
+                                            <p >Posted:&nbsp; 2 months ago &nbsp;&nbsp;&nbsp;</p><!-- Edited:&nbsp; a month ago </p>-->
+                                        </div>
+                                        <div class="col-md-5">
+                                            <p style="font-size:20px;color:#ff0000;margin-top:5px;">{{agreement.project_name}}:{{agreement.propsubtype}} for {{agreement.property_for}}</p>
+                                            <p>{{agreement.area}}</p>
+                                            <p>{{agreement.city}}</p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Assigned To:</span>{{agreement.assign_to}}    <span style="font-weight:bold;margin-right:5px;text-overflow: ellipsis;">Teams:</span>{{agreement.teams}}</p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Agreement From:</span>{{agreement.agreement_from_date}} till {{agreement.agreement_till_date}} </p>
+                                            <p><span style="font-weight:bold;margin-right:5px;">Price:</span>{{agreement.exp_price}}&nbsp;<span style="font-weight:bold;margin-right:5px;">&nbsp;Total Area:</span>&nbsp;{{agreement.sale_area}}<span style="font-weight:bold;margin-right:5px;">&nbsp;Carpet Area:</span>&nbsp;{{agreement.carp_area}}</p>
+                                            <p>{{agreement.locality}} <span class="dot">.</span> Rera No.: {{agreement.rera_num}}  <span class="dot">.</span> Possession Date:{{agreement.possession_date}} <span class="dot">.</span> {{agreement.con_status}}</p>
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <p style="font-size:16px;text-align:center;color:#ff0000">Agreement ID:{{agreement.agreement_id}}</p>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Owner:{{agreement.dev_owner}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{agreement.mob_no}}</p>
+                                        </div>
+                                        <div class="col-md-2" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <p style="font-size:16px;text-align:center;color:#ff0000">Deal Date:{{agreement.deal_date}}</p>
+                                            <p style="text-align:center;"><img src="dist/img/alert2.jpg" style="width:28px;height:33px;" /></p>
+                                            <p style="font-size:16px;text-align:center;">Buyer:{{agreement.buyer}}</p>
+                                            <p style="font-size:16px;text-align:center;">{{agreement.buyer_mob_no}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;">
+                                            <div class="col-md-3">
+                                                    
+                                                </div>
+                                                <div class="col-md-9" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" href="#/agreement_edit/{{agreement.agreement_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="upload" >
+    <form novalidate name="UAddNewForm" id="Uadd-new-form" role="form" autocomplete="off" >
+        <div class="row" >
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Import Properties Data</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" >
+                                    <input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" required>
+                                    <input type="hidden" name="file_name" id="file_name" value="" ng-model="convertdata.file_name" />
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" ng-disabled="UAddNewForm.$invalid || isUnchanged(convertdata)" id="Uadd-new-btn" ng-click="uploadproperty_data(convertdata)">Import</button>
+                                    <a href="#/properties_list" class="btn">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    
+<style>
+    .modal-dialog {
+    
+        width:25%;
+    }
+
+    #upload
+    {
+        display: none;    
+    }
+    
+    p
+    {
+        line-height: 0.9;
+        font-size:12px;
+    }
+    table tr
+    {
+        margin-bottom:20px;
+        box-shadow: 0 0 12px rgba(0,0,0,.09);
+    }
+    .dot
+    {
+        font-size:20px;
+    }
+    .nav-tabs-custom {
+        margin-bottom: 20px;
+        background: #efefef;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        border-radius: 0px;
+    }
+
+    .nav-tabs-custom>.nav-tabs>li.active {
+        border-top-color: #f3f0f0;
+    }
+
+    .bottom-button
+    {
+        position:absolute;
+        margin-top:151px;
+        background-color:#d8d8d8;
+        width:99%;
+
+    }
+    .cornerno
+    {
+        background-color: #ff0000;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 3px;
+        padding-left: 8px;
+        margin-left: 220px;
+    }
+    .prostatus {
+        background-color: #3362e6;
+        width: 152px;
+        height: 22px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 2px;
+        padding-left: 8px;
+        margin-top: 145px;
+        font-size: 12px;
+    }
+    div.dataTables_wrapper div.dataTables_filter {
+     /*text-align: left;*/ 
+    }
+    div.dataTables_wrapper div.dataTables_filter input 
+    {
+        width: 387px;
+    }
+
+</style>
+    
+<script>
+    $("#file-1").fileinput({
+        uploadAsync: false,
+        showUpload: false,
+        uploadUrl: './api/v1/uploadproperty_files',
+        allowedFileExtensions : ['csv','xls','xlsx'],
+        overwriteInitial: false,
+        maxFileSize: 1500000,
+        maxFilesNum: 1,
+        maxFileCount:1,
+        slugCallback: function(filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    }).on("filebatchselected", function(event, files) 
+    {
+        $("#file-1").fileinput("upload");
+    });
+    
+    $('#file-1').on('fileloaded', function(event, file, previewId, index, reader) {
+        $("#file_name").val(file.name);
+        console.log("fileloaded");
+    });
+</script>
+    
+
+
+<!--
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Agreements</h3> 
+    </div>
+    <aside class="right-side">
+        <a class="btn btn-primary" href="#/agreement_add" style="margin:10px;" >Add Agreement</a>
+    </aside>
+    <div class="box-body table-responsive">
+        <table class="table table-bordered table-striped" datatable-setup=""  >
+            <thead>
+                <tr>
+                    <th>agreementID</th> 
+                    <th>propertyID</th>
+                    <th>Property Name</th>
+                    <th>Property Type</th>
+                    <th>Buyer / Tennant</th>
+                    <th>Developer</th>
+                    <th>Buyer Mobile No</th>
+                    <th>Buyer Off Phone</th>
+                    <th>Owner / Landlord</th>
+                    <th>Owner Mobile No</th>
+                    <th>Owner Off Phone</th>
+                    <th>Transaction Type</th>
+                    <th>Deal Date</th>
+                    <th>Shifting Date</th>
+                    <th>Agreement From Date</th>
+                    <th>Agreement Till Date</th>
+                    <th>Rent</th>
+                    <th>Buyer Brokerage</th> 
+                    <th>Seller Brokerage</th>
+                    <th>Our Brokerage</th>
+                    <th>Principal Brokerage Received</th>
+                    <th>Principal Brokerage Pending</th>
+                    <th>Rent Due Date</th>
+                    <th>Send Rent Due Reminder SMS</th>
+                    <th>Is Active</th>
+                    <th>Assigned To</th>
+                    <th>Teams</th>
+                </tr>
+            </thead>
+             <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.username}}</td>
+                    <td>{{user.bo_name}}</td>
+                    <td>{{user.role}}</td>
+                    <td><a href="#/user_edit/{{user.user_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>agreementID</th> 
+                    <th>propertyID</th>
+                    <th>Property Name</th>
+                    <th>Property Type</th>
+                    <th>Buyer / Tennant</th>
+                    <th>Developer</th>
+                    <th>Buyer Mobile No</th>
+                    <th>Buyer Off Phone</th>
+                    <th>Owner / Landlord</th>
+                    <th>Owner Mobile No</th>
+                    <th>Owner Off Phone</th>
+                    <th>Transaction Type</th>
+                    <th>Deal Date</th>
+                    <th>Shifting Date</th>
+                    <th>Agreement From Date</th>
+                    <th>Agreement Till Date</th>
+                    <th>Rent</th>
+                    <th>Buyer Brokerage</th> 
+                    <th>Seller Brokerage</th>
+                    <th>Our Brokerage</th>
+                    <th>Principal Brokerage Received</th>
+                    <th>Principal Brokerage Pending</th>
+                    <th>Rent Due Date</th>
+                    <th>Send Rent Due Reminder SMS</th>
+                    <th>Is Active</th>
+                    <th>Assigned To</th>
+                    <th>Teams</th>
+                </tr>
+            </tfoot>
+        </table>    
+    </div>
+</div>-->

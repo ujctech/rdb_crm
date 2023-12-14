@@ -1,0 +1,464 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" >
+    <div class="row" style="margin-top:5px;">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+            <div class="input-group">
+                <input type="text" class="form-control" id="find_what" name="find_what"  placeholder="Call From" ng-model="find_what" /> 
+                <div class="input-group-addon">
+                    <a href="javascript:void(0)" ng-click="search_client_information(find_what)"><i class="fa fa-search"></i></a>
+                </div>
+            </div>
+            <p>{{call_arrived}}</p>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary" id="add-new-btn" ng-click="getsearch_client_history()">Show Calling History</button>
+        </div>
+        <div class="col-md-3">
+            <div id="pagination" >
+                <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+                <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+                <a href="javascript:void(0);" ng-click="pagenavigation( 'next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="clearfix"></div>
+
+<div class="box boxpadding" id="properties" style="border-top:0px;">
+    <div class="box-body table-responsive" style="width: 80%;margin: 0 auto;-moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);border:1px solid #d9d1d1;" id="search_result">
+        <a href="javascript:void(0)" ng-click="close()" style="float:right;font-size:25px;margin-top:-6px;"><i class="fa fa-window-close"></i></a>
+        <div compile-html="trustedHtml_searchall" style="border:1px solid #d9d1d1;" ></div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="sub_group">Client Response</label>
+                    <textarea class="form-control" id="user_comment" name="user_comment"  placeholder="Comments"  ng-model="user_comment" rows="3" style="margin-bottom:5px;"></textarea>
+                    <a href="javascript:void(0)" class="btn btn-primary" ng-click="save_callinguser_comment(user_comment)" style="margin-top:5px;">Save</a>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="sub_group">Status</label>
+                    <select class="select2 form-control"  id="call_status" name="call_status" select2 ng-model="call_status"  data-placeholder="Select status" style="width:100%;" ng-change="update_calling_status(call_status)">
+                        <option value="No Contact">No Contact</option>
+                        <option value="Follow Up">Follow Up</option>
+                        <option value="Shifted">Shifted</option>
+                        <option value="Renewed" >Renewed</option>
+                        <option value="Outside of the Headquarters" >Outside of the Headquarters</option>
+                        <option value="Converted into Lead" >Converted into Lead</option>
+                        <option value="Dead Client" >Dead Client</option>  
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>  
+        <div class="row" style="border-top:1px solid #959191;border-bottom:1px solid #959191;padding:5px;margin:5px;">
+            <div class="col-md-3">
+                <a class="btn btn-primary" href="#/enquiries_add/residential" target="_blank">Create Enquiry</a>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-primary" href="#/properties_add/residential" target="_blank">Create Property </a>                                                   
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-primary" href="#/task_add" target="_blank">Create Task</a>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-primary" href="#/activity_add/direct/0" target="_blank">Create Activity</a>
+            </div>
+        </div>        
+       
+    </div>
+    <div class="box-header">
+        
+    </div>
+    <div class="nav-tabs-custom" id="callinghistory_div">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#callinghistorystab" data-toggle="tab" >Calling History&nbsp;&nbsp; {{callinghistory_count}}</a></li>
+            
+        </ul>
+        <div class="tab-content">
+            <div class="right-side"  style="text-align:right;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                    <!--form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                        <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_for">Agreement For</label>
+                                           <select class="select2 form-control"  id="agreement_for" name="agreement_for" select2 ng-model="searchdata.agreement_for"  data-placeholder="Select agreement_for" style="width:100%;" >
+                                                <option value="Sale">Sale</option>
+                                                <option value="Lease" >Lease</option>
+                                                <option value="Sale Under Contructions" >Sale Under Contructions</option>
+                                                <option value="Sale Preleased" >Sale Preleased</option>
+                                            </select>
+                                       </div> 
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="assign_to">Assign to</label>
+                                           <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="teams">Teams</label>
+                                           <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams)">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" >
+                                       <div class="form-group">
+                                           <label for="client_id">Owner</label>
+                                           <select class="select2 form-control" select2 ng-model="searchdata.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;" multiple="multiple">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="broker_id">Broker</label>
+                                           <select class="select2 form-control" select2 ng-model="searchdata.broker_id" ng-options="contact.contact_id as contact.name for contact in brokers" style="width:100%;" multiple="multiple">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="payment_id">Payment ID</label>
+                                            <a href="javascript:void(0)" class="btn" style="color:#ff000c;float:right;padding:0px;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                            <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.payment_id" id= "payment_id" name= "payment_id" ng-options="payment_id.payment_id as payment_id.payment_id for payment_id in payment_ids" style="width:100%;"></select>
+                                        </div>
+                                    </div>
+                                   
+                              </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="property_id">Property ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.property_id" id= "property_id" name= "property_id" ng-options="property_id.property_id as property_id.property_id for property_id in property_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="project_id">Project ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.project_id" id= "project_id" name= "project_id" ng-options="project_id.project_id as project_id.project_id for project_id in project_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="enquiry_id">Enquiry ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.enquiry_id" id= "enquiry_id" name= "enquiry_id" ng-options="project_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_id">Agreement ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.agreement_id" id= "agreement_id" name= "agreement_id" ng-options="agreement_id.agreement_id as agreement_id.agreement_id for agreement_id in agreement_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_from">Created Date from</label>
+                                           <div class="input-group date" id="created_date_from" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_to">To</label>
+                                           <div class="input-group date" id="created_date_to" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_from">Deal Date From</label>
+                                            <div class="input-group date" id="deal_date_from" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_from" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_to">Deal Date To</label>
+                                            <div class="input-group date" id="deal_date_to" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_to" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="due_date_from">Due Date From</label>
+                                            <div class="input-group date" id="due_date_from" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.due_date_from" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="due_date_to">Due Date To</label>
+                                            <div class="input-group date" id="due_date_to" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.due_date_to" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="callinghistory_status">callinghistory Status</label>
+                                            <select class="select2 form-control"  id="callinghistory_status" name="callinghistory_status" select2 ng-model="paymentsdata.callinghistory_status"  required  data-placeholder="Select callinghistory Status" style="width:100%;" >
+                                                <option value="Pending" selected="selected">Pending</option>
+                                                <option value="Partial Recieved" >Partial Recieved</option>
+                                                <option value="Received" >Received</option>
+                                            </select>
+                                        </div>
+                                    </div>                                          
+
+                                </div>
+                            </div>
+                            
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <div class="col-md-2" style="margin-top:25px;">        
+                                       <div class="form-group">
+                                           <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_callinghistorys(searchdata,'form')">Search Now </button>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                           <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                       <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+                    </form-->
+                </div>
+            </div>
+            <div class="tab-pane active" id="callinghistorystab">   
+                <div class="box-body table-responsive">
+                    
+                    <table class="table table-bordered table-striped"  > <!--datatable-setup="" -->
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>End Stamp</th>
+                                <th>Service</th>
+                                <th>Direction</th>
+                                <th>Description</th>
+                                <th>Call Duration</th>
+                                <th>Answered Seconds</th>
+                                <th>Minutes Consumed</th>
+                                <th>Status</th>
+                                <th>Agent Number</th>
+                                <th>Agent Name</th>
+                                <th>Client Number</th>
+                                <th>DID Number</th>
+                                <th>Reason</th>
+                                <th>Hangup Cause</th>
+                                <th>ID</th>
+                                <th>Call Id</th>
+                                <th>UUID</th>                                
+                                <th>Detailed Description</th>                                
+                                <th>Blocked Number ID</th>
+                                <th>Recording URL</th>
+                                <th>Broadcast ID</th>
+                                <th>DTMF Input</th>                                
+                                <th>Charges</th>
+                                <th>Department Name</th>                                
+                                <th>Notes</th>
+                                <th>Contact Details</th>                              
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <tr ng-repeat="callinghistory in callinghistory_list">
+                                <td>{{callinghistory.c_date}}</td>
+                                <td>{{callinghistory.c_time}}</td>
+                                <td>{{callinghistory.tend_stamp}}</td>
+                                <td>{{callinghistory.c_service}}</td>
+                                <td>{{callinghistory.direction}}</td>
+                                <td>{{callinghistory.c_description}}</td>
+                                <td>{{callinghistory.call_duration}}</td>
+                                <td>{{callinghistory.answered_seconds}}</td>
+                                <td>{{callinghistory.minutes_consumed}}</td>
+                                <td>{{callinghistory.c_status}}</td>
+                                <td>{{callinghistory.agent_number}}</td>
+                                <td>{{callinghistory.agent_name}}</td>
+                                <td>{{callinghistory.client_number}}</td>
+                                <td>{{callinghistory.did_number}}</td>
+                                <td>{{callinghistory.reason}}</td>
+                                <td>{{callinghistory.hangup_cause}}</td>
+                                <td>{{callinghistory.id}}</td>
+                                <td>{{callinghistory.call_id}}</td>
+                                <td>{{callinghistory.uuid}}</td>                                
+                                <td>{{callinghistory.detailed_description}}</td>                                
+                                <td>{{callinghistory.blocked_number_id}}</td>
+                                <td>{{callinghistory.recording_url}}</td>
+                                <td>{{callinghistory.broadcast_id}}</td>
+                                <td>{{callinghistory.dtmf_input}}</td>
+                                <td>{{callinghistory.charges}}</td>
+                                <td>{{callinghistory.department_name}}</td>
+                                <td>{{callinghistory.notes}}</td>
+                                <td>{{callinghistory.contact_details}}</td>                                
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>End Stamp</th>
+                                <th>Service</th>
+                                <th>Direction</th>
+                                <th>Description</th>
+                                <th>Call Duration</th>
+                                <th>Answered Seconds</th>
+                                <th>Minutes Consumed</th>
+                                <th>Status</th>
+                                <th>Agent Number</th>
+                                <th>Agent Name</th>
+                                <th>Client Number</th>
+                                <th>DID Number</th>
+                                <th>Reason</th>
+                                <th>Hangup Cause</th>
+                                <th>ID</th>
+                                <th>Call Id</th>
+                                <th>UUID</th>                                
+                                <th>Detailed Description</th>                                
+                                <th>Blocked Number ID</th>
+                                <th>Recording URL</th>
+                                <th>Broadcast ID</th>
+                                <th>DTMF Input</th>                                
+                                <th>Charges</th>
+                                <th>Department Name</th>                                
+                                <th>Notes</th>
+                                <th>Contact Details</th>  
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-dialog{
+			width:875px;height:1800px;
+		}
+#pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    .red_color
+    {
+        color:#a61111;
+    }
+    .green_color
+    {
+        color:#30d718;
+    }
+
+    .black_color
+    {
+        color:#000000;
+    }
+    #search_result
+    {
+        display: none;
+    }
+    #callinghistory_div
+    {
+        display: none; 
+    }
+</style>

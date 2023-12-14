@@ -1,0 +1,96 @@
+<div id="project_info" >
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="project">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Project</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+
+								<!-- TAB NAVIGATION (see data-target) -->
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#information" data-toggle="tab">Information</a></li>
+										<li><a data-target="#contact_person" data-toggle="tab">Contact Person</a></li>
+										<li><a data-target="#attributes" data-toggle="tab">Attributes</a></li>
+										<li><a data-target="#image" data-toggle="tab">Image</a></li>
+										<li><a data-target="#configuration" data-toggle="tab">Configuration</a></li>
+										<li><a data-target="#additional" data-toggle="tab">Additional</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="information">
+											<div class="row">
+												<div class="col-md-6">
+													<h2>Project Info</h2>
+
+													<!-- FOR INPUTS -->
+													<div class="form-group">
+														<label for="projectname">Project Name</label>
+														<input type="text" class="form-control" id="projectname" name="projectname"  placeholder="Project Name" ng-model="project.projectname" />
+													</div>
+
+													<!-- FOR DROPDOWN FROM TABLE -->
+													<div class="form-group" ng-controller="SelectDeveloper">
+														<label for="developer_id">Developer</label>
+														<select class="selectpicker form-control" ng-model="project.developer_id" ng-options="developer.developer_id as developer.name for developer in developers">
+														</select>
+													</div>
+													
+													<!-- FOR DROPDOWN ON FORM VALUES -->
+													<div class="form-group">
+														<label for="project_for">Project For</label>
+														<select class="selectpicker form-control" id="project_for" name="project_for" ng-model="project.project_for">
+															<option value="Not Specified" selected>Not Specified</option>
+															<option value="Under Construction">Under Construction</option>
+															<option value="Completed">Completed</option>
+															<option value="Upcoming">Upcoming</option>
+															<option value="Postponed">Postponed</option>
+														</select>
+													</div>
+
+													<div class="form-group">
+														<label for="rerano">Rera Number</label>
+														<input type="text" class="form-control" id="rerano" name="rerano"  placeholder="Rera Number" ng-model="project.rerano" />
+													</div>
+													<h2>Address</h2>
+													<div class="form-group">
+														<label for="address1">Address 1</label>
+														<input type="text" class="form-control" id="address1" name="address1"  placeholder="Address 1" ng-model="project.address1" />
+													</div>
+													<div class="form-group">
+														<label for="address2">Address 2</label>
+														<input type="text" class="form-control" id="address2" name="address2"  placeholder="Address 2" ng-model="project.address2" />
+													</div>
+													
+													<!-- FOR CHECKBOX -->
+													<div class="form-group">
+														<div class="checkbox">
+															<label>
+															<input type="checkbox" id="show_location" name="show_location" ng-model="project.show_location">
+															Show Exact Location ?
+															</label>
+														</div>
+													</div>
+													
+													<!-- FORM SUBMISSION -->
+													<div class="form-group">
+														<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(project)" id="add-new-btn" ng-click="project_add_new(project)">Save !</button>
+														<a href="#/project_list" class="btn">Cancel</a>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

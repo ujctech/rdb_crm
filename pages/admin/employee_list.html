@@ -1,0 +1,175 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <!--<a class="btn btn-primary" href="#/employee_add" style="margin:10px;" >Add Employee</a>-->
+    <a ng-if="hasRoles.includes('Sub Admin')" class="btn btn-primary" href="" style="margin:10px;" >Add Employee</a>
+    <a ng-if="!(hasRoles.includes('Sub Admin'))" class="btn btn-primary" href="#/employee_add" style="margin:10px;" >Add Employee</a>
+</div>
+<div class="clearfix"></div>
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#resumetab" data-toggle="tab">Employee</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="resumetab">
+                
+                <div class="box-body table-responsive">
+                    <div class="row">
+                        <div class="right-side"  style="text-align:right;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                                <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                    <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="emp_id">Name</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple"  ng-model="searchdata.emp_id" id ="emp_id"  ng-options="employee.emp_id as employee.name for employee in employees" style="width:100%;" > 
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="mobile_no">Mobile No</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.mobile_no" id= "mobile_no" name= "mobile_no" ng-options="mobile_no.mobile_no as mobile_no.mobile_no for mobile_no in mobile_nos" style="width:100%;"></select>
+        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="off_email">Email ID</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.off_email" id= "off_email" name= "email" ng-options="off_email.off_email as off_email.off_email for off_email in emails" style="width:100%;"></select>
+        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="teams">teams</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.teams" id= "teams" name= "teams" ng-options="team.team_id as team.team_name for team in teams" style="width:100%;"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="sub_teams">Sub Teams</label>
+                                                        <select class="select2 form-control" multiple="multiple"  id = "sub_teams"  ng-model="searchdata.sub_teams"  name="sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list" style="width:100%;"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="manager_id">Manager</label>
+                                                        <select class="select2 form-control" multiple="multiple"  id = "manager_id"  ng-model="searchdata.manager_id" name="manager_id" ng-options="employee.manager_id as employee.manager for employee in managers" style="width:100%;"></select>
+                                                    </div>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="dob">DOB</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple"  id = "dob"  ng-model="searchdata.dob" name="dob" ng-options="dob.dob as dob.dob for dob in dobs" style="width:100%;"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <select class="select2 form-control" multiple="multiple"  id = "status"  ng-model="searchdata.status" name="status" ng-options="status.status as status.status for status in statuss" style="width:100%;">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">                                            
+                                                <div class="col-md-2" style="margin-top:25px;">        
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_employees(searchdata)">Search Now </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="margin-top:25px;">       
+                                                    <div class="form-group">
+                                                        <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="margin-top:25px;">       
+                                                    <div class="form-group">
+                                                    <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()">Clear Filters</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>   
+                    <table class="table table-bordered table-striped" datatable-setupnosort1="" >
+                        <thead>
+                            <tr>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                <th>Employee Name</th>
+                                <th>Mobile</th>
+                                <th>Office Email</th>
+                                <th>OTP</th>
+                                <th>OTP Created @</th>
+                                <th>PropertyData OTP</th>
+                                <th>PropertyData OTP Created @</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>Manager</th>
+                                <th>Date of Joining</th>
+                                <th>Date of Birth</th>
+                                <th>Employee Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="resume in resumes">
+                                <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/employee_edit/{{resume.emp_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                <td>{{resume.name}}</td>
+                                <td>{{resume.mobile_no}}</td>
+                                <td>{{resume.off_email}}</td>
+                                <td>{{resume.referral_otp}}</td>
+                                <td>{{resume.referral_otp_created}}</td>
+                                <td>{{resume.referral_propertydata_otp}}</td>
+                                <td>{{resume.referral_propertydata_otp_created}}</td>
+                                <td>{{resume.teams}}</td>
+                                <td>{{resume.sub_teams}}</td>
+                                <td>{{resume.manager}}</td>
+                                <td>{{resume.doj}}</td>
+                                <td>{{resume.dob}}</td>
+                                <td>{{resume.employee_type}}</td>
+                                <td>{{resume.status}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Employee Name</th>
+                                <th>Mobile</th>
+                                <th>Office Email</th>
+                                <th>OTP</th>
+                                <th>OTP Created @</th>
+                                <th>PropertyData OTP</th>
+                                <th>PropertyData OTP Created @</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>Manager</th>
+                                <th>Date of Joining</th>
+                                <th>Date of Birth</th>
+                                <th>Employee Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </tfoot>
+                    </table>   
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

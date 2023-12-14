@@ -1,0 +1,2308 @@
+<a id="reminder_bell"  href="javascript:void(0)" ng-click="reminders()"  title="Reminders"  alt="Reminders" >
+    <div style="position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 7px;
+    background-color: red;
+    color: #ffffff;
+    margin-left: 12px;
+    margin-top: 0px; 
+    padding-left: 5px;
+    font-size: 10px;" ng-if="reminder_count>0">{{reminder_count}} 
+    </div>
+    <i class="fa fa-bell" ></i>
+</a>
+
+<!--div  class="top_fixed">
+    
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+        <div class="row">
+             <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <div class="input-group date" id="start_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="goalsdata.start_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <div class="input-group date" id="end_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="goalsdata.end_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="user_id">User Name</label>
+                    <select class="select2 form-control"  id = "user_id" select2 ng-model="goalsdata.user_id" ng-options="user.user_id as user.name for user in listusers" style="width:100%;" >
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top:25px;">
+                <button class="btn btn-primary" id="add-new-btn" ng-click="getuserdashboard(goalsdata)">Go</button>
+            </div>
+        </div>
+    </form>
+</div-->
+<div class="clearfix"></div>
+<div style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;margin-top:50px;">
+    
+<section class="content" style="padding:20px;min-height:150px;margin-top:50px;" id="topsheet">
+    <div class="row" id="maindashboard">
+        <div class="col-md-8">
+            <img src="dist/img/no_image.jpg" ng-if="emp_image==null " style="width:40px; height:40px;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);border:1px solid #6c6a6a;float:left;margin-left:25px;border-radius:20px;" /> 
+            <img src="api/v1/uploads/employee/{{emp_image}}" ng-if="emp_image!=null " style="width:40px; height:40px;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);border:1px solid #6c6a6a;float:left;margin-left:25px;border-radius:20px;" /> </a>
+            <span style="font-size:20px;float:left;margin-left:10px;margin-top:5px;">Hi , {{emp_name}} Welcome to RD Brothers Properties</span>
+            <div style="clear:both"></div>
+            <!-- Small boxes (Stat box) -->
+            <div class="panel-group" style="margin-top:5px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="display:none;">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapsegoals">Goals</a>
+                        </h4>
+                    </div>
+                    <div id="collapsegoals" class="panel-collapse collapse in">
+                        <div class="panel-body" style="margin-top:5px;border:1px;"> 
+                            <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                <div class="row">
+                                    <div class="col-md-3">       
+                                        <div class="form-group">
+                                            <label for="start_date">Start Date</label>
+                                            <div class="input-group date" id="start_date" date-directive="">
+                                                <input class="form-control" type="text" ng-model="goalsdata.start_date" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">       
+                                        <div class="form-group">
+                                            <label for="end_date">End Date</label>
+                                            <div class="input-group date" id="end_date" date-directive="">
+                                                <input class="form-control" type="text" ng-model="goalsdata.end_date" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="teams">Teams</label>
+                                            <select class="select2 form-control" multiple="multiple"  id = "goalsdata.teams" name = "goalsdata.teams"  ng-model="goalsdata.teams" ng-options="team.team_id as team.team_name for team in teams_list" style="width:200px;" ng-change="getsubodrniate(goalsdata.teams,0)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="sub_teams">Sub Teams</label>
+                                            <select class="select2 form-control" multiple="multiple"  id = "goalsdata.sub_teams"  name = "goalsdata.sub_teams"  ng-model="goalsdata.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"  style="width:185px;" ng-change="getsubodrniate(goalsdata.teams,goalsdata.sub_teams)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="user_id">Employee Name</label>
+                                            <select class="select2 form-control"  id = "goalsdata.user_id" name = "goalsdata.user_id" select2 ng-model="goalsdata.user_id" ng-options="user.user_id as user.name +' - ' + user.sub_team_name for user in listusers" style="width:100%;" >
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary" id="add-new-btn" ng-click="getuserdashboard(goalsdata)" style="margin-top:26px;">Go</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="dashboard_div" class="html_content"  compile-html="dashboardHtml" style="margin-top:10px;"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="growth_plan">
+                <div class="col-md-6">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                    <div class="panel-heading" style="background:none;">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapsegrowth"><div style="background: #d2aa4b;
+                            width: 160px;
+                            border-radius: 5px;
+                            padding: 10px;
+                            color: #ffffff;font-size:20px">Growth Plan<i class="glyphicon glyphicon-signal" style="padding:5px;padding-left:8px;"></i></div></a>
+                        </h4>
+                    </div>
+                    <div id="collapsegrowth" class="panel-collapse collapse in">
+                        <div class="panel-body"  style="min-height:300px;border:0px;"> 
+                            <!--div class="chart" id="line-chart" style="height: 450px;display:none;" ></div-->
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <p style="font-size:22px;margin-top:10px;">Salary (Monthly)</p> 
+                                    <p style="margin:15px;"><!--div class="days_growth">Jan</div><div class="days_growth">Feb</div><div class="days_growth">Mar</div><div class="days_growth">Apr</div><div class="days_growth">May</div--><div class="days_growth" style="background-color: #4b4be1;color:#ffffff;">Sep</div></p>
+                                    <p style="clear:both;"></p>
+                                    <p style="font-size:22px;margin-top:15px;">Incentive Plan - Quarterly</p> 
+                                    <p style="margin-top:15px;"><div class="days_growth green_color">Sep</div><div class="days_growth green_color">Oct</div><div class="days_growth green_color">Nov</div></p>
+                                    <p style="clear:both;"></p>
+
+                                    <p style="font-size:22px;margin-top:15px;">Appraisal Plan</p> 
+                                    <div compile-html="trustedHtml_appraisals" style="margin:0 auto;width:255px;"></div>
+                                    
+                                    <p style="clear:both;"></p>
+                                    
+                                    
+                                    <p style="font-size:22px;margin-top:15px;">Increment</p> 
+                                    <p style="margin-top:15px;"><div class="days_growth" ng-class="{ 'green_color' : increment_month==1}" >Jan</div><div class="days_growth"  ng-class="{ 'green_color' : increment_month==2}">Feb</div><div class="days_growth"  ng-class="{ 'green_color' : increment_month==3}">Mar</div><div class="days_growth"  ng-class="{ 'green_color' : increment_month==4}">Apr</div><div class="days_growth"  ng-class="{ 'green_color' : increment_month==5}">May</div><div class="days_growth"  ng-class="{ 'green_color' : increment_month==6}">Jun</div></p>
+                                    
+                                    <p style="clear:both;"></p>
+                                    
+                                    <p style="margin-top:15px;"><div class="days_growth"  ng-class="{ 'green_color' : increment_month==7}">Jul</div><div class="days_growth" ng-class="{ 'green_color' : increment_month==8}">Aug</div><div class="days_growth" ng-class="{ 'green_color' : increment_month==9}">Sep</div><div class="days_growth" ng-class="{ 'green_color' : increment_month==10}">Oct</div><div class="days_growth" ng-class="{ 'green_color' : increment_month==11}">Nov</div><div class="days_growth" ng-class="{ 'green_color' : increment_month==12}">Dec</div></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div style="margin-top:40px;width:50px;height:50px;border:2px dotted #d77a7a;border-radius:26px;padding:14px;padding-left:8px;">{{total_target_achieved}}%</div>
+                                    
+                                    <div style="margin-top:50px;width:50px;height:50px;border:2px dotted #d77a7a;border-radius:26px;padding:14px;padding-left:8px;">{{target_achieved}}%</div>
+                                    <div style="margin-top:50px;width:50px;height:50px;border:2px dotted #d77a7a;border-radius:26px;padding:14px;padding-left:8px;">%</div>
+                                    <div style="margin-top:60px;width:50px;height:50px;border:2px dotted #d77a7a;border-radius:26px;padding:14px;padding-left:8px;">{{increment_per}}%</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer"></div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="display: none;">
+                                <h4 class="panel-title">
+                                <a data-toggle="collapse" data-target="#collapserevenue">Revenue Report</a>
+                                </h4>
+                            </div>
+                            <div id="collapserevenue" class="panel-collapse collapse in">
+                                <div class="panel-body"  style="min-height:300px;border:0px;"> 
+                                    <div class="row" style="margin-bottom:10px;">
+                                        <div class="panel-group">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="background: #31acb0;
+                                                color: #ffffff;
+                                                border-radius: 12px;
+                                                font-size: 20px;">
+                                                    <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-target="#collapsetransactions"   style="color:#ffffff;font-size:19px;">Transactions </a>
+                                                         
+                                                    
+                                                        
+                                                    
+                                                        <div class="input-group date" id="tr_end_date" date-directive="" style="float:right;width:130px;margin-top:-5px;">
+                                                            <input class="form-control" type="text" ng-model="tr_end_date" ng-change="gettransactionsdata(tr_start_date,tr_end_date)">
+                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+
+                                                        <div class="input-group date" id="tr_start_date" date-directive="" style="float:right;width:130px;margin-top:-5px;">
+                                                            <input class="form-control" type="text" ng-model="tr_start_date" ng-change="gettransactionsdata(tr_start_date,tr_end_date)" >
+                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                    
+                                                    
+                                                    <!--select class="selectpicker form-control" id="selectedyear" name="selectedyear" ng-model="selectedyear" ng-change="gettransactionsdata(selectedmonth,selectedyear)" style="width: 80px;float:right;margin-top:-5px;" ng-init="selectedyear='2022'">
+                                                        <option value="2021">2021</option>
+                                                        <option value="2022">2022</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2024">2024</option>
+                                                        <option value="2025">2025</option>
+                                                    </select>
+                                                    <select class="selectpicker form-control" id="selectedmonth" name="selectedmonth" ng-model="selectedmonth" ng-change="gettransactionsdata(selectedmonth,selectedyear)" style="width: 70px;float:right;margin-top:-5px;">
+                                                        <option value="All">All</option>
+                                                        <option value="01">Jan</option>
+                                                        <option value="02">Feb</option>
+                                                        <option value="03">Mar</option>
+                                                        <option value="04">Apr</option>
+                                                        <option value="05">May</option>
+                                                        <option value="06">Jun</option>
+                                                        <option value="07">Jul</option>
+                                                        <option value="08">Aug</option>
+                                                        <option value="09">Sep</option>
+                                                        <option value="10">Oct</option>
+                                                        <option value="11">Nov</option>
+                                                        <option value="12">Dec</option>
+                                                    </select-->
+
+                                                    </h4>
+                                                </div>
+                                                <div id="collapsetransactions" class="panel-collapse collapse in">
+                                                    <div class="panel-body"  style="min-height:100px;border:0px;">
+                                                        <a href = "#/agreement_list/commercial" target="_blank" title="Agreement List " alt="Agreement List" >
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Commerical</p></div>
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;min-height:25px;"><p style="font-size:18px;text-align: right;">{{transactions_commercial}}</p></div>
+                                                            </div>
+                                                        </a>
+                                                        <a href = "#/agreement_list/residential" target="_blank" title="Agreement List " alt="Agreement List" >
+                                                            <div class="row">
+                                                                <div class="col-md-6"  style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Residential</p></div>
+                                                                <div class="col-md-6"  style="border-bottom:1px solid #858282;"><p style="font-size:18px;text-align: right;min-height:25px;" >{{transactions_residential}}</p></div>
+                                                            </div>
+                                                        </a>
+                                                        <a href = "#/agreement_list/retail" target="_blank" title="Agreement List " alt="Agreement List" >
+                                                            <div class="row">
+                                                                <div class="col-md-6"  style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Retails</p></div>
+                                                                <div class="col-md-6"  style="border-bottom:1px solid #858282;"><p style="font-size:18px;text-align: right;min-height:25px;" >{{transactions_retail}}</p></div>
+                                                            </div>
+                                                        </a>
+                                                        <a href = "#/agreement_list/pre-leased" target="_blank" title="Agreement List " alt="Agreement List" >
+                                                            <div class="row">
+                                                                <div class="col-md-6"  style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Preleased</p></div>
+                                                                <div class="col-md-6"  style="border-bottom:1px solid #858282;"><p  style="font-size:18px;text-align: right;min-height:25px;">{{transactions_preleased }}</p></div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="background: #d96325;
+                                                color: #ffffff;
+                                                border-radius: 12px;
+                                                font-size: 20px;">
+                                                    <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-target="#collapsetotaltransactions"   style="color:#ffffff;font-size:20px;">Total Transactions </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapsetotaltransactions" class="panel-collapse collapse in">
+                                                    <div class="panel-body"  style="min-height:100px;border:0px;">
+                                                        <a href = "#/agreement_list/direct" target="_blank" title="Agreement List " alt="Agreement List" >
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Total:</p></div>
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;min-height:25px;"><p style="font-size:18px;text-align: right;">{{transactions}}</p></div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="background: #2451a2;
+                                                color: #ffffff;
+                                                border-radius: 12px;
+                                                font-size: 20px;">
+                                                    <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-target="#collapsetotaltransactions"   style="color:#ffffff;font-size:20px;">Total Brokerage Expected  </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapsetotaltransactions" class="panel-collapse collapse in">
+                                                    <div class="panel-body"  style="min-height:100px;border:0px;">
+                                                        <a href = "#/collections" target="_blank" title="Collections" alt="Collections" >
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Total:</p></div>
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;min-height:25px;"><p style="font-size:18px;text-align: right;">{{brokerage_expected}}</p></div>
+                                                            </div>
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="background: #09214f;
+                                                color: #ffffff;
+                                                border-radius: 12px;
+                                                font-size: 20px;">
+                                                    <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-target="#collapsetotaltransactions"   style="color:#ffffff;font-size:20px;">Total Brokerage Invoiced  </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapsetotaltransactions" class="panel-collapse collapse in">
+                                                    <div class="panel-body"  style="min-height:100px;border:0px;">
+                                                        <a href = "#/collections" target="_blank" title="Collections" alt="Collections" >
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Total:</p></div>
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;min-height:25px;"><p style="font-size:18px;text-align: right;">{{brokerage_invoiced}}</p></div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" style="background: #09214f;
+                                                color: #ffffff;
+                                                border-radius: 12px;
+                                                font-size: 20px;">
+                                                    <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-target="#collapsetotaltransactions"   style="color:#ffffff;font-size:20px;">Total Brokerage Received  </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapsetotaltransactions" class="panel-collapse collapse in">
+                                                    <div class="panel-body"  style="min-height:100px;border:0px;">
+                                                        <a href = "#/collections" target="_blank" title="Collections" alt="Collections" >
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;"><p style="font-size:18px;">Total:</p></div>
+                                                                <div class="col-md-6" style="border-bottom:1px solid #858282;min-height:25px;"><p style="font-size:18px;text-align: right;">{{brokerage_received}}</p></div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+                                </div>
+                                <div class="panel-footer"></div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background: #09214f;
+                        color: #ffffff;
+                        border-radius: 12px;
+                        font-size: 20px;">
+                            <h4 class="panel-title">
+                            <a data-toggle="collapse" data-target="#collapsemonthly_brokerage"   style="color:#ffffff;font-size:20px;">Monthly Brokerage</a>
+                            </h4>
+                        </div>
+                        <div id="collapsemonthly_brokerage" class="panel-collapse collapse in">
+                            <div class="panel-body"  style="min-height:100px;border:0px;">
+                                <canvas id="line" class="chart chart-line" chart-data="data"
+                                    chart-labels="labels" chart-series="series" chart-options="options"
+                                    chart-dataset-override="datasetOverride" chart-click="onClick">
+                                </canvas>
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <p style="font-size:22px;text-align:center;margin-top:-23px;">Today, {{today_date}}</p> 
+            <div compile-html="trustedHtml_days" style="margin:0 auto;width:255px;"></div>
+            <div class="panel-group" style="margin-top:52px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background: #d2aa4b;
+                    color: #ffffff;
+                    border-radius: 12px;
+                    font-size: 20px;">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapseassistant" style="color:#ffffff;font-size:20px;">Assistant</a>
+
+                        <a href = "javascript:void(0)" title="Add Task " alt="Add Task" data-toggle="modal" data-target="#assign_task" ng-click="assign_task_new()" style="width: 30px;border-radius: 20px; 
+font-size: 14px;background-color: #807c7c;color: rgb(255, 255, 255);height: 30px;margin-left: 5px;float: left;margin-top:-5px;border:1px solid #807c7c;position:absolute;"><i class="glyphicon glyphicon-pencil"  style="padding:5px;padding-left:8px;"></i></a>
+
+<div style="position: absolute;
+width: 15px;
+height: 15px;
+border-radius: 7px;
+background-color: red;
+color: rgb(255, 255, 255);
+margin-left: 138px;
+margin-top: -29px;
+padding-left: 5px;
+font-size: 10px;
+z-index: 99;" ng-if="newcomment_count>0">{{newcomment_count}}</div>
+
+
+                        <a href = "#/assist_readmore" title="Read More" alt="Read More" style="width: 30px;border-radius: 20px; 
+font-size: 14px;background-color: #807c7c;color: rgb(255, 255, 255);height: 30px;margin-left: 40px;float: left;margin-top:-5px;border:1px solid #807c7c;position:absolute;"><i class="glyphicon glyphicon-th-list" style="padding:5px;padding-left:8px;"></i></a>
+                        </h4>
+                    </div>
+                    <div id="collapseassistant" class="panel-collapse collapse in">
+                        <div class="panel-body"  style="min-height:235px;"> 
+                            <div compile-html="trustedHtml_assist"></div>
+                        </div>
+                        <div class="panel-footer">
+                            <p style="color:#df1212;font-size:16px;">Leave Balance:{{leave_balance}}</p>
+                            <p style="color:#df1212;font-size:16px;">Assets Issued:{{assets_issued}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background: #d2aa4b;
+                    color: #ffffff;
+                    border-radius: 12px;
+                    font-size: 20px;">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapseschedules"  style="color:#ffffff;font-size:20px;">Schedules</a>
+                        <!--<a href = "#/activity_add/direct/0" target="_blank" title="Add Activity " alt="Add Activity"  style="width: 30px;border-radius: 20px; font-size: 14px;background-color: #807c7c;color: rgb(255, 255, 255);height: 30px;margin-left: 5px;border:1px solid #807c7c;position:absolute;margin-top:-5px;">-->
+                        <!--    <i class="glyphicon glyphicon-pencil" style="padding:5px;padding-left:8px;"></i>-->
+                        <!--</a>-->
+                        <a ng-if="hasRoles.includes('Sub Admin')" href = "" title="Add Activity " alt="Add Activity"  style="width: 30px;border-radius: 20px; 
+                            font-size: 14px;background-color: #807c7c;color: rgb(255, 255, 255);height: 30px;margin-left: 5px;border:1px solid #807c7c;position:absolute;margin-top:-5px;"><i class="glyphicon glyphicon-pencil" style="padding:5px;padding-left:8px;"></i></a>
+                        <a ng-if="!(hasRoles.includes('Sub Admin'))" href = "#/activity_add/direct/0" target="_blank" title="Add Activity " alt="Add Activity"  style="width: 30px;border-radius: 20px; 
+                            font-size: 14px;background-color: #807c7c;color: rgb(255, 255, 255);height: 30px;margin-left: 5px;border:1px solid #807c7c;position:absolute;margin-top:-5px;"><i class="glyphicon glyphicon-pencil" style="padding:5px;padding-left:8px;"></i></a>
+                        
+                        </h4>
+                    </div>
+                    <div id="collapseschedules" class="panel-collapse collapse">
+                        <div class="panel-body"  style="min-height:300px;"> 
+                            <!--div compile-html="trustedHtml_assist"></div-->
+                            <div style="width:100%;height:345px;" id="task_manager"  ng-controller="task_manager" ng-show="authenticated">
+                                <div class="html_content" id="tasks" compile-html="trustedHtml_task"></div>
+                            </div>
+                        </div>
+                        <div class="panel-footer"></div>
+                    </div>
+                </div>
+            </div> 
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background: #31acb0;
+                    color: #ffffff;
+                    border-radius: 12px;
+                    font-size: 20px;">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapseeligibility"  style="color:#ffffff;font-size:20px;">Eligibility</a>
+                        
+                        </h4>
+                    </div>
+                    <div id="collapseeligibility" class="panel-collapse collapse in">
+                        <div class="panel-body"  style="min-height:100px;"> 
+                            <!--div compile-html="trustedHtml_assist"></div-->
+                            <div style="background:#9c0b0e;color: #ffffff;border-radius: 12px;font-size: 20px;height:38px;width:100%;"><div style="float:left;width:48%;padding:5px;padding-left:15px;">Employee<i class="glyphicon glyphicon-signal" style="padding-left:8px;"></i></div><div  style="float:left;width:48%;padding:5px;padding-left:15px;">Franchise<i class="glyphicon glyphicon-signal" style="padding-left:8px;"></i></div></div>
+                            
+                            <div style="color:#df1212;font-size:18px;width: 100%;text-align: center;"><!--span>Target Achieved:{{goals_achieved}}({{goals_to_achieve}})</!--span><span style="margin-left:10px;">Achieved Per:{{target_achieved}}%({{goal_per_to_get}}%)</span--><span ng-if="eligibility=='No'">Not Eligibile for Incentive</span><span ng-if="eligibility=='Yes'">Eligibile for Incentive</span></div>
+
+                            <!--p style="font-size:16px;font-weight: bold;margin-top:5px;">Note:- </p>
+                                <p style="margin-left:10px;">Increment & Appraisal is based on the Percentage achieved by you.</p>
+                                <p style="margin-left:10px;">Any referral given which is materialized is eligible for 2 points.</p>
+
+                            <p style="font-size:16px;font-weight: bold;margin-top:5px;">HR pointers:-</p>
+                                <p style="margin-left:10px;">Monthly Attendance 100% then 2 points added.</p>
+                                <p style="margin-left:10px;">Any new idea given and Implemented then 2 points added.</p>
+                                <p style="margin-left:10px;">Activity participation 1 point will be added. </p>
+
+                            <p style="font-size:16px;font-weight: bold;margin-top:5px;">CRM pointers.</p>
+                                <p  style="margin-left:10px;">Daily Activity: 1 point.</p>
+                                <p style="margin-left:10px;">Response On Assigned:  2 points (If responded within 12 hours or else Zero points).</p> 
+                                <p style="margin-left:10px;">Transaction Process:  2 points. (applicable when any transaction happens.)</p-->
+
+                        </div>
+                        <div class="panel-footer"></div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        
+        
+    </div>
+    
+
+    <div class="row" id="more_info">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-10">
+
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" id="add-new-btn" ng-click="showdashboard()">Show Dashboard</button>
+                </div>
+            </div>
+            <div id="dashboardmore_div" class="html_content" compile-html="dashboardMoreHtml"></div>
+        </div>
+    </div>
+    
+</section>
+<hr style="margin-top: 0px;margin-bottom: 0px;">
+<style>
+    
+    .smallbox_new
+    {
+        font-size:12px;
+        min-height:93px;
+        margin-left:5px;
+        color:#ffffff;
+        margin-left:5px;
+        padding:0px;
+        width:18.67%;
+    }
+
+    .smallbox_new
+    {
+        font-size:12px;
+        min-height:93px;
+        margin-left:5px;
+        color:#ffffff;
+        margin-left:5px;
+        padding:0px;
+        width:18.67%;
+    }
+    .smallbox_new p
+    {
+        font-size:12px;
+        margin-top: 22px;
+    }
+    .smallbox_new .inner
+    {
+        padding:5px;
+    }
+    .smallbox_new .inner h3
+    {
+        margin-top:0px;
+    }
+    .smallbox_new .icon
+    {
+        position: absolute;
+        font-size: 41px;
+        right: 10px;
+        top: -2px;  
+    }
+    .smallbox_new_right
+    {
+        font-size:18px;
+        /*min-height:93px;*/
+        margin-left:20px;
+        color:#ffffff;
+        margin-left:20px;
+        padding:10px;
+        width:90%;
+        border-radius:17px;
+        
+    }
+    .smallbox_new_right p
+    {
+        font-size:14px;
+        margin-top: 0px;
+    }
+    .smallbox_new_right .inner
+    {
+        padding:5px;
+        float:right;
+        width:130px
+    }
+    .smallbox_new_right .inner h3
+    {
+        margin-top:0px;
+    }
+    .smallbox_new_right .icon_right
+    {
+        position: absolute;
+        font-size: 41px;
+        left: 10px;
+        top: -2px;  
+    }
+    
+    
+</style>
+
+<!--div class="div_ht" style="background-color:#fefef2;color:#605f5f;width:100%;margin-top:0px;">
+    <h1 class="hidden-sm hidden-xs" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Total New Listings</h1>
+    <h2 class="hidden-lg hidden-xl" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Total New Listings</h2>
+
+    <p style="font-weight:bold;margin-left: 30px;">These are total properties from the current date range</p>
+    <div class="flexslider" id="flexslider1" flex-slider1="">
+        <ul class="slides">
+            <li ng-repeat="rowtotal_listing in listtotal_listings" >
+                <a href="#/properties_edit/{{rowtotal_listing.property_id}}">
+                    <div class="slider">
+                        <div class="cornerno">1</div>
+                        <p>
+                            <img src="dist/img/no_image.jpg" ng-if="rowtotal_listing.filenames==null " style="width:188px;height:126px;" />
+                            <img src="api/v1/uploads/property/thumb/{{rowtotal_listing.filenames}}"  style="width:188px;height:126px;" ng-if="rowtotal_listing.filenames!=null " /> 
+                        </p>
+
+                            <!--<img src="dist/img/properties/properties_{{total_listing.property_id}}.jpg" style="width:188px;height:126px;"/></p>-->
+                        <!--p style="font-weight:bold;">{{rowtotal_listing.building_name}}:{{rowtotal_listing.propsubtype}} for {{rowtotal_listing.property_for}}</p>
+                        <p>{{rowtotal_listing.sale_area}} Sq.Ft @ {{rowtotal_listing.exp_price}}</p>
+                        <p></p><br>
+                        <p class="imgdata_1">{{rowtotal_listing.project_contact}}</p>
+                        <p class="imgdata_2">{{rowtotal_listing.usermobileno}}</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:{{total_list_residential}}</p></a>
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p>Commercial  &nbsp;&nbsp;&nbsp;:{{total_list_commercial}}</p></a>
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p></a>
+        </div></a>
+    </div>
+</div-->
+<!--hr style="margin-top: 0px;margin-bottom: 0px;">
+<div class="div_ht" style="background-color:#ffffff;color:#605f5f;width:100%;margin-top:6px;">
+    <h1 class="hidden-sm hidden-xs" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Branch Wise New Listings</h1>
+    <h2 class="hidden-lg hidden-xl" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Branch Wise New Listings</h2>
+
+    <p style="font-weight:bold; margin-left: 30px;">These are total properties from the current date range</p>
+    <div class="flexslider" id="flexslider2" flex-slider2="">
+        <ul class="slides">
+            <li ng-repeat="branch_listing in branch_listings  | limitTo:10" >
+                <a href="#/properties_edit/{{branch_listing.property_id}}">
+                    <div class="slider">
+                        <div class="cornerno">1</div>
+                        <p><img src="dist/img/no_image.jpg" ng-if="branch_listing.filenames==null " style="width:188px;height:126px;" /> 
+                            <img src="api/v1/uploads/property/{{branch_listing.filenames}}" ng-if="branch_listing.filenames!=null " style="width:188px;height:126px;" /> 
+                        </p>
+                        <!--<p style="font-weight:bold;">{{branch_listing.project_name}}:{{branch_listing.propsubtype}} for {{branch_listing.property_for}}</p>-->
+                        <!--p style="font-weight:bold;">{{branch_listing.teams}}</p>
+                        <p>{{branch_listing.sale_area}} Sq.Ft @ {{branch_listing.exp_price}}</p>
+                        <p></p><br>
+                        <p class="imgdata_1">{{branch_listing.project_contact}}</p>
+                        <p class="imgdata_2">{{branch_listing.usermobileno}}</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <!--<ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Goa Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Macbeth Dias</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Ajay Thakur</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Gandhinagar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Sushil Shinde</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Pune Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Shripad Kulkarni</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Ahmadabad Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Dahisar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>-->
+        <!--div id="viewmore">
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:{{branch_list_residential}}</p></a>
+            <a href="#/properties_list/commercial" style="color:#ffffff;"><p>Commercial  &nbsp;&nbsp;&nbsp;:{{branch_list_commercial}}</p></a>
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p></a>
+        </div>
+    </div>
+</div>
+<hr style="margin-top: 0px;margin-bottom: 0px;">
+<!--div class="div_ht" style="background-color:#fefef2;color:#605f5f;width:100%;height:320px;margin-top:0px;padding:10px;">
+    <h1 class="hidden-sm hidden-xs" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Transactions Completed</h1>
+    <h2 class="hidden-lg hidden-xl" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Transactions Completed</h2>
+
+    <p style="font-weight:bold;margin-left: 30px; ">These are total properties from the current date range</p>
+    <div class="flexslider"  id="flexslider3" flex-slider3="">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Hiteshbhai Chaudhari</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Holidays Resort 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Mangesh Chaudhari</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Villa Holidays 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Suresh Patil</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Sanjay Shinde</p>
+                    <p class="imgdata_2">8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Babasaheb PAtil</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Arjun Patel</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, Gandinagar</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Hiteshbhai Chaudhari</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<hr style="margin-top: 0px;margin-bottom: 0px;">
+<div class="div_ht" style="background-color:#ffffff;color:#605f5f;width:100%;margin-top:6px;">
+    <h1 class="hidden-sm hidden-xs" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Total Billing</h1>
+    <h2 class="hidden-lg hidden-xl" style="color: #2980B9;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Total Billing</h2>
+
+    <p style="font-weight:bold;margin-left: 30px; ">These are total properties from the current date range</p>
+    <div class="flexslider" id="flexslider4" flex-slider4="">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Goregaon (East)</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Mangesh Patil</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Om Apartment Flat</p>
+                    <p>Malad</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Sridhar Deshpande</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 3 BHK Vila Apartment Flat</p>
+                    <p>Dahisar</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Nagraj Borse</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Boriwali</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Nayan Shelke</p>
+                    <p class="imgdata_2">8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 2 BHK Vila Apartment Flat</p>
+                    <p>Andheri</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Shardul Bhargav</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Palghar</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Parth Thakkar</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Pune</p>
+                    <p></p><br>
+                    <p class="imgdata_1">Mr. Parth Thakkar</p>
+                    <p class="imgdata_2">8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Buy &nbsp;&nbsp;&nbsp;&nbsp;:12</p>
+            <p>Rent  &nbsp;&nbsp;&nbsp;:118</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!--<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Total new listings</h1>
+    <p style="font-weight:bold;">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                    <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, 3 BHK, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                    <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Saffrony holidays Resort 2 BHK residential</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                    <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Capital Flora, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                    <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha Flat - sale</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Saffrony holidays Resort</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Capital Flora, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Branch wise new listings</h1>
+    <p style="font-weight:bold; ">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Goa Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Macbeth Dias</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Ajay Thakur</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Gandhinagar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Sushil Shinde</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Pune Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Shripad Kulkarni</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Ahmadabad Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Dahisar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Transactions Completed</h1>
+    <p style="font-weight:bold; ">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Hiteshbhai Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Holidays Resort 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Mangesh Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Villa Holidays 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Suresh Patil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Sanjay Shinde</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Babasaheb PAtil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Arjun Patel</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, Gandinagar</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Hiteshbhai Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Total billing</h1>
+    <p style="font-weight:bold; ">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Goregaon (East)</p>
+                    <p></p><br>
+                    <p>Mr. Mangesh Patil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Om Apartment Flat</p>
+                    <p>Malad</p>
+                    <p></p><br>
+                    <p>Mr. Sridhar Deshpande</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 3 BHK Vila Apartment Flat</p>
+                    <p>Dahisar</p>
+                    <p></p><br>
+                    <p>Mr. Nagraj Borse</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Boriwali</p>
+                    <p></p><br>
+                    <p>Mr. Nayan Shelke</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 2 BHK Vila Apartment Flat</p>
+                    <p>Andheri</p>
+                    <p></p><br>
+                    <p>Mr. Shardul Bhargav</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Palghar</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Pune</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Buy &nbsp;&nbsp;&nbsp;&nbsp;:12</p>
+            <p>Rent  &nbsp;&nbsp;&nbsp;:118</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>-->
+
+<!--div ng-controller="task_manager" ng-show="authenticated">
+    <button ng-click="open_task_manager()" class="right_drawer_task">Schedules</button>
+    <div style="width:30%;position:fixed;top:235px;right:-31%;height:345px;z-index:2000;" id="task_manager" >
+        <button ng-click="close_task_manager()" class="close_drawer_task"><i class="fa fa-toggle-right"></i></button>
+        <a href = "#/activity_add/direct/0" target="_blank" title="Add Activity " alt="Add Activity"  style="width: 30px;border-radius: 20px; z-index:3000;
+font-size: 14px;background-color: #807c7c;color: rgb(255, 255, 255);height: 30px;margin-left: 5px;float: left;margin-top:5px;border:1px solid #807c7c;"><i class="glyphicon glyphicon-pencil" style="padding:5px;padding-left:8px;"></i></a>
+        <p style="text-align:center;font-size:20px;margin-top:5px;">Schedules & Reminders</p>
+        <div class="html_content" id="tasks" compile-html="trustedHtml_task"></div>
+    </div>
+    <!--div class="modal fade" id="assign_task">
+        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign Task</h4>
+                    <div style="margin-top:-30px;float:right;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="save_button"class="btn btn-primary"  ng-click="task_save(task)" style="float:right;margin-left:10px;" ng-disabled="AddNewForm.$invalid || isUnchanged(task)">Assign</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="task_title">Task Title</label>
+                                <input type="text" class="form-control" id="task_title" name="task_title"  placeholder="Task Title"  ng-model="task.task_title" required focus />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="assigned_to">Assigned To</label>
+                                <select class="selectpicker form-control" id="assigned_to" name="assigned_to" ng-model="task.assigned_to" ng-options="teammember.emp_id as teammember.name for teammember in teammembers" ng-controller = "SelectTeamMember" multiple  ></select>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="task">Task</label>
+                                <textarea class="form-control" id="task" name="task"  placeholder="Task"  ng-model="task.task"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="reminder_type">Reminder Type</label>
+                                <select  style="margin-bottom:10px;margin-right:10px;" class="selectpicker form-control" id="reminder_type" name="reminder_type" ng-model="task.reminder_type" ng-change="changevalueinput(this)" required>
+                                    <option value="Once">Once</option>
+                                    <option value="Daily">Daily</option>
+                                    <option value="Weekly">Weekly</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Quarterly">Qualterly</option>
+                                    <option value="Yearly">Yearly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="reminderdate">
+                            <div class="form-group">
+                                <label for="reminder_value">Reminder Value</label>
+                                <div class="input-group date" id="reminder_value" date-directive="">
+                                    <input class="form-control" type="text" ng-model="task.reminder_value"  ng-init="task.reminder_value = task.reminder_value">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="reminderweek">
+                            <div class="form-group">
+                                <label for="reminder_value">Reminder Value</label>
+                                <select  style="margin-bottom:10px;margin-right:10px;" class="selectpicker form-control" id="reminder_value" name="reminder_value" ng-model="task.reminder_value">
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div-->
+<div id="assign_task" class="modal" role="dialog">
+    <form novalidate name="MAddNewForm" id="madd-new-form" role="form" autocomplete="off">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign Task</h4>
+                    <div style="margin-top:-30px;float:right;">
+                        <button type="button" id="closebtn" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button id="save_button"class="btn btn-primary" ng-click="task_save_new(task)" style="float:right;margin-left:10px;" ng-disabled="MAddNewForm.$invalid || isUnchanged(task)" aria-hidden="true">Assign</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="task_title">Task Title</label>
+                                <input type="text" class="form-control" id="task_title" name="task_title"  placeholder="Task Title"  ng-model="task.task_title" required focus />
+                            </div>
+                            <div class="form-group">
+                                <label for="task">Task</label>
+                                <textarea class="form-control" id="description" name="description"  placeholder="Task"  ng-model="task.description" rows="5"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="client_id">Client</label>
+                                <div class="input-group">
+                                    <select class="select2 form-control" select2 ng-model="task.client_id" id="client_id" name="client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;">
+                                        <option value="" disabled selected>Select Client</option>
+                                    </select>
+                                    <div class="input-group-addon">
+                                        <a href="javascript:void(0)" ng-click="addclient()"><i class="fa fa-plus"></i></a>
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="teams">Teams</label>
+                                <select class="select2 form-control" multiple="multiple"  select2 id = "task.teams"  name = "task.teams"   ng-model="task.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" ng-change="select_assign_to(task.teams,0)">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sub_teams">Sub Teams</label>
+                                <select class="select2 form-control" multiple="multiple"  id = "task.sub_teams" name = "task.sub_teams"  ng-model="task.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"  style="width:100%;" ng-change="select_assign_to(task.teams,task.sub_teams)">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="assign_to">Assign To</label>
+                                <select class="select2 form-control" multiple="multiple"  id = "task.assign_to" name = "task.assign_to" select2 ng-model="task.assign_to" ng-options="user.user_id as user.name for user in listusers" style="width:100%;">
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="file_task">Attachments</label>
+                                <input id="file_task" name="file_task[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" >
+                                <input type="hidden" name="file_task_name" id="file_task_name" value="" ng-model="task.file_task_name" />
+                            </div>
+                        </div>
+                        <!--div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-12">	
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" ng-disabled="MAddNewForm.$invalid || isUnchanged(listvalues)" id="madd-new-btn" ng-click="listvalues_add(listvalues)">Save</button>
+                                        <a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="addclient">
+    <div clas="row">
+        <div class="col-md-12">
+            <form novalidate name="CAddNewForm" id="Cadd-new-form" role="form" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-12" style="border-bottom:1px solid #dfd8d8;">
+                        <h4>Add Contact</h4>
+                        <div style="margin-top:-40px;float:right;">
+                            <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+                            <button id="save_button"class="btn btn-primary" ng-click="contact_save_new(contact)" style="float:right;margin-left:10px;" ng-disabled="CAddNewForm.$invalid || isUnchanged(contact)" aria-hidden="true">Save</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="contact.name_title">Salutation</label>
+                                        <select class="select2 form-control" select2  id="contact.name_title" name="contact.name_title" ng-model="contact.name_title"  data-placeholder="Select Name Title" style="width:100%;">
+                                            <option value="Not Specified" selected="selected">Not Specified</option>
+                                            <option value="Mr.">Mr.</option>
+                                            <option value="Mrs." >Mrs.</option>
+                                            <option value="Ms." >Ms.</option>
+                                            <option value="Dr." >Dr.</option>
+                                            <option value="Mohd.." >Mohd.</option>
+                                            <option value="Cmdr." >Cmdr.</option>
+                                            <option value="Capt." >Capt.</option>
+                                            <option value="Maj." >Maj.</option>
+                                            <option value="Col." >Col.</option>
+                                            <option value="Flt.Lt." >Flt.Lt.</option>
+                                            <option value="Prof." >Prof.</option>
+                                            <option value="Brig." >Brig.</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="contact.f_name">First Name<span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="contact.f_name" name="contact.f_name"  placeholder="First Name" ng-model="contact.f_name" required pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed"/>
+                                    </div>
+                                </div>	
+                                <div class="col-md-4">	
+                                    <div class="form-group">
+                                        <label for="contact.l_name">Last Name</label>
+                                        <input type="text" class="form-control" id="contact.l_name" name="contact.l_name"  placeholder="Last Name" ng-model="contact.l_name" pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed"/>
+                                    </div>
+                                </div>
+                            </div>	
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label >Contact Off</label>
+                                        <div class="radio" >
+                                            <label>
+                                                <input type="radio" name="contact_off" id="contact_off" value="Client" checked ng-model="contact.contact_off">
+                                                Client &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--(Resale)-->
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="contact_off" id="contact_off" value="Developer" ng-model="contact.contact_off">
+                                                Developer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--(First Sale)-->
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="contact_off" id="contact_off" value="Broker" ng-model="contact.contact_off">
+                                                Broker &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--(First Sale)-->
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">	
+                                    <div class="form-group">
+                                        <label for="contact.mob_no">Mobile No.<span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="contact.mob_no" name="contact.mob_no"  placeholder="Mobile No." ng-model="contact.mob_no" ng-blur = "checkcontact(contact.mob_no,'mob_no')" required pattern="[0-9 ]{10}"  hide-zero title="Only Numbers Allowed"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="contact.email">Email Id</label>
+                                        <input type="text" class="form-control" id="contact.email" name="contact.email"  placeholder="Email Id" ng-model="contact.email" ng-blur = "checkcontact(contact.email,'email')" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="reminders" >
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;">Reminder<a  href="javascript:void(0)" ng-click="close_reminders()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a></div>
+    <div clas="row">
+        <div class="col-md-12">
+          <!--div class="html_content" id="reminder_list" compile-html="trustedHtml_reminders"></div-->
+          <div style="overflow-y:auto;height:290px;">
+            <table class="table table-bordered table-striped">
+              <tr>
+                <td style="width:20%;">ID</td>
+                <td style="width:10%;">Type</td>
+                <td style="width:20%;">Client</td>
+                <td style="width:20%;">Start</td>
+                <td style="width:20%;">End</td>
+                <td></td>
+              </tr> 
+              <tr ng-repeat="reminder in reminders_list">
+                <td style="width:25%;"><a href="#/activity_edit/{{reminder.activity_id}}" target="_blank" >ACTIVITYID_{{reminder.activity_id}}</a></td>
+                <td style="width:10%;">{{reminder.activity_type}}</td>
+                <td style="width:20%;">{{reminder.client_name}}<p>{{reminder.description}}</p></td>
+                <td style="width:20%;">{{reminder.activity_start}}</td>
+                <td style="width:20%;">{{reminder.activity_end}}</td>
+                <td><a href="javascript:void(0)" style="font-size:25px;" title="Close Activity" alt="Close Activity" ng-click="close_activity(reminder.activity_id)"><i class="fa fa-window-close"></i></a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+  </div>
+</div>
+<div id="reminders_comment" >
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;">Closure Comment<a  href="javascript:void(0)" ng-click="close_reminders_comment()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a></div>
+    <div style="padding:20px;width:100%">
+        <div id="first_comment">
+            <textarea class="form-control" id="closure_comment" name="closure_comment"  placeholder="Comment"  ng-model="closure_comment" rows="3"></textarea>
+            <a  href="javascript:void(0)" class="btn btn-primary" ng-click="save_reminders_comment(closure_comment)" style="margin-top:5px;">Save</a>
+            <a  href="javascript:void(0)" ng-click="close_reminders_comment()" style="margin-top:5px;">Cancel</a>
+        </div>
+        <div id="second_comment">
+            <label for="next_date">Next Activity Date</label>
+            <div class="input-group date" id="next_date" name="next_date" ng-model="next_date"  datetimepickeractivity="">
+                <input class="form-control" type="text"  >
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <a  href="javascript:void(0)" class="btn btn-primary" ng-click="create_new_activity(next_date)" style="margin-top:5px;">Create Activity</a>
+            <a  href="javascript:void(0)" ng-click="close_reminders_comment()" style="margin-top:5px;">Cancel</a>
+        </div>
+
+    </div>
+    <input type="hidden" id="temp_activity_id" name="temp_activity_id" value="0"/>
+</div>
+<style>
+    #second_comment
+    {
+        display:none;
+    }
+</style>
+
+<!--div style="position:fixed;bottom:0px;width:100%;height:35px;font-size:18px;color:#ffffff;background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d2aa4b), to(#a49163));background-image:   -webkit-linear-gradient(top, #d2aa4b,#a49163);background-image:   -moz-linear-gradient(top, #d2aa4b,#a49163);filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#a49163', GradientType=0);-ms-filter:             'progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#a49163', GradientType=0)';background-image:   -ms-linear-gradient(top, #d2aa4b, #a49163);background-image:   -o-linear-gradient(top, #d2aa4b,#a49163);">
+    <div class="html_content" compile-html="trustedHtml_todays_alerts"></div>
+    <!--<div class="html_content" compile-html="trustedHtml_todays_all_performance"></div>
+    <!--<div class="container">
+        <div class="marquee-sibling">
+           Today's Performance
+        </div>
+        
+        <!--<div class="marquee">
+           <ul class="marquee-content-items">
+              <li>Item 1</li>
+              <li>Item 2</li>
+              <li>Item 3</li>
+              <li>Item 4</li>
+              <li>Item 5</li>
+           </ul>
+        </div>
+     </div>-->
+<!--/div-->
+
+<style>
+    #more_info
+    {
+        display:none;
+        margin-top:5px;
+    }
+    .slider
+    {
+        height:264px;
+        width:192px;
+        float: left;
+        margin-left:2px;
+    }
+    .slider p
+    {
+        margin: 0 0 5px 0;
+        line-height: 1.2em;
+    }
+
+
+    .flexslider
+    {
+        background:none;
+        border:0px;
+        /*width:97%;*/
+        margin-left: 30px;
+        margin-right: 40px;
+    }
+    .flex-control-nav
+    {
+        display: none;
+    }
+    .flex-direction-nav a
+    {
+        height:45px;
+        top:20%;
+    }
+    .flexslider:hover .flex-direction-nav .flex-prev
+    {
+        margin-left:-45px;
+    }
+    .flexslider:hover .flex-direction-nav .flex-next
+    {
+        right:-45px;
+    }
+    #viewmore
+    {
+        background-color:#d2aa4b;
+        width:192px;
+        height:128px;
+        position:absolute;
+        z-index:2;
+        opacity:0.7;
+        color:#ffffff;
+        font-size:20px;
+        right:0px;
+        padding:20px;
+    }
+      .div_ht{
+            height: 350px;
+            padding:20px;
+           }
+     @media screen and (max-width:991px)
+        {
+            .flex-direction-nav .flex-next{
+                right: -33px;
+            }
+            .flex-direction-nav .flex-prev{
+                left: -25px;
+            }
+            
+           #viewmore{
+            display:none;
+           }
+           .header{
+            font-size: 20px;
+           }
+           .imgdata_1{
+            position: absolute;
+            padding-left: 10px;
+            top:85px;
+           }
+           .imgdata_2{
+            position: absolute;
+            padding-left:  10px;
+            top:102px;
+           }
+           .div_ht{
+            height: 250px;
+            padding: 0px;
+           }
+
+        }
+
+    #viewmore p{
+        font-size:14px;
+        line-height: 0.9;
+
+    }
+    .cornerno
+    {
+        background-color: #d2aa4b;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 3px;
+        padding-left: 8px;
+        margin-left: 163px;
+    }
+    .slides a
+    {
+        color:#000000;
+
+    }
+    #topsheet p
+    {
+        margin-bottom:0px;
+    }
+  
+    .small-box h3 {
+        font-size: 17px;
+        color:#ffffff;
+    }
+    .small-box {
+        color:#ffffff;
+    }
+    .catname
+    {
+        color:#000000;
+    }
+    .panel-group
+    {
+        border: 1px solid aliceblue;
+    }  
+    .panel-footer
+    {
+        background:none;
+    }
+    .chart {
+        height:500px;
+    }
+    .string { color: green; }
+    .number { color: darkorange; }
+    .boolean { color: blue; }
+    .null { color: magenta; }
+    .key { color: red; }
+    #legend1 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend1 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend1 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    #legend2 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend2 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend2 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    #legend3 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend3 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend3 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    #legend4 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend4 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend4 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    
+    .morris-hover{position:absolute;z-index:1000;}
+.morris-hover.morris-default-style{border-radius:10px;padding:6px;color:#666;background:rgba(255, 255, 255, 0.8);border:solid 2px rgba(230, 230, 230, 0.8);font-family:sans-serif;font-size:12px;text-align:center;}
+    .morris-hover.morris-default-style .morris-hover-row-label{font-weight:bold;margin:0.25em 0;}
+
+
+    .marquee-sibling {
+        padding: 0;
+        /*background-image: url('dist/img/red_strip.jpg');
+        background-size:24% 48px;
+        background-repeat: no-repeat;*/
+
+        background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eb1839), to(#2d0102));background-image:   -webkit-linear-gradient(top, #eb1839,#2d0102);
+        background-image:   -moz-linear-gradient(top, #eb1839,#2d0102);filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0);
+        -ms-filter:             'progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0)';
+        background-image:   -ms-linear-gradient(top, #eb1839, #2d0102);
+        background-image:   -o-linear-gradient(top, #eb1839,#2d0102);
+        /*background:#e31b23;*/
+        font-size: 25px;
+        font-weight: normal;
+        color: #ffffff;
+        text-align: center;
+        left: 0;
+        z-index: 2000;
+        width:24%;
+        height:48px;
+        text-shadow: 2px 3px 5px #000000;
+        
+        
+    }
+        
+    .marquee-sibling1 {
+        padding: 0;
+        /*background-image: url('dist/img/red_strip.jpg');
+        background-size:100% 48px;
+        background-repeat: no-repeat;*/
+        background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eb1839), to(#2d0102));background-image:   -webkit-linear-gradient(top, #eb1839,#2d0102);
+        background-image:   -moz-linear-gradient(top, #eb1839,#2d0102);filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0);
+        -ms-filter:             'progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0)';
+        background-image:   -ms-linear-gradient(top, #eb1839, #2d0102);
+        background-image:   -o-linear-gradient(top, #eb1839,#2d0102);
+        /*background:#e31b23;*/
+        font-size: 25px;
+        font-weight: normal;
+        color: #ffffff;
+        text-align: center;
+        left: 0;
+        z-index: 2000;
+        text-shadow: 2px 3px 5px #000000;
+        bottom:35px;
+        width:24%;
+        height:48px;
+        padding-top:5px;
+        
+    }
+
+    .marquee, *[class^="marquee"] {
+        /*display: inline-block;*/
+        white-space: nowrap;
+        position:absolute;
+        margin-top:-1px;
+    }
+
+    .marquee{
+        clear:both;
+    /*margin-left: 25%;*/
+    }
+
+    .marquee-content-items{
+        display: inline-block;
+        padding: 5px;
+        margin: 0;
+        height: 48px;
+        position: relative;
+        font-size:18px;
+        padding-top:2px;
+    
+    }
+
+    .marquee-content-items li{
+        display: inline-block;
+        line-height: 30px;
+        color: #fff;
+    }
+
+    .marquee-content-items li:after{
+        content: "|";
+        margin: 0 1em;
+    }
+</style>
+<script>
+   $(document).ready(function () {
+        $('#closebtn').on('click', function () {
+            location.reload();
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $(this).toggleClass('active');
+        });
+        /*$('.flexslider').flexslider({
+                slideshow:true,
+                animation: "slide",
+                itemWidth: 192,
+                itemMargin: 2
+
+        });*/
+
+    });
+</script>
+<script>
+    /*$(function () {
+      "use strict";
+      /*var line = new Morris.Line({
+        element: 'line-chart',
+        resize: true,
+        data: [
+          {y: 'Trainee', item1: 100000},
+          {y: 'Sales Executive', item1: 150000},
+          {y: 'Sr.Sales Executive', item1: 200000},
+          {y: 'Manager', item1: 250000},
+          {y: 'Sr. Manager', item1: 300000}
+        ],
+        xkey: 'y',
+        ykeys: ['item1'],
+        labels: ['Item 1'],
+        lineColors: ['#3c8dbc'],
+        hideHover: 'auto'
+      });
+    });
+    var lineGraph = Morris.Area({
+    element: 'line-chart',
+    xkey: 'post',
+    parseTime: false,
+    ykeys: ['amount'],
+    labels: ['Amount'],
+    xLabelAngle: 60,
+    fillOpacity: '0.7',
+    gridTextFamily: 'mtsRegular',
+    hideHover: 'auto',
+    lineWidth: '1px',
+    lineColors: ['#076178'],
+    pointFillColors: ['#fff'],
+    pointStrokeColors: ['#012e42'],
+    data: [{ post: 'Trainee', amount: 1 },{ post: 'Sales Executive', amount: 1.5,},{ post: 'Sr.Sales Executive', amount: 2.5 },{ post: 'Manager', amount: 3.5,},{ post: 'Sr. Manager', amount: 5}],
+    resize: true
+});
+/*var lineGraph = Morris.Area({
+    element: 'line-chart',
+    xkey: 'Date',
+    ykeys: ['Sales', 'Revenue'],
+    labels: ['Sales','Revenue'],
+    fillOpacity: '0.7',
+    gridTextFamily: 'mtsRegular',
+    hideHover: 'auto',
+    lineWidth: '1px',
+    lineColors: ['#076178','#1ecee8'],
+    pointFillColors: ['#fff'],
+    pointStrokeColors: ['#012e42'],
+    data: [{ 'Date': '2018-08-06', Sales: 1, Revenue: 9.75},{ Date: '2018-08-08', Sales: 1, Revenue: 21.03},{ Date: '2018-08-09', Sales: 1, Revenue: 4.75},{ Date: '2018-08-12', Sales: 1, Revenue: 27.66},{ Date: '2018-08-13', Sales: 3, Revenue: 63.33},{ Date: '2018-08-16', Sales: 2, Revenue: 192.29},{ Date: '2018-08-18', Sales: 2, Revenue: 47.37},{ Date: '2018-08-19', Sales: 1, Revenue: 28.94},{ Date: '2018-08-20', Sales: 1, Revenue: 66.09},{ Date: '2018-08-21', Sales: 1, Revenue: 24.73},{ Date: '2018-08-22', Sales: 4, Revenue: 93.53},{ Date: '2018-08-23', Sales: 1, Revenue: 27.59},{ Date: '2018-08-25', Sales: 2, Revenue: 142.52},{ Date: '2018-08-26', Sales: 1, Revenue: 24.77},{ Date: '2018-08-27', Sales: 3, Revenue: 69.79},{ Date: '2018-08-29', Sales: 2, Revenue: 67.63},{ Date: '2018-08-30', Sales: 1, Revenue: 15.3},{ Date: '2018-09-01', Sales: 1, Revenue: 73.69},{ Date: '2018-09-02', Sales: 4, Revenue: 270.38},{ Date: '2018-09-03', Sales: 2, Revenue: 50.07}],
+    resize: true
+});
+    });*/
+  </script>
+
+<!--script src="bower_components/raphael/raphael.min.js"></script>
+  <script src="bower_components/morris.js/morris.min.js"></script-->
+
+  <style>
+
+    #reminderweek
+                {
+                    display:none;
+                }
+                
+                .callout.callout-info {
+                    background-color: #295F65;
+                    border-color: #C2E274;
+               }
+                
+                .callout {
+                    padding: 5px 10px 5px 5px;
+                    margin-bottom:10px;
+                    height:75px;
+                }
+        
+                .right_drawer_task {
+                    word-wrap: break-word;
+                    font-size: 14px;
+                    width: 14px;
+                    height: 195px;
+                    font-weight: bold;
+                    /*position: fixed;*/
+                    right: -1px;
+                    z-index: 5;
+                    /*background-color: #d2aa4b;*/
+                    width: 25px;
+                    padding: 7px;
+                    color: white;
+                    border: 1px solid;
+                    border-left: 5px;
+                    border-radius: 10px 0px 0px 10px;
+                    top: 233px;
+                    z-index:9999;
+                }
+                .close_drawer_task {
+                    font-size: 26px;
+                    float: left;
+                    margin-left: 0px;
+                    margin-top: 0px;
+                    height: 39px;
+                    display:none;
+                    background-color:#d2aa4b;
+                    border:0px;
+                    
+                }
+                #task_manager
+                {
+                    width:100%;
+                    margin-right:10px;
+                    font-size:13px;
+                    float:left;
+            /* Safari 4+, Chrome 1-9 */                         
+            /*background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d2aa4b), to(#f2dfb1));
+            /* Safari 5.1+, Mobile Safari, Chrome 10+ */    
+            /*background-image:   -webkit-linear-gradient(top, #d2aa4b,#f2dfb1);
+            /* Firefox 3.6+ */                                      
+            /*background-image:   -moz-linear-gradient(top, #d2aa4b,#f2dfb1);
+            /* IE 7-*/                                                  
+            /*filter:                 progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0);
+            /* IE 8+*/                                                  
+            /*-ms-filter:             "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0)";
+            /* IE 10+ */                                               /* background-image:   -ms-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* Opera 11.10+ */                                      /*background-image:   -o-linear-gradient(top, #d2aa4b,#f2dfb1);		
+    
+                color:#ffffff;
+                font-size:14px;
+                /*	-moz-box-shadow: inset 0 0 3px 		#000000, 0 0 9px 		#000000;
+                -webkit-box-shadow: inset 0 0 3px 	#000000, 0 0 9px 		#000000 ;
+                box-shadow: inset 0 0 3px 			#000000, 0 0 9px 		#000000;*/
+    
+    
+                }
+                #tasks
+                {
+                    min-height:300px;
+                    width:100%;
+                    color:#000000;
+                    /*/* Safari 4+, Chrome 1-9 */                         
+                    /*background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d2aa4b), to(#f2dfb1));
+            /* Safari 5.1+, Mobile Safari, Chrome 10+ */    
+            /*background-image:   -webkit-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* Firefox 3.6+ */                                      
+            /*background-image:   -moz-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* IE 7-*/                                                  
+            /*filter:                 progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0);
+            /* IE 8+*/                                                  /*
+            -ms-filter:             "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0)";
+            /* IE 10+ */                                                /*background-image:   -ms-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* Opera 11.10+ */                                      /*
+            background-image:   -o-linear-gradient(top, #d2aa4b, #f2dfb1);		
+    
+                    */
+
+                    font-size:14px;
+                    
+                }
+                
+
+        #tasks .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+            /*background-color:  #d2aa4b;*/
+            /*color:#000;*/
+        }
+        .modal-dialog {
+            width:55%;
+        }   
+
+        #addclient
+    {
+        position:absolute;
+        top:6%;
+        left:30%;
+        background-color:#ffffff;
+        width:40%;
+        height:350px;
+        display:none;
+        z-index:9000;
+        -moz-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        padding:30px;
+        padding-top:5px;
+    }
+    
+    .myTicker
+    {
+        height:235px;
+        list-style-type:none;
+        margin-left:-38px;
+        width:100%;
+        overflow:auto;
+    }
+
+    .myTicker li
+    {
+        list-style-type:none;
+    }
+    #reminders
+    {
+        position:fixed;
+        top:25%;
+        left:25%;
+        background-color:#ffffff;
+        width:60%;
+        height:350px;
+        display:none;
+        z-index:9000;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+    #reminders_comment
+    {
+        position:fixed;
+        top:38%;
+        left:38%;
+        background-color:#ffffff;
+        width:30%;
+        height:200px;
+        display:none;
+        z-index:9001;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+    .days
+    {
+        width:30px;
+        height:30px;
+        background:rgb(151, 147, 147);
+        color:#000000;
+        border-radius:15px;
+        float:left;
+        margin-left:10px;
+        font-size:18px;
+        padding-left:3px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .days_day
+    {
+        font-size:13px;
+        margin-top:5px;
+    }
+    .days_growth
+    {
+        width:30px;
+        height:30px;
+        background:rgb(151, 147, 147);
+        color:#000000;
+        border-radius:15px;
+        float:left;
+        margin-left:10px;
+        font-size:14px;
+        padding-top:3px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .smallbox
+    {
+        width:16%;
+        padding-left:3px;
+        padding-right: 3px;
+    }
+    #reminder_bell 
+    {
+        position: fixed;
+        right: 230px;
+        top: 11px;
+        font-size: 20px;
+        color: #fff;z-index: 9000;
+    }
+    .green_color
+    {
+        background-color:#30d718;
+        color:#ffffff;
+    }
+    @media screen and (max-width: 991px)  {
+
+        #reminders_comment
+        {
+            left:2%;
+            width:96%;
+        }   
+        .smallbox
+        {
+            width:33%;
+            padding-right: 3px;
+            padding-left:3px;
+        }
+        #growth_plan 
+        {
+            display:none;
+        }
+        #reminder_bell 
+        {
+            display:none;
+        }
+    }
+      </style>
+
+<script>
+
+    $("#file_task").fileinput({
+        uploadAsync: false,
+        showUpload: false,
+        uploadUrl: './api/v1/uploads_files_task',
+        allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','pdf','docx','xlxs','pptx'],
+        overwriteInitial: false,
+        maxFileSize: 15000000,
+        maxFilesNum: 25,
+        maxFileCount:100,
+        slugCallback: function(filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+
+    $('#file_task').on('fileloaded', function(event, file, previewId, index, reader) {
+        $("#file_task_name").val(file.name);
+        console.log("fileloaded");
+    });
+
+</script>
+
+<script>
+	$(function () {
+		$('.select2').select2();
+
+		//$('.textarea').wysihtml5();
+
+	});
+    </script>
+
+

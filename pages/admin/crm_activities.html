@@ -1,0 +1,663 @@
+
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    
+</div>
+<div class="clearfix"></div>
+
+<div class="row" id="goals" style="margin-top:115px;" >
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                <div class="row">
+                    <div class="col-md-3">       
+                        <div class="form-group">
+                            <!--label for="start_date">Start Date</label-->
+                            <div class="input-group date" id="start_date" date-directive="">
+                                <input class="form-control" type="text" ng-model="goalsdata.start_date" >
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">       
+                        <div class="form-group">
+                            <!--label for="end_date">End Date</label-->
+                            <div class="input-group date" id="end_date" date-directive="">
+                                <input class="form-control" type="text" ng-model="goalsdata.end_date" >
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" id="add-new-btn" ng-click="getcrm_activities(goalsdata)">Go</button>
+                    </div>
+                </div>
+            </form>
+            <div id="goals_div" class="html_content"  compile-html="crm_activitiesHtml" style="margin-top:10px;"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #more_info
+    {
+        display:none;
+        margin-top:5px;
+    }
+    .slider
+    {
+        height:264px;
+        width:192px;
+        float: left;
+        margin-left:2px;
+    }
+    .slider p
+    {
+        margin: 0 0 5px 0;
+        line-height: 1.2em;
+    }
+
+
+    .flexslider
+    {
+        background:none;
+        border:0px;
+        /*width:97%;*/
+        margin-left: 30px;
+        margin-right: 40px;
+    }
+    .flex-control-nav
+    {
+        display: none;
+    }
+    .flex-direction-nav a
+    {
+        height:45px;
+        top:20%;
+    }
+    .flexslider:hover .flex-direction-nav .flex-prev
+    {
+        margin-left:-45px;
+    }
+    .flexslider:hover .flex-direction-nav .flex-next
+    {
+        right:-45px;
+    }
+    #viewmore
+    {
+        background-color:#d2aa4b;
+        width:192px;
+        height:128px;
+        position:absolute;
+        z-index:2;
+        opacity:0.7;
+        color:#ffffff;
+        font-size:20px;
+        right:0px;
+        padding:20px;
+    }
+      .div_ht{
+            height: 350px;
+            padding:20px;
+           }
+     @media screen and (max-width:991px)
+        {
+            .flex-direction-nav .flex-next{
+                right: -33px;
+            }
+            .flex-direction-nav .flex-prev{
+                left: -25px;
+            }
+            
+           #viewmore{
+            display:none;
+           }
+           .header{
+            font-size: 20px;
+           }
+           .imgdata_1{
+            position: absolute;
+            padding-left: 10px;
+            top:85px;
+           }
+           .imgdata_2{
+            position: absolute;
+            padding-left:  10px;
+            top:102px;
+           }
+           .div_ht{
+            height: 250px;
+            padding: 0px;
+           }
+
+        }
+
+    #viewmore p{
+        font-size:14px;
+        line-height: 0.9;
+
+    }
+    .cornerno
+    {
+        background-color: #d2aa4b;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 3px;
+        padding-left: 8px;
+        margin-left: 163px;
+    }
+    .slides a
+    {
+        color:#000000;
+
+    }
+    #topsheet p
+    {
+        margin-bottom:0px;
+    }
+  
+    .small-box h3 {
+        font-size: 17px;
+        color:#ffffff;
+    }
+    .small-box {
+        color:#ffffff;
+    }
+    .catname
+    {
+        color:#000000;
+    }
+    .panel-group
+    {
+        border: 1px solid aliceblue;
+    }  
+    .panel-footer
+    {
+        background:none;
+    }
+    .chart {
+        height:500px;
+    }
+    .string { color: green; }
+    .number { color: darkorange; }
+    .boolean { color: blue; }
+    .null { color: magenta; }
+    .key { color: red; }
+    #legend1 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend1 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend1 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    #legend2 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend2 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend2 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    #legend3 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend3 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend3 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    #legend4 {
+        height: 50px;
+        /*background: rgba(127, 127, 127, 0.5)*/
+    }
+    #legend4 span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend4 span:before {
+        padding-right: 4px;
+        content: '\2666';
+        text-decoration-style: solid;
+        font-size:20px;
+        /*text-decoration: line-through;*/
+    }
+    
+    
+    .morris-hover{position:absolute;z-index:1000;}
+.morris-hover.morris-default-style{border-radius:10px;padding:6px;color:#666;background:rgba(255, 255, 255, 0.8);border:solid 2px rgba(230, 230, 230, 0.8);font-family:sans-serif;font-size:12px;text-align:center;}
+    .morris-hover.morris-default-style .morris-hover-row-label{font-weight:bold;margin:0.25em 0;}
+
+
+    .marquee-sibling {
+        padding: 0;
+        /*background-image: url('dist/img/red_strip.jpg');
+        background-size:24% 48px;
+        background-repeat: no-repeat;*/
+
+        background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eb1839), to(#2d0102));background-image:   -webkit-linear-gradient(top, #eb1839,#2d0102);
+        background-image:   -moz-linear-gradient(top, #eb1839,#2d0102);filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0);
+        -ms-filter:             'progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0)';
+        background-image:   -ms-linear-gradient(top, #eb1839, #2d0102);
+        background-image:   -o-linear-gradient(top, #eb1839,#2d0102);
+        /*background:#e31b23;*/
+        font-size: 25px;
+        font-weight: normal;
+        color: #ffffff;
+        text-align: center;
+        left: 0;
+        z-index: 2000;
+        width:24%;
+        height:48px;
+        text-shadow: 2px 3px 5px #000000;
+        
+        
+    }
+        
+    .marquee-sibling1 {
+        padding: 0;
+        /*background-image: url('dist/img/red_strip.jpg');
+        background-size:100% 48px;
+        background-repeat: no-repeat;*/
+        background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eb1839), to(#2d0102));background-image:   -webkit-linear-gradient(top, #eb1839,#2d0102);
+        background-image:   -moz-linear-gradient(top, #eb1839,#2d0102);filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0);
+        -ms-filter:             'progid:DXImageTransform.Microsoft.Gradient(startColorStr='#eb1839', endColorStr='#2d0102', GradientType=0)';
+        background-image:   -ms-linear-gradient(top, #eb1839, #2d0102);
+        background-image:   -o-linear-gradient(top, #eb1839,#2d0102);
+        /*background:#e31b23;*/
+        font-size: 25px;
+        font-weight: normal;
+        color: #ffffff;
+        text-align: center;
+        left: 0;
+        z-index: 2000;
+        text-shadow: 2px 3px 5px #000000;
+        bottom:35px;
+        width:24%;
+        height:48px;
+        padding-top:5px;
+        
+    }
+
+    .marquee, *[class^="marquee"] {
+        /*display: inline-block;*/
+        white-space: nowrap;
+        position:absolute;
+        margin-top:-1px;
+    }
+
+    .marquee{
+        clear:both;
+    /*margin-left: 25%;*/
+    }
+
+    .marquee-content-items{
+        display: inline-block;
+        padding: 5px;
+        margin: 0;
+        height: 48px;
+        position: relative;
+        font-size:18px;
+        padding-top:2px;
+    
+    }
+
+    .marquee-content-items li{
+        display: inline-block;
+        line-height: 30px;
+        color: #fff;
+    }
+
+    .marquee-content-items li:after{
+        content: "|";
+        margin: 0 1em;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $(this).toggleClass('active');
+        });
+        /*$('.flexslider').flexslider({
+                slideshow:true,
+                animation: "slide",
+                itemWidth: 192,
+                itemMargin: 2
+
+        });*/
+
+    });
+</script>
+<script>
+    /*$(function () {
+      "use strict";
+      /*var line = new Morris.Line({
+        element: 'line-chart',
+        resize: true,
+        data: [
+          {y: 'Trainee', item1: 100000},
+          {y: 'Sales Executive', item1: 150000},
+          {y: 'Sr.Sales Executive', item1: 200000},
+          {y: 'Manager', item1: 250000},
+          {y: 'Sr. Manager', item1: 300000}
+        ],
+        xkey: 'y',
+        ykeys: ['item1'],
+        labels: ['Item 1'],
+        lineColors: ['#3c8dbc'],
+        hideHover: 'auto'
+      });
+    });
+    var lineGraph = Morris.Area({
+    element: 'line-chart',
+    xkey: 'post',
+    parseTime: false,
+    ykeys: ['amount'],
+    labels: ['Amount'],
+    xLabelAngle: 60,
+    fillOpacity: '0.7',
+    gridTextFamily: 'mtsRegular',
+    hideHover: 'auto',
+    lineWidth: '1px',
+    lineColors: ['#076178'],
+    pointFillColors: ['#fff'],
+    pointStrokeColors: ['#012e42'],
+    data: [{ post: 'Trainee', amount: 1 },{ post: 'Sales Executive', amount: 1.5,},{ post: 'Sr.Sales Executive', amount: 2.5 },{ post: 'Manager', amount: 3.5,},{ post: 'Sr. Manager', amount: 5}],
+    resize: true
+});
+/*var lineGraph = Morris.Area({
+    element: 'line-chart',
+    xkey: 'Date',
+    ykeys: ['Sales', 'Revenue'],
+    labels: ['Sales','Revenue'],
+    fillOpacity: '0.7',
+    gridTextFamily: 'mtsRegular',
+    hideHover: 'auto',
+    lineWidth: '1px',
+    lineColors: ['#076178','#1ecee8'],
+    pointFillColors: ['#fff'],
+    pointStrokeColors: ['#012e42'],
+    data: [{ 'Date': '2018-08-06', Sales: 1, Revenue: 9.75},{ Date: '2018-08-08', Sales: 1, Revenue: 21.03},{ Date: '2018-08-09', Sales: 1, Revenue: 4.75},{ Date: '2018-08-12', Sales: 1, Revenue: 27.66},{ Date: '2018-08-13', Sales: 3, Revenue: 63.33},{ Date: '2018-08-16', Sales: 2, Revenue: 192.29},{ Date: '2018-08-18', Sales: 2, Revenue: 47.37},{ Date: '2018-08-19', Sales: 1, Revenue: 28.94},{ Date: '2018-08-20', Sales: 1, Revenue: 66.09},{ Date: '2018-08-21', Sales: 1, Revenue: 24.73},{ Date: '2018-08-22', Sales: 4, Revenue: 93.53},{ Date: '2018-08-23', Sales: 1, Revenue: 27.59},{ Date: '2018-08-25', Sales: 2, Revenue: 142.52},{ Date: '2018-08-26', Sales: 1, Revenue: 24.77},{ Date: '2018-08-27', Sales: 3, Revenue: 69.79},{ Date: '2018-08-29', Sales: 2, Revenue: 67.63},{ Date: '2018-08-30', Sales: 1, Revenue: 15.3},{ Date: '2018-09-01', Sales: 1, Revenue: 73.69},{ Date: '2018-09-02', Sales: 4, Revenue: 270.38},{ Date: '2018-09-03', Sales: 2, Revenue: 50.07}],
+    resize: true
+});
+    });*/
+  </script>
+
+<!--script src="bower_components/raphael/raphael.min.js"></script>
+  <script src="bower_components/morris.js/morris.min.js"></script-->
+
+  <style>
+
+    #reminderweek
+                {
+                    display:none;
+                }
+                
+                .callout.callout-info {
+                    background-color: #295F65;
+                    border-color: #C2E274;
+               }
+                
+                .callout {
+                    padding: 5px 10px 5px 5px;
+                    margin-bottom:10px;
+                    height:75px;
+                }
+        
+                .right_drawer_task {
+                    word-wrap: break-word;
+                    font-size: 14px;
+                    width: 14px;
+                    height: 195px;
+                    font-weight: bold;
+                    /*position: fixed;*/
+                    right: -1px;
+                    z-index: 5;
+                    /*background-color: #d2aa4b;*/
+                    width: 25px;
+                    padding: 7px;
+                    color: white;
+                    border: 1px solid;
+                    border-left: 5px;
+                    border-radius: 10px 0px 0px 10px;
+                    top: 233px;
+                    z-index:9999;
+                }
+                .close_drawer_task {
+                    font-size: 26px;
+                    float: left;
+                    margin-left: 0px;
+                    margin-top: 0px;
+                    height: 39px;
+                    display:none;
+                    background-color:#d2aa4b;
+                    border:0px;
+                    
+                }
+                #task_manager
+                {
+                    width:100%;
+                    margin-right:10px;
+                    font-size:13px;
+                    float:left;
+            /* Safari 4+, Chrome 1-9 */                         
+            /*background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d2aa4b), to(#f2dfb1));
+            /* Safari 5.1+, Mobile Safari, Chrome 10+ */    
+            /*background-image:   -webkit-linear-gradient(top, #d2aa4b,#f2dfb1);
+            /* Firefox 3.6+ */                                      
+            /*background-image:   -moz-linear-gradient(top, #d2aa4b,#f2dfb1);
+            /* IE 7-*/                                                  
+            /*filter:                 progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0);
+            /* IE 8+*/                                                  
+            /*-ms-filter:             "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0)";
+            /* IE 10+ */                                               /* background-image:   -ms-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* Opera 11.10+ */                                      /*background-image:   -o-linear-gradient(top, #d2aa4b,#f2dfb1);		
+    
+                color:#ffffff;
+                font-size:14px;
+                /*	-moz-box-shadow: inset 0 0 3px 		#000000, 0 0 9px 		#000000;
+                -webkit-box-shadow: inset 0 0 3px 	#000000, 0 0 9px 		#000000 ;
+                box-shadow: inset 0 0 3px 			#000000, 0 0 9px 		#000000;*/
+    
+    
+                }
+                #tasks
+                {
+                    min-height:300px;
+                    width:100%;
+                    color:#000000;
+                    /*/* Safari 4+, Chrome 1-9 */                         
+                    /*background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d2aa4b), to(#f2dfb1));
+            /* Safari 5.1+, Mobile Safari, Chrome 10+ */    
+            /*background-image:   -webkit-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* Firefox 3.6+ */                                      
+            /*background-image:   -moz-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* IE 7-*/                                                  
+            /*filter:                 progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0);
+            /* IE 8+*/                                                  /*
+            -ms-filter:             "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#d2aa4b', endColorStr='#f2dfb1', GradientType=0)";
+            /* IE 10+ */                                                /*background-image:   -ms-linear-gradient(top, #d2aa4b, #f2dfb1);
+            /* Opera 11.10+ */                                      /*
+            background-image:   -o-linear-gradient(top, #d2aa4b, #f2dfb1);		
+    
+                    */
+
+                    font-size:14px;
+                    
+                }
+        #tasks .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+            /*background-color:  #d2aa4b;*/
+            /*color:#000;*/
+        }
+        .modal-dialog {
+            width:25%;
+        }   
+
+        #addclient
+    {
+        position:absolute;
+        top:6%;
+        left:30%;
+        background-color:#ffffff;
+        width:40%;
+        height:350px;
+        display:none;
+        z-index:9000;
+        -moz-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        padding:30px;
+        padding-top:5px;
+    }
+    
+    .myTicker
+    {
+        height:235px;
+        list-style-type:none;
+        margin-left:-38px;
+        width:100%;
+        overflow:auto;
+    }
+
+    .myTicker li
+    {
+        list-style-type:none;
+    }
+    #reminders
+    {
+        position:fixed;
+        top:25%;
+        left:25%;
+        background-color:#ffffff;
+        width:60%;
+        height:350px;
+        display:none;
+        z-index:9000;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+    #reminders_comment
+    {
+        position:fixed;
+        top:38%;
+        left:38%;
+        background-color:#ffffff;
+        width:30%;
+        height:200px;
+        display:none;
+        z-index:9001;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+    .days
+    {
+        width:30px;
+        height:30px;
+        background:rgb(151, 147, 147);
+        color:#000000;
+        border-radius:15px;
+        float:left;
+        margin-left:10px;
+        font-size:18px;
+        padding-left:3px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .days_day
+    {
+        font-size:13px;
+        margin-top:5px;
+    }
+    .days_growth
+    {
+        width:30px;
+        height:30px;
+        background:rgb(151, 147, 147);
+        color:#000000;
+        border-radius:15px;
+        float:left;
+        margin-left:10px;
+        font-size:14px;
+        padding-top:3px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .smallbox
+    {
+        width:16%;
+        padding-left:3px;
+        padding-right: 3px;
+    }
+    #reminder_bell 
+    {
+        position: fixed;
+        right: 230px;
+        top: 11px;
+        font-size: 20px;
+        color: #fff;z-index: 9000;
+    }
+    @media screen and (max-width: 991px)  {
+
+        #reminders_comment
+        {
+            left:2%;
+            width:96%;
+        }   
+        .smallbox
+        {
+            width:33%;
+            padding-right: 3px;
+            padding-left:3px;
+        }
+        #growth_plan 
+        {
+            display:none;
+        }
+        #reminder_bell 
+        {
+            display:none;
+        }
+    }
+      </style>

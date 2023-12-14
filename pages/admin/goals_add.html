@@ -1,0 +1,141 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+
+</div>
+<div class="clearfix"></div>
+
+<div id="dropdowns_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="dropdowns_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Goal</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="user_id">User Name<span class="required">*</span></label>
+											<select class="select2 form-control"  id = "user_id" select2 ng-model="goals.user_id" ng-options="user.user_id as user.name for user in listusers" style="width:100%;" required>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="goal_category">Goal Category<span class="required">*</span></label>
+											<select class="select2 form-control"  select2 required ng-model="goals.goal_category" id="goal_category" name="goal_category" ng-options="dropdown.value as dropdown.display_value for dropdown in goal_categories" style="width:100%;" ng-change="change_goal_sub_category(goals.goal_category)" >
+											</select>
+										</div> 
+										<div class="form-group">
+											<label for="goal_sub_category">Goal Sub Category</label>
+											<select class="select2 form-control" select2 name="goal_sub_category" id="goal_sub_category" ng-model="goals.goal_sub_category" ng-options="dropdown.value as dropdown.display_value for dropdown in goal_sub_categories" style="width:100%;"  >
+											</select>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="fy_year">Financial Year</label>
+													<input type="text" class="form-control numbers" id="fy_year" name="fy_year"  placeholder="Financial Year" ng-model="goals.fy_year"  />
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="goal_per">Goal Per (%) </label>
+													<input type="text" class="form-control numbers" id="goal_per" name="goal_per"  placeholder="Goal Per (%)" ng-model="goals.goal_per" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_jan">Goal Jan </label>
+													<input type="text" class="form-control numbers" id="goal_jan" name="goal_jan"  placeholder="Goal Jan" ng-model="goals.goal_jan" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" ng-blur="apply_goal(goals.goal_jan)" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_feb">Goal Feb </label>
+													<input type="text" class="form-control numbers" id="goal_feb" name="goal_feb"  placeholder="Goal Feb" ng-model="goals.goal_feb" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_mar">Goal Mar </label>
+													<input type="text" class="form-control numbers" id="goal_mar" name="goal_mar"  placeholder="Goal Mar" ng-model="goals.goal_mar" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+										</div>	
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_apr">Goal Apr </label>
+													<input type="text" class="form-control numbers" id="goal_apr" name="goal_apr"  placeholder="Goal Apr" ng-model="goals.goal_apr" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_may">Goal May</label>
+													<input type="text" class="form-control numbers" id="goal_may" name="goal_may"  placeholder="Goal May" ng-model="goals.goal_may" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_jun">Goal Jun</label>
+													<input type="text" class="form-control numbers" id="goal_jun" name="goal_jun"  placeholder="Goal Mar" ng-model="goals.goal_jun" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+										</div>	
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_jul">Goal Jul</label>
+													<input type="text" class="form-control numbers" id="goal_jul" name="goal_jul"  placeholder="Goal Jan" ng-model="goals.goal_jul" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_aug">Goal Aug </label>
+													<input type="text" class="form-control numbers" id="goal_aug" name="goal_aug"  placeholder="Goal Aug" ng-model="goals.goal_aug" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_sep">Goal Sep</label>
+													<input type="text" class="form-control numbers" id="goal_sep" name="goal_sep"  placeholder="Goal Sep" ng-model="goals.goal_sep" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+										</div>	
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_oct">Goal Oct</label>
+													<input type="text" class="form-control numbers" id="goal_oct" name="goal_oct"  placeholder="Goal Oct" ng-model="goals.goal_oct" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_nov">Goal Nov </label>
+													<input type="text" class="form-control numbers" id="goal_nov" name="goal_nov"  placeholder="Goal Nov" ng-model="goals.goal_nov" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label for="goal_dec">Goal Dec</label>
+													<input type="text" class="form-control numbers" id="goal_dec" name="goal_dec"  placeholder="Goal Dec" ng-model="goals.goal_dec" pattern="[0-9 ]+"  hide-zero title="Only Numbers Allowed" />
+												</div>
+											</div>
+										</div>	
+										<div class="form-group">
+											<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(goals)" id="add-new-btn" ng-click="goals_add_new(goals)">Save </button>
+											<a href="#/goals_list" class="btn">Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

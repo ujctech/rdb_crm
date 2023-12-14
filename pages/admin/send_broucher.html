@@ -1,0 +1,255 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+        
+</div>
+<div class="clearfix"></div>
+<div id="mails_client" style="margin-top:115px;">
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Send Broucher</h3>
+                    
+                    <div style="right:0;float:right;margin-top:10px;">
+                        <a href="#/{{back_to}}" class="btn">Cancel</a>
+                        <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(mail_sent)" id="add-new-btn" ng-click="send_broucher(mail_sent)">Send Mail</button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            
+                            <div class="row" style="margin:0px;border:1px solid #dad2d2;min-height:450px;">
+                                <div style="width:100%;font-size:16px;text-align:center;border-bottom:1px solid #ffffff;background-color:#000000;color:#ffffff;">Mails to Client</div>
+                                <div compile-html="trustedHtml_sentitems"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-8" style="margin:0px;border:1px solid #dad2d2;">
+                            <div id="mails_client_inner">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+							                    <label for="to_mail_id">To</label>
+								                <input type="text" class="form-control" id="to_mail_id" name="to_mail_id"  placeholder="To" ng-model="mail_sent.to_mail_id" required />
+                                                 <!--span class="input-group-addon"><a href="javascript:void(0)" style="color:#000;" ng-click="showmailids(mail_sent.client_id,'to')" ><span class="glyphicon glyphicon-user" title="TO Mail ID"></span></a></span><span class="input-group-addon"><a href="javascript:void(0)" ng-click="addnewemail(mail_sent.client_id)"><span class="glyphicon glyphicon-plus" title="Add New Mail ID"></span></a></span>
+								                <div id="showtomailids" compile-html="trustedHtml_tomailids"></div>
+                                                <div id="addnewemailid"><input type="text" class="form-control" id="newemailid"  placeholder="New Email ID" /><a href="javascript:void(0)" ng-click="newemail(mail_sent.client_id)"><span class="glyphicon glyphicon-ok" title="Done" style="position: absolute;right: 17px;margin-top: 16px; border: 1px solid #000; border-radius: 3px;padding: 2px;padding-right: 17px;"></span></a></div-->
+						                  </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+							                 <label for="cc_mail_id">CC</label>
+							                 
+								                <input type="text" class="form-control" id="cc_mail_id" name="cc_mail_id"  placeholder="CC" ng-model="mail_sent.cc_mail_id" />
+								                <!--span class="input-group-addon"><a href="javascript:void(0)" style="color:#000;" ng-click="showmailids(mail_sent.client_id,'cc')" ><span class="glyphicon glyphicon-user" title="CC Mail ID"></span></a></span>
+								                <div id="showccmailids" compile-html="trustedHtml_ccmailids"></div-->
+						                 </div>
+                                    </div>
+                                </div>
+                                <!--<div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+							                 <label for="cc_mail_id">BCC</label>
+							                 <div class="input-group">
+								                <input type="text" class="form-control" id="bcc_mail_id" name="bcc_mail_id"  placeholder="BCC" ng-model="mail_sent.bcc_mail_id" required ng-init="mail_sent.bcc_mail_id = mail_sent.bcc_mail_id"/>
+								                <span class="input-group-addon"><a href="javascript:void(0)" style="color:#000;" ng-click="showmailids(mail_sent.client_id,'bcc')" ><span class="glyphicon glyphicon-user" title="BCC Mail ID"></span></a></span>
+								                <div id="showbccmailids" compile-html="trustedHtml_bccmailids"></div>
+							                 </div>
+						                 </div>
+                                    </div>
+                                </div>-->
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                             <label for="subject">Subject</label>
+                                             <input class="form-control" id="subject" name="subject" ng-model="mail_sent.subject" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+							                 <label for="attachments">Attachments</label>
+							                 <div class="input-group">
+								                <input type="text" class="form-control" id="attachments" name="attachments"  placeholder="Attachments" ng-model="mail_sent.attachments" required ng-init="mail_sent.attachments = mail_sent.attachments"/>
+                                                 <span class="input-group-addon"><a href="javascript:void(0)" style="color:#000;" ng-click="showattachments(mail_sent.client_id)" ><span class="glyphicon glyphicon-paperclip" title="attachments"></span></a></span><span class="input-group-addon"><a href="javascript:void(0)" style="color:#000;" ng-click="showpdffile(mail_sent.client_id)" ><span class="glyphicon glyphicon-list" title="attachments"></span></a></span>
+								                <div id="showattachments" compile-html="trustedHtml_attachments"></div>
+                                                <div id="showpdffile" compile-html="trustedHtml_pdffile"></div>
+							                 </div>
+						                 </div>
+                                    </div>
+                                </div>-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                             <label for="text_message">Message</label>
+                                             <textarea class="form-control" id="text_message" rows="30" name="text_message" ng-model="mail_sent.text_message"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="show_pdf">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="javascript:void(0)" ng-click="close_pdf()" style="float:right;width:18px; height:18px; border:1px solid #000;border-radius: 18px;margin:5px;" ><span style="margin-left:5px;">X</span></a>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="show_pdf" compile-html="trustedHtml_show_pdf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    #mails_client_inner
+    {
+        display: none;
+    }
+    
+    
+    .mydropdown-menu {
+  		position: absolute;
+  		top: 100%;
+  		left: 0;
+  		z-index: 1000;
+  		display: none;
+  		float: left;
+  		min-width: 360px;
+		max-height: 250px;
+		overflow-y: auto;
+  		padding: 5px 0;
+  		margin: 2px 0 0;
+  		font-size: 14px;
+  		list-style: none;
+  		background-color: #ffffff;
+		border: 1px solid #cccccc;
+		border: 1px solid rgba(0, 0, 0, 0.15);
+		border-radius: 4px;
+		-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+		background-clip: padding-box;
+	}
+
+	.mydropdown-menu.pull-right {
+		  right: 0;
+		  left: auto;
+	}
+
+.mydropdown-menu .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+.mydropdown-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.mydropdown-menu > li > a:hover,
+.mydropdown-menu > li > a:focus {
+  color: #262626;
+  text-decoration: none;
+  background-color: #428bca;
+}
+
+.mydropdown-menu > .active > a,
+.mydropdown-menu > .active > a:hover,
+.mydropdown-menu > .active > a:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #428bca;
+  outline: 0;
+}
+
+.mydropdown-menu > .disabled > a,
+.mydropdown-menu > .disabled > a:hover,
+.mydropdown-menu > .disabled > a:focus {
+  color: #999999;
+}
+
+.mydropdown-menu > .disabled > a:hover,
+.mydropdown-menu > .disabled > a:focus {
+  text-decoration: none;
+  cursor: not-allowed;
+  background-color: transparent;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.open > .mydropdown-menu {
+  display: block;
+}
+
+.open > a {
+  outline: 0;
+}
+
+.mydropdown-header {
+  display: block;
+  padding: 3px 20px;
+  font-size: 12px;
+  line-height: 1.428571429;
+  color: #999999;
+}
+
+.mydropdown-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 990;
+}
+
+.pull-right > .mydropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+#addnewemailid {
+    display: none;
+    border: 1px solid #CEC0C0;
+    width: 287px;
+    height: 57px;
+    background-color: #DED2D2;
+    position: absolute;
+    right: 0px;
+    margin-top: 36px;
+    padding: 10px;
+    z-index: 1000;
+}
+  .modal-header {
+        min-height: 16.428571429px;
+        padding: 0px;
+        border-bottom: 0px solid #e5e5e5;
+        
+    }
+    .modal-dialog
+    {
+        width:935px;
+        height:790px;
+    }  
+
+    
+</style>

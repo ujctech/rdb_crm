@@ -1,0 +1,392 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" >
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+        <a href="javascript:void(0);" ng-click="pagenavigation( 'next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+    </div>
+    
+</div>
+<div class="clearfix"></div>
+
+
+<div class="box boxpadding" id="properties" style="border-top:0px;" >
+    <div class="box-header">
+        <p>Result:</p>
+        <div id="result">
+
+        </div>
+    </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#callingdatastab" data-toggle="tab" >Call Data&nbsp;&nbsp; {{callingdata_count}}</a></li>
+            
+        </ul>
+        <div class="tab-content">
+            <div class="right-side"  style="text-align:right;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                    <!--form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                        <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_for">Agreement For</label>
+                                           <select class="select2 form-control"  id="agreement_for" name="agreement_for" select2 ng-model="searchdata.agreement_for"  data-placeholder="Select agreement_for" style="width:100%;" >
+                                                <option value="Sale">Sale</option>
+                                                <option value="Lease" >Lease</option>
+                                                <option value="Sale Under Contructions" >Sale Under Contructions</option>
+                                                <option value="Sale Preleased" >Sale Preleased</option>
+                                            </select>
+                                       </div> 
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="assign_to">Assign to</label>
+                                           <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="teams">Teams</label>
+                                           <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams)">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" >
+                                       <div class="form-group">
+                                           <label for="client_id">Owner</label>
+                                           <select class="select2 form-control" select2 ng-model="searchdata.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;" multiple="multiple">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="broker_id">Broker</label>
+                                           <select class="select2 form-control" select2 ng-model="searchdata.broker_id" ng-options="contact.contact_id as contact.name for contact in brokers" style="width:100%;" multiple="multiple">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="payment_id">Payment ID</label>
+                                            <a href="javascript:void(0)" class="btn" style="color:#ff000c;float:right;padding:0px;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                            <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.payment_id" id= "payment_id" name= "payment_id" ng-options="payment_id.payment_id as payment_id.payment_id for payment_id in payment_ids" style="width:100%;"></select>
+                                        </div>
+                                    </div>
+                                   
+                              </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="property_id">Property ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.property_id" id= "property_id" name= "property_id" ng-options="property_id.property_id as property_id.property_id for property_id in property_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="project_id">Project ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.project_id" id= "project_id" name= "project_id" ng-options="project_id.project_id as project_id.project_id for project_id in project_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="enquiry_id">Enquiry ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.enquiry_id" id= "enquiry_id" name= "enquiry_id" ng-options="project_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_id">Agreement ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.agreement_id" id= "agreement_id" name= "agreement_id" ng-options="agreement_id.agreement_id as agreement_id.agreement_id for agreement_id in agreement_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_from">Created Date from</label>
+                                           <div class="input-group date" id="created_date_from" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_to">To</label>
+                                           <div class="input-group date" id="created_date_to" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_from">Deal Date From</label>
+                                            <div class="input-group date" id="deal_date_from" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_from" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_to">Deal Date To</label>
+                                            <div class="input-group date" id="deal_date_to" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_to" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="due_date_from">Due Date From</label>
+                                            <div class="input-group date" id="due_date_from" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.due_date_from" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="due_date_to">Due Date To</label>
+                                            <div class="input-group date" id="due_date_to" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.due_date_to" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="callingdata_status">callingdata Status</label>
+                                            <select class="select2 form-control"  id="callingdata_status" name="callingdata_status" select2 ng-model="paymentsdata.callingdata_status"  required  data-placeholder="Select callingdata Status" style="width:100%;" >
+                                                <option value="Pending" selected="selected">Pending</option>
+                                                <option value="Partial Recieved" >Partial Recieved</option>
+                                                <option value="Received" >Received</option>
+                                            </select>
+                                        </div>
+                                    </div>                                          
+
+                                </div>
+                            </div>
+                            
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <div class="col-md-2" style="margin-top:25px;">        
+                                       <div class="form-group">
+                                           <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_callingdatas(searchdata,'form')">Search Now </button>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                           <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                       <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+                    </form-->
+                </div>
+            </div>
+            <div class="tab-pane active" id="callingdatastab">   
+                <div class="box-body table-responsive">
+                    
+                    <table class="table table-bordered table-striped"  > <!--datatable-setup="" -->
+                        <thead>
+                            <tr>
+
+
+                                <th>Call_id</th>
+                                <th>Call_to_number</th>
+                                <th>Caller_id_number</th>
+                                <th>Start_stamp</th>
+                                <th>Start_date</th>
+                                <th>Start_time</th>
+                                <th>Direction</th>
+                                <th>Call_flow</th>
+                                <th>Lead_fields</th>
+                                <th>Campaign_name</th>
+                                <th>Campaign_id</th>
+                                <th>Billing_circle</th>
+                                <th>Agent</th>
+                                <th>Agent_name</th>
+                                <th>Agent_number</th>
+                                <th>UUID</th>
+                                <th>Date</th>
+                                <th>Dept Name</th>
+                                <th>IVR name</th> 
+                                <th>Created Date</th>  
+
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <tr ng-repeat="callingdata in callingdata_list">
+                                <td>{{callingdata.call_id}}</td>
+                                <td>{{callingdata.call_to_number}}</td>
+                                <td>{{callingdata.caller_id_number}}</td>
+                                <td>{{callingdata.start_stamp}}</td>
+                                <td>{{callingdata.start_date}}</td>
+                                <td>{{callingdata.start_time}}</td>
+                                <td>{{callingdata.direction}}</td>
+                                <td>{{callingdata.call_flow}}</td>
+                                <td>{{callingdata.lead_fields}}</td>
+                                <td>{{callingdata.campaign_name}}</td>
+                                <td>{{callingdata.campaign_id}}</td>
+                                <td>{{callingdata.billing_circle}}</td>
+                                <td>{{callingdata.agent}}</td>
+                                <td>{{callingdata.agent_name}}</td>
+                                <td>{{callingdata.agent_number}}</td>
+                                <td>{{callingdata.uuid}}</td>
+                                <td>{{callingdata.date}}</td>
+                                <td>{{callingdata.dept_name}}</td>
+                                <td>{{callingdata.ivr_name}}</td>
+                                <td>{{callingdata.created_date}}</td>
+
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Call_id</th>
+                                <th>Call_to_number</th>
+                                <th>Caller_id_number</th>
+                                <th>Start_stamp</th>
+                                <th>Start_date</th>
+                                <th>Start_time</th>
+                                <th>Direction</th>
+                                <th>Call_flow</th>
+                                <th>Lead_fields</th>
+                                <th>Campaign_name</th>
+                                <th>Campaign_id</th>
+                                <th>Billing_circle</th>
+                                <th>Agent</th>
+                                <th>Agent_name</th>
+                                <th>Agent_number</th>  
+                                <th>UUID</th>
+                                <th>Date</th>
+                                <th>Dept Name</th>
+                                <th>IVR name</th>   
+                                <th>Created Date</th> 
+                                
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-dialog{
+			width:875px;height:1800px;
+		}
+#pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    .red_color
+    {
+        color:#a61111;
+    }
+    .green_color
+    {
+        color:#30d718;
+    }
+
+    .black_color
+    {
+        color:#000000;
+    }
+
+
+</style>
+
+<script>
+    if(typeof(EventSource) !== "undefined") {
+      var source = new EventSource("https://crm.rdbrothers.com/api/v1/calldata.php");
+      source.onmessage = function(event) {
+          console.log(event.data);
+        document.getElementById("result").innerHTML += event.data + "<br>";
+      };
+    } else {
+      document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+    }
+</script>

@@ -1,0 +1,202 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('pptx')">Export to PPT</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('pdf')">Export to PDF</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('docx')">Export to DOC</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('xlsx')">Export to EXCEL</a>
+</div>
+<div class="clearfix"></div>
+
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+    <!--<div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active " style="border-top-color: #f3f0f0;text-transform: capitalize;"><a data-target="#reports" data-toggle="tab" >{{module_name}}</a></li>
+        </ul>
+        <div class="tab-content">
+            <h3>{{main_heading}}</h3>
+            <div class="tab-pane active" id="reports">
+                <div id="showreport" class=" html_content" compile-html="trustedHtml_show_report">Nothing to show</div>
+            </div>
+        </div>
+    </div>-->
+
+    <!--<div class="item" ng-if="property_images.length>0">            
+        <div class="clearfix" style="max-width:900px;">
+            <ul id="image-gallery" class="gallery list-unstyled"  light-slider=""> <!--cS-hidden-->
+                <!--li ng-repeat="property_image in property_images" data-thumb="api/v1/uploads/property/{{property_image.filenames}}">
+                        <p style="font-weight:bold;font-size:20px;color:#000000;margin-bottom:20px;text-align:center;">{{project_image.description}}</p>
+                    <img src="api/v1/uploads/property/{{property_image.filenames}}" style="width:700px;height:300px;" />
+                </li>
+                
+            </ul>
+        </div>
+    </div>-->
+    <div class="flexslider html_content" id="flexslider3" flex-sliderrep="" style="max-width:1015px;" compile-html="trustedHtml_pages">
+        <!--ul class="slides">
+            <li>
+                <div class="slider " id="lpage_1"  >
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_2"  compile-html="trustedHtml_page_2">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_3"  compile-html="trustedHtml_page_3">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_4"  compile-html="trustedHtml_page_4">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_5"  compile-html="trustedHtml_page_5">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_6"  compile-html="trustedHtml_page_6">
+                </div>
+            </li>
+        </ul-->
+    </div>
+
+    <!--div class="item" >            
+        <div class="clearfix" style="max-width:988px;">
+            <ul id="image-gallery" class="gallery list-unstyled cS-hidden" light-slider="">
+                <li id="lpage_1" class=" html_content" compile-html="trustedHtml_page_1" >  
+                </li>
+                <li id="lpage_1" class=" html_content" compile-html="trustedHtml_page_1" >  
+                </li>
+                <li  id="lpage_2" class=" html_content" compile-html="trustedHtml_page_2">  
+                </li>
+                <li id="lpage_3" class=" html_content" compile-html="trustedHtml_page_3"> 
+                </li>
+                <li  id="lpage_4" class=" html_content" compile-html="trustedHtml_page_4">   
+                </li>
+                <li id="lpage_5" class=" html_content" compile-html="trustedHtml_page_5"> 
+                </li>
+                <li id="lpage_6" class=" html_content" compile-html="trustedHtml_page_6">   
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    <!--div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_1" class=" html_content" compile-html="trustedHtml_page_1">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_2" class=" html_content" compile-html="trustedHtml_page_2">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_3" class=" html_content" compile-html="trustedHtml_page_3">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_4" class=" html_content" compile-html="trustedHtml_page_4">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_5" class=" html_content" compile-html="trustedHtml_page_5">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_6" class=" html_content" compile-html="trustedHtml_page_6">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_1">Page 1</label>
+                                <textarea class="form-control"  id="fpage_1" rows="30" name="fpage_1" ng-model="fpage_1" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_2">Page 2</label>
+                                <textarea class="form-control"  id="fpage_2" rows="30" name="fpage_2" ng-model="fpage_2" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_3">Page 3</label>
+                                <textarea class="form-control"  id="fpage_3" rows="30" name="fpage_3" ng-model="fpage_3" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_4">Page 4</label>
+                                <textarea class="form-control"  id="fpage_4" rows="30" name="fpage_4" ng-model="fpage_4" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_5">Page 5</label>
+                                <textarea class="form-control"  id="fpage_5" rows="30" name="fpage_5" ng-model="fpage_5" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_6">Page 6</label>
+                                <textarea class="form-control"  id="fpage_6" rows="30" name="fpage_6" ng-model="fpage_6" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+<style>
+.lSAction > .lSNext {
+   
+    background-color: #383434;
+    border-radius: 20px;
+}
+
+.lSAction > .lSPrev {
+   
+    background-color: #383434;
+    border-radius: 20px;
+    margin-left:18px;
+}
+
+</style>
+
+                

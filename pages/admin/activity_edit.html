@@ -1,0 +1,962 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		
+</div>
+<div class="clearfix"></div>
+
+<div id="activity_info"  style="margin-top:114px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;" ng-if="update_rights" >
+	<form  novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="activity_data">
+			<div class="col-md-12">
+				<div class="box box-primary" style="border-top:0px;border-radius:0px;background: #ffffff;">
+					<div class="box-header">
+						<h3 class="box-title">Edit Activity</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs" id="tab_menu">
+										<li class="active"><a data-target="#activity_tab" data-toggle="tab">Activity</a></li>
+										<li><a data-target="#matching_properties" data-toggle="tab">Schedule Visits</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="activity_tab">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="activity_type">Activity Type</label>
+														<select class="select2 form-control" select2 ng-model="activity.activity_type" ng-options="dropdown.value as dropdown.display_value for dropdown in factivity_type" style="width:100%;" ng-change="change_activity_sub_type(activity.activity_type)">
+															<option value="" disabled selected>Select Activity Type</option>
+														</select>
+													</div> 
+													<div class="form-group"  ng-if="activity.activity_type=='Task'">
+														<label for="activity_sub_type">Category</label>
+														<select class="select2 form-control" select2 name="activity_sub_type" id="activity_sub_type" ng-model="activity.activity_sub_type" ng-options="dropdown.value as dropdown.display_value for dropdown in activity_sub_types" style="width:100%;">
+														</select>
+													</div>
+													<div class="form-group" ng-if="activity.activity_type=='Task' && activity.activity_sub_type=='Data Calling'">
+														<label for="calling_count" >Calling Count</label>
+														<input type="text" class="form-control" id="calling_count" name="calling_count"  placeholder="Calling Count" ng-model="activity.calling_count"  />
+													</div>
+													<div class="row">
+														<div class="col-md-6">       
+															<div class="form-group">
+																<label for="activity_start">Start Date Time</label><div class="input-group date" id="activity_start" ng-model="activity.activity_start" datetimepicker>
+																<input class="form-control" type="text"  >
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="activity_end">End Date Time</label><div class="input-group date" id="activity_end" ng-model="activity.activity_end" datetimepicker>
+																<input class="form-control" type="text"  >
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>															
+													<div class="form-group">
+														<label for="enquiry_id">Enquiry</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="activity.enquiry_id" ng-options="enquiry.enquiry_id as enquiry.enquiry_title for enquiry in enquiries"  style="width:100%;"  ng-required="!activitydata.property_id && !activitydata.project_id"> <!--ng-change="GetProperties(activity.enquiry_id);"-->
+																<option value="" disabled selected>Select Enquiry</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  ng-click="RemoveID('enquiry_id')" title="Remove Enquiry" alt="Remove Enquiry"><i class="fa fa-times"></i></a>
+															</div>
+														</div>
+
+														
+													</div>
+													<div class="form-group">
+														<label for="property_id">Properties</label>
+														
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="activity.property_id" ng-options="property.property_id as property.property_title for property in m_properties"  style="width:100%;" multiple="multiple" ng-required="!activitydata.enquiry_id && !activitydata.project_id">
+																
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  ng-click="RemoveID('property_id')" title="Remove Property" alt="Remove Property"><i class="fa fa-times"></i></a>
+															</div>
+															</a>
+														</div>
+
+													</div>
+													<div class="form-group">
+														<label for="project_id">Project</label>
+														
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="activity.project_id" ng-options="project.project_id as project.project_title for project in m_projects"  style="width:100%;" multiple="multiple" ng-required="!activitydata.enquiry_id && !activitydata.property_id">
+																
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  ng-click="RemoveID('project_id')" title="Remove Project" alt="Remove Project"><i class="fa fa-times"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="client_id">Client</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="activity.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;">
+																<option value="" disabled selected>Select Client</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)" data-toggle="modal" data-target="#adddeveloper"  ng-click="AddContact('Client')"><i class="fa fa-plus"></i></a>
+															</div>															
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  ng-click="RemoveID('client_id')" title="Remove Client" alt="Remove Client"><i class="fa fa-times"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="broker_id">Broker</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="activity.broker_id" ng-options="contact.contact_id as contact.name for contact in brokers" style="width:100%;" multiple="multiple">		
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  ng-click="RemoveID('broker_id')" title="Remove Broker" alt="Remove Broker"><i class="fa fa-times"></i></a>
+															</div>
+														</div>
+
+													</div>
+													<div class="form-group">
+														<label for="developer_id">Developer</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="activity.developer_id" ng-options="contact.contact_id as contact.name for contact in developers" style="width:100%;">
+																<option value="" disabled selected>Select Developer</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)" data-toggle="modal" data-target="#adddeveloper"  ng-click="AddContact('Developer')"  ng-if="create_developer"><i class="fa fa-plus"></i></a>
+															</div>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  ng-click="RemoveID('developer_id')" title="Remove Developer" alt="Remove Developer"  ng-if="create_developer"><i class="fa fa-times"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="description">Description</label>
+														<textarea class="form-control" id="description" name="description"  placeholder="Description" ng-model="activity.description" ></textarea>
+													</div>
+													<!--<div class="form-group">
+														<label for="target_id">Target List</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="activity.target_id" ng-options="contact.contact_id as contact.name for contact in targets" style="width:100%;">
+																<option value="" disabled selected>Select Target List</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)" data-toggle="modal" data-target="#addcontacts"  ng-click="AddContact('Target List')"><i class="fa fa-plus"></i></a>
+															</div>
+															</a>
+														</div>
+													</div>-->
+													<!--div class="form-group" >
+														<label for="properties">Properties</label>
+														<select class="select2 form-control" select2 multiple="multiple"  ng-model="activity.properties" ng-options="property.property_id as property.project_name for property in properties" style="width:100%;">
+															<option value="" disabled selected>Select Properties</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="description">Description</label>
+														<textarea class="form-control" id="description" name="description"  placeholder="Description" ng-model="activity.description"  required ></textarea>
+													</div-->
+													<div class="form-group" ng-controller="SelectTeams">
+														<label for="teams">Teams<span class="required">*</span></label>
+														<select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="activity.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required ng-change="select_assign_to(activity.teams)">
+														</select>
+													</div>
+													<div class="form-group" ng-controller="SelectUsers">
+														<label for="assign_to">Assign To<span class="required">*</span></label>
+														<select class="select2 form-control" select2 multiple="multiple"  id="assign_to" ng-model="activity.assign_to" ng-options="user.user_id as user.name+' - '+user.sub_team_name for user in users"   style="width:100%;" required>
+															<!--option value="" disabled selected>Select Assign to</option-->
+														</select>
+													</div>
+													<div class="row">
+														<div class="col-md-3">
+															<div class="form-group">
+																<div class="checkbox">
+																	<label>
+																		<input type="checkbox" id="remind" name="remind" ng-model="activity.remind" style="margin-top:10;">Remind ?
+																	</label>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label for="remindBefore">Remind Before</label>
+																<input type="text" class="form-control" id="remind_before" name="remind_before"  placeholder="Remind Before" ng-model="activity.remind_before"  />
+															</div>
+														</div>
+														<div class="col-md-5">									
+															<div class="form-group">
+																<label for="remind_time">Remind Time</label>
+																<select class="select2 form-control"  id="remind_time" name="remind_time"  select2 ng-model="activity.remind_time"  data-placeholder="Select remind_time" style="width:100%;">
+																	<option value="Minutes" selected="selected">Minutes</option>
+																	<option value="Hours" >Hours</option>
+																	<option value="Days" >Days</option>
+																</select>
+															</div>
+														</div>  
+													</div>    
+													<div class="form-group">
+														<label for="status">Status</label>
+														<select class="select2 form-control"  id="status" name="status" select2 ng-model="activity.status"  data-placeholder="Select status" style="width:100%;">
+															<option value="Open" selected="selected">Open</option>
+															<option value="Completed" >Completed</option>
+															<option value="Cancelled" >Cancelled</option>
+														</select>
+													</div>
+													<div class="form-group" ng-if="activity.status=='Completed'">
+														<label for="closure_comment">Closure Comment</label>
+														<textarea class="form-control" id="closure_comment" name="closure_comment"  placeholder="Closure Comment" ng-model="activity.closure_comment" ></textarea>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="file_activity">Activity Report</label>
+														<input id="file_activity" name="file_activity[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+														<input type="hidden" name="filename" id="filename" value="" ng-model="activity.filename" />
+													</div>
+													
+												</div>
+												<div class="col-md-3">
+													<table class="table">
+														<thead>
+															<tr style="display:none;">
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="activity_image in activity_images">
+																<td style="width:100%">
+																	<img src="dist/img/no_image.jpg" ng-if="activity_image.filenames==null " style="width:245px; height:185px;" ng-disabled="disableAll"/>
+																	<a href="javascript:void();" class="btn btn-default btn-sm" style="position:absolute;" title="Remove Image" alt="Remove Image" ng-click="removeimage(activity_image.activity_id)"><i class="glyphicon glyphicon-trash" style="font-size:20px;"></i></a> 
+																	<img src="api/v1/uploads/activitities/{{activity_image.filenames}}" ng-if="activity_image.filenames!=null " style="width:245px; height:185px;" ng-disabled="disableAll"/> 
+																	<p><a href="api/v1/uploads/activity/{{activity_image.filenames}}" title="Click to Download" alt="Click to Download" download>Download Image</a></p>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="matching_properties">
+											<div class="box box-primary" style="border-top:0px;border-radius:0px;" id="propertiestable">
+												<div class="row">
+													<div class="col-md-6" style="padding-left:20px;">
+														<div class="form-group">
+															<label for="manual_property_id">Properties</label>
+															<select class="select2 form-control" select2 ng-model="activity.manual_property_id" ng-options="manual_property.property_id as manual_property.property_name for manual_property in manual_properties" style="width:100%;">
+																<option value="" disabled selected>Select Property</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-top:24px;" ng-click="addschdulemanually(activity.activity_id,activity.manual_property_id)">Add Manually</a>
+													</div>
+												</div>
+												<div class="box-body table-responsive" style="overflow:hidden;">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 class="box-title" style="margin:10px;color:#f73030;">Visits</h3>
+														</div>
+													</div>
+													<table class="table table-bordered table-striped"  >
+														<thead>
+															<tr>
+																<th>Sub Type</th>
+																<th>Plot / Building</th>
+																<th>Wing</th>
+																<th>Floor</th>
+																<th>Bed Rooms</th>
+																<th>Bath Rooms</th>
+																<th>Price</th>
+																<th>Start Date</th>
+																<th>End Date</th>
+																<th>Remarks</th>
+																<th>Visited On</th>
+																<th>Status</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="activity_schedule in activity_schedules">
+																<td>{{activity_schedule.propsubtype}}</td>
+																<td>{{activity_schedule.building_name}}</td>
+																<td>{{activity_schedule.wing}}</td>
+																<td>{{activity_schedule.floor}}</td>
+																<td>{{activity_schedule.bedrooms}}</td>
+																<td>{{activity_schedule.bathrooms}}</td>
+																<td>{{activity_schedule.exp_price}}</td>
+																<td>{{activity_schedule.start_date}}</td>
+																<td>{{activity_schedule.end_date}}</td>
+																<td>{{activity_schedule.description}}</td>
+																<td>{{activity_schedule.visited_on}}</td>
+																<td>{{activity_schedule.status}}</td>
+																<td><a href="javascript:void(0)" data-toggle="modal" data-target="#update_schedule" class="btn btn-default btn-sm" ng-click="Get_Activity_Schedule(activity_schedule.activity_details_id)"><i class="glyphicon glyphicon-pencil"></i></a></td>
+															</tr>
+														</tbody>
+													</table>    
+												</div>
+												
+												<div class="box-body table-responsive" ng-if="m_properties.length" style="margin-top:10px;overflow:hidden;">
+													<div class="row" style="margin-bottom:40px;">
+														<div class="col-md-12">
+															<h3 class="box-title" style="margin:10px;color:#f73030;">Matching Properties</h3>
+														</div>
+													</div>
+													<div class="checkbox" style="margin-top:-50px;margin-left:7px;position:absolute;">
+														<label>
+															<input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All
+														</label>
+														<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="addschedule();">Add Schedule</a>
+													</div>
+													
+													<table class="table table-bordered table-striped"  >
+														<thead>
+															<tr>
+																<th></th>
+																<th>Type</th>
+																<th>Sub Type</th>
+																<th>Plot / Building</th>
+																<th>Wing</th>
+																<th>Floor</th>
+																<th>Bed Rooms</th>
+																<th>Bath Rooms</th>
+																<th>Package Price</th>
+																<th>Sale Area</th>
+																<th>Carpet Area</th>
+																<th>Price</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="property in m_properties">
+																<td><div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{property.property_id}}"/></label></div></td>
+																<td>{{property.proptype}}</td>
+																<td>{{property.propsubtype}}</td>
+																<td>{{property.building_name}}</td>
+																<td>{{property.wing}}</td>
+																<td>{{property.floor}}</td>
+																<td>{{property.bedrooms}}</td>
+																<td>{{property.bathrooms}}</td>
+																<td>{{property.pack_price}}</td>
+																<td>{{property.sale_area}}</td>
+																<td>{{property.carp_area}}</td>
+																<td>{{property.exp_price}}</td>
+															</tr>
+														</tbody>
+													</table>    
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(activity)" id="add-new-btn" ng-click="activity_update(activity)" ng-if="update_rights">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+									<button class="btn btn-danger" ng-click="activity_delete(activity)" ng-if="delete_rights">Delete <span class="glyphicon glyphicon-trash"></span></button>
+									<a href="#/activity_list/direct/0" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="addvalues" class="modal" role="dialog">
+	<form novalidate name="MAddNewForm" id="madd-new-form" role="form" autocomplete="off">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">List of Values</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row" id="listofvalues">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="type">Type</label>
+										<input type="text" class="form-control" id="type" name="type"  placeholder="Type" ng-model="listvalues.type" disabled />
+									</div>
+									<div class="form-group">
+										<label for="display_value">Display Value<span class="required">*</span></label>
+										<input type="text" class="form-control" id="display_value" name="display_value"  placeholder="Display Value" ng-model="listvalues.display_value" required/>
+									</div>
+									<div class="form-group">
+										<label for="value">Value<span class="required">*</span></label>
+										<input type="text" class="form-control" id="value" name="value" placeholder="Value" ng-model="listvalues.value" required/>
+									</div>
+									<div class="form-group">
+										<label for="parent_type">Parent Value</label>
+										<select class="select2 form-control" select2  ng-model="listvalues.parent_type" ng-options="parentlist.display_value as parentlist.parent_type for parentlist in parentlists" style="width:100%;">
+											<option value="" disabled selected>Select Parent Value</option>
+										</select>
+									</div> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-md-12">	
+							<div class="form-group">
+								<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(activity)" id="add-new-btn" ng-click="activity_update(activity)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+								<button class="btn btn-danger" ng-click="activity_delete(activity)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+								<a href="#/activity_list/direct/0" class="btn">Cancel</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<div id="adddeveloper" class="modal" role="dialog" >
+	<form novalidate name="CAddNewForm" id="cadd-new-form" role="form" autocomplete="off">
+		<div class="modal-dialog modal-lg" style="width:50%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a href="javascript:void(0)" class="btn" data-dismiss="modal"  style="float:right;">Cancel</a>
+					<button class="btn btn-primary" ng-disabled="CAddNewForm.$invalid || isUnchanged(contact)" id="cadd-new-btn" ng-click="contact_add_new(contact)" class="close" data-dismiss="modal" aria-hidden="true" style="float:right;">Save </button>
+					
+					<h3 class="modal-title" style="float:left;">Add {{add_option}}</h3>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="nav-tabs-custom">
+								<ul class="nav nav-tabs">
+									<li class="active"><a data-target="#ccompany" data-toggle="tab">Company</a></li>
+									<li><a data-target="#cpersonal" data-toggle="tab">Personal</a></li>
+									<li><a data-target="#cattributes" data-toggle="tab">Attributes</a></li>
+									<li><a data-target="#ccompany_logo" data-toggle="tab">Company Logo</a></li>
+									<li><a data-target="#coffice" data-toggle="tab">Office</a></li>
+									<li><a data-target="#cadditional" data-toggle="tab">Additional Info</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="ccompany">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="contact.company_name">Company Name<span ng-if="property.propfrom =='Developer'" class="required">*</span></label>
+													<input type="text" class="form-control" id="contact.company_name" name="contact.company_name"  placeholder="Company Name" ng-model="contact.company_name"  required  pattern="[A-Z0-9a-z .,_+-]+"  hide-zero title="Only Alphabates Allowed" ng-if="property.propfrom =='Developer'"/>
+													<input type="text" class="form-control" id="company_name" name="company_name"  placeholder="Company Name" ng-model="contact.company_name"  pattern="[A-Z0-9a-z .,_+-]+"  hide-zero title="Only Alphabates Allowed" ng-if="property.propfrom !='Developer'"/>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.add1">Address 1</label>
+													<input type="text" class="form-control" id="contact.add1" name="contact.add1"  placeholder="Address 1" ng-model="contact.add1"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.add2">Address 2</label>
+													<input type="text" class="form-control" id="contact.add2" name="contact.add2"  placeholder="Address 2" ng-model="contact.add2"  />
+												</div>
+												<div class="form-group" ng-controller="SelectLocality">
+													<label for="contact.locality_id">Locality<span class="required">*</span></label>
+													<select class="select2 form-control" id = "contact.locality_id" select2 ng-change="contact_details('locality_id',contact.locality_id);" ng-model="contact.locality_id" ng-options="locality.locality_id as locality.locality for locality in localities"   style="width:100%;" required>
+														<option value="" disabled selected>Select Locality</option>
+													</select>
+												</div>
+												<div class="form-group" ng-controller="SelectArea">
+													<label for="contact.area_id">Area<span class="required">*</span></label>
+													<select class="select2 form-control" id = "contact.area_id" select2 ng-change="contact_details('area_id',contact.area_id);" ng-model="contact.area_id" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" required>
+													</select>
+												</div>
+												<div class="form-group">
+													<label for="contact.city">City</label>
+													<input type="text" class="form-control" id="contact.city" name="contact.city"  placeholder="city" ng-model="contact.city"  disabled/>
+												</div>
+												<div class="form-group">
+													<label for="contact.state">State</label>
+													<input type="text" class="form-control" id="contact.state" name="contact.state"  placeholder="contact.state" ng-model="contact.state"   disabled />
+												</div>
+												<div class="form-group">
+													<label for="contact.country">Country</label>
+													<input type="text" class="form-control" id="contact.country" name="contact.country"  placeholder="country" ng-model="contact.country"   disabled />
+												</div>
+												<div class="form-group">
+													<label for="contact.zip">Zip</label>
+													<input type="text" class="form-control" id="contact.zip" name="contact.zip"  placeholder="Zip" ng-model="contact.zip" pattern="[0-9 ]{6}"  hide-zero title="Only Alphabates Allowed" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="file_visiting_card">Visiting Card</label>
+													<input id="file_visiting_card" name="file_visiting_card[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+													<input type="hidden" name="file_name_visiting_card" id="file_name_visiting_card" value="" ng-model="contact.file_name_visiting_card" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane " id="cpersonal">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label for="contact.name_title">Salutation</label>
+															<select class="select2 form-control" select2  id="contact.name_title" name="contact.name_title" ng-model="contact.name_title"  data-placeholder="Select Name Title" style="width:100%;">
+																<option value="Not Specified" selected="selected">Not Specified</option>
+																<option value="Mr.">Mr.</option>
+																<option value="Mrs." >Mrs.</option>
+																<option value="Ms." >Ms.</option>
+																<option value="Dr." >Dr.</option>
+																<option value="Mohd.." >Mohd.</option>
+																<option value="Cmdr." >Cmdr.</option>
+																<option value="Capt." >Capt.</option>
+																<option value="Maj." >Maj.</option>
+																<option value="Col." >Col.</option>
+																<option value="Flt.Lt." >Flt.Lt.</option>
+																<option value="Prof." >Prof.</option>
+																<option value="Brig." >Brig.</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label for="contact.f_name">First Name<span class="required">*</span></label>
+															<input type="text" class="form-control" id="contact.f_name" name="contact.f_name"  placeholder="First Name" ng-model="contact.f_name" required pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed"/>
+														</div>
+													</div>	
+													<div class="col-md-4">	
+														<div class="form-group">
+															<label for="contact.l_name">Last Name</label>
+															<input type="text" class="form-control" id="contact.l_name" name="contact.l_name"  placeholder="Last Name" ng-model="contact.l_name"  pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed"/>
+														</div>
+													</div>
+												</div>		
+												<div class="form-group">
+													<label for="contact.mob_no">Mobile No.<span class="required">*</span></label>
+													<input type="text" class="form-control" id="contact.mob_no" name="contact.mob_no"  placeholder="Mobile No." ng-model="contact.mob_no" ng-blur = "checkcontact(contact.mob_no,'mob_no')" required pattern="[0-9 ]{10}"  hide-zero title="Only Numbers Allowed"/>
+													<p style="color:#fa0404;">{{mob_error}}</p>
+												</div>
+												
+												<div class="form-group">
+													<label for="contact.alt_phone_no">Alternate Phone No </label>
+													<input type="text" class="form-control" id="contact.alt_phone_no" name="contact.alt_phone_no"  placeholder="Alternate Phone No " ng-model="contact.alt_phone_no" pattern="[0-9 ]{10}"  hide-zero title="Only Numbers Allowed [Max-10 digit]" />
+												</div>	
+												<div class="form-group">
+													<label for="contact.email">Email Id<span ng-if="property.propfrom=='Developer'" class="required">*</span></label>
+													<input type="text" class="form-control" id="contact.email" name="contact.email"  placeholder="Email Id" ng-model="contact.email" ng-blur = "checkcontact(contact.email,'email')" required ng-if="property.propfrom=='Developer'" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+													<input type="text" class="form-control" id="email" name="email"  placeholder="Email Id" ng-model="contact.email" ng-blur = "checkcontact(contact.email,'email')" ng-if="property.propfrom!='Developer'"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+													<p style="color:#fa0404;">{{email_error}}</p>
+												</div>
+												<div class="form-group">
+													<div class="checkbox">
+														<label>
+															<input type="checkbox" id="contact.dnd" name="contact.dnd" ng-model="contact.dnd" >DND
+														</label>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="contact.pan_no">PAN No</label>
+													<input type="text" class="form-control" id="contact.pan_no" name="contact.pan_no"  placeholder="PAN No" ng-model="contact.pan_no" pattern="[A-Za-z0-9 ]{10}"  hide-zero title="Only Alpha numeric Allowed.. [Max 10 Char]" />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.tan_no">TAN  No</label>
+													<input type="text" class="form-control" id="contact.tan_no" name="contact.tan_no"  placeholder="TAN No" ng-model="contact.tan_no" pattern="[A-Za-z0-9 ]+"  hide-zero title="Only Alpha Numeric Allowed"/>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.occupation">Occupation</label>
+													<input type="text" class="form-control" id="contact.occupation" name="contact.occupation"  placeholder="Occupation" ng-model="contact.occupation" pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed" />
+												</div>
+
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="file_contact_pic">Contact Picture</label>
+													<input id="file_contact_pic" name="file_contact_pic[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+													<input type="hidden" name="file_name_contact_pic" id="file_name_contact_pic" value="" ng-model="contact.file_name_contact_pic" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="cattributes">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group" ng-controller="SelectDesignation">
+													<label for="contact.designation">Designation</label>
+													<select class="select2 form-control"    ng-model="contact.designation" ng-options="designation.designation as designation.designation for designation in designations"   style="width:100%;">
+													</select>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.birth_date">Birth Date</label><div class="input-group date" id="contact.birth_date" date-directive="">
+													<input class="form-control" type="text" ng-model="contact.birth_date" >
+													<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+													</div>
+												</div>
+
+												<div class="form-group" ng-controller="SelectTeams">
+													<label for="contact.teams">Teams<span class="required">*</span></label>
+													<select class="select2 form-control" multiple="multiple"  id = "contact.teams" select2 ng-model="contact.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required ng-change="select_assign_to(contact.teams)">
+														<!--option value="" disabled selected>Select</option-->
+													</select>
+												</div>
+												<div class="form-group" ng-controller="SelectUsers">
+													<label for="contact.assign_to">Assign To<span class="required">*</span></label>
+													<select class="select2 form-control" multiple="multiple"  id = "contact.assign_to" select2 ng-model="contact.assign_to" ng-options="user.user_id as user.name+' - '+user.sub_team_name for user in users"   style="width:100%;" required>
+														<!--option value="" disabled selected>Select</option-->
+													</select>
+												</div>
+												<div class="form-group">
+													<label for="contact.rera_no">Rera No<span ng-if="property.propfrom=='Developer'" class="required">*</span></label>
+													<input type="text" class="form-control" id="contact.rera_no" name="contact.rera_no"  placeholder="Rera No" ng-model="contact.rera_no" required ng-if="property.propfrom=='Developer'" pattern="[a-z0-9A-Z]{12}"  hide-zero title="Only Alpha Numeric Allowed"/>
+													<input type="text" class="form-control" id="contact.rera_no" name="contact.rera_no"  placeholder="Rera No" ng-model="contact.rera_no" ng-if="property.propfrom!='Developer'" pattern="[a-z0-9A-Z]{12}"  hide-zero title="Only Alphabates Allowed"/>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.gst_no">GST No</label>
+													<input type="text" class="form-control" id="contact.gst_no" name="contact.gst_no"  placeholder="GST No" ng-model="contact.gst_no"  pattern="[A-Za-z0-9 ]+"  hide-zero title="Only Alpha Numeric Allowed"/>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.comments">Comments</label>
+													<textarea class="form-control" id="contact.comments" name="contact.comments"  placeholder="Comments" ng-model="contact.comments" ></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="ccompany_logo">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="file_company_logo">Company Logo<span class="required">*</span></label>
+													<input id="file_company_logo" name="file_company_logo[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" required>
+													<input type="hidden" name="file_name_company_logo" id="file_name_company_logo" value="" ng-model="contact.file_name_company_logo" />
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="coffice">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="contact.off_email">Office Email</label>
+													<input type="text" class="form-control" id="contact.off_email" name="contact.off_email"  placeholder="Office Email" ng-model="contact.off_email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.off_phone">Office Phone</label>
+													<input type="text" class="form-control" id="contact.off_phone" name="contact.off_phone"  placeholder="Office Phone " ng-model="contact.off_phone"  pattern="[0-9 ]{10}"  hide-zero title="Only Numbers Allowed [Max 10]"/>
+												</div>
+												<div class="form-group">
+													<label for="contact.off_fax">Office Fax</label>
+													<input type="text" class="form-control" id="contact.off_fax" name="contact.off_fax"  placeholder="Office Fax" ng-model="contact.off_fax"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.off_add1">Office Address</label>
+													<input type="text" class="form-control" id="contact.off_add1" name="contact.off_add1"  placeholder="Office Address " ng-model="contact.off_add1"  />
+												</div>
+
+												<div class="form-group" ng-controller="SelectLocality">
+													<label for="contact.off_locality">Office Locality<span class="required">*</span></label>
+													<select class="select2 form-control" id = "contact.off_locality" select2 ng-change="contact_details('off_locality',contact.off_locality);" ng-model="contact.off_locality" ng-options="locality.locality_id as locality.locality for locality in localities"   style="width:100%;" required>
+														<option value="" disabled selected>Select Locality</option>
+													</select>
+												</div>
+												<div class="form-group" ng-controller="SelectArea">
+													<label for="off_area">Office Area<span class="required">*</span></label>
+													<select class="select2 form-control" id = "contact.off_area" select2 ng-change="contact_details('off_area',contact.off_area);" ng-model="contact.off_area" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" required>
+														<!--option value="" disabled selected>Select Area</option-->
+													</select>
+												</div>
+												<div class="form-group">
+													<label for="contact.off_city">Office City</label>
+													<input type="text" class="form-control" id="contact.off_city" name="contact.off_city"  placeholder="Office city" ng-model="contact.off_city"  disabled/>
+												</div>
+												<div class="form-group">
+													<label for="contact.off_state">Office State</label>
+													<input type="text" class="form-control" id="contact.off_state" name="contact.off_state"  placeholder="Office state" ng-model="contact.off_state"   disabled />
+												</div>
+												<div class="form-group">
+													<label for="off_country">Office Country</label>
+													<input type="text" class="form-control" id="contact.off_country" name="contact.off_country"  placeholder="Office country" ng-model="contact.off_country"   disabled />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.off_zip">Office Zip Code</label>
+													<input type="text" class="form-control" id="contact.off_zip" name="contact.off_zip"  placeholder="Office Zip Code" ng-model="contact.off_zip"  pattern="[0-9 ]{6}"  hide-zero title="Only Numbers Allowed [Max 6]"/>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="cadditional">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="contact.source_channel">Source Channel <span class="required">*</span></label>
+													<div class="input-group">
+														<select class="select2 form-control" multiple="multiple" select2 required ng-model="contact.source_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in client_sources" style="width:100%;" ng-change="change_sub_source(contact.source_channel)" >
+															<!--option value="" disabled selected>Select</option-->
+														</select>
+														<div class="input-group-addon">
+															<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('CLIENT_SOURCE')"><i class="fa fa-plus"></i></a>
+														</div>
+													</div>
+												</div>        
+												<div class="form-group">
+													<label for="contact.source_sub_channel">Sub source Channel</label>
+													<div class="input-group">
+														<select class="select2 form-control" multiple="multiple" select2 ng-model="contact.source_sub_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in sub_sources" style="width:100%;">
+															<!--option value="" disabled selected>Select</option-->
+														</select>
+														<div class="input-group-addon">
+															<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('SUB_SOURCE')"><i class="fa fa-plus"></i></a>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label for="contact.website">Website</label>
+													<input type="text" class="form-control" id="contact.website" name="contact.website"  placeholder="Website" ng-model="contact.website" pattern="[A-Za-z0-9 ]+"  hide-zero title="Only Alphabates Allowed" />
+												</div>
+														
+												<div class="form-group">
+													<label for="rating">Rating</label>
+													<input id="rating" name="rating" ng-model = "contact.rating" value="0" type="number" min=0 max=5 step=0.5 data-size="xs" rating-setup="" >
+												</div>
+
+												<div class="form-group" ng-controller="SelectArea">
+													<label for="contact.opp_area">Opperates in Area<span class="required">*</span></label>
+													<select class="select2 form-control" id = "contact.opp_area" select2 ng-change="contact_details('opp_area',contact.opp_area);" ng-model="contact.opp_area" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" required>
+													</select>
+												</div>
+												<div class="form-group">
+													<label for="contact.opp_city">Opperates in City</label>
+													<input type="text" class="form-control" id="contact.opp_city" name="contact.opp_city"  placeholder="Operated in City" ng-model="contact.opp_city"   disabled />
+													</select>
+												</div>
+												
+														
+												<div class="form-group">
+													<label for="contact.about">About {{add_option}}</label>
+													<textarea class="form-control" id="contact.about" name="contact.about"  placeholder="About {{add_option}}" ng-model="contact.about" pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed"></textarea>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.invoice_name">Invoice Name</label>
+													<input type="text" class="form-control" id="contact.invoice_name" name="contact.invoice_name"  placeholder="Invoice Name" ng-model="contact.invoice_name" pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="update_schedule" class="modal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Update Schedule</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row" id="schedulesupdate">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="start_date">Start Date Time</label><div class="input-group date" id="start_date" ng-model="start_date" datetimepicker1>
+									<input class="form-control" type="text"  >
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="end_date">End Date Time</label><div class="input-group date" id="end_date" ng-model="end_date" datetimepicker1>
+									<input class="form-control" type="text"  >
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="visited_on" >Visited on<span class="required">*</span></label><div class="input-group date" id="visited_on" ng-model="visited_on" datetimepicker1>
+									<input class="form-control" type="text" required >
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="description">Remarks</label>
+									<textarea class="form-control" id="description" name="description" placeholder="description" ng-model="description" ></textarea>
+								</div>
+								<div class="form-group">
+									<label for="status">Status</label>
+									<select class="select2 form-control"  id="status" name="status" select2 ng-model="status"  data-placeholder="Select status" style="width:100%;">
+										<option value="" disabled selected>Select Status</option>
+										<option value="Visit Pending" >Visit Pending</option>
+										<option value="Not Suitable">Not Suitable</option>
+										<option value="Short Listed">Short Listed</option>
+										<option value="Deal Done">Deal Done</option>
+										<option value="Property Visit">Property Visit</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-md-12">	
+						<div class="form-group">
+							<button class="btn btn-primary" data-dismiss="modal" ng-click="Update_Activity_Schedule()">Save</button>
+							<a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<style>
+.modal-dialog {
+
+	width:25%;
+}
+</style>
+
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+	
+
+	$( document ).ready(function() {
+	
+		
+
+		$("#file_company_logo").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/contact_uploads',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+	
+		$('#file_company_logo').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_name_company_logo").val(file.name);
+			console.log("fileloaded");
+		});
+
+		$("#file_visiting_card").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/contact_uploads_visiting_card',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+	
+		$('#file_visitng_card').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_name_visiting_card").val(file.name);
+			console.log("fileloaded");
+		});
+
+		$("#file_contact_pic").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/contact_uploads_contact_pic',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+	
+		$('#file_contact_pic').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_name_contact_pic").val(file.name);
+			console.log("fileloaded");
+		});
+		$("#file_activity").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/activity_uploads',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','xlsx','docx','pdf','pptx'],
+			overwriteInitial: false,
+			maxFileSize: 15000000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+		$('#file_activity').on('fileloaded', function(event, file, previewId, index, reader) 
+		{
+			$("#filename").val(file.name);
+			console.log("fileloaded");
+		});	
+		
+	});
+		
+
+</script>
+
+<style>
+	#tab_menu
+	{
+		display: block;
+	}
+	
+	@media screen and (max-width: 991px)  {
+		#tab_menu
+		{
+			display: none;
+		}
+		
+		.tab-content > .tab-pane {
+			display: block;
+		}
+	}
+	
+	</style>
+	
+	
+
+
+
+
+

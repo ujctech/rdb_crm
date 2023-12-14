@@ -1,0 +1,36 @@
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+    <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active " style="border-top-color: #f3f0f0;text-transform: capitalize;"><a data-target="#audit_trail" data-toggle="tab" >{{module_name}}</a></li>
+            </ul>
+            <div class="tab-content">
+                <h3>{{main_heading}}</h3>
+                <div class="tab-pane active" id="audit_trail">
+                    <div class="box-body table-responsive">
+                        <table class="table table-bordered table-striped" datatable-setupnosort=""  >
+                            <thead>
+                                <tr>
+                                    <th>Field Name</th>
+                                    <th>Old Value</th>
+                                    <th>New Value</th>
+                                    <th>Modified By</th>
+                                    <th>Modified Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="history in histories">
+                                    <td>{{history.field_name}}</td>
+                                    <td>{{history.old_value}}</td>
+                                    <td>{{history.new_value}}</td>
+                                    <td>{{history.modified_by}}</td>
+                                    <td>{{history.modified_date}}</td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                

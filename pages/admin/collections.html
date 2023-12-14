@@ -1,0 +1,699 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" ng-if="view_rights">
+    
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+        <a href="javascript:void(0);" ng-click="pagenavigation( 'next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+    </div>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" data-toggle="modal"  ng-click="export()" ng-if="hasRoles.includes('Admin')">Export</a>    
+</div>
+<div class="clearfix"></div>
+
+
+<div class="box boxpadding" id="properties" style="border-top:0px;" ng-if="view_rights">
+    <div class="box-header">
+        
+    </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#collectionstab" data-toggle="tab" >Collections&nbsp;&nbsp; {{collection_count}}</a></li>
+            <li><a data-target="#collections_receivedtab" data-toggle="tab" >Collections [Received]&nbsp;&nbsp; {{collection_received_count}}</a></li>
+        </ul>
+        <div class="tab-content">
+            
+            <div class="right-side"  style="text-align:right;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox hidden-xs hidden-sm" style="margin-top:-30px;margin-left:7px;position:absolute;">
+                <label>
+                    <input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All
+                </label>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                        <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_for">Agreement For</label>
+                                           <select class="select2 form-control"  id="agreement_for" name="agreement_for" select2 ng-model="searchdata.agreement_for"  data-placeholder="Select agreement_for" style="width:100%;" >
+                                                <option value="Sale">Sale</option>
+                                                <option value="Lease" >Lease</option>
+                                                <option value="Sale Under Contructions" >Sale Under Contructions</option>
+                                                <option value="Sale Preleased" >Sale Preleased</option>
+                                            </select>
+                                       </div> 
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="assign_to">Assign to</label>
+                                           <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="teams">Teams</label>
+                                           <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams)">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" >
+                                       <div class="form-group">
+                                           <label for="client_id">Owner</label>
+                                           <select class="select2 form-control" select2 ng-model="searchdata.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;" multiple="multiple">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="broker_id">Broker</label>
+                                           <select class="select2 form-control" select2 ng-model="searchdata.broker_id" ng-options="contact.contact_id as contact.name for contact in brokers" style="width:100%;" multiple="multiple">
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="payment_id">Payment ID</label>
+                                            <a href="javascript:void(0)" class="btn" style="color:#ff000c;float:right;padding:0px;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                            <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.payment_id" id= "payment_id" name= "payment_id" ng-options="payment_id.payment_id as payment_id.payment_id for payment_id in payment_ids" style="width:100%;"></select>
+                                        </div>
+                                    </div>
+                                   
+                              </div>
+                           </div>
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="property_id">Property ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.property_id" id= "property_id" name= "property_id" ng-options="property_id.property_id as property_id.property_id for property_id in property_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="project_id">Project ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.project_id" id= "project_id" name= "project_id" ng-options="project_id.project_id as project_id.project_id for project_id in project_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="enquiry_id">Enquiry ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.enquiry_id" id= "enquiry_id" name= "enquiry_id" ng-options="project_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">
+                                       <div class="form-group">
+                                           <label for="agreement_id">Agreement ID</label>
+                                           <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.agreement_id" id= "agreement_id" name= "agreement_id" ng-options="agreement_id.agreement_id as agreement_id.agreement_id for agreement_id in agreement_ids" style="width:100%;"></select>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_from">Created Date from</label>
+                                           <div class="input-group date" id="created_date_from" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2">       
+                                       <div class="form-group">
+                                           <label for="created_date_to">To</label>
+                                           <div class="input-group date" id="created_date_to" date-directive="">
+                                               <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_from">Deal Date From</label>
+                                            <div class="input-group date" id="deal_date_from" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_from" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="deal_date_to">Deal Date To</label>
+                                            <div class="input-group date" id="deal_date_to" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.deal_date_to" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="due_date_from">Due Date From</label>
+                                            <div class="input-group date" id="due_date_from" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.due_date_from" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="due_date_to">Due Date To</label>
+                                            <div class="input-group date" id="due_date_to" date-directive="">
+                                                <input class="form-control" type="text" ng-model="searchdata.due_date_to" >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">       
+                                        <div class="form-group">
+                                            <label for="collection_status">Collection Status</label>
+                                            <select class="select2 form-control"  id="collection_status" name="collection_status" select2 ng-model="paymentsdata.collection_status"  required  data-placeholder="Select Collection Status" style="width:100%;" >
+                                                <option value="Pending" selected="selected">Pending</option>
+                                                <option value="Partial Recieved" >Partial Recieved</option>
+                                                <option value="Received" >Received</option>
+                                            </select>
+                                        </div>
+                                    </div>                                          
+
+                                </div>
+                            </div>
+                            
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <div class="col-md-2" style="margin-top:25px;">        
+                                       <div class="form-group">
+                                           <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_collections(searchdata,'form')">Search Now </button>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                           <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                       </div>
+                                   </div>
+                                   <div class="col-md-2" style="margin-top:25px;">       
+                                       <div class="form-group">
+                                       <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane active" id="collectionstab">   
+                <div class="box-body table-responsive">
+                    
+                    <table class="table table-bordered table-striped"  > <!--datatable-setup="" -->
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Agreement</th>
+                                <th>Client</th>
+                                <th>Assigned To</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>PaymentID</th>
+                                <th>Invoice</th>
+                                <th>Invoice Date</th>
+                                <th>Sr No</th>
+                                <th>Stage Name</th>
+                                <th>Due Date</th>
+                                <th>Due Amount</th>
+                               
+                                <th>CGST </th>
+                                <th>SGST </th>
+                                <th>TDS</th>
+                                <th>Total Expected</th>
+                                <th>Next Pay Date</th>
+                                <th>Principal Received</th>
+                                
+                                <th>CGST Amount Received</th>
+                                <th>SGST Amount Received</th>
+                                <th>TDS Amount Received</th>
+                                <th>Total Received</th>
+                                <th>Principal Pending</th>
+                                
+                                <th>CGST Amount Pending</th>
+                                <th>SGST Amount Pending</th>
+                                <th>TDS Amount Pending</th>
+                                <th>Total Pending</th>
+                                <th>Collection Status</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <tr ng-repeat="collection in collections" ng-class="{ 'green_color' : collection.collection_status=='Received', 'red_color' : collection.collection_status!='Received'}">
+                                <td>
+                                    <div class="checkbox hidden-xs hidden-sm">
+                                        <label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{collection.payments_id}}"/></label>
+                                    </div>
+                                </td>
+                                <!--<td><a href="#/agreement_edit/{{collection.agreement_id}}" title="Edit" target="_blank">AGREEMENT ID:{{collection.agreement_id}}</a></td>-->
+                                <td><a ng-if="hasRoles.includes('Sub Admin')" href="" title="Edit">AGREEMENT ID:{{collection.agreement_id}}</a>
+                                <!--</td>-->
+                                <!--<td>-->
+                                    <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/agreement_edit/{{collection.agreement_id}}" title="Edit" target="_blank">AGREEMENT ID:{{collection.agreement_id}}</a>
+                                </td>
+                                <td >{{collection.client_name}}</td>
+                                <td>{{collection.assign_to}}</td>
+                                <td>{{collection.team}}</td>
+                                <td>{{collection.subteam}}</td>
+                                <!--<td><a href="#/payments_edit/{{collection.payments_id}}"  title="Edit" target="_blank">PAYMENTID:{{collection.payments_id}}</a></td>-->
+                                <td><a ng-if="hasRoles.includes('Sub Admin')"  href=""  title="Edit">PAYMENTID:{{collection.payments_id}}</a>
+                                <!--</td>-->
+                                <!--<td>-->
+                                    <a ng-if="!(hasRoles.includes('Sub Admin'))"  href="#/payments_edit/{{collection.payments_id}}"  title="Edit" target="_blank">PAYMENTID:{{collection.payments_id}}</a></td>
+                                <td><a href="javascript:void(0)" class="btn btn-primary"  title="Invoice" ng-click="create_invoice(collection.payments_id,collection.invoice_no,collection.invoice_date)"><span ng-if="collection.invoice_no==''">Invoice</span><span ng-if="collection.invoice_no!=''">{{collection.invoice_no}}</span></a></td>
+                                <td>{{collection.invoice_date}}</td>
+                                <td>{{collection.sr_no}}</td>
+                                <td>{{collection.stage_name}}</td>
+                                <td>{{collection.due_date}}</td>
+                                <td>{{collection.brokerage}}</td>
+                                
+                                <td>{{collection.cgst}}</td>
+                                <td>{{collection.sgst}}</td>
+                                <td>{{collection.tds}}</td>
+                                <td>{{collection.total_brokerage}}</td>
+                                <td>{{collection.next_pay_date}}</td> 
+                                <td>{{collection.brokerage_payment}}</td>
+                                
+                                <td>{{collection.cgst_payment}}</td>
+                                <td>{{collection.sgst_payment}}</td>
+                                <td>{{collection.tds_payment}}</td>
+                                <td>{{parseFloat(collection.brokerage_payment)+parseFloat(collection.service_tax_payment)+parseFloat(collection.cgst_payment)+parseFloat(collection.sgst_payment)-parseFloat(collection.tds_payment)}}</td>
+
+                                <td>{{parseFloat(collection.brokerage)-parseFloat(collection.brokerage_payment)}}</td>
+                                
+                                <td>{{parseFloat(collection.cgst)-parseFloat(collection.cgst_payment)}}</td>
+                                <td>{{parseFloat(collection.sgst)-parseFloat(collection.sgst_payment)}}</td>
+                                <td>{{parseFloat(collection.tds)-parseFloat(collection.tds_payment)}}</td>
+                                <td>{{(parseFloat(collection.brokerage)+parseFloat(collection.service_tax)+parseFloat(collection.cgst)+parseFloat(collection.sgst)-parseFloat(collection.tds))-(parseFloat(collection.brokerage_payment)+parseFloat(collection.service_tax_payment)+parseFloat(collection.cgst_payment)+parseFloat(collection.sgst_payment)-parseFloat(collection.tds_payment))}}</td>
+                                
+                                <td>{{collection.collection_status}}</td>
+                                
+                                
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Agreement</th>
+                                <th>Client</th>
+                                <th>Assigned To</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>PaymentID</th>
+                                <th>Invoice</th>
+                                <th>Invoice Date</th>
+                                <th>Sr No</th>
+                                <th>Stage Name</th>
+                                <th>Due Date</th>
+                                <th>Due Amount</th>
+                               
+                                <th>CGST </th>
+                                <th>SGST </th>
+                                <th>TDS</th>
+                                <th>Total Expected</th>
+                                <th>Next Pay Date</th>
+                                <th>Principal Received</th>
+                                
+                                <th>CGST Amount Received</th>
+                                <th>SGST Amount Received</th>
+                                <th>TDS Amount Received</th>
+                                <th>Total Received</th>
+                                <th>Principal Pending</th>
+                                
+                                <th>CGST Amount Pending</th>
+                                <th>SGST Amount Pending</th>
+                                <th>TDS Amount Pending</th>
+                                <th>Total Pending</th>
+                                <th>Collection Status</th>
+                                
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+            <div class="tab-pane" id="collections_receivedtab">   
+                <div class="box-body table-responsive">
+                    
+                    <table class="table table-bordered table-striped"  > <!--datatable-setup="" -->
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Agreement</th>
+                                <th>Client</th>
+                                <th>Assigned To</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>PaymentID</th>
+                                <th>Invoice</th>
+                                <th>Invoice Date</th>
+                                <th>Sr No</th>
+                                <th>Stage Name</th>
+                                <th>Due Date</th>
+                                <th>Due Amount</th>
+                               
+                                <th>CGST </th>
+                                <th>SGST </th>
+                                <th>TDS</th>
+                                <th>Total Expected</th>
+                                <th>Next Pay Date</th>
+                                <th>Principal Received</th>
+                                
+                                <th>CGST Amount Received</th>
+                                <th>SGST Amount Received</th>
+                                <th>TDS Amount Received</th>
+                                <th>Total Received</th>
+                                <th>Principal Pending</th>
+                                
+                                <th>CGST Amount Pending</th>
+                                <th>SGST Amount Pending</th>
+                                <th>TDS Amount Pending</th>
+                                <th>Total Pending</th>
+                                <th>Collection Status</th>
+                                
+                                
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <tr ng-repeat="collection in collections_received" ng-class="{ 'green_color' : collection.collection_status=='Received', 'red_color' : collection.collection_status!='Received'}">
+                                <td>
+                                    <div class="checkbox hidden-xs hidden-sm">
+                                        <label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{collection.payments_id}}"/></label>
+                                    </div>
+                                </td>
+                                <!--<td><a href="#/agreement_edit/{{collection.agreement_id}}" title="Edit" target="_blank">AGREEMENT ID:{{collection.agreement_id}}</a></td>-->
+                                <td><a ng-if="hasRoles.includes('Sub Admin')" href="" title="Edit">AGREEMENT ID:{{collection.agreement_id}}</a>
+                                <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/agreement_edit/{{collection.agreement_id}}" title="Edit" target="_blank">AGREEMENT ID:{{collection.agreement_id}}</a></td>
+                                <td ><p>{{collection.client_name}}</p><p>{{collection.billing_name}}</p></td>
+                                <td>{{collection.assign_to}}</td>
+                                <td>{{collection.team}}</td>
+                                <td>{{collection.subteam}}</td>
+                                <!--<td><a href="#/payments_edit/{{collection.payments_id}}"  title="Edit" target="_blank">PAYMENTID:{{collection.payments_id}}</a></td>-->
+                                <td><a ng-if="hasRoles.includes('Sub Admin')"  href=""  title="Edit">PAYMENTID:{{collection.payments_id}}</a>
+                                <a ng-if="!(hasRoles.includes('Sub Admin'))"  href="#/payments_edit/{{collection.payments_id}}"  title="Edit" target="_blank">PAYMENTID:{{collection.payments_id}}</a></td>
+                                <td><a href="javascript:void(0)" class="btn btn-primary"  title="Invoice" ng-click="create_invoice(collection.payments_id,collection.invoice_no,collection.invoice_date)"><span ng-if="collection.invoice_no==''">Invoice</span><span ng-if="collection.invoice_no!=''">{{collection.invoice_no}}</span></a></td>
+                                <td>{{collection.invoice_date}}</td>
+                                <td>{{collection.sr_no}}</td>
+                                <td>{{collection.stage_name}}</td>
+                                <td>{{collection.due_date}}</td>
+                                <td>{{collection.brokerage}}</td>
+                                
+                                <td>{{collection.cgst}}</td>
+                                <td>{{collection.sgst}}</td>
+                                <td>{{collection.tds}}</td>
+                                <td>{{collection.total_brokerage}}</td>
+                                <td>{{collection.next_pay_date}}</td> 
+                                <td>{{collection.brokerage_payment}}</td>
+                                
+                                <td>{{collection.cgst_payment}}</td>
+                                <td>{{collection.sgst_payment}}</td>
+                                <td>{{collection.tds_payment}}</td>
+                                <td>{{parseFloat(collection.brokerage_payment)+parseFloat(collection.service_tax_payment)+parseFloat(collection.cgst_payment)+parseFloat(collection.sgst_payment)-parseFloat(collection.tds_payment)}}</td>
+
+                                <td>{{parseFloat(collection.brokerage)-parseFloat(collection.brokerage_payment)}}</td>
+                                
+                                <td>{{parseFloat(collection.cgst)-parseFloat(collection.cgst_payment)}}</td>
+                                <td>{{parseFloat(collection.sgst)-parseFloat(collection.sgst_payment)}}</td>
+                                <td>{{parseFloat(collection.tds)-parseFloat(collection.tds_payment)}}</td>
+                                <td>{{(parseFloat(collection.brokerage)+parseFloat(collection.service_tax)+parseFloat(collection.cgst)+parseFloat(collection.sgst)-parseFloat(collection.tds))-(parseFloat(collection.brokerage_payment)+parseFloat(collection.service_tax_payment)+parseFloat(collection.cgst_payment)+parseFloat(collection.sgst_payment)-parseFloat(collection.tds_payment))}}</td>
+                                
+                                <td>{{collection.collection_status}}</td>
+                                
+                                
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Agreement</th>
+                                <th>Client</th>
+                                <th>Assigned To</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>PaymentID</th>
+                                <th>Invoice</th>
+                                <th>Invoice Date</th>
+                                <th>Sr No</th>
+                                <th>Stage Name</th>
+                                <th>Due Date</th>
+                                <th>Due Amount</th>
+                               
+                                <th>CGST </th>
+                                <th>SGST </th>
+                                <th>TDS</th>
+                                <th>Total Expected</th>
+                                <th>Next Pay Date</th>
+                                <th>Principal Received</th>
+                                
+                                <th>CGST Amount Received</th>
+                                <th>SGST Amount Received</th>
+                                <th>TDS Amount Received</th>
+                                <th>Total Received</th>
+                                <th>Principal Pending</th>
+                                
+                                <th>CGST Amount Pending</th>
+                                <th>SGST Amount Pending</th>
+                                <th>TDS Amount Pending</th>
+                                <th>Total Pending</th>
+                                <th>Collection Status</th>
+                                
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="create_invoice" >
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;">Invoice<a  href="javascript:void(0)" ng-click="close_create_invoice()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a></div>
+    <form novalidate name="AddNewForm1" id="add-new-form1" role="form" autocomplete="off" ></form>
+        <div style="padding:20px;width:100%">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="invoice_no">Invoice No.</label>
+                        <input type="text" class="form-control" id="invoice_no" name="invoice_no"  placeholder="Invoice No" ng-model="invoice_no"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="invoice_date">Invoice Date</label>
+                        <div class="input-group date" id="invoice_date" name="invoice_date" ng-model="invoice_date"  date-directive="">
+                            <input class="form-control" type="text"  >
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a  href="javascript:void(0)" class="btn btn-primary" ng-click="show_invoice(invoice_no,invoice_date)" style="margin-top:5px;">Show Invoice</a>
+            <a  href="javascript:void(0)" ng-click="close_create_invoice()" style="margin-top:5px;">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="show_pdf">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="javascript:void(0)" ng-click="close_pdf()" style="float:right;width:18px; height:18px; " ><span style="margin-left:5px;">X</span></a>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="show_pdf" compile-html="trustedHtml_show_pdf"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="exportdetails" class="modal" role="dialog">
+    <div class="modal-dialog" style="width:50%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <div class="radio">
+                                    
+                                    <label>
+                                        <input type="radio" name="option_value" id="option_value" value="current_page" ng-model="option_value">
+                                        Current Page
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="option_value" id="option_value" value="selected" ng-model="option_value" checked="checked" >
+                                        Selected
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="option_value" id="option_value" value="all_records" ng-model="option_value">
+                                        All Records
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" ng-click="exportdata()">Export</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Un-Selected Columns</p>
+                        <ul class="todo-list" style="height:325px;overflow-y:auto;overflow-x:hidden;border: 1px solid #d8cfcf;font-size:14px;">
+                            <li ng-repeat="unselected_field in unselected_fields" class="callout callout-info" style="background-color: #ffffff !important; color:#000000;border-right:4px solid rgb(236, 9, 9);border-left:none;font-size:16px;font-weight:none;" ng-click="reportfieldsselect(unselected_field.report_fields_id,'select')">
+                                <div class="row " style="color:#000000 !important;">
+                                    <div class="col-md-12">
+                                        <span class="text">{{unselected_field.column_heading}}</span>
+                                        <span style="float:right;"><i class="fa fa-forward"></i></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6"  >
+                        <p>Selected Columns</p>
+                        <ul class="todo-list" style="height:325px;overflow-y:auto;overflow-x:hidden;border: 1px solid #d8cfcf;font-size:14px;">
+                            <li ng-repeat="selected_field in selected_fields" class="callout callout-info" style="background-color: #ffffff !important; color:#000000;border-left:4px solid rgb(236, 9, 9);font-size:16px;font-weight:none;" ng-click="reportfieldsselect(selected_field.report_fields_id,'unselect')">
+                                <div class="row " style="color:#000000 !important;">
+                                    <div class="col-md-12">
+                                        <span><i class="fa fa-backward"></i></span> 
+                                        <span class="text">{{selected_field.column_heading}}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" ng-click="exportdata()">Export</button>
+                            <button class="btn btn-primary" ng-click="configurecolumns()">Configure Columns</button>
+                        </div>
+                    </div>
+                </div>
+            </div-->
+        </div>
+    </div>
+</div>  
+
+<style>
+    .modal-dialog{
+			width:875px;height:1800px;
+		}
+#pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    .red_color
+    {
+        color:#a61111;
+    }
+    .green_color
+    {
+        color:#30d718;
+    }
+
+    .black_color
+    {
+        color:#000000;
+    }
+
+    #create_invoice
+    {
+        position:fixed;
+        top:38%;
+        left:38%;
+        background-color:#ffffff;
+        width:30%;
+        height:200px;
+        display:none;
+        z-index:9001;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+
+</style>

@@ -1,0 +1,54 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="permission_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+
+    <form ng-repeat="permission in fpermissions" novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+
+        <input type="hidden" ng-model="permission.permission_id" value="{{permission.permission_id}}" />
+
+        <div class="row" id="permission">
+
+            <div class="col-md-6">
+
+                <div class="box box-primary">
+
+                    <div class="box-header">
+
+                        <h3 class="box-title">Edit Permission</h3>
+
+                    </div>
+
+                    <div class="box-body">
+
+                        <div class="form-group">
+
+                            <label for="permission">Permission<span class="required">*</span></label>
+
+                            <input type="text" class="form-control" id="permission" name="permission"  placeholder="Permission" ng-model="permission.permission" value="{{permission.permission}}" required />
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(permission)" id="add-new-btn" ng-click="permission_update(permission)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+
+                            <button class="btn btn-danger" ng-click="permission_delete(permission)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+
+                             <a href="#/permission_list" class="btn">Cancel</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+

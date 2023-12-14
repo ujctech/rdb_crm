@@ -1,0 +1,150 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <a class="btn btn-primary" href="#/social_media_add" style="margin:10px;margin-right:2px;" >Add Post</a>
+</div>
+<div class="clearfix"></div>
+
+<div id="users_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+        <div class="row" id="users_data">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Social Media Updation</h3>
+                    </div>
+                    <div class="box-body">
+                        <!--div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="for_month">Date</label>
+                                        <div class="input-group date" id="for_month" date-directive="">
+                                            <input class="form-control" type="text" ng-model="for_month" >
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" style="margin-top:25px;">
+                                        <button class="btn btn-primary" ng-click="show_social_media(for_month)">Show Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div-->
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box-body table-responsive">
+                                    <div class="row">
+                                        <div class="right-side"  style="text-align:right;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-group">
+                                            <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                                                <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                                    <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label for="employee_name">Name</label>
+                                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.employee_name" id= "employee_name" name= "employee_name" ng-options="employee_name.employee_name as employee_name.employee_name for employee_name in employee_names" style="width:100%;"></select>
+                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-12">                                            
+                                                                <div class="col-md-2" style="margin-top:25px;">        
+                                                                    <div class="form-group">
+                                                                        <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_social_media(searchdata,'form')">Search Now </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2" style="margin-top:25px;">       
+                                                                    <div class="form-group">
+                                                                        <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2" style="margin-top:25px;">       
+                                                                    <div class="form-group">
+                                                                    <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()">Clear Filters</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <table class="table table-bordered table-striped" datatable-setupnosort1="" >
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Category</th>
+                                                <th>Posts</th>
+                                                <th>Likes</th>
+                                                <th>Followers</th>
+                                                <th>Subscribers</th>
+                                                <th>Views</th>
+                                                <th>Lead Generation</th>
+                                                <th>Created By</th>
+                                                <th>Assign To</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="social_media in social_medias">
+                                                <td>{{social_media.data_date}}</td>
+                                                <td>{{social_media.media_category}}</td>
+                                                <td>{{social_media.no_of_posts}}</td>
+                                                <td>{{social_media.no_of_likes}}</td>
+                                                <td>{{social_media.no_of_followers}}</td>
+                                                <td>{{social_media.no_of_subscribers}}</td>
+                                                <td>{{social_media.no_of_views}}</td>
+                                                <td>{{social_media.lead_generation}}</td>
+                                                <td>{{social_media.created_by_name}}</td>
+                                                <td>{{social_media.assign_to}}</td>
+                                                
+                                                <td><a href="#/social_media_edit/{{social_media.social_media_id}}" class="btn btn-default btn-sm" ng-if="update_rights"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Category</th>
+                                                <th>Posts</th>
+                                                <th>Likes</th>
+                                                <th>Followers</th>
+                                                <th>Subscribers</th>
+                                                <th>Views</th>
+                                                <th>Lead Generation</th>
+                                                <th>Created By</th>
+                                                <th>Assign To</th>
+                                                <th></th>
+                                                
+                                            </tr>
+                                        </tfoot>
+                                    </table>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    .numbers
+    {
+        text-align: right;
+    }
+</style>

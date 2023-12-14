@@ -1,0 +1,54 @@
+<div class="form_bglogin">
+    <form novalidate name="loginForm" class="form-horizontal" role="form" autocomplete="off" ng-controller="authCtrl">
+        <div class="form-group">
+            <img src="dist/img/logo.png" style="height:52px;" />
+        </div>
+        <div class="form-group">
+            <input type="text" autocomplete="nope"  style="border:0px;width:90%;height:40px;margin:5px 10px 0px 30px;font-size:30px;font-family:Helvetica Neue Thin;" id="username" name="username"  placeholder="User Name" ng-model="login.username" required focus>
+        </div>
+        <div class="form-group">
+            <input type="password" autocomplete="nope"  style="border:0px;width:90%;height:40px;margin:5px 10px 0px 30px;font-size:30px;font-family:Helvetica Neue Thin;" id="password" name="password"  placeholder="Password" ng-model="login.password" required>
+        </div>
+        <div class="form-group">
+            <a href="javascript:void(0)" class="btn" ng-disabled="loginForm.$invalid || isUnchanged(login)" id="add-new-btn" ng-click="doLogin(login)" style="margin-left:5px;"><img src="dist/img/login.jpg" style="width:150px;height:40px;" /></a>
+            <a href="#/forgetpassword" style="color:green;margin-right:15px;float:right;font-size:18px;margin-top:14px;"><div><p>Forgot Your Password ? </p></div></a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .form_bglogin 
+  {
+    background-color: #fff8f8;
+    color: #666;
+    padding: 15px;
+    position: absolute;
+    border: 1px solid #fff8f8;
+    margin: auto;
+    top: -375px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 411px;
+    height: 190px;
+    -webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    opacity:0.8;
+      /*border-radius:7px;*/
+  }
+
+</style>
+
+<script>
+
+    $(".wrapper").css("background","url(dist/img/banner.png)");
+    $(".wrapper").css("background-size","100% 100%");
+    $(".main-footer").css("margin-left","0px");
+    $("#forlogin").css("display","block");
+    $("#navlogin").css("display","block");
+    $("#logologin").css("display","block");
+    $(".content-wrapper").css("background-color","transparent");
+    $(".content").css("background-color","transparent");
+    
+
+</script>

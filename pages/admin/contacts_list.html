@@ -1,0 +1,671 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+        <a href="javascript:void(0);" ng-click="pagenavigation( 'next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+    </div>
+    <a class="btn btn-primary" href="#/contacts_add/{{cat}}" style="margin:10px;" ng-if="create_rights">Add {{cat.charAt(0).toUpperCase()+ cat.substr(1).toLowerCase()}}</a>
+
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="send_mails()" ng-if="view_rights">Send Mail</a>
+    
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="send_wamessages()" ng-if="view_rights"  data-toggle="modal" data-target="#sendwamessage">Whatsapp Message</a>
+    
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="batch_update();" ng-if="hasRoles.includes('Admin')">Batch Update</a>
+    
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" data-toggle="modal"  ng-click="exportdata()" ng-if="hasRoles.includes('Admin')">Export</a>
+    
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" data-toggle="modal" data-target="#upload" ng-if="hasRoles.includes('Admin')">Import</a>
+ <!--ng-click="import_contacts()"-->
+</div>
+<div class="clearfix"></div>
+<div class="row" id="contact_info" ng-if="view_rights">
+    <div class="col-md-12">
+        <div class="box boxpadding"  style="border-top:0px;">
+            <div class="box-header hidden-xs hidden-sm">
+                <!--h3 class="box-title">{{cat.charAt(0).toUpperCase()+ cat.substr(1).toLowerCase()}}s List</h3-->
+            </div>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#contactstab" data-toggle="tab" >{{cat.charAt(0).toUpperCase()+ cat.substr(1).toLowerCase()}}s List &nbsp;&nbsp; {{contact_count}}</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="contactstab">    
+                        <div class="box-body table-responsive"  style="overflow: hidden;">
+                            <!--table class="table table-bordered table-striped" datatable-setup="" data-page-length='10' >
+                                <thead>
+                                    <tr>
+                                        <th>Contact Code</th>
+                                        <th>Name</th>
+                                        <th>Company Name</th>
+                                        <th>Mobile No.</th>
+                                        <th>Email ID</th>
+                                        <th>Address</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="contact in contacts">
+                                        <td>{{contact.contact_code.charAt(0).toUpperCase()+ contact.contact_code.substr(1).toLowerCase()}}</td>
+                                        <td>{{contact.name}}</td>
+                                        <td>{{contact.company_name}}</td>
+                                        <td>{{contact.mob_no}}</td>
+                                        <td>{{contact.email}}</td>
+                                        <td>{{contact.add1}}</td>
+                                        <td><a href="#/contacts_edit/{{contact.contact_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Contact Code</th>
+                                        <th>Name</th>
+                                        <th>Company Name</th>
+                                        <th>Mobile No.</th>
+                                        <th>Email ID</th>
+                                        <th>Address</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table-->   
+                            
+                            <div class="right-side btn-right" style="text-align:right;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                                        <!--<input type="text" class="form-control" id="projectsearch" name="projectsearch"  placeholder="Search Project" ng-model="projectsearch" style="margin:10px;margin-right:2px;"/>-->
+                                    </div>
+                                    <!--<div class="col-md-5" style="float:right;text-align:right;">
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" >Save My Search</a>
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" >My Saved Search <i class="fa fa-angle-down"></i></a>
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" >Sort By <i class="fa fa-angle-down"></i></a>
+                                    </div>-->
+                                </div>
+                            </div>
+                            </div>
+                            <div class="panel-group">
+                                <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                                <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                    <div class="row">
+                                         <div class="col-md-12">
+                                            <div class="col-md-2">
+                                         
+                                                <div class="form-group">
+                                                    <label for="company_name">Company Name</label>
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.company_name" id= "company_name" name= "company_name" ng-options="company_name.company_name as company_name.company_name for company_name in company_names" style="width:100%;"></select>
+                                                </div> 
+                                            </div>
+                                            <div class="col-md-2">
+                                         
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.name" id= "name" name= "name" ng-options="name.name as name.name for name in names" style="width:100%;"></select>
+
+                                                </div> 
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="mob_no">Mobile No</label>
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.mob_no" id= "mob_no" name= "mob_no" ng-options="mob_no.mob_no as mob_no.mob_no for mob_no in mob_nos" style="width:100%;"></select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                            <div class="form-group" >
+                                                <label for="area_id">Area</label>
+                                                <select class="select2 form-control" id = "area_id" select2  ng-model="searchdata.area_id" ng-options="area.area_id as area.area_name for area in areas" style="width:100%;" multiple="multiple" >
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" >
+                                                <label for="locality_id">Locality</label>
+                                                <select class="select2 form-control" select2 ng-model="searchdata.locality_id" id= "locality_id" ng-options="locality.locality_id as locality.locality for locality in localities" style="width:100%;" multiple="multiple" >
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" >
+                                                <label for="city_id">City</label>
+                                                <a href="javascript:void(0)" class="btn" style="color:#ff000c;float:right;padding:0px;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions" >Clear Filters</a>
+                                               
+                                                <select class="select2 form-control" select2 ng-model="searchdata.city_id" id= "city_id" ng-options="city.city_id as city.city for city in cities" style="width:100%;" multiple="multiple" >
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="contact_off">Client Type</label>
+                                                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.contact_off" id= "contact_off" name= "contact_off" ng-options="contact_off.contact_off as contact_off.contact_off for contact_off in client_types" style="width:100%;"></select>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="client_id">Client ID</label>
+                                                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.client_id" id= "client_id" name= "client_id" ng-options="client_id.contact_id as client_id.contact_id for client_id in client_ids" style="width:100%;"></select>
+                                               
+                                            </div>
+                                        </div>
+                                        <!--div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="developer_id">Developer ID</label>
+                                                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.developer_id" id= "developer_id" name= "developer_id" ng-options="developer_id.name as developer_id.name for developer_id in developer_ids" style="width:100%;"></select>
+                                               
+                                            </div>
+                                        </!--div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="broker_id">Broker ID</label>
+                                                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.broker_id" id= "broker_id" name= "broker_id" ng-options="broker_id.name as broker_id.name for broker_id in broker_ids" style="width:100%;"></select>
+                                               
+                                            </div>
+                                        </div-->
+                                        
+                                        
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="teams">Teams</label>                                                
+                                                <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" ng-change="select_assign_to(searchdata.teams,0)" >
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="sub_teams">Sub Teams</label>
+                                                <select class="select2 form-control" multiple="multiple"  id = "sub_teams"  ng-model="searchdata.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"  style="width:100%;" ng-change="select_assign_to(searchdata.teams,searchdata.sub_teams)">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" >
+                                                <label for="assign_to">Assign to</label>
+                                                <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" >
+                                                <label for="groups">Groups</label>
+                                                <select class="select2 form-control" multiple="multiple"  id = "groups" select2 ng-model="searchdata.groups" ng-options="group.group_id as group.group_name for group in groups"   style="width:100%;" >
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="source_channel">Source Channel</label>
+                                                <select class="select2 form-control" multiple="multiple" select2 ng-model="searchdata.source_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in client_sources" style="width:100%;" ng-change="change_sub_source(searchdata.source_channel)" >
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">    
+                                            <div class="form-group">
+                                                <label for="subsource_channel">Sub source Channel</label>
+                                                <select class="select2 form-control" multiple="multiple" select2 ng-model="searchdata.subsource_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in sub_sources" style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">       
+                                            <div class="form-group">
+                                                <label for="registration_date_from">Reg.Date From</label>
+                                                <div class="input-group date" id="registration_date_from" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="searchdata.registration_date_from" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">       
+                                            <div class="form-group">
+                                                <label for="registration_date_to">Reg. Date to</label>
+                                                <div class="input-group date" id="registration_date_to" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="searchdata.registration_date_to" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="alt_phone_no">Alternate Phone No</label>
+                                                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.alt_phone_no" id= "alt_phone_no" name= "alt_phone_no" ng-options="alt_phone_no.alt_phone_no as alt_phone_no.alt_phone_no for alt_phone_no in alt_phone_nos" style="width:100%;"></select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="off_phone">Office No</label>
+                                                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.off_phone" id= "off_phone" name= "off_phone" ng-options="off_phone.off_phone as off_phone.off_phone for off_phone in off_phones" style="width:100%;"></select>
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="email">Email ID</label>
+                                                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.email" id= "email" name= "email" ng-options="email.email as email.email for email in emails" style="width:100%;"></select>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="visited">Visited</label>
+                                                <select class="select2 form-control"  id="visited" name="visited" select2 ng-model="searchdata.visited"  data-placeholder="Select visited" style="width:100%;">
+                                                    <option value="Yes" selected="selected">Yes</option>
+                                                    <option value="No" >No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4" style="margin-top:25px;">
+                                            <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_contacts(searchdata,'form')">Search Now </button>
+                                            <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                            <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions" >Clear Filters</a>
+                                        </div>
+                                    </div>
+                                </div> 
+                                
+                                </form>
+                                </div>
+                            </div>
+                            <div class="checkbox hidden-xs hidden-sm" style="margin-top:-30px;margin-left:7px;position:absolute;">
+                                <label>
+                                    <input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All
+                                </label>
+                            </div>
+                            <table class="table" >
+                                <thead>
+                                    <tr style="display:none;">
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="contact in contacts">
+                                        <td style="width:100%">
+                                            <div class="row rm_content" style="padding:0px;margin-left:0px;margin-right:0px;">
+                                                <div class="col-md-5" style="min-width:250px;padding-left:0px;">
+                                                    <div class="col-md-1" style="padding-left:0px;">
+                                                        <div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{contact.contact_id}}"/></label></div>
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <!--<p style="font-size:18px;color:blue;">-->
+                                                        <!--    <a class="ex2" href="#/contacts_edit/{{contact.contact_id}}">Organisation : {{contact.company_name}}</a>-->
+                                                        <!--</p>-->
+                                                        <p style="font-size:18px;color:blue;">
+                                                            <a class="ex2"  ng-if="hasRoles.includes('Sub Admin')" href="">Organisation : {{contact.company_name}}</a>
+                                                            <a class="ex2"  ng-if="!(hasRoles.includes('Sub Admin'))" href="#/contacts_edit/{{contact.contact_id}}">Organisation : {{contact.company_name}}</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 hidden-xs hidden-sm">
+                                                    <p>Source</p>
+                                                    <p style="font-weight:bold;font-size:13px;color:#5db101;">{{contact.source_channel}}</p>
+                                                </div>
+                                                <div class="col-md-2 hidden-xs hidden-sm">
+                                                    <p>Edited</p>
+                                                    <p style="font-weight:bold;font-size:16px;"><span ng-if="contact.modified_date!='00-00-0000 00:00' " >{{contact.modified_date}}</span><span ng-if="contact.modified_date=='00-00-0000 00:00'">{{contact.created_date}}</span></p>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p class="hidden-xs hidden-sm">contact ID</p>
+                                                    <p style="font-weight:bold;font-size:16px;">{{cat.charAt(0).toUpperCase()+ cat.substr(1).toLowerCase()}}_{{contact.contact_id}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row info_padding">
+                                                <!-- <div class="col-md-2">
+                                                    <img src="dist/img/no_image.jpg" ng-if="contact.filenames==null " style="width:145px; height:85px;" /> 
+                                                    <img src="api/v1/uploads/contact/{{contact.filenames}}" ng-if="contact.filenames!=null " style="width:145px; height:185px;" /> 
+                                                </div> -->
+                                                <div class="col-md-2">
+                                                <div style="font-size: 45px;text-align: center;padding:10px;background-color:blue ;color: #ffffff;border-radius: 25px;width: 80px;height: 80px;float:left;margin:20px;margin-right:30px;" ng-if="contact.filenames==null ">{{contact.f_char}}</div>
+                                                <img src="api/v1/uploads/contact/{{contact.filenames}}" ng-if="contact.filenames!=null " style="font-size: 45px;text-align: center;color: #ffffff;border-radius: 25px;width: 80px;height: 80px;float:left;margin:20px;margin-right:30px;" />
+                                                <p style="text-align:center;">Created By:</p>
+                                                <p  style="text-align:center;">{{contact.created_by}}</p>
+                                                </div>
+
+                                                <div class="col-md-5">
+                                                    <p class="hidden-xs hidden-sm" style="font-size:16px;">Contact Person:<span style="font-weight:bold;font-size:16px;">{{contact.name}}</span></p>
+                                                    <p class="hidden-xl hidden-lg" style="font-size:16px;">Contact:<span style="font-weight:bold;font-size:16px;">{{contact.name}}</span></p>
+                                                    <p class="hidden-xs hidden-sm" style="font-size:16px;">Email Address:<span style="font-weight:bold;font-size:16px;">{{contact.email}}</span></p>
+                                                    <p class="hidden-xl hidden-lg" style="font-size:16px;">Email:<span style="font-weight:bold;font-size:16px;">{{contact.email}}</span></p>
+                                                    <p style="font-size:16px;">Location:<span style="font-weight:bold;font-size:16px;">{{contact.location_name}}</span></p>
+                                                    <p class="hidden-xs hidden-sm" style="font-size:16px;">Assigned To:<span style="font-size:16px;font-weight:bold;"> {{contact.assign_to}}</span></p>
+                                                    <p class="hidden-xs hidden-sm" style="font-size:16px;"><span>Teams:</span><span style="font-size:16px;font-weight:bold;">{{contact.team}}</span></p>
+                                                    <p class="hidden-xs hidden-sm" style="font-size:16px;"><span>Sub Teams:</span><span style="font-size:16px;font-weight:bold;">{{contact.sub_teams}}</span></p>
+                                                    <p  class="hidden-xs hidden-sm" style="font-size:16px;">Visited:
+                                                        <select id="visited" name="visited" ng-model="contact.visited"  data-placeholder="Visited " style="width:20%;" ng-change="update_visited(contact.visited, contact.contact_id)">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </p>
+                                                </div>
+                                                <div class="row hidden-xl hidden-lg" ng-if="update_rights">
+                                                    <div class="col-md-12" style="margin-left:7px;width:99%;margin-top:15px;">
+                                                        <div class="col-md-12" >
+                                                            <div style="float:right;">
+                                                                <a  class="btn btn-primary" href="#/contacts_edit/{{contact.contact_id}}" style="margin:10px;margin-top:-20px;margin-right:2px;" ng-if="update_rights"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                            </div>  
+                                                        </div>
+                                                    </div> 
+                                                </div>
+
+                                                <div class="col-md-5">
+                                                    <div class="row" style="float:right;">
+                                                        <a ng-if="contact.residential_properties_count>0" href="#/properties_list/residential/0/0"><div class="right_details">
+                                                            <p style="font-size:20px;color:#3033f1;padding:3px;">{{contact.residential_properties_count}}</p>
+                                                            <p>Residential Properties</p>
+                                                        </div></a>
+                                                        <a ng-if="contact.commercial_properties_count>0" href="#/properties_list/commercial/0/0"><div class="right_details">
+                                                            <p style="font-size:20px;color:#3033f1;padding:3px;">{{contact.commercial_properties_count}}</p>
+                                                            <p>Commercial Properties</p>
+                                                        </div></a>
+                                                        <a ng-if="contact.retail_properties_count>0" href="#/properties_list/retail/0/0"><div class="right_details">
+                                                            <p style="font-size:20px;color:#3033f1;padding:3px;">{{contact.retail_properties_count}}</p>
+                                                            <p>Retail Properties</p>
+                                                        </div></a>
+                                                        <a ng-if="contact.pre_leased_properties_count>0" href="#/properties_list/pre-leased/0/0"><div class="right_details">
+                                                            <p style="font-size:20px;color:#3033f1;padding:3px;">{{contact.pre_leased_properties_count}}</p>
+                                                            <p>Pre-leased Properties</p>
+                                                        </div></a>
+                                                        <a ng-if="contact.project_count>0" href="#/project_list/{{contact.contact_id}}"><div class="right_details">
+                                                            <p style="font-size:20px;color:#3033f1;padding:3px;">{{contact.project_count}}</p>
+                                                            <p>Projects</p>
+                                                        </div></a>
+                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="border-top:1px solid #959191;border-bottom:1px solid #959191;padding:5px;margin:5px;">
+                                                <!--<div class="col-md-3">-->
+                                                <!--    <a class="btn btn-primary" href="#/enquiries_add/residential" >Create Enquiry</a>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-md-3">-->
+                                                <!--    <a class="btn btn-primary" href="#/properties_add/residential">Create Property </a>                                                   -->
+                                                <!--</div>-->
+                                                <!--<div class="col-md-3">-->
+                                                <!--    <a class="btn btn-primary" href="#/task_add" >Create Task</a>-->
+                                                <!--</div>-->
+                                                <!--<div class="col-md-3">-->
+                                                <!--    <a class="btn btn-primary" href="#/activity_add/direct/0">Create Activity</a>-->
+                                                <!--</div>-->
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-2">
+                                                    <a class="btn btn-primary" ng-if="(hasRoles.includes('Sub Admin'))" href="" >Create Enquiry</a>
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/enquiries_add/residential" >Create Enquiry</a>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a class="btn btn-primary" ng-if="(hasRoles.includes('Sub Admin'))" href="">Create Property </a>                                                   
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/properties_add/residential">Create Property </a>                                                   
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a class="btn btn-primary" ng-if="(hasRoles.includes('Sub Admin'))" href="" >Create Task</a>
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/task_add" >Create Task</a>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a class="btn btn-primary" ng-if="(hasRoles.includes('Sub Admin'))" href="">Create Activity</a>
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/activity_add/direct/0">Create Activity</a>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a class="btn btn-primary" ng-if="(hasRoles.includes('Sub Admin'))" href="">Activity History</a>
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/activity_list/direct/0">Activity History</a>
+                                                </div>
+                                            </div>                                   
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="upload" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Import Contacts</h4>
+            </div>
+            <form novalidate name="UAddNewForm" id="Uadd-new-form" role="form" autocomplete="off">
+                <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">Import Contacts</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-12" style="margin-top:20%;">
+                                                <div class="form-group">
+                                                    <input id="file-1" name="file-1[]" type="file" multiple class="file"
+                                                        data-overwrite-initial="false" data-min-file-count="1" required>
+                                                    <input type="hidden" name="file_name" id="file_name" value=""
+                                                        ng-model="convertdata.file_name"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-12">	
+                            <div class="form-group">
+                                <button class="btn btn-primary" data-dismiss="modal" ng-disabled="UAddNewForm.$invalid || isUnchanged(convertdata)" id="Uadd-new-btn" ng-click="uploadcontact_data(convertdata)">Import</button>
+                                <a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="sendwamessage" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Whatapps Message</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" id="listofvalues">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="receipient">Receipient</label>
+                                    <input type="text" class="form-control" id="receipient" name="receipient"  placeholder="receipient" ng-model="wa_data.receipient"  />
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="10" placeholder="message" ng-model="wa_data.message" value="Please find the details of the project "></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" data-dismiss="modal" ng-click="wasend(wa_data)">Send</button>
+                            <a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <script>
+            $("#file-1").fileinput({
+                uploadAsync: false,
+                showUpload: false,
+                uploadUrl: './api/v1/uploadcontact_files',
+                allowedFileExtensions: ['csv', 'xls', 'xlsx'],
+                overwriteInitial: false,
+                maxFileSize: 1500000,
+                maxFilesNum: 1,
+                maxFileCount: 1,
+                slugCallback: function (filename) {
+                    return filename.replace('(', '_').replace(']', '_');
+                }
+            }).on("filebatchselected", function (event, files) {
+                $("#file-1").fileinput("upload");
+            });
+
+            $('#file-1').on('fileloaded', function (event, file, previewId, index, reader) {
+                $("#file_name").val(file.name);
+                console.log("fileloaded");
+            });
+        </script>
+
+<style>
+    .modal-dialog {
+        width:25%;
+    }
+
+    .right_details
+    {
+        width:90px;
+        height:90px;
+        border: 1px solid #e8e0e0;
+        background-color: #f0f3f9;
+        float:left;
+        margin:10px;
+        text-align:center;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+    }
+
+    a.ex1:active,a.ex1:hover
+    {
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: red;
+    }
+    a.ex2:active,a.ex2:hover
+    {
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: #337ab7;
+    }
+
+    #contact_info{
+        margin:5px;
+        background: #ffffff;
+        
+    }
+    .info_padding{
+        margin-top:10px;
+    }
+    .rm_content{
+        border-bottom:1px solid #959191;
+    }
+    @media (max-width:800px){
+
+        .info_padding{
+            margin-top:10px;
+        }
+        .rm_content{
+            border-bottom:0px solid #959191;
+        }
+        
+        #contact_info{
+            margin:5px;
+            margin-top:0px;
+        }
+        div.dataTables_wrapper div.dataTables_filter {
+         float: left; 
+        }
+    }
+
+</style>
+
+<style>
+    #pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+
+</style>

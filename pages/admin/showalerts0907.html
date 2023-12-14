@@ -1,0 +1,400 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+        
+</div>
+<div class="clearfix"></div>
+
+
+
+<div class="box" id="properties" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#alerts" data-toggle="tab">Alerts</a></li>
+            <li><a data-target="#reminders" data-toggle="tab">Reminders</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="alerts">
+                <div id="layoutdashboard">
+                    <div class="panel-group" id="accordion">
+                        <div class="row">
+                            <div class="col-md-4" style="padding-bottom:10px;">
+                                <div class="panel panel-default" ng-controller="MDbNearBirthDay">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            Near Birth day
+                                        </h4>
+                                    </div>
+                                    <div id="1" class="panel-collapse collapse in">
+                                        <div class="panel-body" style="padding-top:1px;">
+                                            <div compile-html="trustedHtml_mdbnearbirthday" style="max-height:110px;height:110px;"></div>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)" ng-click="detmdbnearbirthday()" title="Detailed Report">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">View Details</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding-bottom:10px;">
+                                <div class="panel panel-default" ng-controller="MDbExpiringLease">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Late Count
+                                            </a>-->
+                                            Expiring Lease
+                                        </h4>
+                                    </div>
+                                    <div id="1" class="panel-collapse collapse in">
+                                        <div class="panel-body" style="padding-top:1px;">
+                                            <div compile-html="trustedHtml_mdbexpiringlease" style="max-height:110px;height:110px;"></div>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)" ng-click="detmdbexpiringlease()" title="Detailed Report">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">View Details</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding-bottom:10px;">
+                                <div class="panel panel-default" ng-controller="MDbPendingEnquiries">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Monthly Average
+                                            </a>-->
+                                            Pending Enquiries
+                                        </h4>
+                                    </div>
+                                    <div id="1" class="panel-collapse collapse in">
+                                        <div class="panel-body" style="padding-top:1px;">
+                                            <div compile-html="trustedHtml_mdbpendingenquiries" style="max-height:110px;height:110px;"></div>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)" ng-click="detmdbpendingenquiries()" title="Detailed Report">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">View Details</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-bottom:10px;">
+                                <div class="panel panel-default" ng-controller="MDbPendingActivities">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)"> Pending Activities
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="1" class="panel-collapse collapse in">
+                                        <div class="panel-body" style="padding-top:1px;">
+                                            <div compile-html="trustedHtml_mdbpendingactivities" style="max-height:110px;height:110px;"></div>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)" ng-click="detmdbpendingactivities()" title="Detailed Report">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">View Details</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding-bottom:10px;">
+                                <div class="panel panel-default" ng-controller="MDbPendingAgreement">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Pending Agreements
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="1" class="panel-collapse collapse in">
+                                        <div class="panel-body" style="padding-top:1px;">
+                                            <div compile-html="trustedHtml_mdbpendingagreement" style="max-height:110px;height:110px;"></div>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)" ng-click="detmdbpendingagreement()" title="Detailed Report">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">View Details</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding-bottom:10px;">
+                                <div class="panel panel-default" ng-controller="MDbReminders">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Reminders
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="1" class="panel-collapse collapse in">
+                                        <div class="panel-body" style="padding-top:1px;">
+                                            <div compile-html="trustedHtml_mdbreminders" style="max-height:110px;height:110px;"></div>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:void(0)" ng-click="detmdbreminders()" title="Detailed Report">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">View Details</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="reminders">
+                <div class="box box-primary" style="border-top:0px;border-radius:0px;" id="reminderstable">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="background-color: #f9cdcd;">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-target="#collapse1" class="btn btn-primary" style="color:#ffffff;">Add Reminder</a>
+                                    <a href="javascript:void(0)" class="btn" data-toggle="collapse" data-target="#collapse1" style="float:right;">X</a>
+                                </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div id="onereminder" >
+                                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-2" style="padding-left:0px;">
+                                                        <div class="form-group">
+                                                            <label for="reminder_for">Reminder For</label>
+                                                            <select class="select2 form-control" select2 id="reminder_for" name="reminder_for" select2 ng-model="reminder.reminder_for"  data-placeholder="Select Reminder For" style="width:100%;" tabindex="10">
+                                                                <option value="Task" selected="selected">Task</option>
+                                                                <option value="SMS">SMS</option>
+                                                                <option value="Phone Call">Phone Call</option>
+                                                                <option value="Meeting">Meeting</option>
+                                                                <option value="Activity">Activity</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="reminder_title">Reminder Title</label>
+                                                            <input type="text" class="form-control" id="reminder_title" name="reminder_title"  placeholder="Reminder Title" ng-model="reminder.reminder_title" tabindex="11"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="description">description</label>
+                                                            <textarea class="form-control" id="description" name="description"  placeholder="Description" ng-model="reminder.description" tabindex="12"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="reminder_type">Reminder Type</label>
+                                                            <select class="select2 form-control" select2 id="reminder_type" name="reminder_type" select2 ng-model="reminder.reminder_type"  data-placeholder="Select Reminder Type" style="width:100%;" tabindex="13">
+                                                                <option value="Daily">Daily</option>
+                                                                <option value="Weekly">Weekly</option>
+                                                                <option value="Yearly">Yearly</option>
+                                                                <option value="Once">Once</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2" ng-if="reminder.reminder_type=='Daily'">
+                                                        <div class="form-group">
+                                                            <label for="reminder_on">Reminder At</label>
+                                                            <select class="select2 form-control" select2 id="reminder_on" name="reminder_on" select2 ng-model="reminder.reminder_on"  data-placeholder="Select Reminder At" style="width:100%;" tabindex="14">
+                                                                <option value="8:00">8:00</option>
+                                                                <option value="8:30">8:30</option>
+                                                                <option value="9:00">9:00</option>
+                                                                <option value="9:30">9:30</option>
+                                                                <option value="10:00">10:00</option>
+                                                                <option value="10:30">10:30</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2" ng-if="reminder.reminder_type=='Weekly'">
+                                                        <div class="form-group">
+                                                            <label for="reminder_on">Reminder At</label>
+                                                            <select class="select2 form-control" select2 id="reminder_on" name="reminder_on" select2 ng-model="reminder.reminder_on"  data-placeholder="Select Reminder At" style="width:100%;" tabindex="14">
+                                                                <option value="Monday">Monday</option>
+                                                                <option value="Tuesday">Tuesday</option>
+                                                                <option value="Wednsday">Wednsday</option>
+                                                                <option value="Thursday">Thursday</option>
+                                                                <option value="Friday">Friday</option>
+                                                                <option value="Saturday">Saturday</option>
+                                                                <option value="Sunday">Sunday</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2" ng-if="reminder.reminder_type=='Once' || reminder.reminder_type=='Yearly' ">
+                                                        <div class="form-group">
+                                                            <label for="reminder_on">Completion Date</label>
+                                                            <div class="input-group date" id="reminder_on" date-directive="">
+                                                                <input class="form-control" type="text" ng-model="reminder.reminder_on" >
+                                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="status">Status</label>
+                                                            <select class="select2 form-control" select2 id="status" name="status" select2 ng-model="reminder.status"  data-placeholder="Select Status" style="width:100%;" tabindex="15">
+                                                                <option value="Open">Open</option>
+                                                                <option value="Cancelled">Cancelled</option>
+                                                                <option value="Close">Close</option>
+                                                                <option value="Ignore">Ignore</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-controller="SelectUsers">
+                                                        <label for="assign_to">Assign to</label>
+                                                        <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="reminder.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" required>
+                                                            <!--option value="" disabled selected>Select</option-->
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(reminder)" id="add-new-btn" ng-click="reminder_add(reminder)" data-toggle="collapse" data-target="#collapse1">Save</button>
+                                                        <a href="javascript:void(0)" class="btn" data-toggle="collapse" data-target="#collapse1" >Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive">
+                        <table class="table table-bordered table-striped" datatable-setup="" >
+                            <thead>
+                                <tr>
+                                    <th>Reminder For</th>
+                                    <th>Reminder Title</th>
+                                    <th>Description</th>
+                                    <th>Reminder Type</th>
+                                    <th>Reminder On</th>
+                                    <th>Assign To</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dreminder in listreminders">
+                                    <td>{{dreminder.reminder_for}}</td>
+                                    <td>{{dreminder.reminder_title}}</td>
+                                    <td>{{dreminder.description}}</td>
+                                    <td>{{dreminder.reminder_type}}</td>
+                                    <td>{{dreminder.reminder_on}}</td>
+                                    <td>{{dreminder.assigned_users}}</td>
+                                    <td>{{dreminder.status}}</td>
+                                    <td><a href="javascript:void(0)" ng-click="changereminder(dreminder.reminder_id)" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;<a href="javascript:void(0)" ng-click="deletereminder(dreminder.reminder_id)" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-trash"></i></a></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Reminder For</th>
+                                    <th>Reminder Title</th>
+                                    <th>Description</th>
+                                    <th>Reminder Type</th>
+                                    <th>Reminder On</th>
+                                    <th>Assign To</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+<div id="detaileddashboard">
+    <div class="panel-group" id="accordion">
+        <div class="row">
+            <div class="col-md-12" style="padding-bottom:10px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" style="color:#ffffff;">{{detheading}}
+                            </a>
+                            <a href="javascript:void(0)" ng-click="backmdashboard()" title="Back to Alerts">
+                                <span class="pull-right"><i class="fa fa-arrow-circle-left"></i></span>
+                                <div class="clearfix"></div>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_detaileddashboard"></div>
+                        </div>
+                    </div>
+                    <!--<a href="javascript:void(0)" ng-click="detmdbattendance()">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    #detaileddashboard
+    {
+        display:none;
+    }
+
+    .panel-default>.panel-heading {
+        color: #333;
+        background-color: #ff0000;
+        border-color: #ddd;
+        color: #fff;
+    }
+    
+    .panel-group .panel-footer {
+        background-color: #f9cdcd;
+        color: #000000;
+    }
+
+    .lihover:hover
+    {
+        color:#000;
+      background:#f1c1c1;
+    }
+    
+    .lihover
+    {
+        cursor: pointer;
+    }
+    #topsheet p
+    {
+        margin-bottom:0px;
+    }
+
+</style>

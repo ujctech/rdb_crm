@@ -1,0 +1,50 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    
+   
+</div>
+<div class="clearfix"></div>
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#sms_templatetab" data-toggle="tab">SMS Sent</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="sms_templatetab">
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped" datatable-setup=""  >
+                        <thead>
+                            <tr>
+                                <th>Receipient</th>
+                                <th>Date</th>
+                                <th>Message</th>
+                                <th>Response ID</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="sms_sent in sms_sents">
+                                <td>{{sms_sent.receipient}}</td>
+                                <td>{{sms_sent.tcreated_date}}</td>
+                                <td>{{sms_sent.message}}</td>
+                                <td>{{sms_sent.sms_response}}</td>
+                                <td>{{sms_sent.status}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Receipient</th>
+                                <th>Date</th>
+                                <th>Message</th>
+                                <th>Response ID</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>   
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

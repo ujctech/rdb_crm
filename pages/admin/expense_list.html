@@ -1,0 +1,164 @@
+<div class="hidden-xs hidden-sm" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <!--<a class="btn btn-primary" href="#/expense_add" style="margin:10px;margin-right:2px;" ng-if="create_rights">Add Expense Details</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;margin-right:2px;">Add Expense Details</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin')) && create_rights" href="#/expense_add" style="margin:10px;margin-right:2px;">Add Expense Details</a>
+    <!--<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="batch_update();" ng-if="hasRoles.includes('Admin')">Batch Update</a>-->
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="batch_update();" ng-if="(hasRoles.includes('Admin') || hasRoles.includes('Accountant'))">Batch Update</a>
+</div>
+<div class="clearfix"></div>
+
+<div class="box boxpadding"  style="border-top:0px;" ng-if="view_rights"> 
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" style="background: #f1f1f1;"> 
+            <li class="active" ><a data-target="#myexpense" data-toggle="tab">Expense Details <b>-({{ expenselist.length }})</b></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="myexpense">
+                <div class="box-body table-responsive">
+                    <div class="right-side"  style="text-align:right;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group">
+                        <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                            <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                    <div class="row">
+                                        <div class="col-md-12"> 
+                                            <div class="col-md-2" style="margin-top:10px;">
+                                                <div class="form-group">
+                                                    <label for="expense_head_id">Expense Head</label>
+                                                    <select class="select2 form-control" id="expense_head_id" name="expense_head_id" multiple="multiple" ng-model="searchdata.expense_head_id" ng-options="expense_head.expense_head_id as expense_head.expense_title for expense_head in expense_heads"   style="width:100%;">
+                                                    </select>
+                                                </div>
+                                            </div>                                          
+                                            <div class="col-md-2" style="margin-top:10px;">
+                                                <div class="form-group">
+                                                    <label for="user_id">Employee Name</label>
+                                                    <select class="select2 form-control" id="user_id" name="user_id"  ng-model="searchdata.user_id" multiple="multiple" ng-options="employee.user_id as employee.name for employee in employees"   style="width:100%;" ng-change="selectteamfromid(expensedata.user_id)">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:10px;">
+                                                <div class="form-group">
+                                                    <label for="teams">Teams</label>
+                                                    <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams)">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">                                           
+                                            
+                                            <div class="col-md-2" style="margin-top:20px;">       
+                                                <div class="form-group">
+                                                    <label for="expense_date_from">Expense Date from</label>
+                                                    <div class="input-group date" id="expense_date_from" date-directive="">
+                                                        <input class="form-control" type="text" ng-model="searchdata.expense_date_from" >
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:20px;">       
+                                                <div class="form-group">
+                                                    <label for="expense_date_to">To</label>
+                                                    <div class="input-group date" id="expense_date_to" date-directive="">
+                                                        <input class="form-control" type="text" ng-model="searchdata.expense_date_to" >
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                           <div class="col-md-2" style="margin-top:25px;">        
+                                               <div class="form-group">
+                                                   <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_expenses(searchdata,'form')">Search Now </button>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2" style="margin-top:25px;">       
+                                               <div class="form-group">
+                                                   <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2" style="margin-top:25px;">       
+                                               <div class="form-group">
+                                               <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                               </div>
+                                           </div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped" datatable-setup=""  >
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="checkbox" style="margin-bottom:12px;margin-left:7px;">
+                                        <label>
+                                            <input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All
+                                        </label>
+                                    </div>
+                                </th>
+                                <th>Expense ID</th>
+                                <th>Expene Type</th>
+                                <th>Account</th>
+                                <th>Voucher No</th>
+                                <th>Voucher Date</th>
+                                <th>Emp Name</th>
+                                <th>Team</th>
+                                <th>Sub Team</th>
+                                <th>Amount</th>
+                                <th>Payment Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="expense in expenselist">
+                                <!--<td><a href="#/expense_edit/{{expense.expense_id}}"  title="Edit">ExpenseID_{{expense.expense_id}}</a></td>-->
+                                <td><div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{expense.expense_id}}"/></label></div></td>
+                                <td>
+                                    <a ng-if="hasRoles.includes('Sub Admin')" href="" title="Edit">ExpenseID_{{expense.expense_id}}</a>
+                                    <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/expense_edit/{{expense.expense_id}}"  title="Edit">ExpenseID_{{expense.expense_id}}</a>
+                                </td>
+                                <td>{{expense.expense_type}}</td>
+                                <td>{{expense.expense_title}}</td>
+                                <td>{{expense.expense_no}}</td>
+                                <td>{{expense.expense_date}}</td>
+                                <td>{{expense.emp_name}}</td>
+                                <td>{{expense.team_name}}</td>
+                                <td>{{expense.sub_team_name}}</td>
+                                <td>{{expense.amount}}</td>
+                                <td>{{expense.payment_status}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Expense ID</th>
+                                <th>Expene Type</th>
+                                <th>Account</th>
+                                <th>Voucher No</th>
+                                <th>Voucher Date</th>
+                                <th>Emp Name</th>
+                                <th>Team</th>
+                                <th>Sub Team</th>
+                                <th>Amount</th>
+                                <th>Payment Status</th>
+                                
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

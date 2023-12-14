@@ -1,0 +1,217 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+
+</div>
+<div class="clearfix"></div>
+
+<div id="dropdowns_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="dropdowns_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Post</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="media_category">Media Category<span class="required">*</span></label>
+											<select class="select2 form-control"  id="media_category" name="media_category" ng-model="social_media.media_category"  required  data-placeholder="Select Media Category" style="width:100%;">
+												<option value="Instagram">Instagram</option>
+												<option value="Facebook">Facebook</option>
+												<option value="Linkedin">Linkedin</option>
+												<option value="Twitter">Twitter</option>
+												<option value="Youtube">Youtube</option>
+												<option value="Other">Other</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="data_date">Date</label>
+											<div class="input-group date" id="data_date" date-directive="">
+												<input class="form-control" type="text" ng-model="social_media.data_date" >
+												<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+											</div>
+										</div>
+										
+										<div class="form-group">
+											<label for="no_of_posts">No Of Posts</label>
+											<input type="text" class="form-control numbers" id="no_of_posts" name="no_of_posts"  placeholder="No Of Posts" ng-model="social_media.no_of_posts" />
+										</div>
+										
+
+										<div class="form-group">
+											<label for="no_of_likes">No Of Likes</label>
+											<input type="text" class="form-control numbers" id="no_of_likes" name="no_of_likes"  placeholder="No Of Likes" ng-model="social_media.no_of_likes" />
+										</div>
+
+										<div class="form-group">
+											<label for="no_of_followers">No Of Followers</label>
+											<input type="text" class="form-control numbers" id="no_of_followers" name="no_of_followers"  placeholder="No Of Followers" ng-model="social_media.no_of_followers" />
+										</div>
+
+										<div class="form-group">
+											<label for="no_of_subscribers">No Of Subscribers</label>
+											<input type="text" class="form-control numbers" id="no_of_subscribers" name="no_of_subscribers"  placeholder="No Of Subscribers" ng-model="social_media.no_of_subscribers" />
+										</div>
+
+										<div class="form-group">
+											<label for="no_of_views">No Of Views</label>
+											<input type="text" class="form-control numbers" id="no_of_views" name="no_of_views"  placeholder="No Of Views" ng-model="social_media.no_of_views" />
+										</div>
+
+										<div class="form-group">
+											<label for="lead_generation">Lead Generation</label>
+											<input type="text" class="form-control numbers" id="lead_generation" name="lead_generation"  placeholder="Lead Generation" ng-model="social_media.lead_generation" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+										</div>
+
+										<div class="form-group">
+											<label for="teams">Teams<span class="required">*</span></label>
+											<select class="select2 form-control" multiple="multiple"  id = "teams" name = "teams" select2 ng-model="social_media.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required ng-change="select_assign_to(social_media.teams,0)">
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="sub_teams">Sub Teams</label>
+											<select class="select2 form-control" multiple="multiple"  id = "sub_teams" name = "sub_teams" select2 ng-model="social_media.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams"   style="width:100%;" ng-change="select_assign_to(social_media.teams,social_media.sub_teams)">
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="assign_to">Assign to<span class="required">*</span></label>
+											<select class="select2 form-control" multiple="multiple"  id = "assign_to" name = "assign_to" select2 ng-model="social_media.assign_to" ng-options="user.user_id as user.name +' - '+user.sub_team_name for user in users"   style="width:100%;" required>
+											</select>
+										</div>
+
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="file_documents">Documents</label>
+											<input id="file_documents" name="file_documents[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+											<input type="hidden" name="file_name_documents" id="file_name_documents" value="" ng-model="social_media.file_name_documents" />
+										</div>
+									</div>
+									<!--div class="col-md-4">
+										<table class="table">
+											<thead>
+												<tr style="display:none;">
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="social_media_document in social_media_documents">
+													<td style="width:100%">
+														<img src="dist/img/no_image.jpg" ng-if="social_media_document.filenames==null " style="width:245px; height:185px;" /> 
+
+														<a href="javascript:void();" class="btn btn-default btn-sm" style="position:absolute;" title="Remove Image" alt="Remove Image" ng-click="removedocuments(social_media_document.attachment_id)"><i class="glyphicon glyphicon-trash" style="font-size:20px;"></i></a> 
+
+														<a href="api/v1/uploads/social_media_docs/{{social_media_document.filenames}}" title="Download or View File" alt="Download or View File" target="_blank"> <img src="api/v1/uploads/social_media_docs/{{social_media_document.filenames}}" ng-if="social_media_document.filenames!=null " style="width:245px; height:185px;" /><p style="position:absolute;margin-left:50px;" >{{social_media_document.filenames}}</p> </a>
+														<!--p style="margin-top:50px;">
+															<select id="file_category" name="file_category" ng-model="social_media_document.file_category"   ng-change="social_media_image_update(social_media_document.attachment_id,'file_category',social_media_document.file_category)">
+																<option value="">Select Category</option>
+																<option value="Instagram Likes">Instagram Likes</option>
+																<option value="Instagram Followers">Instagram Followers</option>
+																<option value="Facebook Likes">Facebook Likes</option>
+																<option value="Facebook Followers">Facebook Followers</option>
+																<option value="Old Youtube Subscribers">Old Youtube Subscribers</option>
+																<option value="New Youtube Subscribers">New Youtube Subscribers</option>
+																<option value="Old Linkedin Followers">Old Linkedin Followers</option>
+																<option value="New Linkedin Followers">New Linkedin Followers</option>
+																<option value="Old Twitter Followers">Old Twitter Followers</option>
+																<option value="New Twitter Followers">New Twitter Followers</option>
+																<option value="Lead Generation">Lead Generation</option>
+															</select>
+														</p-->	
+
+													<!--/td>
+												</tr>
+											</tbody>
+										</table>
+									</div-->
+								</div>
+								
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(social_media)" id="add-new-btn" ng-click="social_media_add(social_media)">Save<span class="glyphicon glyphicon-floppy-disk"></span></button>
+											<a href="#/social_media_list" class="btn">Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<style>
+    .kv-file-upload
+{
+	display:none;
+}
+
+</style>
+<script>
+    
+    var footerTemplate_docs = '<div class="file-thumbnail-footer" style ="height:94px">\n' +
+        
+    '<select id="docs_category" name="docs_category" class="docs_images kv-input kv-new form-control input-sm form-control-sm text-center {TAG_CSS_NEW}">'+
+					'<option value="">Select Category</option>'+
+					'<option value="Instagram Likes">Instagram Likes</option>'+
+					'<option value="Instagram Followers">Instagram Followers</option>'+
+					'<option value="Facebook Likes">Facebook Likes</option>'+
+					'<option value="Facebook Followers">Facebook Followers</option>'+
+					'<option value="Old Youtube Subscribers">Old Youtube Subscribers</option>'+
+					'<option value="New Youtube Subscribers">New Youtube Subscribers</option>'+
+					'<option value="Old Linkedin Followers">Old Linkedin Followers</option>'+
+					'<option value="New Linkedin Followers">New Linkedin Followers</option>'+
+					'<option value="Old Twitter Followers">Old Twitter Followers</option>'+
+					'<option value="New Twitter Followers">New Twitter Followers</option>'+
+					'<option value="Lead Generation">Lead Generation</option>'+
+					'</select>\n'+
+	
+	'   <div class="small" style="margin:15px 0 2px 0">{size}</div> {progress}\n{indicator}\n{actions}\n' +
+	'</div>';
+    $( document ).ready(function() {
+	    
+        $("#file_documents").fileinput({
+            uploadAsync: false,
+            showUpload: false,
+            uploadUrl: './api/v1/social_media_documents_uploads',
+            allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','pptx','pdf','docx','xlsx'],
+            overwriteInitial: false,
+            maxFileSize: 1500000,
+            maxFilesNum: 25,
+            maxFileCount:100,
+            /*layoutTemplates: {footer: footerTemplate_docs},
+	
+			uploadExtraData: function() {  
+                var out = {}, key,  z=1;
+                $('.kv-input').each(function() {
+					$el = $(this);
+					if ($($el).hasClass('docs_images'))
+					{
+						
+						value = $el.val();
+						key = 'docs_category_'+z;
+						out[key] = value;
+					}
+				});
+				return out;
+            },*/
+            slugCallback: function(filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+
+        $('#file_documents').on('fileloaded', function(event, file, previewId, index, reader) {
+            $("#file_name_documents").val(file.name);
+            console.log("fileloaded");
+        });
+
+    });
+</script>

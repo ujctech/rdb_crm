@@ -1,0 +1,733 @@
+<div class="" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')">
+            <div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div>
+        </a>
+        <a href="javascript:void(0);" ng-click="pagenavigation( 'next')">
+            <div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div>
+        </a>
+    </div>
+
+    <a class="btn btn-primary" href="#/referrals_add" style="margin:10px;margin-right:2px;" ng-if="create_rights">Create Referrals</a>
+
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#import_referrals" ng-if="hasRoles.includes('Admin')">Import Data  &nbsp;<i class="fa fa-angle-down"></i></a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="send_mails()" ng-if="view_rights">Send Mail</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="send_smss()" ng-if="view_rights"  data-toggle="modal" data-target="#sendsms">Send SMS</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="send_wamessages()" ng-if="view_rights"  data-toggle="modal" data-target="#sendwamessage">Whatsapp Message</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="assign_group()" ng-if="view_rights" ng-if="hasRoles.includes('Admin')">Assign Group</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="setreassign_to()"  ng-if="hasRoles.includes('Admin')">Assign to</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="delete_selected()"  ng-if="hasRoles.includes('Admin')">Delete Records</a>
+    <div id="setreassign_to" style="position: absolute;
+    z-index: 9999;
+    width: 250px;
+    height: 145px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(149, 145, 145);
+   
+    padding: 20px;left:39%;">
+        <div class="form-group">
+            <label for="reassign_to">Reassgin To</label>
+            <input type="text" class="form-control" id="reassign_to" name="reassign_to"  placeholder="Reassign to" ng-model="reassign_to" style="width:200px;"/>
+            <a class="btn btn-primary" href="javascript:void(0)" style="margin-top:10px;width:50px;" ng-click="change_assign_to()"  >Go</a>
+        <a href="javascript:void(0);" class="btn" ng-click="closereassign_to()" style="margin-top:7px;">Cancel</a>
+        </div>
+        
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+<div class="box boxpadding"  style="border-top:0px;" ng-if="view_rights"> 
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" style="background: #f1f1f1;">
+            <li class="active" ><a data-target="#myreferrals" data-toggle="tab">Referrals &nbsp;&nbsp; {{referrals_count}}</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="myreferrals">
+                <div class="panel-group">
+                    <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                            <div id="import_referrals" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                        <div class="form-group" >
+                                            <input id="file_imports" name="file_imports[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" required>
+                                            <input type="hidden" name="file_name_imports" id="file_name_imports" value="" ng-model="convertdata.file_name_imports" />
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" ng-disabled="UAddNewForm.$invalid || isUnchanged(convertdata)" id="Uadd-new-btn" ng-click="uploadreferrals_property_data(convertdata)" data-toggle="collapse" data-target="#import_referrals">Import</button>
+                                            <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#import_referrals">Cancel</a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="find_what" name="find_what"  placeholder="Find ?" ng-model="searchdata.find_what" /> 
+                                <div class="input-group-addon">
+                                    <a href="javascript:void(0)" ng-click="searchall(searchdata,'form')"><i class="fa fa-search"></i></a>                                    
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="javascript:void(0)" style="color:#ff000c;" ng-click="resetForm()" >Clear Filters</a>
+                        </div>
+                    </div>
+                    <div class="right-side"  style="text-align:right;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group">
+                        <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                            <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="contact_person">Contact Person</label>
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.contact_person" id= "contact_person" name= "contact_person" ng-options="contact_person.contact_person as contact_person.contact_person for contact_person in contact_persons" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="mobile_no">Mobile No.</label>
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.mobile_no" id= "mobile_no" name= "mobile_no" ng-options="mobile_no.mobile_no as mobile_no.mobile_no for mobile_no in mobile_nos" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="email_id">Email ID</label>
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.email_id" id= "email_id" name= "email_id" ng-options="email_id.email_id as email_id.email_id for email_id in email_ids" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="building_name">Building Name</label>
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.building_name" id= "building_name" name= "building_name" ng-options="building_name.building_name as building_name.building_name for building_name in building_names" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="assign_to">Assign to</label>
+                                                   <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="searchdata.assign_to" ng-options="assign_to.assign_to as assign_to.assign_to for assign_to in assign_tos"   style="width:100%;" >
+                                                   </select>
+                                               </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                               <div class="form-group">
+                                                   <label for="team">Teams</label>
+                                                   <select class="select2 form-control" multiple="multiple"  id = "team" select2 ng-model="searchdata.team" ng-options="team.team as team.team for team in teams"   style="width:100%;">
+                                                   </select>
+                                               </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="sub_team">Sub Teams</label>
+                                                    <select class="select2 form-control" multiple="multiple"  id = "sub_team" select2 ng-model="searchdata.sub_team" ng-options="sub_team.sub_team as sub_team.sub_team for sub_team in sub_teams"   style="width:100%;">
+                                                    </select>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="group_name">Group Name</label>
+                                                    <select class="select2 form-control" multiple="multiple"  id = "group_name" select2 ng-model="searchdata.group_name" ng-options="group_name.group_name as group_name.group_name for group_name in group_names"   style="width:100%;" ng-change="change_sub_group(searchdata.group_name)">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="sub_group">Sub Group</label>
+                                                    <select class="select2 form-control" multiple="multiple"  id = "sub_group" select2 ng-model="searchdata.sub_group" ng-options="sub_group.sub_group as sub_group.sub_group for sub_group in sub_groups" style="width:100%;">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="sub_group">Status</label>
+                                                    <select class="select2 form-control"  id="status" name="status" select2 ng-model="searchdata.status"  data-placeholder="Select status" style="width:100%;">
+                                                        <option value="No Contact">No Contact</option>
+                                                        <option value="Follow Up">Follow Up</option>
+                                                        <option value="Shifted">Shifted</option>
+                                                        <option value="Renewed" >Renewed</option>
+                                                        <option value="Outside of the Headquarters" >Outside of the Headquarters</option>
+                                                        <option value="Converted into Lead" >Converted into Lead</option>
+                                                        <option value="Dead Client" >Dead Client</option>  
+                                                    </select>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-md-12">
+                                           <div class="col-md-2" style="margin-top:25px;">        
+                                               <div class="form-group">
+                                                   <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_referrals(searchdata,'form')">Search Now </button>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2" style="margin-top:25px;">       
+                                               <div class="form-group">
+                                                   <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-2" style="margin-top:25px;">       
+                                               <div class="form-group">
+                                               <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="checkbox " style="margin-bottom:12px;margin-left:7px;"><label><input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All</label></div>
+                    <div class="row" ng-repeat="referrals in listreferrals" id="referrals_list_div">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div style="width:30px;">
+                                    <p><div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{referrals.referral_property_id}}"/></label></div></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><span style="font-weight:bold;">Contact Person</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.contact_person}}</span></p>
+
+                                    <p><span style="font-weight:bold;">Mobile No</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.mobile_no}}</span></p>
+                                    <p><span style="font-weight:bold;">Email ID</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.email_id}}</span></p>
+
+                                    <p><span style="font-weight:bold;">Building Name</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.building_name}}</span></p>
+
+
+                                    <p><span style="font-weight:bold;">Property Type</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.property_type}}</span></p>
+                                    <p><span style="font-weight:bold;">Locality</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.locality}}</span></p>
+                                    <p><span style="font-weight:bold;">Developer Name</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.developer_name}}</span></p>
+                                    <p><span style="font-weight:bold;">Registration Date</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.registration_date}}</span></p>
+                                    <p><span style="font-weight:bold;">Lease Start Date</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.lease_start_date}}</span></p>
+                                    <p><span style="font-weight:bold;">Lease End Date</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.lease_end_date}}</span></p>
+                                    <p><span style="font-weight:bold;">Transaction Type</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.transaction_type}}</span></p>
+                                    <p><span style="font-weight:bold;">Area</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.area}}</span></p>
+                                    <p><span style="font-weight:bold;">Rate</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.rate}}</span></p>
+                                    <p><span style="font-weight:bold;">Floor</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.floor}}</span></p>
+                                    
+
+
+                                    
+                             
+                                </div>
+                                <div class="col-md-4">
+                                    <p><span style="font-weight:bold;">Buyer Company</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.buyer_company}}</span></p>
+                                    <p><span style="font-weight:bold;">Buyer Name</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.buyer_name}}</span></p>
+                                    <p><span style="font-weight:bold;">Buyer Mobile No</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.buyer_mobile}}</span></p>
+                                    <p><span style="font-weight:bold;">Buyer Email ID</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.buyer_email}}</span></p>
+                                    <p><span style="font-weight:bold;">Lease</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.lease}}</span></p>
+                                    <p><span style="font-weight:bold;">Representative Role</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.representative_role}}</span></p>
+                                    <p><span style="font-weight:bold;">Tenure</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.tenure}}</span></p>
+                                    <p><span style="font-weight:bold;">Total Rent</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.rate_1}}</span></p>
+                                    <p><span style="font-weight:bold;">Security Deposit</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.security_deposit}}</span></p>
+                                    <p><span style="font-weight:bold;">Condition of Space</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.condition_space}}</span></p>
+                                    <p><span style="font-weight:bold;">Car Park Slots</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.car_park_slots}}</span></p><p><span style="font-weight:bold;">Rent Free Period</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.rent_free_period}}</span>
+                                    </p>
+                                    <p><span style="font-weight:bold;">CAM Charge</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.cam_charge}}</span></p>
+                                    <p><span style="font-weight:bold;">Carpet</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.carpet}}</span></p>
+                                    <p><span style="font-weight:bold;">Chargeable Area</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.chargeable_area}}</span></p>
+                                   
+                                    
+                                    
+                                                                       
+                                </div>
+                                <div class="col-md-4">
+                                    <p><span style="font-weight:bold;">Starting Rate</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.starting_rate}}</span></p>
+                                    <p><span style="font-weight:bold;">Landlord Company</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.landlord_company}}</span></p>
+                                    
+                                    <p><span style="font-weight:bold;">Landlord Name</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.landlord_name}}</span></p><p><span style="font-weight:bold;">Landlord Designation</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.landlord_designation}}</span></p>
+                                    <p><span style="font-weight:bold;">Escalation Per</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.escalation_per}}</span></p>
+                                    <p><span style="font-weight:bold;">Escalation Monthly</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.escalation_monthly}}</span></p>
+                                    <p><span style="font-weight:bold;">Lock in Expiry</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.lock_in_expiry}}</span></p>
+                                    <p><span style="font-weight:bold;">Assign To</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.assign_to}}</span></p>
+                                    <p><span style="font-weight:bold;">Team</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.team}}</span></p>
+                                    <p><span style="font-weight:bold;">Sub_team</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.sub_team}}</span></p>
+                                    <p><span style="font-weight:bold;">Group</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.group_name}}</span></p>
+                                    <p><span style="font-weight:bold;">Sub Group</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span>{{referrals.sub_group}}</span></p>
+                                    <p><span style="font-weight:bold;">Status</span> &nbsp;&nbsp;:&nbsp;&nbsp;<span><select class="select2 "   id="status" name="status" select2 ng-model="referrals.status"  data-placeholder="Select status" ng-change="change_referral_property_status(referrals.status,referrals.referral_property_id)">
+                                        <option value="No Contact">No Contact</option>
+                                        <option value="Follow Up">Follow Up</option>
+                                        <option value="Shifted">Shifted</option>
+                                        <option value="Renewed" >Renewed</option>
+                                        <option value="Outside of the Headquarters" >Outside of the Headquarters</option>
+                                        <option value="Converted into Lead" >Converted into Lead</option>
+                                        <option value="Dead Client" >Dead Client</option>  
+                                    </select></span></p>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="add_comments(referrals.referral_property_id)">Add Comments</a><a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#collapse_h{{referrals.referral_property_id}}" ng-click="show_history_referral_property(referrals.referral_property_id)">Show History</a>
+                                    </div>
+                                    <!--div class="col-md-4">
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;margin-left:0px;" ng-click="create_referral_client(referrals.referrals_id)" ng-if="cat=='client'">Create Client</a>
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="create_referral_client(referrals.referrals_id)"  ng-if="cat=='Broker'">Create Broker</a>
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="create_referral_enquiry(referrals.referrals_id)">Create Enquiry</a>
+                                    </div-->
+                                    <div class="col-md-4">
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="create_referral_property(referrals.referral_property_id)">Create Property</a><a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="create_referral_task(referrals.referral_property_id)">Create Task</a>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        
+                                        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="delete_referral_property(referrals.referral_property_id)">Delete</a><!--a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="create_referral_task(referrals.referrals_id)">Create Task</a-->
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div id="collapse_h{{referrals.referral_property_id}}" class="panel-collapse collapse html_content"  compile-html="trustedHtml_h{{referrals.referral_property_id}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                    <!--table class="table table-bordered table-striped" datatable-setupnosort="">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Designation</th>
+                                <th>Company_name</th>
+                                <th>Mobile No</th>
+                                <th>Alternative Mobile</th>
+                                <th>Email</th>
+                                <th>Alternative Email</th>
+                                <th>Operate In Area</th>
+                                <th>Address</th>
+                                <th>Area</th>
+                                <th>Locality Street</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th>Comments</th>
+                                <th>Teams</th>
+                                <th>Assigned To</th>
+                                <th>Groups Names</th>
+                                <th>Office Phone</th>
+                                <th>Website</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="referrals in listreferrals">
+                                <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{referrals.referrals_id}}"/></label></div>
+				                <td>{{referrals.broker_id}}</td>
+                                <td>{{referrals.designation}}</td>
+                                <td>{{referrals.company_name}}</td>
+                                <td>{{referrals.mobile_no}}</td>
+                                <td>{{referrals.alternative_mobile}}</td>
+                                <td>{{referrals.email}}</td>
+                                <td>{{referrals.alternative_email}}</td>
+                                <td>{{referrals.operates_in_area}}</td>
+                                <td>{{referrals.address1}}</td>
+                                <td>{{referrals.area}}</td>
+                                <td>{{referrals.locality_street}}</td>
+                                <td>{{referrals.city}}</td>
+                                <td>{{referrals.state}}</td>
+                                <td>{{referrals.country}}</td>
+                                <td>{{referrals.comments}}</td>
+                                <td>{{referrals.teams}}</td>
+                                <td>{{referrals.assigned_to}}</td>
+                                <td>{{referrals.groups_names}}</td>
+                                <td>{{referrals.office_phone}}</td>
+                                <td>{{referrals.website}}</td>
+                                <td><a href="#/referrals_edit/{{referrals.referrals_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Designation</th>
+                                <th>Company_name</th>
+                                <th>Mobile No</th>
+                                <th>Alternative Mobile</th>
+                                <th>Email</th>
+                                <th>Alternative Email</th>
+                                <th>Operate In Area</th>
+                                <th>Address</th>
+                                <th>Area</th>
+                                <th>Locality Street</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th>Comments</th>
+                                <th>Teams</th>
+                                <th>Assigned To</th>
+                                <th>Groups Names</th>
+                                <th>Office Phone</th>
+                                <th>Website</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table--> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sendsms" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Send SMS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" id="listofvalues">
+                            <div class="col-md-12">
+                                <!--div class="form-group">
+                                    <label for="transport_name">Transport Name</label>
+                                    <select class="select2 form-control"  id="transport_name" name="transport_name" select2 ng-model="transport_name"  data-placeholder="Select transport_name" style="width:100%;">
+                                        <option value="Not Specified" >Not Specified</option>
+                                        <option value="Gupshup_transport" >Gupshup_transport</option>
+                                    </select>
+                                </div-->
+                                <div class="form-group">
+                                    <label for="sms_template_id">Select Template</label>
+                                    <select class="selectpicker form-control" select2 id="sms_template_id" name="sms_template_id" ng-model="sms_data.sms_template_id" ng-options="sms_template.sms_template_id as sms_template.template_title for sms_template in sms_templates" ng-change="select_sms_template(sms_data.sms_template_id)" style="width:100%;"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="receipient">Receipient</label>
+                                    <input type="text" class="form-control" id="receipient" name="receipient"  placeholder="receipient" ng-model="sms_data.receipient"  />
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="10" placeholder="message" ng-model="sms_data.message" value="Please find the details of the project "></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" data-dismiss="modal" ng-click="smssend(sms_data)">Send</button>
+                            <a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="referrals_comment" >
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;">Response
+        <a href="javascript:void(0)" ng-click="close_referrals_property_comment()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a>
+    </div>
+    <div style="padding:20px;width:100%">
+        <div id="first_comment">
+            <textarea class="form-control" id="closure_comment" name="closure_comment"  placeholder="Comment"  ng-model="closure_comment" rows="3" style="margin-bottom:5px;"></textarea>
+
+            <div class="input-group date" id="next_date" name="next_date" ng-model="next_date"  datetimepicker="">
+                <input class="form-control" type="text"  >
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <a href="javascript:void(0)" class="btn btn-primary" ng-click="save_referrals_property_comment(closure_comment,next_date)" style="margin-top:5px;">Save</a>
+            <a  href="javascript:void(0)" ng-click="close_referrals_property_comment()" style="margin-top:5px;">Cancel</a>
+        </div>
+    </div>
+</div>
+
+
+<div id="sendwamessage" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Whatapps Message</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" id="listofvalues">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="receipient">Receipient</label>
+                                    <input type="text" class="form-control" id="receipient" name="receipient"  placeholder="receipient" ng-model="wa_data.receipient"  />
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="10" placeholder="message" ng-model="wa_data.message" value="Please find the details of the project "></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" data-dismiss="modal" ng-click="wasend(wa_data)">Send</button>
+                            <a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="otp_div" style="margin-top: 50px!important;">
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;">Enter OTP
+        <a href="#/{{goindex}}" ng-click="close_otp()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a>
+    </div>
+    <div style="padding:20px;width:100%">
+        <input class="form-control" type="text" id="otp" name="otp"  ng-model="otp">             
+        <a href="javascript:void(0)" class="btn btn-primary" ng-click="verify_otp(otp)" style="margin-top:5px;">Save</a>
+        <!-- <a  href="javascript:void(0)" ng-click="close_otp()" style="margin-top:5px;">Cancel</a> -->
+    </div>
+</div>
+<div class="modal-backdrop fade in" aria-hidden="true"></div>
+
+
+<style>
+.modal-dialog {
+
+    width:25%;
+}
+.bottomborder{
+    border-bottom:1px solid #959191;
+}
+
+#referrals_comment
+{
+    position:fixed;
+    top:38%;
+    left:38%;
+    background-color:#ffffff;
+    width:30%;
+    height:250px;
+    display:none;
+    z-index:9001;
+    -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    /*padding:30px;
+    padding-top:5px;*/
+    border:1px solid #f0d2d2;
+}
+
+#otp_div
+{
+    position:fixed;
+    top:38%;
+    left:38%;
+    background-color:#ffffff;
+    width:30%;
+    height:150px;
+   
+    z-index:9001;
+    -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+    /*padding:30px;
+    padding-top:5px;*/
+    border:1px solid #f0d2d2;
+    
+}
+
+@media (max-width:991px){
+    .bottomborder{
+        border-bottom:0px;
+    }
+
+     div.dataTables_wrapper div.dataTables_filter {
+     text-align: left; 
+     float: left; 
+     margin-left: -15px;
+     margin-top:-35px;
+    }
+    div.dataTables_wrapper div.dataTables_filter input 
+    {
+        width: 150px;
+    }
+     .btndiv{
+        position: absolute;
+        top: -2px;
+        width:100%;
+    }
+    .act_desc{
+        left: 150px;
+        height: 100px;
+       
+    }
+    .act_img{
+        margin-bottom: -120px;
+    }
+    .buttombtn{
+        margin-top: -48px;
+    }
+  
+    .right-side{
+        height: 50px;
+    } 
+   .cls_name{
+ margin-top: 30px;
+   } 
+   .cls_width{
+    width: 45%;
+   }
+}
+</style>
+<style>
+    #pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #referrals_list_div
+    {
+        margin:5px;padding:5px;min-height:350px;margin-bottom: 20px;box-shadow: 0 0 12px rgba(0,0,0,.09);
+        
+    }
+    #referrals_list_div p
+    {
+        font-size:14px;
+    }
+
+    
+    @media screen and (max-width: 991px)  {
+        .act_desc{
+            left: 5px;
+            height: 100%;
+        
+        }
+        
+        .act_img{
+            margin-bottom: 0px;
+        }
+    }
+    #setreassign_to
+    {
+        display:none;
+    }
+
+</style>
+
+<script>
+
+    $( document ).ready(function() { 
+        $("#file_imports").fileinput({
+        uploadAsync: false,
+        showUpload: false,
+        uploadUrl: './api/v1/uploadreferrals_property_files',
+        allowedFileExtensions : ['csv','xls','xlsx'],
+        overwriteInitial: false,
+        maxFileSize: 1500000,
+        maxFilesNum: 1,
+        maxFileCount:1,
+        slugCallback: function(filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+        }).on("filebatchselected", function(event, files) 
+        {
+            $("#file_imports").fileinput("upload");
+        });
+        
+        $('#file_imports').on('fileloaded', function(event, file, previewId, index, reader) {
+            $("#file_name_imports").val(file.name);
+            console.log("fileloaded");
+        });
+    });
+
+</script>

@@ -1,0 +1,256 @@
+<div style="background-color:#cecece;margin-top:45px;height:75px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+        <a href="javascript:void(0);" ng-click="pagenavigation('next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+    </div>
+    <!--form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+        <div class="row">
+             <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <div class="input-group date" id="start_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="searchdata.start_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <div class="input-group date" id="end_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="searchdata.end_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <!--iv class="col-md-4">
+                <div class="form-group">
+                    <label for="user_id">User Name</label>
+                    <select class="select2 form-control"  id = "user_id" select2 ng-model="goalsdata.user_id" ng-options="user.user_id as user.name for user in listusers" style="width:100%;" >
+                    </select>
+                </div>
+            </div-->
+            <!--div class="col-md-4" style="margin-top:25px;">
+                <button class="btn btn-primary" id="add-new-btn" ng-click="getadmindashboardmore(searchdata)">Go</button>
+            </div>
+        </div>
+    </form-->
+</div>
+<div class="clearfix"></div>
+<!--div style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;"-->
+    
+<section class="content" style="padding:20px;min-height:150px;margin-top:120px;" id="topsheet">
+    <div class="row">
+        <div class="right-side"  style="text-align:right;">
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                    <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <select class="select2 form-control"  id="status" name="status" select2 ng-model="searchdata.status"  data-placeholder="Select status" style="width:100%;" multiple="multiple">
+                                            <option value="Open">Open</option>
+                                            <option value="Completed" >Completed</option>
+                                            <option value="Cancelled" >Cancelled</option>
+                                        </select>
+                                    </div> 
+                                </div>
+                                <div class="col-md-2">       
+                                    <div class="form-group">
+                                        <label for="created_date_from">Created Date from</label>
+                                        <div class="input-group date" id="created_date_from" date-directive="">
+                                            <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">       
+                                    <div class="form-group">
+                                        <label for="created_date_to">To</label>
+                                        <div class="input-group date" id="created_date_to" date-directive="">
+                                            <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="teams">Teams</label>
+                                        <select class="select2 form-control" multiple="multiple"  id = "searchdata.teams" name = "searchdata.teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" ng-change="select_assign_to(searchdata.teams,0)">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="sub_teams">Sub Teams</label> 
+                                        <select class="select2 form-control" multiple="multiple"  id = "searchdata.sub_teams"  name = "searchdata.sub_teams" ng-model="searchdata.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"  style="width:185px;" ng-change="select_assign_to(searchdata.teams,searchdata.sub_teams)">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="assign_to">Assign to</label>
+                                        <select class="select2 form-control" multiple="multiple"  id = "searchdata.assign_to"  name = "searchdata.assign_to" select2 ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in listusers"   style="width:100%;" >
+                                        </select>
+                                    </div>
+                                </div>
+
+                                
+
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-2" >
+                                    <div class="form-group">
+                                        <label for="client_id">Client</label>
+                                        <select class="select2 form-control" select2 ng-model="searchdata.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;" multiple="multiple">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="property_id">Property ID</label>
+                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.property_id" id= "property_id" name= "property_id" ng-options="property_id.property_id as property_id.property_id for property_id in property_ids" style="width:100%;"></select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="enquiry_id">Enquiry ID</label>
+                                        <!--input type="text" class="form-control numbers" id="enquiry_id" name="enquiry_id"  placeholder="Property ID" ng-model="searchdata.enquiry_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.enquiry_id" id= "enquiry_id" name= "enquiry_id" ng-options="project_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids" style="width:100%;"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="activity_id">Activity ID</label>
+                                        <!--input type="text" class="form-control numbers" id="activity_id" name="activity_id"  placeholder="ACtivity ID" ng-model="searchdata.activity_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.activity_id" id= "activity_id" name= "activity_id" ng-options="activity_id.activity_id as activity_id.activity_id for activity_id in activity_ids" style="width:100%;"></select>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                <div class="col-md-2" style="margin-top:25px;">        
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_assist(searchdata,'form')">Search Now </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="margin-top:25px;">       
+                                    <div class="form-group">
+                                        <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="margin-top:25px;">       
+                                    <div class="form-group">
+                                    <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()">Clear Filters</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="dashboard_div" class="html_content"  compile-html="trustedHtml_assist_readmore"></div>
+    </div>
+</section>
+<!--/div-->
+<style>
+    .myTicker
+    {
+        
+        list-style-type:none;
+        width:100%;
+        overflow:auto;
+    }
+
+    .myTicker li
+    {
+        list-style-type:none;
+    }
+    #pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+</style>

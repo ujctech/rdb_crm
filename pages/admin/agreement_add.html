@@ -1,0 +1,818 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		
+</div>
+<div class="clearfix"></div>
+<div id="agreement_info" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="agreement_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Agreement</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active" id="agreement_tab"><a data-target="#agreement" data-toggle="tab">Agreement</a></li>
+										<li><a data-target="#financial" data-toggle="tab">Financial Details</a></li>
+										<li><a data-target="#other_charges" data-toggle="tab">Other Charges</a></li>
+										<li><a data-target="#contribution" data-toggle="tab">Contribution</a></li>
+										<li  id="documents_tab"><a data-target="#documents" data-toggle="tab">Documents</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="agreement">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="agreement_for">Agreement For<span class="required">*</span></label>
+														<select class="select2 form-control"  id="agreement_for" name="agreement_for" select2 ng-model="agreement.agreement_for"  required  data-placeholder="Select Agreement For" style="width:100%;" ng-change="agreement_stage_change(agreement.agreement_for,0)">
+															<option value="Sale">Sale</option>
+															<option value="Lease" >Lease</option>
+															<option value="Sale Under Contructions" >Sale Under Contructions</option>
+															<option value="Sale Preleased" >Sale  Preleased</option>
+														</select>
+													</div>
+													<div class="form-group" >
+														<label for="property_id">Property<span class="required">*</span></label>
+														<select class="select2 form-control" select2 ng-model="agreement.property_id" ng-options="property.property_id as property.property_title for property in m_properties"  required   style="width:100%;" ng-change="getowner_developer(agreement.property_id)">
+															<option value="" disabled selected>Select Property</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<div class="radio">
+															<label>
+																<input type="radio" name="agreement_from" id="agreement_from" value="Owner" checked ng-model="agreement.agreement_from" >
+																Owner
+															</label>
+															<label>
+																<input type="radio" name="agreement_from" id="agreement_from" value="Developer" ng-model="agreement.agreement_from" >
+																Developer 
+															</label>
+															<label>
+																<input type="radio" name="agreement_from" id="agreement_from" value="Broker" ng-model="agreement.agreement_from" >
+																Broker 
+															</label>
+														</div>
+													</div>
+													<div class="form-group" ng-if = "agreement.agreement_from=='Owner'">
+														<label for="contact_id"><span ng-if="agreement.agreement_for=='Lease'">Licensor</span><span  ng-if="agreement.agreement_for!='Lease'">Owner</span><span class="required">*</span></label>
+														<select class="select2 form-control" select2 ng-model="agreement.contact_id" id="contact_id" name="contact_id" ng-options="contact.contact_id as contact.name for contact in clients"  required   style="width:100%;">
+															<option  ng-if="agreement.agreement_for=='Lease'" value="" disabled selected>Select Licensor</option>
+															<option  ng-if="agreement.agreement_for!='Lease'" value="" disabled selected>Select Owner</option>
+														</select>
+													</div>
+													<div class="form-group" ng-if = "agreement.agreement_from=='Developer'">
+														<label for="contact_id">Developer<span class="required">*</span></label>
+														<select class="select2 form-control" select2 ng-model="agreement.contact_id" id="contact_id" name="contact_id" ng-options="contact.contact_id as contact.name for contact in developers"  required   style="width:100%;">
+															<option value="" disabled selected>Select Developer</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="broker1_id"><span  ng-if="agreement.agreement_for=='Lease'" >Broker (Licensor)</span><span  ng-if="agreement.agreement_for!='Lease'" >Broker (Seller)</span></label>
+														<select class="select2 form-control" select2 ng-model="agreement.broker1_id" id="broker1_id" name="broker1_id" ng-options="contact.contact_id as contact.name for contact in brokers"   style="width:100%;" >
+															<option  ng-if="agreement.agreement_for=='Lease'" value="" disabled selected>Select Broker - Licensor</option>
+															<option  ng-if="agreement.agreement_for!='Lease'" value="" disabled selected>Select Broker - Seller</option>
+														</select>
+													</div>													
+													<div class="form-group">
+														<label for="enquiry_id">Enquiry<span class="required">*</span></label>
+														<select class="select2 form-control" select2 ng-model="agreement.enquiry_id" ng-options="enquiry.enquiry_id as enquiry.enquiry_title for enquiry in m_enquiries" style="width:100%;" required ng-change="getenquiry_buyer(agreement.enquiry_id)">
+															<option value="" disabled selected>Select Enquiry</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="buyer_id"><span  ng-if="agreement.agreement_for=='Lease'">Licensee</span><span  ng-if="agreement.agreement_for!='Lease'">Buyer</span><span class="required">*</span></label>
+														<select class="select2 form-control" select2 ng-model="agreement.buyer_id" ng-options="contact.contact_id as contact.name for contact in clients"  required   style="width:100%;">
+															<option  ng-if="agreement.agreement_for=='Lease'" value="" disabled selected>Select Licensee</option>
+															<option  ng-if="agreement.agreement_for!='Lease'" value="" disabled selected>Select Buyer</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="broker2_id"><span   ng-if="agreement.agreement_for=='Lease'" >Broker (Licensee)</span><span   ng-if="agreement.agreement_for!='Lease'" >Broker (Buyer)</span></label>
+														<select class="select2 form-control" select2 ng-model="agreement.broker2_id" ng-options="contact.contact_id as contact.name for contact in brokers"  style="width:100%;">
+															<option  ng-if="agreement.agreement_for=='Lease'" value="" disabled selected>Select Broker - Licensee</option>
+															<option  ng-if="agreement.agreement_for!='Lease'" value="" disabled selected>Select Broker - Buyer</option>
+														</select>
+													</div>	
+													<div class="form-group">
+														<label for="inname">In the Name of</label>
+														<input type="text" class="form-control" id="inname" name="inname"  placeholder="In the Name of" ng-model="agreement.inname"  />
+													</div>
+													<div class="form-group">
+														<label for="transfer_type">Transfer Type</label>
+														<select class="select2 form-control"  select2 id="transfer_type" name="transfer_type" select2 ng-model="agreement.transfer_type"  data-placeholder="Select Transfer Type" style="width:100%;">
+															<option value="Not Specified" >Not Specified</option>
+															<option value="None" >None</option>
+															<option value="50-50" >50-50</option>
+															<option value="Buyer" >Buyer</option>
+															<option value="Seller" >Seller</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="transfer_term">Transfer Terms</label>
+														<textarea class="form-control" id="transfer_term" name="transfer_term"  placeholder="Transfer Terms" ng-model="agreement.transfer_term" ></textarea>
+													</div>
+													<div class="row">
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="deal_date">Deal Date<span class="required">*</span></label>
+																<div class="input-group date" id="deal_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.deal_date" required>
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="shifting_date">Shifting Date</label>
+																<div class="input-group date" id="shifting_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.shifting_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="agreement_from_date">Agreement From Date</label><div class="input-group date" id="agreement_from_date" date-directive="">
+																<input class="form-control" type="text" ng-model="agreement.agreement_from_date" >
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="agreement_till_date">Agreement Till Date</label><div class="input-group date" id="agreement_till_date" date-directive="">
+																<input class="form-control" type="text" ng-model="agreement.agreement_till_date" >
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="possession_date">Possession Date</label>
+																<div class="input-group date" id="possession_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.possession_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="opening_date">Opening Date</label>
+																<div class="input-group date" id="opening_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.opening_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row" ng-if="agreement.agreement_for=='Lease'">
+														<div class="col-md-6">													
+															<div class="form-group">
+																<label for="lease_period">Lease Period</label>
+																<input type="text" class="form-control" id="lease_period" name="lease_period"  placeholder="Lease Period" ng-model="agreement.lease_period"  />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="rent_due_date">Rent Due Date</label>
+																<div class="input-group date" id="rent_due_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.rent_due_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="checkbox">
+															<label>
+																<input type="checkbox" id="send_rent_sms" name="send_rent_sms" ng-model="agreement.send_rent_sms" >Send Rent Reminder SMS
+															</label>
+														</div>
+													</div>
+													<div class="form-group" ng-controller="SelectUsers">
+														<label for="assign_to">Assign to<span class="required">*</span></label>
+														<select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="agreement.assign_to" ng-options="user.user_id as user.name+' - '+user.sub_team_name for user in users"   style="width:100%;" required>
+															<!--option value="" disabled selected>Select Assign to</option-->
+														</select>
+													</div>
+													<div class="form-group" ng-controller="SelectTeams">
+														<label for="teams">Teams<span class="required">*</span></label>
+														<div class="input-group">
+															<select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="agreement.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required ng-change="select_assign_to(agreement.teams)">
+																<!--option value="" disabled selected>Select Team</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addteam" ng-click="Addteam()"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="sub_teams">Sub Teams</label>
+														<select class="select2 form-control" multiple="multiple"  id = "sub_teams" name = "sub_teams" select2 ng-model="agreement.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"   style="width:100%;" required>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="agreement_status">Agreement Status</label>
+														<select class="select2 form-control"  id="agreement_status" name="agreement_status" select2 ng-model="agreement.agreement_status"  required  data-placeholder="Select Agreement Status" style="width:100%;" >
+															<option value="Open">Open</option>
+															<option value="Completed" >Completed</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="agreement_stage">Agreement Stage<span class="required">*</span></label>
+														<div compile-html="trustedHtml_agreement_stage"></div>
+
+												<!--    <ul ng-if="agreement.agreement_for=='Lease' ">
+															<li ng-repeat="stage in agreement_stages_lease">{{stage.value}}</li>
+														</ul>
+														<ul  ng-if="agreement.agreement_for=='Sale'">
+															<li ng-repeat="stage in agreement_stages_sale">{{stage.value}}</li>
+														</ul>
+														<ul  ng-if="agreement.agreement_for=='Sale Under Contructions' ">
+															<li ng-repeat="stage in agreement_stages_sale_uc">{{stage.value}}</li>
+														</ul>
+														<ul>  ng-if="agreement.agreement_for=='Sale Preleased' " >
+															<li ng-repeat="stage in agreement_stages_prelease">{{stage.value}}</li>
+														</ul>
+
+														<div class="input-group">
+															<select ng-if="agreement.agreement_for=='Lease'" class="form-control select2" select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_lease" style="width:100%;" required>
+																<option value="" disabled selected>Select Agreement Stage</option>
+															</select>
+
+															<select  ng-if="agreement.agreement_for=='Sale'"   class="form-control select2" select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_sale" style="width:100%;" required>
+																<option value="" disabled selected>Select Agreement Stage</option>
+															</select>
+
+															<select  ng-if="agreement.agreement_for=='Sale Under Contructions' " class="form-control select2" select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_sale_uc" style="width:100%;" required>
+																<option value="" disabled selected>Select Agreement Stage</option>
+															</select>
+
+															<select ng-if="agreement.agreement_for=='Sale Preleased' " class="form-control select2" select2  ng-model="agreement.agreement_stage" ng-options="dropdown.value as dropdown.display_value for dropdown in agreement_stages_prelease" style="width:100%;" required>
+																<option value="" disabled selected>Select Agreement Stage</option>
+															</select>
+
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('AGREEMENT STAGE')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div> -->
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane " id="financial">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-9">
+															<div class="form-group">
+																<label for="agreement_value">Agreement Value</label>
+																<input type="text" class="form-control numbers" id="agreement_value" name="agreement_value"  placeholder="Agreement Value" ng-model="agreement.agreement_value" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" ng-change="calculations()"/>
+															</div>
+														</div>
+														<div class="col-md-3" style="padding-top:24px;">
+															<select  class="select2 form-control" id="agreement_value_para" name="agreement_value_para" select2 ng-model="agreement.agreement_value_para"  data-placeholder="Select agreement_value_para"  ng-init="agreement.agreement_value_para='Abs'" ng-change="calculations()">
+																<option value="Abs" >Abs</option>
+																<option value="Th" >Th</option>
+																<option value="Lac" >Lac</option>
+																<option value="Cr" >Cr</option>
+															</select>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-9">
+																	
+															<div class="form-group">
+																<label for="furniture">Furniture</label>
+																<input type="text" class="form-control  numbers" id="furniture" name="furniture"  placeholder="Furniture" ng-model="agreement.furniture"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"  ng-change="calculations()"/>
+															</div>
+														</div>
+														<div class="col-md-3" style="padding-top:24px;">
+															<select  class="select2 form-control" id="furniture_para" name="furniture_para" select2 ng-model="agreement.furniture_para"  data-placeholder="Select furniture_para"  ng-init="agreement.furniture_para='Abs'">
+																<option value="Abs" >Abs</option>
+																<option value="Th" >Th</option>
+																<option value="Lac" >Lac</option>
+																<option value="Cr" >Cr</option>
+															</select>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-9">		
+															<div class="form-group">
+																<label for="basic_cost">Basic Cost</label>
+																<input type="text" class="form-control  numbers" id="basic_cost" name="basic_cost"  placeholder="Basic Cost" ng-model="agreement.basic_cost"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"  ng-change="calculations()"/>
+															</div>
+														</div>
+														<div class="col-md-3" style="padding-top:24px;">
+															<select  class="select2 form-control" id="basic_cost_para" name="basic_cost_para" select2 ng-model="agreement.basic_cost_para"  data-placeholder="Select basic_cost_para"  ng-init="agreement.basic_cost_para='Abs'">
+																<option value="Abs" >Abs</option>
+																<option value="Th" >Th</option>
+																<option value="Lac" >Lac</option>
+																<option value="Cr" >Cr</option>
+															</select>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-9">		
+															<div class="form-group" ng-show="agreement.agreement_for !='Lease'">
+																<label for="rent" >Price</label>
+																<input type="text" class="form-control  numbers" id="rent" name="rent"  placeholder="Price" ng-model="agreement.rent" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"  ng-change="calculations()"/>
+															</div>
+															<div class="form-group" ng-show="agreement.agreement_for =='Lease'">
+																<label for="rent" >Rent</label>
+																<input type="text" class="form-control  numbers" id="rent" name="rent"  placeholder="Rent" ng-model="agreement.rent" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"  ng-change="calculations()"/>
+															</div>
+														</div>
+														<div class="col-md-3" style="padding-top:24px;">
+															<select  class="select2 form-control" id="rent_para" name="rent_para" select2 ng-model="agreement.rent_para"  data-placeholder="Select rent_para"  ng-init="agreement.rent_para='Abs'">
+																<option value="Abs" >Abs</option>
+																<option value="Th" >Th</option>
+																<option value="Lac" >Lac</option>
+																<option value="Cr" >Cr</option>
+															</select>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="buyer_brokerage_per">Buyer Brokerage Per</label>
+																<input type="text" class="form-control numbers" id="buyer_brokerage_per" name="buyer_brokerage_per"  placeholder="Buyer Brokerage Per" ng-model="agreement.buyer_brokerage_per"  ng-change="calculations()" ng-init="agreement.buyer_brokerage_per=0"/>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="buyer_brokerage">Buyer Brokerage Amount</label>
+																<input type="text" class="form-control numbers" id="buyer_brokerage" name="buyer_brokerage"  placeholder="Buyer Brokerage Amount" ng-model="agreement.buyer_brokerage"   ng-change="calculations()"  ng-init="agreement.buyer_brokerage=0"/>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">	
+															<div class="form-group">
+																<label for="seller_brokerage_per">Seller Brokerage Per</label>
+																<input type="text" class="form-control numbers" id="seller_brokerage_per" name="seller_brokerage_per"  placeholder="Seller Brokerage Per" ng-model="agreement.seller_brokerage_per"   ng-change="calculations()" ng-init="agreement.seller_brokerage_per=0"/>
+															</div>
+														</div>
+														<div class="col-md-6">	
+															<div class="form-group">
+																<label for="seller_brokerage">Seller Brokerage Amount</label>
+																<input type="text" class="form-control numbers" id="seller_brokerage" name="seller_brokerage"  placeholder="Seller Brokerage Amount" ng-model="agreement.seller_brokerage"   ng-change="calculations()"  ng-init="agreement.seller_brokerage=0"/>
+															</div>
+														</div>
+													</div>
+														
+													<div class="form-group">
+														<label for="total_brokerage" ng-if="agreement.agreement_for!='Lease'">Total Brokerage</label >
+														<label for="total_brokerage"  ng-if="agreement.agreement_for=='Lease'">Total Brokerage</label>
+														<input type="text" class="form-control numbers" id="total_brokerage" name="total_brokerage"  placeholder="Total Brokerage" ng-model="agreement.total_brokerage" ng-init="agreement.total_brokerage=0" />
+													</div>
+													<div class="row">
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="our_brokerage_per">Our Brokerage Per</label>
+																<input type="text" class="form-control numbers" id="our_brokerage_per" name="our_brokerage_per"  placeholder="Our Brokerage Per" ng-model="agreement.our_brokerage_per"   ng-change="calculations()"  ng-init="agreement.our_brokerage_per=0"/>
+															</div>
+														</div>
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="our_brokerage">Our Brokerage Amount</label>
+																<input type="text" class="form-control numbers" id="our_brokerage" name="our_brokerage"  placeholder="Our Brokerage Amount" ng-model="agreement.our_brokerage"  ng-change="calculations()"  ng-init="agreement.our_brokerage=0"/>
+															</div>
+														</div>
+													</div>
+													<!--div class="row">
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="service_tax_per">Service Tax Per</label>
+																<input type="text" class="form-control numbers" id="service_tax_per" name="service_tax_per"  placeholder="Service Tax Per" ng-model="agreement.service_tax_per"  ng-change="calculations()" ng-init="agreement.service_tax_per=2.5" />
+															</div>
+														</div>
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="service_tax">Service Tax Amount</label>
+																<input type="text" class="form-control numbers" id="service_tax" name="service_tax"  placeholder="Service Tax Amount" ng-model="agreement.service_tax"  ng-init="agreement.service_tax=0"/>
+															</div>
+														</div>
+													</div-->
+													<div class="row">
+														<div class="col-md-6">	
+															<div class="form-group">
+																<label for="cgst_per">CGST Per</label>
+																<input type="text" class="form-control numbers" id="cgst_per" name="cgst_per"  placeholder="CGST Per" ng-model="agreement.cgst_per"  ng-change="calculations()" ng-init="agreement.cgst_per=9"/>
+															</div>
+														</div>
+														<div class="col-md-6">	
+															<div class="form-group">
+																<label for="cgst">CGST Amount</label>
+																<input type="text" class="form-control numbers" id="cgst" name="cgst"  placeholder="CGST Amount" ng-model="agreement.cgst"   ng-init="agreement.cgst=0" />
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">	
+															<div class="form-group">
+																<label for="sgst_per">SGST Per</label>
+																<input type="text" class="form-control numbers" id="sgst_per" name="sgst_per"  placeholder="SGST Per" ng-model="agreement.sgst_per"  ng-change="calculations()" ng-init="agreement.sgst_per=9"/>
+															</div>
+														</div>
+														<div class="col-md-6">	
+															<div class="form-group">
+																<label for="sgst">SGST Amount</label>
+																<input type="text" class="form-control numbers" id="sgst" name="sgst"  placeholder="SGST Amount" ng-model="agreement.sgst"  ng-init="agreement.sgst=0" />
+															</div>
+														</div>
+													</div>
+													<!--div class="row">
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="tds_per">TDS Per</label>
+																<input type="text" class="form-control numbers" id="tds_per" name="tds_per"  placeholder="TDS Per" ng-model="agreement.tds_per"  ng-change="calculations()" ng-init="agreement.tds_per=2.5"/>
+															</div>
+														</div>
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="tds">TDS Amount</label>
+																<input type="text" class="form-control numbers" id="tds" name="tds"  placeholder="TDS Amount" ng-model="agreement.tds"  ng-init="agreement.tds=0"/>
+															</div>
+														</div>
+													</!--div-->
+														
+													<div class="form-group">
+														<label for="gross_brokerage">Gross Brokerage</label>
+														<input type="text" class="form-control numbers" id="gross_brokerage" name="gross_brokerage"  placeholder="Gross Brokerage" ng-model="agreement.gross_brokerage"   ng-init="agreement.gross_brokerage=0"/>
+													</div>
+												</div>
+													
+											</div>
+										</div>
+										<div class="tab-pane" id="other_charges">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="stamp_duty">Stamp Duty</label>
+																<input type="text" class="form-control  numbers" id="stamp_duty" name="stamp_duty"  placeholder="Stamp Duty" ng-model="agreement.stamp_duty" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="stamp_duty_date">Stamp Duty Date</label><div class="input-group date" id="stamp_duty_date" date-directive="">
+																<input class="form-control" type="text" ng-model="agreement.stamp_duty_date" >
+																<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="security_deposit">Security Deposit</label>
+																<input type="text" class="form-control  numbers" id="security_deposit" name="security_deposit"  placeholder="Security Deposit" ng-model="agreement.security_deposit"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/>
+															</div>
+														</div>
+														<div class="col-md-6">																
+															<div class="form-group">
+																<label for="security_deposit_date">Security Deposit Date</label>
+																<div class="input-group date" id="security_deposit_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.security_deposit_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="transfer_charges">Transfer Charges</label>
+																<input type="text" class="form-control  numbers" id="transfer_charges" name="transfer_charges"  placeholder="Transfer Charges" ng-model="agreement.transfer_charges" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="transfer_charges_date">Transfer Charges Date</label>
+																<div class="input-group date" id="transfer_charges_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.transfer_charges_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="document_charges">Document Charges</label>
+																<input type="text" class="form-control  numbers" id="document_charges" name="document_charges"  placeholder="Document Charges" ng-model="agreement.document_charges"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/>
+															</div>	
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="document_charges_date">Document Charges Date</label>
+																<div class="input-group date" id="document_charges_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.document_charges_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="club_house_charges">Club House Charges</label>
+																<input type="text" class="form-control  numbers" id="club_house_charges" name="club_house_charges"  placeholder="Club House Charges" ng-model="agreement.club_house_charges" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+														<div class="col-md-6">		
+															<div class="form-group">
+																<label for="club_house_date">Club House Date</label>
+																<div class="input-group date" id="club_house_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="agreement.club_house_date" >
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="registration_charges">Registration Charges</label>
+																<input type="text" class="form-control  numbers" id="registration_charges" name="registration_charges"  placeholder="Registration Charges" ng-model="agreement.registration_charges" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="development_charges">Development Charges</label>
+																<input type="text" class="form-control  numbers" id="development_charges" name="development_charges"  placeholder="Development Charges" ng-model="agreement.development_charges" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="advance_maintenance">Advance Maintenance</label>
+																<input type="text" class="form-control  numbers" id="advance_maintenance" name="advance_maintenance"  placeholder="Advance Maintenance" ng-model="agreement.advance_maintenance" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="parking_charges">Parking Charges</label>
+																<input type="text" class="form-control  numbers" id="parking_charges" name="parking_charges"  placeholder="Parking Charges" ng-model="agreement.parking_charges" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="corpus_fund">Corpus Fund</label>
+																<input type="text" class="form-control  numbers" id="corpus_fund" name="corpus_fund"  placeholder="Corpus Fund" ng-model="agreement.corpus_fund" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="other_expenses">Other Expenses</label>
+																<textarea class="form-control" id="other_expenses" name="other_expenses"  placeholder="Other Expenses" ng-model="agreement.other_expenses"  ></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="contribution">
+											<div class="row">
+												<div class="col-md-10">
+													<div class="row">
+														<a class="btn btn-primary" href="javascript:void();" style="float:right;margin:5px;" ng-click="addItem()" >Add</a>
+														<div class="col-md-12">
+															
+															<table class="table table-bordered table-striped"><!--  datatable-setupnosort1="" -->
+																<thead>
+																	<tr>
+																		<th>Contribution For</th>
+																		<th>To</th>
+																		<th>Per</th>
+																		<th>Amount</th>
+																	</tr>
+																</thead>
+																
+																<tbody>
+																	<tr ng-repeat="item in agreement.items">
+																		<td  style="width:150px;">
+																			<div class="form-group" >
+																				<select class="select2 form-control"  id="contribution_by" name="contribution_by" select2 ng-model="item.contribution_by"  data-placeholder="Select Contri.By" style="width:100%;">
+																					<!--option value="Broker" selected="selected" >Broker</option-->
+																					<option value="Employee">Employee</option>
+																					<!--option value="Franchisee" >Franchisee</option-->
+																					<option value="Other" >Other</option>
+																				</select>
+																			</div>
+																		</td>
+																		<td >
+																			<div class="form-group" >
+																				<!--select class="select2 form-control"    ng-model="item.contribution_to" ng-options="broker.contact_id as broker.name for broker in brokers"  style="width:100%;" ng-if="item.contribution_by=='Broker'">
+																					<option value="" disabled selected>Broker</option>
+																				</select-->
+																				<select class="select2 form-control"    ng-model="item.contribution_to" ng-options="user.user_id as user.name for user in users" style="width:100%;" ng-if="item.contribution_by=='Employee'">
+																					<option value="" disabled selected>Employee</option>
+																				</select>
+																				<!--select class="select2 form-control"    ng-model="item.contribution_to" ng-options="franchisee.bo_id as franchisee.bo_name for franchisee in franchisees"  style="width:100%;" ng-if="item.contribution_by=='Franchisee'">
+																					<option value="" disabled selected>Franchisee</option>
+																				</select-->
+																				<input class="form-control" id="contribution_to_name" name="contribution_to_name" placeholder="Name" ng-model="item.contribution_to_name" ng-if="item.contribution_by=='Other'"/>
+																			</div>
+																		</td>
+																		<td style="width:75px;">
+																			<div class="form-group">
+																				<input class="form-control numbers" id="contribution_per" name="contribution_per" placeholder="Per" ng-model="item.contribution_per" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" ng-change="calculate_contribution(item.contribution_per,$index)"/>
+																			</div>
+																		</td>
+																		<td  style="width:100px;">
+																			<div class="form-group">
+																				<input class="form-control numbers" id="contribution_amount" name="contribution_amount" placeholder="Amount" ng-model="item.contribution_amount" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/>
+																			</div>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="documents">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="file-1">Documents</label>
+														<input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" >
+														<input type="hidden" name="file_name" id="file_name" value="" ng-model="agreement.file_name" />
+													</div>
+												</div>
+												<div class="col-md-6">
+													<table class="table">
+														<thead>
+															<tr style="display:none;">
+																<th></th>
+																<th></th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="property_image in property_images">
+																<td style="width:100%">
+																	<img src="dist/img/no_image.jpg" ng-if="property_image.filenames==null " style="width:245px; height:185px;" /> 
+																	<img src="api/v1/uploads/property/{{property_image.filenames}}" ng-if="property_image.filenames!=null " style="width:245px; height:185px;" /> 
+																	
+																</td>
+																<td>
+																	<p><input type="text" class="form-control" id="description" name="description"  placeholder="File Title" ng-model="property_image.description"  /></p>	
+																	<p><select id="file_category" name="file_category" ng-model="property_image.file_category">
+																				<option value="">Select Category</option>
+																				<option value="Special Offer Detail">Special Offer Detail</option>
+																				<option value="Amenities">Amenities</option>
+																				<option value="Site Plan">Site Plan</option>
+																				<option value="Special Offer Listing">Special Offer Listing</option>
+																				<option value="special offer">special offer</option>
+																				<option value="Elevation">Elevation</option>
+																				<option value="Location">Location</option>
+																				<option value="Floor Plans">Floor Plans</option>
+																				<option value="General">General</option>
+																				<option value="Sample Flat">Sample Flat</option>
+																				</select></p>
+
+																	<p><div class="form-group">
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" id="main_image" name="main_image" ng-model="property_image.main_image" >Set as Main Image
+																				</label>
+																			</div>
+																		</div></p>
+																		<p><div class="form-group">
+																				<div class="checkbox">
+																					<label>
+																						<input type="checkbox" id="share_on_web" name="share_on_web" ng-model="property_image.share_on_web" >Share
+																					</label>
+																				</div>
+																			</div></p>
+																</td>
+																
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(agreement)" id="add-new-btn" ng-click="agreement_add_new(agreement)">Save </button>
+							<a href="#/agreement_list/direct" class="btn">Cancel</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+var footerTemplate = '<div class="file-thumbnail-footer" style ="height:94px">\n' +
+	'  <input class="kv-input kv-new form-control input-sm form-control-sm text-center {TAG_CSS_NEW}"  value="" placeholder="Enter Title...">\n' +
+	'  <input class="kv-input kv-new  {TAG_CSS_NEW}" type="checkbox" value="true" >Set as main image' +
+	'  <input class="kv-input kv-new  {TAG_CSS_NEW}" type="checkbox" value="true" checked>Share' +
+	'<select id="file_category" name="file_category" class="kv-input kv-new form-control input-sm form-control-sm text-center {TAG_CSS_NEW}">'+
+					'<option value="">Select Category</option>'+
+					'<option value="LOI">LOI</option>'+
+					'<option value="Brokerage Confirmation">Brokerage Confirmation</option>'+
+					'<option value="Agreement Approval">Agreement Approval</option>'+
+					'<option value="Registration">Registration</option>'+
+					'<option value="Police Verification">Police Verification</option>'+
+					'<option value="Keys Hand Over">Keys Hand Over</option>'+
+					'<option value="Brokerage Bill">Brokerage Bill</option>'+
+					'<option value="Other">Other</option>'+
+					'</select>\n'+
+	
+	'   <div class="small" style="margin:15px 0 2px 0">{size}</div> {progress}\n{indicator}\n{actions}\n' +
+	'</div>';
+
+
+	$("#file-1").fileinput({
+		uploadAsync: false,
+		showUpload: false,
+		uploadUrl: './api/v1/agreement_uploads',
+		allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','xlsx','docx','pdf'],
+		overwriteInitial: false,
+		maxFileSize: 1500000,
+		maxFilesNum: 25,
+		maxFileCount:100,
+		layoutTemplates: {footer: footerTemplate},
+	
+		uploadExtraData: function() {  
+			var out = {}, key, i = 0,j=1,z=1;
+			$('.kv-input:visible').each(function() {
+				$el = $(this);
+				value = $el.val();
+				if (j==1)
+				{
+					key = 'file_title_'+z;
+				}
+				if (j==2)
+				{
+					key = 'main_image_'+z;
+					if ($(this).is(':checked'))
+					{
+						value = true;
+					}
+					else{
+						value = false;
+					}
+				}
+				if (j==3)
+				{
+					key = 'share_on_web_'+z;
+					if ($(this).is(':checked'))
+					{
+						value = true;
+					}
+					else{
+						value = false;
+					}
+				}
+				if (j==4)
+				{
+					key = 'file_category_'+z;
+					j=0;
+					z++;
+				}
+				j++;
+				//key = $el.hasClass('kv-new') ? 'new_' + i : 'init_' + i;
+				out[key] = value;
+				i++;
+			});
+			return out;
+		},
+		slugCallback: function(filename) {
+			return filename.replace('(', '_').replace(']', '_');
+		}
+	});
+
+	$('#file-1').on('fileloaded', function(event, file, previewId, index, reader) {
+		$("#file_name").val(file.name);
+		console.log("fileloaded");
+	});
+</script>

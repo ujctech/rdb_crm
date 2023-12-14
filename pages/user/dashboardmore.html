@@ -1,0 +1,40 @@
+<div style="background-color:#cecece;margin-top:45px;height:75px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+        <div class="row">
+             <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <div class="input-group date" id="start_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="searchdata.start_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <div class="input-group date" id="end_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="searchdata.end_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <!--iv class="col-md-4">
+                <div class="form-group">
+                    <label for="user_id">User Name</label>
+                    <select class="select2 form-control"  id = "user_id" select2 ng-model="goalsdata.user_id" ng-options="user.user_id as user.name for user in listusers" style="width:100%;" >
+                    </select>
+                </div>
+            </div-->
+            <div class="col-md-4" style="margin-top:25px;">
+                <button class="btn btn-primary" id="add-new-btn" ng-click="getuserdashboardmore(searchdata)">Go</button>
+            </div>
+        </div>
+    </form-->
+</div>
+<div class="clearfix"></div>
+<div style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;">
+<section class="content" style="padding:20px;min-height:150px;margin-top:120px;" id="topsheet">
+    <div id="dashboard_div" class="html_content"  compile-html="dashboardMoreHtml"></div>
+</section>

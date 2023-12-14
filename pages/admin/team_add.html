@@ -1,0 +1,86 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="teams_info"  style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+
+		<div class="row" id="teams_data">
+
+			<div class="col-md-6">
+
+				<div class="box box-primary">
+
+					<div class="box-header">
+
+						<h3 class="box-title">Add Team</h3>
+
+					</div>
+
+					<div class="box-body">
+
+						<div class="row">
+
+							<div class="col-md-12">
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+
+                                            <label for="team_name">Name<span class="required">*</span></label>
+
+                                            <input type="text" class="form-control" id="team_name" name="team_name"  placeholder="Name" ng-model="team.team_name"  required  />
+
+										</div>
+
+										<div class="form-group">
+
+											<label for="team_description">Team Description</label>
+
+											<textarea class="form-control" id="team_description" name="team_description"  placeholder="Description" ng-model="team.team_description" ></textarea>
+
+										</div>
+										
+										<div class="form-group">
+											<label for="sharing_per">Sharing Per</label>
+											<input class="form-control numbers" type="text" ng-model="team.sharing_per" id="sharing_per" name="sharing_per" placeholder="Sharing Per">
+										</div>
+                                        <div class="form-group">
+											<label for="team_type">Team Type</label>
+											<select class="select2 form-control"  id="team_type" name="team_type" ng-model="employee.team_type"  data-placeholder="Select Employee Type" style="width:100%;" ng-init="team.team_type='Branch'" >
+												<option value="" disabled selected>Select Team Type</option>
+												<option value="Branch">Branch</option>
+												<option value="Franchisee">Franchisee</option>
+											</select>
+										</div>
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(team)" id="add-new-btn" ng-click="teams_add_new(team)">Save </button>
+
+                                            <a href="#/teams_list" class="btn">Cancel</a>
+
+                                        </div>
+
+                                    </div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+</div>

@@ -1,0 +1,6839 @@
+<form id="createViewForm" path="createViewData" action="index.html?_csrf=21ed8466-299e-4a8f-b1f7-a6e506a9e68a" method="post" enctype="multipart/form-data">
+	
+	<div class="subhead">
+		<div class="container-fluid">
+			<div id="createViewActionsPanel_Top" class="btn-toolbar">
+				
+				<div class="btn-wrapper" style="margin-left: 0;">
+					<i class="icon-new icon-white"></i><input type="button" name="Submit" class="gradientBtnBlue btn btn-small btn-success" value="Submit" onclick="broker_handleSubmit()">
+				</div>
+				<div class="btn-wrapper">
+					<i class="icon-unpublish"></i><input type="button" value="Cancel" class="gradientBtnBlue btn btn-small" id="Cancel_Top" onclick="createView_CancelHandler()">
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	// Show hide tabs in create / edit view
+	function broker_showHideTabs(elementClass) {
+		$(document).ready(function() {
+			$('.container-fluid .container-fluid-broker').attr('style', 'display:none;');
+			$('.container-fluid .container-fluid-broker.' + elementClass).removeAttr('style');
+			$('#broker li').removeClass('active');
+			$('#broker li.' + elementClass).addClass('active');
+		});
+	}
+	</script>
+	<div class="container-fluid">
+		
+		<ul class="nav nav-tabs" id="broker">
+			
+			<li class="0 active"><a onclick="broker_showHideTabs('0')"> General<script>
+		$(document).ready(function() {
+			broker_showHideTabs('0');
+		});
+	</script> 
+			</a></li>
+			
+			<li class="1"><a onclick="broker_showHideTabs('1')"> More Details
+			</a></li>
+			
+		</ul>
+		
+		<div class="accordion container-fluid container-fluid-broker 0">
+			<!-- loop for the Section -->
+			
+			<h2 style="display: none;">
+				Contact Information :: Personal
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Contact_Information_::_Personal">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Contact Information :: Personal
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerSalutation">Name (*)</td>
+					<td class="" id="markup_for_brokerSalutation" style="width: 226px">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var childID = "#brokerSalutation_create";
+	$(childID).select2({dropdownAutoWidth : true});
+});
+
+
+function brokerSalutation_create_reload(){
+    var childID = "#brokerSalutation_create";
+
+    var currentSelection = {};
+    $(childID).find("option:selected").each(function() {
+    	currentSelection[$(this).val()]=$(this).val();
+    });
+    
+    if (!VT.isSet(currentSelection.value)) {
+    	currentSelection[''] = '';
+    }
+		
+	var extraWhereClause = $('#create_brokerSalutation_extraWhereClause').val();
+	var parentFieldName = $('#create_brokerSalutation_parentFieldName').val();
+	if(VT.isSet(parentFieldName) && !VT.isSet(extraWhereClause)) {
+	    return;
+	}
+	
+	ajaxExecuteController(function(data) {
+		$(childID).html("");
+	    
+			$(childID).append($('<option>', { value : ' ',text : 'Not Specified' }));
+		
+    	data = JSON.parse($.trim(data));
+		$.each(data, function(i, item) {
+			if(currentSelection.hasOwnProperty(item.value)) {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display, selected: "selected" }));
+			}
+			else {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display }));
+			}
+		});
+		
+		$(childID).select2({dropdownAutoWidth : true});
+		
+		setTimeout(function() {
+		}, 3000);
+    }, "listOfValue", "loadFromModule", {
+		lovType : "",
+		moduleName : "broker", 
+		fieldName : "brokerSalutation",
+		extraWhereClause : extraWhereClause
+	});
+}
+
+function brokerSalutation_create_add() {
+	// lov add opens in a dialog now. 
+	var layoutDef = '';
+	layoutDef += '<LayoutDef>';
+	layoutDef += '	<Panel>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>type</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>dispVal</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>val</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>parent</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '	</Panel>';
+	layoutDef += '</LayoutDef>';
+
+	showProgress();
+	ajaxExecuteController(function(data) {
+		hideProgress();
+		brokerSalutation_open_lov_create_dialog(data, layoutDef);
+	}, 'ajax', 'renderCreateView', {"ajax_module": "listOfValue", "ajax_layoutDef": layoutDef, "recordData.fields['type'].value": ''});
+}
+
+function brokerSalutation_open_lov_create_dialog(lovCreateFormMarkup, lovCreateFormLayoutDef) {
+	$('#brokerSalutation_lov_inline_create').remove();
+	$('body').append($('<div id="brokerSalutation_lov_inline_create" style="display: none;"> ' + lovCreateFormMarkup + '</div>'));
+
+	// open the locality create form in a dialog box. 
+	openDialog("Create List Of Val", '#brokerSalutation_lov_inline_create', '650', 'auto', {
+		"Save": function() {
+			var dialog = $(this);
+			var formData = VT.getFormObject($('#brokerSalutation_lov_inline_create #createViewForm'));
+			formData['ajax_module'] = formData['module'];
+			formData['ajax_layoutDef'] = lovCreateFormLayoutDef;
+			formData['module'] = 'ajax';
+			formData['action'] = 'create';
+			showProgress();
+			$.ajax({
+				type : "POST",
+				url : "index.html",
+				data : formData,
+				success : function(data) {
+					hideProgress();
+					try {
+						// if lov was created successfully then we get a json response. 
+						// else we get HTML representing the form again to be rendered with the error messages, this we are doing in the catch block. 
+						var jsData = JSON.parse($.trim(data));
+						if (jsData.status === 'SUCCESS') {
+							$(dialog).dialog('close');
+
+							// first reload the new value. 
+							brokerSalutation_create_reload()
+
+							openDialog("Alert", "New Value added. You can start typing to select the new value.", '350', '150');
+						}
+					}
+					catch (error) {
+						// could not parse as json, so must be HTML carrying the invalid error message.
+						brokerSalutation_open_lov_create_dialog(data, lovCreateFormLayoutDef);
+					}
+				}
+			});
+		}, 
+		"Cancel": function() {
+			$(this).dialog('close');
+			$('#brokerSalutation_lov_inline_create').remove();
+		}
+	}, {
+		"close": function() {
+			$('#brokerSalutation_lov_inline_create').remove();
+		}
+	});
+}
+</script>
+<!-- Bind the value of this IField instance. -->
+<div class="select2-container dropDown_create" id="s2id_brokerSalutation_create"><a href="javascript:void(0)" onclick="return false;" class="select2-choice" tabindex="-1">   <span class="select2-chosen">Not Specified</span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow"><b></b></span></a><input class="select2-focusser select2-offscreen" type="text" id="s2id_autogen2"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input">   </div>   <ul class="select2-results">   </ul></div></div><select class="dropDown_create select2-offscreen" id="brokerSalutation_create" name="recordData.fields['brokerSalutation'].value" tabindex="-1">
+	
+	<option value="">Not Specified</option>
+	
+	<option value="Mr." rid="null">Mr.</option><option value="Mrs." rid="null">Mrs.</option><option value="Ms." rid="null">Ms.</option><option value="Dr." rid="null">Dr.</option><option value="Mohd." rid="null">Mohd.</option><option value="Cmdr." rid="null">Cmdr.</option><option value="Capt." rid="null">Capt.</option><option value="Maj." rid="null">Maj</option><option value="Col." rid="null">Col.</option><option value="Flt.Lt." rid="null">Flt.Lt.</option><option value="Prof." rid="null">Prof.</option><option value="Brig." rid="null">Brig.</option>
+</select>
+
+<input type="hidden" name="create_brokerSalutation_extraWhereClause" id="create_brokerSalutation_extraWhereClause" value="">
+<input type="hidden" name="create_brokerSalutation_extraAddParam" id="create_brokerSalutation_extraAddParam" value="">
+<input type="hidden" name="recordData.fields['brokerSalutation'].name" id="brokerSalutation_createViewForm" value="brokerSalutation">
+<input type="hidden" name="recordData.fields['brokerSalutation'].module" id="brokerSalutation_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerSalutation'].type" id="brokerSalutation_type_createViewForm" value="DropDown">
+<input type="hidden" name="create_brokerSalutation_parentFieldName" id="create_brokerSalutation_parentFieldName" value="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['brokerFirstName'].value" id="brokerFirstName" value="" autocomplete="off" placeholder="First Name">
+<input type="hidden" name="recordData.fields['brokerFirstName'].name" id="brokerFirstName_createViewForm" value="brokerFirstName">
+<input type="hidden" name="recordData.fields['brokerFirstName'].module" id="brokerFirstName_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerFirstName'].type" id="brokerFirstName_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td><td id="markup_for_brokerLastName"><script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['brokerLastName'].value" id="brokerLastName" value="" autocomplete="off" placeholder="Last Name">
+<input type="hidden" name="recordData.fields['brokerLastName'].name" id="brokerLastName_createViewForm" value="brokerLastName">
+<input type="hidden" name="recordData.fields['brokerLastName'].module" id="brokerLastName_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerLastName'].type" id="brokerLastName_type_createViewForm" value="TextField"> </td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					
+					
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					
+					
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerOrganization">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Organization name of the broker." class=""> 
+ 		
+			Company Name
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerOrganization">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="textField_create ui-autocomplete-input" type="text" name="recordData.fields['brokerOrganization'].value" id="brokerOrganization" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['brokerOrganization'].name" id="brokerOrganization_createViewForm" value="brokerOrganization">
+<input type="hidden" name="recordData.fields['brokerOrganization'].module" id="brokerOrganization_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerOrganization'].type" id="brokerOrganization_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerMobileNoCountryCode">Mobile No.</td>
+					<td class="" id="markup_for_brokerMobileNoCountryCode">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create country_code" type="text" name="recordData.fields['brokerMobileNoCountryCode'].value" id="brokerMobileNoCountryCode" value="" autocomplete="off"><span style="padding: 5px 3px 0px 5px;">-</span>
+<input type="hidden" name="recordData.fields['brokerMobileNoCountryCode'].name" id="brokerMobileNoCountryCode_createViewForm" value="brokerMobileNoCountryCode">
+<input type="hidden" name="recordData.fields['brokerMobileNoCountryCode'].module" id="brokerMobileNoCountryCode_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerMobileNoCountryCode'].type" id="brokerMobileNoCountryCode_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['brokerMobileNoNonConcat'].value" id="brokerMobileNoNonConcat" value="" autocomplete="off" style="width: 65% !important;">
+<input type="hidden" name="recordData.fields['brokerMobileNoNonConcat'].name" id="brokerMobileNoNonConcat_createViewForm" value="brokerMobileNoNonConcat">
+<input type="hidden" name="recordData.fields['brokerMobileNoNonConcat'].module" id="brokerMobileNoNonConcat_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerMobileNoNonConcat'].type" id="brokerMobileNoNonConcat_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+<p id="Country_code" style="font-size: 10px; width: 100%; float: left;">Country Code - Actual Number</p></td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					
+					
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerEmailID">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Email ID" class=""> 
+ 		
+			Email
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerEmailID">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['brokerEmailID'].value" id="brokerEmailID" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['brokerEmailID'].name" id="brokerEmailID_createViewForm" value="brokerEmailID">
+<input type="hidden" name="recordData.fields['brokerEmailID'].module" id="brokerEmailID_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerEmailID'].type" id="brokerEmailID_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerAlternativeMobileNoCountryCode">Alternative Phone No.</td>
+					<td class="" id="markup_for_brokerAlternativeMobileNoCountryCode">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create country_code" type="text" name="recordData.fields['brokerAlternativeMobileNoCountryCode'].value" id="brokerAlternativeMobileNoCountryCode" value="" autocomplete="off"><span style="padding: 5px 3px 0px 5px;">-</span>
+<input type="hidden" name="recordData.fields['brokerAlternativeMobileNoCountryCode'].name" id="brokerAlternativeMobileNoCountryCode_createViewForm" value="brokerAlternativeMobileNoCountryCode">
+<input type="hidden" name="recordData.fields['brokerAlternativeMobileNoCountryCode'].module" id="brokerAlternativeMobileNoCountryCode_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerAlternativeMobileNoCountryCode'].type" id="brokerAlternativeMobileNoCountryCode_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['brokerAlternativeMobileNoNonConcat'].value" id="brokerAlternativeMobileNoNonConcat" value="" autocomplete="off" style="width: 65% !important;">
+<input type="hidden" name="recordData.fields['brokerAlternativeMobileNoNonConcat'].name" id="brokerAlternativeMobileNoNonConcat_createViewForm" value="brokerAlternativeMobileNoNonConcat">
+<input type="hidden" name="recordData.fields['brokerAlternativeMobileNoNonConcat'].module" id="brokerAlternativeMobileNoNonConcat_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerAlternativeMobileNoNonConcat'].type" id="brokerAlternativeMobileNoNonConcat_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+<p id="AlternativeCountry_code" style="font-size: 10px; width: 100%; float: left;">Country Code - Actual Number</p></td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					
+					
+					
+				</tr>
+				
+			</tbody></table>
+			
+			<h2 style="display: none;">
+				Address
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Address">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Address
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_address1">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Address Line 1." class=""> 
+ 		
+			Address1
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_address1">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['address1'].value" id="address1" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['address1'].name" id="address1_createViewForm" value="address1">
+<input type="hidden" name="recordData.fields['address1'].module" id="address1_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['address1'].type" id="address1_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_address2">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Address Line 2." class=""> 
+ 		
+			Address2
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_address2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['address2'].value" id="address2" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['address2'].name" id="address2_createViewForm" value="address2">
+<input type="hidden" name="recordData.fields['address2'].module" id="address2_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['address2'].type" id="address2_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerLocality">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the Locality." class=""> 
+ 		
+			Locality / Street
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerLocality">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerLocality_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerLocality_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerLocality_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerLocality_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerLocality_createViewForm').val('').change();
+			$('#relatedField_brokerLocality_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerLocality() {
+		var moduleName="locality";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerLocality_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerLocality_open_create_dialog(createFormMarkup) {
+		$('#brokerLocality_inline_create').remove();
+		$('body').append($('<div id="brokerLocality_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerLocality_inline_create #markup_for_owners').hide();
+		$('#brokerLocality_inline_create #label_for_owners').hide();
+		$('#brokerLocality_inline_create #markup_for_teams').hide();
+		$('#brokerLocality_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerLocality_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerLocality_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerLocality_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerLocality_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerLocality_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerLocality_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerLocality_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerLocality_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerLocality_createViewForm() {
+		jQuery(function($) {
+			var moduleName="locality";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerLocality";
+			var name="Locality / Street";
+			var popupExtraWhereClause = ($('#relatedField_brokerLocality_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerLocality_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerLocality_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerLocality_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerLocality_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerLocality",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerLocality_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerLocality'].value" id="relatedField_brokerLocality_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerLocality_autoCompleteExtraWhereClause" id="relatedField_brokerLocality_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerLocality_popupExtraWhereClause" id="relatedField_brokerLocality_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerLocality_createViewForm();" type="text" name="relatedField_brokerLocality_UserKeyValue_createViewForm" id="relatedField_brokerLocality_UserKeyValue_createViewForm" value="" autocomplete="off">
+ 
+	 <button tabindex="-1" type="button" class="related_btn_lookup" name="relatedFieldQuickCreateBtn_brokerLocality_createViewForm" id="relatedFieldQuickCreateBtn_brokerLocality_createViewForm" onclick="relatedField_openPopUp_brokerLocality();"> 
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-add.png?v=127" border="0">
+ </button> 
+ 
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerLocality_createViewForm" id="relatedFieldClearBtn_brokerLocality_createViewForm" onclick="relatedField_clearTextBox_brokerLocality_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerLocality'].name" id="brokerLocality_createViewForm" value="brokerLocality">
+<input type="hidden" name="recordData.fields['brokerLocality'].module" id="brokerLocality_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerLocality'].type" id="brokerLocality_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerArea">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the Area." class=""> 
+ 		
+			Area
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerArea">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerArea_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerArea_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerArea_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerArea_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerArea_createViewForm').val('').change();
+			$('#relatedField_brokerArea_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerArea() {
+		var moduleName="area";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerArea_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerArea_open_create_dialog(createFormMarkup) {
+		$('#brokerArea_inline_create').remove();
+		$('body').append($('<div id="brokerArea_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerArea_inline_create #markup_for_owners').hide();
+		$('#brokerArea_inline_create #label_for_owners').hide();
+		$('#brokerArea_inline_create #markup_for_teams').hide();
+		$('#brokerArea_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerArea_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerArea_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerArea_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerArea_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerArea_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerArea_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerArea_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerArea_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerArea_createViewForm() {
+		jQuery(function($) {
+			var moduleName="area";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerArea";
+			var name="Areas";
+			var popupExtraWhereClause = ($('#relatedField_brokerArea_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerArea_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerArea_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerArea_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerArea_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerArea",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerArea_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerArea'].value" id="relatedField_brokerArea_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerArea_autoCompleteExtraWhereClause" id="relatedField_brokerArea_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerArea_popupExtraWhereClause" id="relatedField_brokerArea_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerArea_createViewForm();" type="text" name="relatedField_brokerArea_UserKeyValue_createViewForm" id="relatedField_brokerArea_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+  
+ 	<!-- HP Note: Related fields no longer support the lookup. We only link fields using the autocomplete queries. -->
+	<button tabindex="-1" class="related_btn_lookup" type="button" name="relatedFieldPopoutBtn_brokerArea_createViewForm" id="relatedFieldPopoutBtn_brokerArea_createViewForm" onclick="relatedField_openNewWindow_brokerArea_createViewForm();"> 
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-select.png?v=127" border="0">
+ </button>
+
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerArea_createViewForm" id="relatedFieldClearBtn_brokerArea_createViewForm" onclick="relatedField_clearTextBox_brokerArea_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerArea'].name" id="brokerArea_createViewForm" value="brokerArea">
+<input type="hidden" name="recordData.fields['brokerArea'].module" id="brokerArea_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerArea'].type" id="brokerArea_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+<p><a onclick="broker_brokerArea_CSCARequestHandler()" style="cursor: pointer;">My Area not in the list</a></p></td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerCity">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the City." class=""> 
+ 		
+			City
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerCity">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerCity_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerCity_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerCity_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerCity_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerCity_createViewForm').val('').change();
+			$('#relatedField_brokerCity_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerCity() {
+		var moduleName="city";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerCity_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerCity_open_create_dialog(createFormMarkup) {
+		$('#brokerCity_inline_create').remove();
+		$('body').append($('<div id="brokerCity_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerCity_inline_create #markup_for_owners').hide();
+		$('#brokerCity_inline_create #label_for_owners').hide();
+		$('#brokerCity_inline_create #markup_for_teams').hide();
+		$('#brokerCity_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerCity_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerCity_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerCity_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerCity_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerCity_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerCity_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerCity_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerCity_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerCity_createViewForm() {
+		jQuery(function($) {
+			var moduleName="city";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerCity";
+			var name="Cities";
+			var popupExtraWhereClause = ($('#relatedField_brokerCity_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerCity_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerCity_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerCity_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerCity_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerCity",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerCity_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerCity'].value" id="relatedField_brokerCity_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerCity_autoCompleteExtraWhereClause" id="relatedField_brokerCity_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerCity_popupExtraWhereClause" id="relatedField_brokerCity_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerCity_createViewForm();" type="text" name="relatedField_brokerCity_UserKeyValue_createViewForm" id="relatedField_brokerCity_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerCity_createViewForm" id="relatedFieldClearBtn_brokerCity_createViewForm" onclick="relatedField_clearTextBox_brokerCity_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerCity'].name" id="brokerCity_createViewForm" value="brokerCity">
+<input type="hidden" name="recordData.fields['brokerCity'].module" id="brokerCity_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerCity'].type" id="brokerCity_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerState">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the State." class=""> 
+ 		
+			State
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerState">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerState_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerState_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerState_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerState_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerState_createViewForm').val('').change();
+			$('#relatedField_brokerState_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerState() {
+		var moduleName="state";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerState_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerState_open_create_dialog(createFormMarkup) {
+		$('#brokerState_inline_create').remove();
+		$('body').append($('<div id="brokerState_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerState_inline_create #markup_for_owners').hide();
+		$('#brokerState_inline_create #label_for_owners').hide();
+		$('#brokerState_inline_create #markup_for_teams').hide();
+		$('#brokerState_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerState_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerState_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerState_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerState_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerState_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerState_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerState_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerState_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerState_createViewForm() {
+		jQuery(function($) {
+			var moduleName="state";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerState";
+			var name="States";
+			var popupExtraWhereClause = ($('#relatedField_brokerState_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerState_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerState_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerState_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerState_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerState",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerState_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerState'].value" id="relatedField_brokerState_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerState_autoCompleteExtraWhereClause" id="relatedField_brokerState_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerState_popupExtraWhereClause" id="relatedField_brokerState_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerState_createViewForm();" type="text" name="relatedField_brokerState_UserKeyValue_createViewForm" id="relatedField_brokerState_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerState_createViewForm" id="relatedFieldClearBtn_brokerState_createViewForm" onclick="relatedField_clearTextBox_brokerState_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerState'].name" id="brokerState_createViewForm" value="brokerState">
+<input type="hidden" name="recordData.fields['brokerState'].module" id="brokerState_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerState'].type" id="brokerState_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerCountry">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the Country." class=""> 
+ 		
+			Country
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerCountry">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerCountry_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerCountry_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerCountry_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerCountry_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerCountry_createViewForm').val('').change();
+			$('#relatedField_brokerCountry_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerCountry() {
+		var moduleName="country";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerCountry_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerCountry_open_create_dialog(createFormMarkup) {
+		$('#brokerCountry_inline_create').remove();
+		$('body').append($('<div id="brokerCountry_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerCountry_inline_create #markup_for_owners').hide();
+		$('#brokerCountry_inline_create #label_for_owners').hide();
+		$('#brokerCountry_inline_create #markup_for_teams').hide();
+		$('#brokerCountry_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerCountry_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerCountry_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerCountry_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerCountry_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerCountry_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerCountry_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerCountry_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerCountry_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerCountry_createViewForm() {
+		jQuery(function($) {
+			var moduleName="country";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerCountry";
+			var name="Countries";
+			var popupExtraWhereClause = ($('#relatedField_brokerCountry_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerCountry_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerCountry_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerCountry_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerCountry_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerCountry",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerCountry_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerCountry'].value" id="relatedField_brokerCountry_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerCountry_autoCompleteExtraWhereClause" id="relatedField_brokerCountry_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerCountry_popupExtraWhereClause" id="relatedField_brokerCountry_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerCountry_createViewForm();" type="text" name="relatedField_brokerCountry_UserKeyValue_createViewForm" id="relatedField_brokerCountry_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerCountry_createViewForm" id="relatedFieldClearBtn_brokerCountry_createViewForm" onclick="relatedField_clearTextBox_brokerCountry_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerCountry'].name" id="brokerCountry_createViewForm" value="brokerCountry">
+<input type="hidden" name="recordData.fields['brokerCountry'].module" id="brokerCountry_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerCountry'].type" id="brokerCountry_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_zip">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Postal Code." class=""> 
+ 		
+			Zip
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_zip">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['zip'].value" id="zip" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['zip'].name" id="zip_createViewForm" value="zip">
+<input type="hidden" name="recordData.fields['zip'].module" id="zip_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['zip'].type" id="zip_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_cityLocations">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="List of Cities where the broker operates." class=""> 
+ 		
+			Operates in City
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_cityLocations">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var childID = "#cityLocations";
+	$(childID).select2({dropdownAutoWidth : true,closeOnSelect : false});
+});
+
+
+function cityLocations_create_reload() {
+    var childID = "#cityLocations";
+
+    var currentSelection = {};
+    $(childID).find("option:selected").each(function() {
+    	currentSelection[$(this).val()]=$(this).val();
+    });
+
+    var extraWhereClause = $('#create_cityLocations_extraWhereClause').val();
+    ajaxExecuteController(function(data) {
+    	data = JSON.parse($.trim(data));
+		$(childID).html("");
+		
+			$(childID).append($('<option>', { value : ' ', text : 'Any' }));
+		
+		$.each(data, function(i, item) {
+			if(currentSelection.hasOwnProperty(item.value)) {
+				$(childID).append($('<option>', { value : item.value, text : item.display, selected: "selected" }));
+			}
+			else {
+				$(childID).append($('<option>', { value : item.value, text : item.display }));
+			}
+		});
+		
+		$(childID).select2({dropdownAutoWidth : true});
+		
+		setTimeout(function() {
+		}, 3000);
+    }, "listOfValue", "loadFromModule", {			
+    	lovType : "",
+		moduleName : "broker", 
+		fieldName : "cityLocations",
+		extraWhereClause : extraWhereClause
+	});
+}
+
+function cityLocations_create_add() {
+	// lov add opens in a dialog now. 
+	var layoutDef = '';
+	layoutDef += '<LayoutDef>';
+	layoutDef += '	<Panel>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>type</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>dispVal</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>val</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>parent</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '	</Panel>';
+	layoutDef += '</LayoutDef>';
+
+	showProgress();
+	ajaxExecuteController(function(data) {
+		hideProgress();
+		cityLocations_open_lov_create_dialog(data, layoutDef);
+	}, 'ajax', 'renderCreateView', {"ajax_module": "listOfValue", "ajax_layoutDef": layoutDef, "recordData.fields['type'].value": ''});
+}
+
+function cityLocations_open_lov_create_dialog(lovCreateFormMarkup, lovCreateFormLayoutDef) {
+	$('#cityLocations_lov_inline_create').remove();
+	$('body').append($('<div id="cityLocations_lov_inline_create" style="display: none;"> ' + lovCreateFormMarkup + '</div>'));
+
+	// open the locality create form in a dialog box. 
+	openDialog("Create List Of Val", '#cityLocations_lov_inline_create', '650', 'auto', {
+		"Save": function() {
+			var dialog = $(this);
+			var formData = VT.getFormObject($('#cityLocations_lov_inline_create #createViewForm'));
+			formData['ajax_module'] = formData['module'];
+			formData['ajax_layoutDef'] = lovCreateFormLayoutDef;
+			formData['module'] = 'ajax';
+			formData['action'] = 'create';
+			showProgress();
+			$.ajax({
+				type : "POST",
+				url : "index.html",
+				data : formData,
+				success : function(data) {
+					hideProgress();
+					try {
+						// if lov was created successfully then we get a json response. 
+						// else we get HTML representing the form again to be rendered with the error messages, this we are doing in the catch block. 
+						var jsData = JSON.parse($.trim(data));
+						if (jsData.status === 'SUCCESS') {
+							$(dialog).dialog('close');
+
+							// first reload the new value. 
+							cityLocations_create_reload()
+
+							openDialog("Alert", "New Value added. You can start typing to select the new value.", '350', '150');
+						}
+					}
+					catch (error) {
+						// could not parse as json, so must be HTML carrying the invalid error message.
+						cityLocations_open_lov_create_dialog(data, lovCreateFormLayoutDef);
+					}
+				}
+			});
+		}, 
+		"Cancel": function() {
+			$(this).dialog('close');
+			$('#cityLocations_lov_inline_create').remove();
+		}
+	}, {
+		"close": function() {
+			$('#cityLocations_lov_inline_create').remove();
+		}
+	});
+}
+</script>
+<!-- Bind the value of this IField instance. -->
+<div class="select2-container select2-container-multi multiSelect_create" id="s2id_cityLocations"><ul class="select2-choices">  <li class="select2-search-field">    <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" id="s2id_autogen3" style="width: 10px;">  </li></ul><div class="select2-drop select2-drop-multi select2-display-none">   <ul class="select2-results">   <li class="select2-no-results">No matches found</li></ul></div></div><select class="multiSelect_create select2-offscreen" id="cityLocations" name="recordData.fields['cityLocations'].lovField_selectedValues" multiple="" size="5" tabindex="-1">
+	
+	<option value="">Not Specified</option>
+	
+	<option value="Mumbai" rid="238828341773433025">Mumbai</option><option value="Ahmedabad" rid="240302561288433005">Ahmedabad</option><option value="Pune" rid="250833392793433036">Pune</option><option value="Gandhinagar" rid="303101600893045627">Gandhinagar</option><option value="Palghar" rid="305630270507045605">Palghar</option><option value="Thane" rid="305680470820045466">Thane</option><option value="Gandhidham" rid="309407716440045838">Gandhidham</option><option value="Palanpur" rid="319023909349738292">Palanpur</option><option value="Patan" rid="319023909349738298">Patan</option><option value="Deesa" rid="319023909349738304">Deesa</option><option value="Dehgam" rid="320042416061738433">Dehgam</option><option value="Noida" rid="322206773467738406">Noida</option><option value="Vadodara" rid="324147922445355104">Vadodara</option><option value="Navi Mumbai" rid="331107164563302396">Navi Mumbai</option><option value="Kalyan" rid="331812409890302287">Kalyan</option><option value="Panvel" rid="331812409890302295">Panvel</option><option value="Vasai" rid="331812409890302312">Vasai</option><option value="Lonavala" rid="331812409890302319">Lonavala</option><option value="New Panvel" rid="331887743551042041">New Panvel</option><option value="Ulhasnagar" rid="332228399451042276">Ulhasnagar</option><option value="Ghatkopar West" rid="332321965745042019">Ghatkopar West</option><option value="Ghatkopar East" rid="332321965745042021">Ghatkopar East</option><option value="Dombivali" rid="332481702825042194">Dombivali</option><option value="Titwala" rid="332492385475042559">Titwala</option><option value="Karjat" rid="333783607461911932">Karjat</option><option value="Naigaon" rid="333783607461911934">Naigaon</option><option value="Nallasopara" rid="333786473436911067">Nallasopara</option><option value="Neral" rid="333786473436911072">Neral</option><option value="Virar" rid="333786473436911101">Virar</option><option value="Nagpur" rid="343330529109920703">Nagpur</option><option value="Raipur" rid="350552912786539142">Raipur</option><option value="Radhanpur" rid="354001272781539929">Radhanpur</option><option value="Sami" rid="354001272781539930">Sami</option><option value="Harij" rid="354001272781539932">Harij</option><option value="Santalpur" rid="354001272781539936">Santalpur</option><option value="Sihori" rid="354001272781539937">Sihori</option><option value="Thara" rid="354001272781539938">Thara</option><option value="Chanshma" rid="354001272781539941">Chanshma</option><option value="Mehsana" rid="354001272781539942">Mehsana</option><option value="Visnagar" rid="354001272781539949">Visnagar</option><option value="Siddhpur" rid="354001272781539951">Siddhpur</option><option value="Unjha" rid="354001272781539956">Unjha</option><option value="Sankheshwar" rid="354001272781539959">Sankheshwar</option><option value="Vapi" rid="367390351751539517">Vapi</option><option value="Surat" rid="375506855373283706">Surat</option><option value="Hyderabad" rid="378268183673159131">Hyderabad</option><option value="Kolkata" rid="378268183673159136">Kolkata</option><option value="Bangalore" rid="378268183673159370">Bangalore</option><option value="Lavasa" rid="379046318027159116">Lavasa</option><option value="Nasik" rid="379150079474159312">Nasik</option><option value="Vasind" rid="381034201762553154">Vasind</option><option value="Raigad" rid="381463601137553011">Raigad</option><option value="Chennai" rid="385094771346530341">Chennai</option><option value="Chandigarh" rid="385094771346530342">Chandigarh</option><option value="Indore" rid="385094771346530343">Indore</option><option value="Patna" rid="385094771346530344">Patna</option><option value="Ranchi" rid="385094771346530345">Ranchi</option><option value="Bhiwandi" rid="385785590631530315">Bhiwandi</option><option value="Badlapur" rid="391172493016530625">Badlapur</option><option value="Ambernath" rid="391172493016530662">Ambernath</option><option value="Ambivali " rid="391172493016530757">Ambivali </option><option value="Thakurli " rid="391172493016530820">Thakurli </option><option value="Valsad" rid="395746596854530576">Valsad</option><option value="Savrolli" rid="397302767998530251">Savrolli</option><option value="Nashik" rid="398160100871530156">Nashik</option><option value="Baroda" rid="398160100871530187">Baroda</option><option value="Khopoli" rid="403256627004530725">Khopoli</option><option value="Bharuch" rid="418036862901347503">Bharuch</option><option value="Sudhara" rid="426207917762199013">Sudhara</option><option value="Abu Road" rid="426332896312199008">Abu Road</option><option value="North Goa" rid="444370488725703095">North Goa</option><option value="South Goa" rid="444370488725703098">South Goa</option><option value="Khalapur" rid="444800215588703243">Khalapur</option><option value="Goa" rid="465464769766703811">Goa</option><option value="Jaipur" rid="468397817674703522">Jaipur</option><option value="Ratnagiri" rid="468397817674703940">Ratnagiri</option><option value="Rajkot" rid="469166365081703310">Rajkot</option><option value="Porbandar" rid="469435600615703251">Porbandar</option><option value="Nadiad" rid="469435600615703266">Nadiad</option><option value="Bhuj" rid="469435600615703274">Bhuj</option><option value="Khambhat" rid="469435600615703364">Khambhat</option><option value="Anand" rid="469435600615703391">Anand</option><option value="Vallabh Vidhyanagar" rid="469435600615703438">Vallabh Vidhyanagar</option><option value="Silvassa" rid="469435600615703570">Silvassa</option><option value="Baladia" rid="469435600615703687">Baladia</option><option value="Jamnagar" rid="469435600615703722">Jamnagar</option><option value="Kadi" rid="477307430476703519">Kadi</option><option value="Hubali-Dharwad" rid="482479745892703920">Hubali-Dharwad</option><option value="Petlad" rid="482485060603703080">Petlad</option><option value="Junagadh" rid="482888666810703449">Junagadh</option><option value="Morbi" rid="482888666810703455">Morbi</option><option value="Waksai" rid="484286619882703308">Waksai</option><option value="Diu" rid="492601829839672439">Diu</option><option value="Kheda" rid="499435929371672603">Kheda</option><option value="Ambaji" rid="505654412653672455">Ambaji</option><option value="Aurangabad" rid="512542909083672422">Aurangabad</option><option value="Nanded" rid="512542909083672425">Nanded</option><option value="Solapur" rid="512542909083672429">Solapur</option>
+</select>
+
+
+<input type="hidden" name="create_cityLocations_extraWhereClause" id="create_cityLocations_extraWhereClause" value="">
+<input type="hidden" name="create_cityLocations_extraAddParam" id="create_cityLocations_extraAddParam" value="">
+<input type="hidden" name="recordData.fields['cityLocations'].name" id="cityLocations_createViewForm" value="cityLocations">
+<input type="hidden" name="recordData.fields['cityLocations'].module" id="cityLocations_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['cityLocations'].type" id="cityLocations_type_createViewForm" value="MultiSelect">
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_locations">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="List of areas where the broker operates." class=""> 
+ 		
+			Operates In Area
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_locations">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var childID = "#locations";
+	$(childID).select2({dropdownAutoWidth : true,closeOnSelect : false});
+});
+
+
+function locations_create_reload() {
+    var childID = "#locations";
+
+    var currentSelection = {};
+    $(childID).find("option:selected").each(function() {
+    	currentSelection[$(this).val()]=$(this).val();
+    });
+
+    var extraWhereClause = $('#create_locations_extraWhereClause').val();
+    ajaxExecuteController(function(data) {
+    	data = JSON.parse($.trim(data));
+		$(childID).html("");
+		
+			$(childID).append($('<option>', { value : ' ', text : 'Any' }));
+		
+		$.each(data, function(i, item) {
+			if(currentSelection.hasOwnProperty(item.value)) {
+				$(childID).append($('<option>', { value : item.value, text : item.display, selected: "selected" }));
+			}
+			else {
+				$(childID).append($('<option>', { value : item.value, text : item.display }));
+			}
+		});
+		
+		$(childID).select2({dropdownAutoWidth : true});
+		
+		setTimeout(function() {
+		}, 3000);
+    }, "listOfValue", "loadFromModule", {			
+    	lovType : "",
+		moduleName : "broker", 
+		fieldName : "locations",
+		extraWhereClause : extraWhereClause
+	});
+}
+
+function locations_create_add() {
+	// lov add opens in a dialog now. 
+	var layoutDef = '';
+	layoutDef += '<LayoutDef>';
+	layoutDef += '	<Panel>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>type</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>dispVal</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>val</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>parent</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '	</Panel>';
+	layoutDef += '</LayoutDef>';
+
+	showProgress();
+	ajaxExecuteController(function(data) {
+		hideProgress();
+		locations_open_lov_create_dialog(data, layoutDef);
+	}, 'ajax', 'renderCreateView', {"ajax_module": "listOfValue", "ajax_layoutDef": layoutDef, "recordData.fields['type'].value": ''});
+}
+
+function locations_open_lov_create_dialog(lovCreateFormMarkup, lovCreateFormLayoutDef) {
+	$('#locations_lov_inline_create').remove();
+	$('body').append($('<div id="locations_lov_inline_create" style="display: none;"> ' + lovCreateFormMarkup + '</div>'));
+
+	// open the locality create form in a dialog box. 
+	openDialog("Create List Of Val", '#locations_lov_inline_create', '650', 'auto', {
+		"Save": function() {
+			var dialog = $(this);
+			var formData = VT.getFormObject($('#locations_lov_inline_create #createViewForm'));
+			formData['ajax_module'] = formData['module'];
+			formData['ajax_layoutDef'] = lovCreateFormLayoutDef;
+			formData['module'] = 'ajax';
+			formData['action'] = 'create';
+			showProgress();
+			$.ajax({
+				type : "POST",
+				url : "index.html",
+				data : formData,
+				success : function(data) {
+					hideProgress();
+					try {
+						// if lov was created successfully then we get a json response. 
+						// else we get HTML representing the form again to be rendered with the error messages, this we are doing in the catch block. 
+						var jsData = JSON.parse($.trim(data));
+						if (jsData.status === 'SUCCESS') {
+							$(dialog).dialog('close');
+
+							// first reload the new value. 
+							locations_create_reload()
+
+							openDialog("Alert", "New Value added. You can start typing to select the new value.", '350', '150');
+						}
+					}
+					catch (error) {
+						// could not parse as json, so must be HTML carrying the invalid error message.
+						locations_open_lov_create_dialog(data, lovCreateFormLayoutDef);
+					}
+				}
+			});
+		}, 
+		"Cancel": function() {
+			$(this).dialog('close');
+			$('#locations_lov_inline_create').remove();
+		}
+	}, {
+		"close": function() {
+			$('#locations_lov_inline_create').remove();
+		}
+	});
+}
+</script>
+<!-- Bind the value of this IField instance. -->
+<div class="select2-container select2-container-multi multiSelect_create" id="s2id_locations"><ul class="select2-choices">  <li class="select2-search-field">    <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" id="s2id_autogen4" style="width: 10px;">  </li></ul><div class="select2-drop select2-drop-multi select2-display-none">   <ul class="select2-results">   <li class="select2-no-results">No matches found</li></ul></div></div><select class="multiSelect_create select2-offscreen" id="locations" name="recordData.fields['locations'].lovField_selectedValues" multiple="" size="5" tabindex="-1"></select>
+
+
+<input type="hidden" name="create_locations_extraWhereClause" id="create_locations_extraWhereClause" value="">
+<input type="hidden" name="create_locations_extraAddParam" id="create_locations_extraAddParam" value="">
+<input type="hidden" name="recordData.fields['locations'].name" id="locations_createViewForm" value="locations">
+<input type="hidden" name="recordData.fields['locations'].module" id="locations_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['locations'].type" id="locations_type_createViewForm" value="MultiSelect">
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+			</tbody></table>
+			
+			<h2 style="display: none;">
+				Attributes
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Attributes">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Attributes
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_designation">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Designation Details." class=""> 
+ 		
+			Designation
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_designation">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['designation'].value" id="designation" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['designation'].name" id="designation_createViewForm" value="designation">
+<input type="hidden" name="recordData.fields['designation'].module" id="designation_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['designation'].type" id="designation_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_birthDate">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Birth Date." class=""> 
+ 		
+			Birth Date
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_birthDate" style="width: 228px">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.datepicker').datetimepicker({
+		timepicker : false,
+		closeOnDateSelect : true,
+		format : 'd-m-Y',
+		scrollMonth : false,
+		scrollInput : false
+		});
+		$('#birthDate_datepicker_create_trigger').click(function() {
+			$('#birthDate_create').datetimepicker('show'); //support hide,show and destroy command
+		});
+	});
+</script>
+<!-- Bind the value of this IField instance. -->
+<input class="date_create datepicker" type="text" name="recordData.fields['birthDate'].value" id="birthDate_create" value="" autocomplete="off">
+<button type="button" id="birthDate_datepicker_create_trigger" class="ui-datepicker-trigger">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/calendar.png?v=127" alt="Select date" title="Select date">
+</button>
+<br>
+<span style="font-size: 10px;">Eg. 13-06-2014</span>
+<input type="hidden" name="recordData.fields['birthDate'].name" id="birthDate_createViewForm" value="birthDate">
+<input type="hidden" name="recordData.fields['birthDate'].module" id="birthDate_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['birthDate'].type" id="birthDate_type_createViewForm" value="Date">
+
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_teams">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Teams who can access broker's details." class=""> 
+ 		
+			Teams
+</span>
+
+
+  (*)</td>
+					<td class="" id="markup_for_teams">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+
+	function broker_teams_createViewForm_loadOwners() {
+		var teamNames = '';
+		$('#broker_teams_createViewForm option:selected').each(function() {
+			var currentTeam = $(this).attr('value');
+			if (VT.isSet(teamNames)) {
+				teamNames += ",";
+			}
+			teamNames += currentTeam;
+		});
+		// keep a track of the previously selected owners.
+		var selectedOwners = {};
+		$('#broker_owners_createViewForm option:selected').each(function() {
+			var t = $(this).attr('value');
+			selectedOwners[t] = t;
+		});
+		$('#broker_owners_createViewForm').html('');
+
+		showProgress();
+		ajaxExecuteController(function(data) {
+			var js = JSON.parse($.trim(data));
+			var newOwnerList = '';
+			for (var i = 0; i < js.length; i++) {
+				var lovFieldEntry = js[i];
+				if (selectedOwners.hasOwnProperty(lovFieldEntry.value)) {
+					newOwnerList += "<option value='"+lovFieldEntry.value+"' rid='"+lovFieldEntry.rowID+"' selected='selected'>" + lovFieldEntry.display + "</option>";
+				}
+				else {
+					newOwnerList += "<option value='"+lovFieldEntry.value+"' rid='"+lovFieldEntry.rowID+"'>" + lovFieldEntry.display + "</option>";
+				}
+			}
+			$('#broker_owners_createViewForm').html(newOwnerList);
+			$('select#broker_owners_createViewForm').select2({
+				placeholder : "Select Employees",closeOnSelect : false
+			});
+			hideProgress();
+		}, "team", "getPossibleOwners", {
+		"teamNames" : teamNames,
+		"moduleName" : "broker"
+		});
+	}
+
+	$(document).ready(function() {
+		$('select#broker_teams_createViewForm').select2({
+			placeholder : "Select Teams",closeOnSelect : false
+		});
+		
+
+	$('#broker_teams_createViewForm').change(function() {
+			broker_teams_createViewForm_loadOwners();
+		});
+
+		$(".assignPublic").click(function() {
+			$('div#broker_create_view #broker_teams_createViewForm').select2("val", "Global Team");
+			
+			broker_teams_createViewForm_loadOwners();
+			
+			
+			});
+		$(".assignPrivateTeam").click(function() {
+			$('div#broker_create_view #broker_teams_createViewForm').select2("val",'Global Team');
+			
+			broker_teams_createViewForm_loadOwners();
+			
+		});
+		
+		broker_teams_createViewForm_loadOwners();
+		
+		
+	});
+</script>
+<div class="select2-container select2-container-multi team_create" id="s2id_broker_teams_createViewForm"><ul class="select2-choices">  <li class="select2-search-choice">    <div>
+		
+		Public Team
+	</div>    <a href="#" onclick="return false;" class="select2-search-choice-close" tabindex="-1"></a></li><li class="select2-search-field">    <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" id="s2id_autogen5" style="width: 10px;">  </li></ul><div class="select2-drop select2-drop-multi select2-display-none">   <ul class="select2-results">   <li class="select2-no-results">No matches found</li></ul></div></div><select class="team_create select2-offscreen" id="broker_teams_createViewForm" name="recordData.fields['teams'].teamField_selectedTeams" multiple="" tabindex="-1">
+	
+	<option value="Global Team" rid="gt_102" selected="selected">
+		
+		Public Team
+	</option>
+	
+</select>
+<br>
+<a tabindex="-1" class="assignPublic" style="cursor: pointer;"> Public Team</a>
+
+<a tabindex="-1" class="assignPrivateTeam" style="cursor: pointer;"> | Private Team</a>
+
+<!-- Bind the value of this IField instance. -->
+<input type="hidden" name="recordData.fields['teams'].name" id="teams_editViewForm" value="teams">
+<input type="hidden" name="recordData.fields['teams'].module" id="teams_moduleName_editViewForm" value="broker">
+<input type="hidden" name="recordData.fields['teams'].type" id="teams_type_editViewForm" value="Team">
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_owners">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the employees to whom this broker is assigned." class=""> 
+ 		
+			Assigned To
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_owners">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('select#broker_owners_createViewForm').select2({
+			placeholder : "Select Employees",closeOnSelect : false
+		});
+	});
+</script>
+<div class="select2-container select2-container-multi owner_create" id="s2id_broker_owners_createViewForm"><ul class="select2-choices">  <li class="select2-search-choice">    <div>Sales Trainee</div>    <a href="#" onclick="return false;" class="select2-search-choice-close" tabindex="-1"></a></li><li class="select2-search-field">    <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" id="s2id_autogen15" style="width: 10px;">  </li></ul><div class="select2-drop select2-drop-multi select2-display-none">   <ul class="select2-results">   <li class="select2-no-results">No matches found</li></ul></div></div><select class="owner_create select2-offscreen" id="broker_owners_createViewForm" name="recordData.fields['owners'].ownerField_selectedOwners" multiple="" tabindex="-1"><option value="vinita" rid="464688866614703097">Vinita Jadhav</option><option value="poonam" rid="423032445613199928">Poonam Thakur</option><option value="Hotel.1" rid="464249316230703776">Hotel</option><option value="ravish" rid="405237920568530519">Ravish Kamra</option><option value="sandeep.v" rid="514268555460672557">Sandeep Vishwakarma</option><option value="kavita.nagarkoti" rid="471687775104703071">Kavita Nagarkoti</option><option value="pradeep.jha" rid="464690855992703902">Pradeep Jha</option><option value="Hardik" rid="302596869518045505">Hardik Thakkar</option><option value="test1234" rid="410721249315327030"></option><option value="jay.thakkar" rid="432723250103199818">Jayesh Thakkar</option><option value="yash" rid="401608471217530066">Yash Hinduja</option><option value="premnath" rid="473749439457703827">Premnath Yadav</option><option value="rukhasar" rid="370610782629094123">Rukhasar Sayyed</option><option value="keval" rid="396851930958530182">Keval Kudale</option><option value="rutul.p" rid="510118529375672999">Rutul Patel</option><option value="thakkar.sunny" rid="494566738544672720">Sunny  Thakkar - 2</option><option value="parth" rid="318940761609738653">Parth Thakkar</option><option value="chetna.d" rid="501478836974672596">Chetna Desai</option><option value="jitendrathakkar" rid="329990450978927248">Jitendra Thakkar</option><option value="trainee5" rid="510809437653672421">trainee 5</option><option value="avinash" rid="318928800723738511">Avinash Shinde</option><option value="dhruv.d" rid="516625476965672369">Dhruv Desai</option><option value="hiren.t" rid="487151622573703534">Hiren  Thakkar</option><option value="arth.thakkar" rid="439808876410703505">Arth A. Thakkar</option><option value="newsqft" rid="465639831160703928">New sqft</option><option value="vishal.thakkar" rid="460113701845703650">Vishal Thakkar</option><option value="shaileshmehta" rid="322193927045738260">Shailesh  Mehta</option><option value="ramyadav" rid="329989699419927145">Ram Yadav</option><option value="swati" rid="395725382777530521">Swati Patil</option><option value="raju.w" rid="497690822639672244">Rajeev Waje</option><option value="ankita.t" rid="499063379308672837">Ankita Tagad</option><option value="clement" rid="502085636253672724">Clement  Sibloon</option><option value="luv" rid="407070827938530987">Luv Kakkad</option><option value="alpana" rid="511610334179672751">Alpana  Shah</option><option value="trainee" rid="465647970672703537">Sales   Trainee</option><option value="akash.t" rid="508218788744672421">Akash Todankar</option><option value="pratap.t" rid="452603696092703126">Pratap Thakor</option><option value="jaykishan" rid="437118693573703848">Jaikishan Koni</option><option value="viraj.t" rid="500458949387672337">Viraj Tamore</option><option value="spurthi" rid="473749439457703023">Spurthi Shetty</option><option value="anil.g" rid="499161777447672116">Anil George</option><option value="test124" rid="410432283750327006"></option><option value="milton" rid="461928490343703018">Milton Gomes</option><option value="nikhil.s" rid="510123289998672307">Nikhilkumar Solanki</option><option value="macbeth" rid="442914840023703935">Macbeth Dias</option><option value="jayanti" rid="370579154488094351">Jayanti  Thakkar</option><option value="santosh" rid="420802775317199549">Santosh Sarvade</option><option value="dipak.a" rid="494665500397672159">Dipak Arakh</option><option value="megha" rid="428391250785199583">Megha Thakkar</option><option value="praveen.thatipamula" rid="438671675908703223">Praveen Thatipamula</option><option value="sunita.n" rid="500290259084672513">Sunita Nair</option><option value="anil.b" rid="515507017394672853">Anil  Bhujange</option><option value="nagesh" rid="440753018841703919">Nagesh Bhayje</option><option value="mahesh.j" rid="444998621387703482">Mahesh Jalgavkar</option><option value="manishd" rid="355389607955539745">Manish Didmishe</option><option value="sanjayp" rid="438170520164703602">Sanjay  Parmar</option><option value="maheshthaker" rid="318928800723738880">Mahesh Thaker</option><option value="tukaram.k" rid="477291749055703216">Tukaram Kapse</option><option value="bonas" rid="427191662388199132">Bonas Thakkar</option><option value="biren" rid="440486094689703736">Biren  Khamboj</option><option value="namdev.b" rid="474352639882703901">Namdev Bhosale</option><option value="hiral.p" rid="499086747964672136">Hiral  Patel</option><option value="vijay" rid="441623431775703077">Vijay  Thakkar</option><option value="trainee2" rid="499404060470672764">Trainee  Sales  - 2</option><option value="shaktithakkar" rid="329991488165927534">Shakti  Thakkar</option><option value="rajan.m" rid="460637502035703183">Rajan Malpure</option><option value="trainee3" rid="509716670007672481" selected="selected">Sales Trainee</option><option value="karishma" rid="513849976405672587">Karishma Gandhi</option><option value="pareshthakkar" rid="329989713415927698">Paresh Thakkar</option><option value="richa.p" rid="447743726050703541">Richa Padte</option><option value="rrtest" rid="433323003890199082">rrtest</option><option value="jayesh.mali" rid="479864547059703307">Jayesh Mali</option><option value="pravin.m" rid="466162678559703661">Pravin Masurkar</option><option value="kartik.s" rid="500290259084672040">Kartik Shah</option><option value="aniket.jain" rid="515679057878672557">Aniket  Jain</option><option value="preeti.vora" rid="473832780335703482">Preeti Vora</option><option value="jagrut.p" rid="496988150378672824">Jagrut  Pathak</option><option value="test123" rid="410721249315327021"></option><option value="milind.raval" rid="442386890191703101">Milind Raval</option><option value="Ishvarji" rid="443254780584703228">Ishwar Thakor</option><option value="priyanka.y" rid="500542221777672242">Priyanka Yadav</option><option value="atul1" rid="251351554547533003">Atul Thakkar</option><option value="dhaval" rid="238560382773433017">Dhaval Thakkar</option><option value="franchise" rid="464255034839703635">Franchise</option><option value="kunal.gor" rid="460113701845703458">Kunal Gor</option><option value="jiten.p" rid="514532772203672424">Jiten Patel</option><option value="hasmukhbhai" rid="498628494145672649">Hasmukhbhai Thakkar</option><option value="vinodd" rid="380852146198553026">Vinod Dhawde</option><option value="supriya" rid="515737092729672170">Supriya  Kadav</option><option value="farooq" rid="512716983080672695">Farooq Qureshi</option><option value="manoj" rid="379307363752159327">Manoj Somalia</option><option value="prakashs" rid="328353963179355658">Prakash Suvarna</option><option value="jashvantjit" rid="435729071785199101">Jashvant Thakor</option><option value="ketan.k" rid="500290259084672249">Ketan Kotak</option><option value="rishikapoor" rid="342176753848920903">Rishi Kapoor</option><option value="ravi.t" rid="475920490649703181">Ravi Thakkar</option><option value="viral.p" rid="462968955256703163">Viral Pawar</option><option value="sqft1" rid="410721249315327038"></option><option value="pradyut" rid="329990055023927234">Pradyut Swarnakar</option><option value="nihal.b" rid="500368082406672769">Nihal Bade</option><option value="rahul.j" rid="514271295193672091">Rahul Jhabak</option><option value="mahrukh" rid="488606261083703085">Mahrukh Gomes</option><option value="shaileshthakkar" rid="337756527438520112">Shailesh  Thakkar</option><option value="uzair" rid="513834867525672619">Uzair Arbani</option><option value="dinesh.k" rid="473749439457703633">Dinesh Kanojiya</option><option value="malakraj" rid="424393485517199030">Malakraj Koli</option><option value="ganesh.chavan" rid="470313646619703735">Ganesh Chavan</option><option value="swapnil.s" rid="465300758392703151">Swapnil Satkar</option><option value="arth" rid="257340057517533010">Arth Thakkar</option><option value="forum.s" rid="509960913908672169">Forum Satra</option><option value="harsha.j" rid="493876092051672807">Harsha  Joshi</option><option value="pritivora" rid="329991751837927078">Preeti Vora</option><option value="gaurikokate" rid="425980241050199947">Gauri Kokate</option><option value="siddharth.t" rid="463722820234703325">Siddharth Thakkar</option><option value="trainee4" rid="510118529375672083">Sales  Trainee</option><option value="rupal" rid="379759949696159612">Rupal Thakkar</option><option value="shashikant" rid="318617812861738634">Shashikant Modh</option><option value="radha" rid="463474166137703729">Radha Prajapati</option><option value="vinodthakkar" rid="329989064085927102">Vinod Thakkar</option><option value="pravin.a" rid="500900276819672053">Pravin Agarwal</option><option value="tauseef.s" rid="500368082406672811">Tauseef Shaikh</option><option value="gurulingappa" rid="473749439457703348">Gurulingappa Atture</option><option value="pradeepn" rid="438671675908703815">Pradeep Navghare</option><option value="victor" rid="370610923796094440">Victor  Iyakutty</option><option value="ankita.g" rid="465979945818703432">Ankita Gajmal</option><option value="sqft" rid="412664903519347491">sqft</option><option value="pruthvi" rid="430220906588199166">Pruthvi Patel</option><option value="himanshu" rid="375849286177283479">Himanshu  Vora</option><option value="raj.t" rid="514955084344672330">Raj Thakkar</option><option value="vaishali" rid="420890003105199230">Vaishali Kini</option><option value="raj.thakkar" rid="432723250103199231">Raj Thakkar</option><option value="niravthakkar" rid="348831538502539272">Nirav Thakkar</option></select>
+<!-- Bind the value of this IField instance. -->
+<input type="hidden" name="recordData.fields['owners'].name" id="owners_createViewForm" value="owners">
+<input type="hidden" name="recordData.fields['owners'].module" id="owners_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['owners'].type" id="owners_type_createViewForm" value="Owner">
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_groupsrids">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Unique identifier for each group." class=""> 
+ 		
+			Groups
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_groupsrids">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var childID = "#groupsrids";
+	$(childID).select2({dropdownAutoWidth : true,closeOnSelect : false});
+});
+
+
+function groupsrids_create_reload() {
+    var childID = "#groupsrids";
+
+    var currentSelection = {};
+    $(childID).find("option:selected").each(function() {
+    	currentSelection[$(this).val()]=$(this).val();
+    });
+
+    var extraWhereClause = $('#create_groupsrids_extraWhereClause').val();
+    ajaxExecuteController(function(data) {
+    	data = JSON.parse($.trim(data));
+		$(childID).html("");
+		
+			$(childID).append($('<option>', { value : ' ', text : 'Any' }));
+		
+		$.each(data, function(i, item) {
+			if(currentSelection.hasOwnProperty(item.value)) {
+				$(childID).append($('<option>', { value : item.value, text : item.display, selected: "selected" }));
+			}
+			else {
+				$(childID).append($('<option>', { value : item.value, text : item.display }));
+			}
+		});
+		
+		$(childID).select2({dropdownAutoWidth : true});
+		
+		setTimeout(function() {
+		}, 3000);
+    }, "listOfValue", "loadFromModule", {			
+    	lovType : "",
+		moduleName : "broker", 
+		fieldName : "groupsrids",
+		extraWhereClause : extraWhereClause
+	});
+}
+
+function groupsrids_create_add() {
+	// lov add opens in a dialog now. 
+	var layoutDef = '';
+	layoutDef += '<LayoutDef>';
+	layoutDef += '	<Panel>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>type</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>dispVal</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>val</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>parent</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '	</Panel>';
+	layoutDef += '</LayoutDef>';
+
+	showProgress();
+	ajaxExecuteController(function(data) {
+		hideProgress();
+		groupsrids_open_lov_create_dialog(data, layoutDef);
+	}, 'ajax', 'renderCreateView', {"ajax_module": "listOfValue", "ajax_layoutDef": layoutDef, "recordData.fields['type'].value": ''});
+}
+
+function groupsrids_open_lov_create_dialog(lovCreateFormMarkup, lovCreateFormLayoutDef) {
+	$('#groupsrids_lov_inline_create').remove();
+	$('body').append($('<div id="groupsrids_lov_inline_create" style="display: none;"> ' + lovCreateFormMarkup + '</div>'));
+
+	// open the locality create form in a dialog box. 
+	openDialog("Create List Of Val", '#groupsrids_lov_inline_create', '650', 'auto', {
+		"Save": function() {
+			var dialog = $(this);
+			var formData = VT.getFormObject($('#groupsrids_lov_inline_create #createViewForm'));
+			formData['ajax_module'] = formData['module'];
+			formData['ajax_layoutDef'] = lovCreateFormLayoutDef;
+			formData['module'] = 'ajax';
+			formData['action'] = 'create';
+			showProgress();
+			$.ajax({
+				type : "POST",
+				url : "index.html",
+				data : formData,
+				success : function(data) {
+					hideProgress();
+					try {
+						// if lov was created successfully then we get a json response. 
+						// else we get HTML representing the form again to be rendered with the error messages, this we are doing in the catch block. 
+						var jsData = JSON.parse($.trim(data));
+						if (jsData.status === 'SUCCESS') {
+							$(dialog).dialog('close');
+
+							// first reload the new value. 
+							groupsrids_create_reload()
+
+							openDialog("Alert", "New Value added. You can start typing to select the new value.", '350', '150');
+						}
+					}
+					catch (error) {
+						// could not parse as json, so must be HTML carrying the invalid error message.
+						groupsrids_open_lov_create_dialog(data, lovCreateFormLayoutDef);
+					}
+				}
+			});
+		}, 
+		"Cancel": function() {
+			$(this).dialog('close');
+			$('#groupsrids_lov_inline_create').remove();
+		}
+	}, {
+		"close": function() {
+			$('#groupsrids_lov_inline_create').remove();
+		}
+	});
+}
+</script>
+<!-- Bind the value of this IField instance. -->
+<div class="select2-container select2-container-multi multiSelect_create" id="s2id_groupsrids"><ul class="select2-choices">  <li class="select2-search-field">    <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" id="s2id_autogen7" style="width: 10px;">  </li></ul><div class="select2-drop select2-drop-multi select2-display-none">   <ul class="select2-results">   <li class="select2-no-results">No matches found</li></ul></div></div><select class="multiSelect_create select2-offscreen" id="groupsrids" name="recordData.fields['groupsrids'].lovField_selectedValues" multiple="" size="5" tabindex="-1">
+	
+	<option value="">Not Specified</option>
+	
+	<option value="20150327203000_GRP_WEBSITE_HOME_PAGE_102" rid="20150327203000_GRP_WEBSITE_HOME_PAGE_102">Website: Home Page</option><option value="385351905406530456" rid="385351905406530456">Area: Jogeshwari to Dahisar</option><option value="385351905406530576" rid="385351905406530576">Area: Andheri to Bandra</option><option value="385351905406530612" rid="385351905406530612">Area: Mira Road to Virar</option><option value="395651063018530639" rid="395651063018530639">Area:Navi Mumbai</option><option value="395651063018530821" rid="395651063018530821">Area: South Mumbai</option><option value="415711249028347314" rid="415711249028347314">Area:Thane to Sion</option><option value="415714101898347811" rid="415714101898347811">AREA GROUP</option><option value="415721603350347209" rid="415721603350347209">SMART</option><option value="419763253899199735" rid="419763253899199735">Doctors Gujarat by Hardik</option><option value="446706890136703222" rid="446706890136703222">Second Home</option><option value="448360908529703480" rid="448360908529703480">Pre Lease brokers</option><option value="472295807802703976" rid="472295807802703976">Golden Arch 1BHK</option>
+</select>
+<a tabindex="-1" href="javascript:groupsrids_create_reload();" class="ddLink">
+	<!-- Reload -->
+	<i class="icon-loop"></i>
+</a>
+
+
+<input type="hidden" name="create_groupsrids_extraWhereClause" id="create_groupsrids_extraWhereClause" value="">
+<input type="hidden" name="create_groupsrids_extraAddParam" id="create_groupsrids_extraAddParam" value="">
+<input type="hidden" name="recordData.fields['groupsrids'].name" id="groupsrids_createViewForm" value="groupsrids">
+<input type="hidden" name="recordData.fields['groupsrids'].module" id="groupsrids_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['groupsrids'].type" id="groupsrids_type_createViewForm" value="MultiSelect">
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_reraNo">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Rera No." class=""> 
+ 		
+			Rera No
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_reraNo">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['reraNo'].value" id="reraNo" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['reraNo'].name" id="reraNo_createViewForm" value="reraNo">
+<input type="hidden" name="recordData.fields['reraNo'].module" id="reraNo_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['reraNo'].type" id="reraNo_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_gstNo">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="GST No." class=""> 
+ 		
+			GST No
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_gstNo">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['gstNo'].value" id="gstNo" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['gstNo'].name" id="gstNo_createViewForm" value="gstNo">
+<input type="hidden" name="recordData.fields['gstNo'].module" id="gstNo_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['gstNo'].type" id="gstNo_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+			</tbody></table>
+			
+			<h2 style="display: none;">
+				Image
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Image">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Image
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd document_field" id="label_for_image">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Upload a photo of the broker." class=""> 
+ 		
+			Contact Picture
+</span>
+
+
+ </td>
+					<td class="document_field" id="markup_for_image">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#image_create_file').change(function() {
+			$('#image_documentType_create_isModified').val('Yes');
+		});
+		
+		$("#image_create_file").change(function() {
+			var allowedExtensionFromProperty = ".jpeg,.png,.doc,.docx,.csv,.jpg,.pdf,.xls,.xlsx"; 
+			var allowedExtension = allowedExtensionFromProperty;
+			var allowedExtensionArray = allowedExtension.split(",");
+			var fileUpload = document.getElementById("image_create_file");
+			var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedExtensionArray.join('|') + ")$");
+			if (!regex.test(fileUpload.value.toLowerCase())) {
+	            var msg = "Please upload files having extensions:" + allowedExtensionArray.join(', ') + " only.";
+	            openDialog("Alert!!!!!", msg, 400, 200, {
+	    			"Ok" : function() {
+	    				$("#image_create_file").val('');
+	    				$(this).dialog("close");
+	    			}
+	    		});
+	        }
+		});
+		
+
+	});
+</script>
+
+<fieldset id="image_create" class="docFieldSet">
+	
+	<table>
+		<tbody><tr>
+			<!-- <td class="labelFieldTd"><label>Select Document: </label></td> -->
+			<td colspan="2"><input type="file" name="recordData.fields['image'].documentField_document.file" id="image_create_file" value=""></td>
+		</tr>
+		
+		
+		
+		
+		
+	</tbody></table>
+	<!-- set of hidden inputs for document type -->
+	
+	<input type="hidden" name="recordData.fields['image'].documentField_document.isModified" id="image_documentType_create_isModified" value="No">
+	
+	<input type="hidden" name="recordData.fields['image'].documentField_document.doResize" id="image_documentType_create_doResize" value="false">
+	<input type="hidden" name="recordData.fields['image'].documentField_document.doWatermark" id="image_documentType_create_doWatermark" value="false">
+
+	<!-- Input for name of field -->
+	<input type="hidden" name="recordData.fields['image'].name" id="image_createViewForm" value="image"> <input type="hidden" name="recordData.fields['image'].module" id="image_moduleName_createViewForm" value="broker"> <input type="hidden" name="recordData.fields['image'].type" id="image_type_createViewForm" value="Document">
+
+</fieldset>
+
+
+
+
+</td>
+					
+				</tr>
+				
+			</tbody></table>
+			
+			<h2 style="display: none;">
+				Comments
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Comments">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Comments
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerComments">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Comments regarding the broker, for internal purpose." class=""> 
+ 		
+			Comments
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerComments">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Bind the value of this IField instance. -->
+<textarea style="width: 350px; height: 150px" class="textArea_create" id="brokerComments" name="recordData.fields['brokerComments'].value"></textarea>
+<input type="hidden" name="recordData.fields['brokerComments'].name" id="brokerComments_createViewForm" value="brokerComments">
+<input type="hidden" name="recordData.fields['brokerComments'].module" id="brokerComments_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerComments'].type" id="brokerComments_type_createViewForm" value="TextArea">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+			</tbody></table>
+			
+		</div>
+		
+		<div class="accordion container-fluid container-fluid-broker 1" style="display:none;">
+			<!-- loop for the Section -->
+			
+			<h2 style="display: none;">
+				Additional Information :: Personal
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Additional_Information_::_Personal">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Additional Information :: Personal
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_relationToPar">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Specify whether the broker's mobile no. is under DND." class=""> 
+ 		
+			DND
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_relationToPar">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#relationToPar_create').val() === 'Yes') {
+			$('#relationToPar_chkSelect').prop('checked', true);
+		}
+		$('#relationToPar_chkSelect').click(function() {
+			var isChecked = $('#relationToPar_chkSelect').prop('checked');
+			if (isChecked) {
+				$('#relationToPar_create').val('Yes');
+				$('#relationToPar_create').change();
+			}
+			else {
+				$('#relationToPar_create').val('No');
+				$('#relationToPar_create').change();
+			}
+		});
+	});
+</script>
+<input type="checkbox" id="relationToPar_chkSelect">
+<input type="hidden" id="relationToPar_create" name="recordData.fields['relationToPar'].value" value="No">
+<input type="hidden" name="recordData.fields['relationToPar'].name" id="relationToPar_createViewForm" value="relationToPar">
+<input type="hidden" name="recordData.fields['relationToPar'].module" id="relationToPar_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['relationToPar'].type" id="relationToPar_type_createViewForm" value="Checkbox">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_resiPhone">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Other Phone No like residential no." class=""> 
+ 		
+			Other Phone
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_resiPhone">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['resiPhone'].value" id="resiPhone" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['resiPhone'].name" id="resiPhone_createViewForm" value="resiPhone">
+<input type="hidden" name="recordData.fields['resiPhone'].module" id="resiPhone_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['resiPhone'].type" id="resiPhone_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_panNo">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Pan No." class=""> 
+ 		
+			Pan No
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_panNo">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['panNo'].value" id="panNo" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['panNo'].name" id="panNo_createViewForm" value="panNo">
+<input type="hidden" name="recordData.fields['panNo'].module" id="panNo_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['panNo'].type" id="panNo_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_occupation">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Occupation Details." class=""> 
+ 		
+			Occupation
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_occupation">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['occupation'].value" id="occupation" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['occupation'].name" id="occupation_createViewForm" value="occupation">
+<input type="hidden" name="recordData.fields['occupation'].module" id="occupation_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['occupation'].type" id="occupation_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+			</tbody></table>
+			
+			<h2 style="display: none;">
+				Contact Information :: Office
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Contact_Information_::_Office">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Contact Information :: Office
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_officeEmailID">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Office Email ID" class=""> 
+ 		
+			Office Email
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_officeEmailID">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['officeEmailID'].value" id="officeEmailID" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['officeEmailID'].name" id="officeEmailID_createViewForm" value="officeEmailID">
+<input type="hidden" name="recordData.fields['officeEmailID'].module" id="officeEmailID_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['officeEmailID'].type" id="officeEmailID_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_offPhoneCountryCode">Off. Phone</td>
+					<td class="" id="markup_for_offPhoneCountryCode">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create country_code" type="text" name="recordData.fields['offPhoneCountryCode'].value" id="offPhoneCountryCode" value="" autocomplete="off"><span style="padding: 5px 3px 0px 5px;">-</span>
+<input type="hidden" name="recordData.fields['offPhoneCountryCode'].name" id="offPhoneCountryCode_createViewForm" value="offPhoneCountryCode">
+<input type="hidden" name="recordData.fields['offPhoneCountryCode'].module" id="offPhoneCountryCode_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['offPhoneCountryCode'].type" id="offPhoneCountryCode_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create country_code" type="text" name="recordData.fields['offPhoneAreaCode'].value" id="offPhoneAreaCode" value="" autocomplete="off"><span style="padding: 5px 3px 0px 5px;">-</span>
+<input type="hidden" name="recordData.fields['offPhoneAreaCode'].name" id="offPhoneAreaCode_createViewForm" value="offPhoneAreaCode">
+<input type="hidden" name="recordData.fields['offPhoneAreaCode'].module" id="offPhoneAreaCode_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['offPhoneAreaCode'].type" id="offPhoneAreaCode_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['offPhoneNonConcat'].value" id="offPhoneNonConcat" value="" autocomplete="off" style="width: 86px;">
+<input type="hidden" name="recordData.fields['offPhoneNonConcat'].name" id="offPhoneNonConcat_createViewForm" value="offPhoneNonConcat">
+<input type="hidden" name="recordData.fields['offPhoneNonConcat'].module" id="offPhoneNonConcat_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['offPhoneNonConcat'].type" id="offPhoneNonConcat_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+<p id="Country_code" style="font-size: 10px; width: 100%; float: left;">Country Code - Actual Number</p></td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					
+					
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					
+					
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_offFax">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Office Fax No." class=""> 
+ 		
+			Office Fax
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_offFax">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['offFax'].value" id="offFax" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['offFax'].name" id="offFax_createViewForm" value="offFax">
+<input type="hidden" name="recordData.fields['offFax'].module" id="offFax_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['offFax'].type" id="offFax_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_offAddress1">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Office Address Line 1." class=""> 
+ 		
+			Off. Address 1
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_offAddress1">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['offAddress1'].value" id="offAddress1" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['offAddress1'].name" id="offAddress1_createViewForm" value="offAddress1">
+<input type="hidden" name="recordData.fields['offAddress1'].module" id="offAddress1_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['offAddress1'].type" id="offAddress1_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerOffLocality">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the Locality of the office." class=""> 
+ 		
+			Off. Locality / Street
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerOffLocality">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerOffLocality_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerOffLocality_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerOffLocality_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerOffLocality_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerOffLocality_createViewForm').val('').change();
+			$('#relatedField_brokerOffLocality_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerOffLocality() {
+		var moduleName="locality";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerOffLocality_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerOffLocality_open_create_dialog(createFormMarkup) {
+		$('#brokerOffLocality_inline_create').remove();
+		$('body').append($('<div id="brokerOffLocality_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerOffLocality_inline_create #markup_for_owners').hide();
+		$('#brokerOffLocality_inline_create #label_for_owners').hide();
+		$('#brokerOffLocality_inline_create #markup_for_teams').hide();
+		$('#brokerOffLocality_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerOffLocality_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerOffLocality_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerOffLocality_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerOffLocality_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerOffLocality_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerOffLocality_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerOffLocality_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerOffLocality_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerOffLocality_createViewForm() {
+		jQuery(function($) {
+			var moduleName="locality";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerOffLocality";
+			var name="Locality / Street";
+			var popupExtraWhereClause = ($('#relatedField_brokerOffLocality_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerOffLocality_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerOffLocality_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerOffLocality_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerOffLocality_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerOffLocality",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerOffLocality_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerOffLocality'].value" id="relatedField_brokerOffLocality_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerOffLocality_autoCompleteExtraWhereClause" id="relatedField_brokerOffLocality_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerOffLocality_popupExtraWhereClause" id="relatedField_brokerOffLocality_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerOffLocality_createViewForm();" type="text" name="relatedField_brokerOffLocality_UserKeyValue_createViewForm" id="relatedField_brokerOffLocality_UserKeyValue_createViewForm" value="" autocomplete="off">
+ 
+	 <button tabindex="-1" type="button" class="related_btn_lookup" name="relatedFieldQuickCreateBtn_brokerOffLocality_createViewForm" id="relatedFieldQuickCreateBtn_brokerOffLocality_createViewForm" onclick="relatedField_openPopUp_brokerOffLocality();"> 
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-add.png?v=127" border="0">
+ </button> 
+ 
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerOffLocality_createViewForm" id="relatedFieldClearBtn_brokerOffLocality_createViewForm" onclick="relatedField_clearTextBox_brokerOffLocality_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerOffLocality'].name" id="brokerOffLocality_createViewForm" value="brokerOffLocality">
+<input type="hidden" name="recordData.fields['brokerOffLocality'].module" id="brokerOffLocality_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerOffLocality'].type" id="brokerOffLocality_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerOffArea">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the Area of the office." class=""> 
+ 		
+			Off. Area
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerOffArea">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerOffArea_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerOffArea_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerOffArea_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerOffArea_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerOffArea_createViewForm').val('').change();
+			$('#relatedField_brokerOffArea_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerOffArea() {
+		var moduleName="area";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerOffArea_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerOffArea_open_create_dialog(createFormMarkup) {
+		$('#brokerOffArea_inline_create').remove();
+		$('body').append($('<div id="brokerOffArea_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerOffArea_inline_create #markup_for_owners').hide();
+		$('#brokerOffArea_inline_create #label_for_owners').hide();
+		$('#brokerOffArea_inline_create #markup_for_teams').hide();
+		$('#brokerOffArea_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerOffArea_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerOffArea_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerOffArea_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerOffArea_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerOffArea_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerOffArea_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerOffArea_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerOffArea_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerOffArea_createViewForm() {
+		jQuery(function($) {
+			var moduleName="area";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerOffArea";
+			var name="Areas";
+			var popupExtraWhereClause = ($('#relatedField_brokerOffArea_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerOffArea_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerOffArea_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerOffArea_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerOffArea_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerOffArea",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerOffArea_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerOffArea'].value" id="relatedField_brokerOffArea_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerOffArea_autoCompleteExtraWhereClause" id="relatedField_brokerOffArea_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerOffArea_popupExtraWhereClause" id="relatedField_brokerOffArea_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerOffArea_createViewForm();" type="text" name="relatedField_brokerOffArea_UserKeyValue_createViewForm" id="relatedField_brokerOffArea_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerOffArea_createViewForm" id="relatedFieldClearBtn_brokerOffArea_createViewForm" onclick="relatedField_clearTextBox_brokerOffArea_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerOffArea'].name" id="brokerOffArea_createViewForm" value="brokerOffArea">
+<input type="hidden" name="recordData.fields['brokerOffArea'].module" id="brokerOffArea_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerOffArea'].type" id="brokerOffArea_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerOffCity">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the City of the office." class=""> 
+ 		
+			Off. City
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerOffCity">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerOffCity_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerOffCity_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerOffCity_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerOffCity_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerOffCity_createViewForm').val('').change();
+			$('#relatedField_brokerOffCity_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerOffCity() {
+		var moduleName="city";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerOffCity_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerOffCity_open_create_dialog(createFormMarkup) {
+		$('#brokerOffCity_inline_create').remove();
+		$('body').append($('<div id="brokerOffCity_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerOffCity_inline_create #markup_for_owners').hide();
+		$('#brokerOffCity_inline_create #label_for_owners').hide();
+		$('#brokerOffCity_inline_create #markup_for_teams').hide();
+		$('#brokerOffCity_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerOffCity_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerOffCity_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerOffCity_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerOffCity_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerOffCity_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerOffCity_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerOffCity_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerOffCity_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerOffCity_createViewForm() {
+		jQuery(function($) {
+			var moduleName="city";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerOffCity";
+			var name="Cities";
+			var popupExtraWhereClause = ($('#relatedField_brokerOffCity_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerOffCity_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerOffCity_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerOffCity_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerOffCity_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerOffCity",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerOffCity_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerOffCity'].value" id="relatedField_brokerOffCity_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerOffCity_autoCompleteExtraWhereClause" id="relatedField_brokerOffCity_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerOffCity_popupExtraWhereClause" id="relatedField_brokerOffCity_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerOffCity_createViewForm();" type="text" name="relatedField_brokerOffCity_UserKeyValue_createViewForm" id="relatedField_brokerOffCity_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerOffCity_createViewForm" id="relatedFieldClearBtn_brokerOffCity_createViewForm" onclick="relatedField_clearTextBox_brokerOffCity_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerOffCity'].name" id="brokerOffCity_createViewForm" value="brokerOffCity">
+<input type="hidden" name="recordData.fields['brokerOffCity'].module" id="brokerOffCity_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerOffCity'].type" id="brokerOffCity_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerOffState">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the State of the office." class=""> 
+ 		
+			Off. State
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerOffState">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerOffState_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerOffState_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerOffState_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerOffState_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerOffState_createViewForm').val('').change();
+			$('#relatedField_brokerOffState_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerOffState() {
+		var moduleName="state";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerOffState_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerOffState_open_create_dialog(createFormMarkup) {
+		$('#brokerOffState_inline_create').remove();
+		$('body').append($('<div id="brokerOffState_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerOffState_inline_create #markup_for_owners').hide();
+		$('#brokerOffState_inline_create #label_for_owners').hide();
+		$('#brokerOffState_inline_create #markup_for_teams').hide();
+		$('#brokerOffState_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerOffState_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerOffState_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerOffState_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerOffState_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerOffState_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerOffState_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerOffState_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerOffState_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerOffState_createViewForm() {
+		jQuery(function($) {
+			var moduleName="state";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerOffState";
+			var name="States";
+			var popupExtraWhereClause = ($('#relatedField_brokerOffState_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerOffState_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerOffState_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerOffState_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerOffState_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerOffState",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerOffState_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerOffState'].value" id="relatedField_brokerOffState_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerOffState_autoCompleteExtraWhereClause" id="relatedField_brokerOffState_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerOffState_popupExtraWhereClause" id="relatedField_brokerOffState_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerOffState_createViewForm();" type="text" name="relatedField_brokerOffState_UserKeyValue_createViewForm" id="relatedField_brokerOffState_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerOffState_createViewForm" id="relatedFieldClearBtn_brokerOffState_createViewForm" onclick="relatedField_clearTextBox_brokerOffState_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerOffState'].name" id="brokerOffState_createViewForm" value="brokerOffState">
+<input type="hidden" name="recordData.fields['brokerOffState'].module" id="brokerOffState_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerOffState'].type" id="brokerOffState_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerOffCountry">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Name of the Country of the office." class=""> 
+ 		
+			Off. Country
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerOffCountry">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerOffCountry_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerOffCountry_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerOffCountry_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerOffCountry_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerOffCountry_createViewForm').val('').change();
+			$('#relatedField_brokerOffCountry_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerOffCountry() {
+		var moduleName="country";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerOffCountry_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerOffCountry_open_create_dialog(createFormMarkup) {
+		$('#brokerOffCountry_inline_create').remove();
+		$('body').append($('<div id="brokerOffCountry_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerOffCountry_inline_create #markup_for_owners').hide();
+		$('#brokerOffCountry_inline_create #label_for_owners').hide();
+		$('#brokerOffCountry_inline_create #markup_for_teams').hide();
+		$('#brokerOffCountry_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerOffCountry_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerOffCountry_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerOffCountry_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerOffCountry_UserKeyValue_createViewForm').val(jsData.record['name']);
+								$('div#broker_create_view #relatedField_brokerOffCountry_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerOffCountry_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerOffCountry_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerOffCountry_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerOffCountry_createViewForm() {
+		jQuery(function($) {
+			var moduleName="country";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerOffCountry";
+			var name="Countries";
+			var popupExtraWhereClause = ($('#relatedField_brokerOffCountry_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerOffCountry_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerOffCountry_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerOffCountry_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerOffCountry_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerOffCountry",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerOffCountry_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerOffCountry'].value" id="relatedField_brokerOffCountry_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerOffCountry_autoCompleteExtraWhereClause" id="relatedField_brokerOffCountry_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerOffCountry_popupExtraWhereClause" id="relatedField_brokerOffCountry_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerOffCountry_createViewForm();" type="text" name="relatedField_brokerOffCountry_UserKeyValue_createViewForm" id="relatedField_brokerOffCountry_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerOffCountry_createViewForm" id="relatedFieldClearBtn_brokerOffCountry_createViewForm" onclick="relatedField_clearTextBox_brokerOffCountry_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerOffCountry'].name" id="brokerOffCountry_createViewForm" value="brokerOffCountry">
+<input type="hidden" name="recordData.fields['brokerOffCountry'].module" id="brokerOffCountry_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerOffCountry'].type" id="brokerOffCountry_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_offZip">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Postal Code of the office." class=""> 
+ 		
+			Off. Zip Code
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_offZip">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['offZip'].value" id="offZip" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['offZip'].name" id="offZip_createViewForm" value="offZip">
+<input type="hidden" name="recordData.fields['offZip'].module" id="offZip_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['offZip'].type" id="offZip_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+			</tbody></table>
+			
+			<h2 style="display: none;">
+				Other Details
+			</h2>
+			<table class="createTable table" style="border: none; display: table;" id="Other_Details">
+				<tbody><tr>
+					<td colspan="2"><p class="sectionTitle">
+							Other Details
+						</p></td>
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_sourceChannel">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Source through which the respective broker came to know about your organization. Facebook/Newspaper Ads." class=""> 
+ 		
+			Source Channel
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_sourceChannel">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var childID = "#sourceChannel_create";
+	$(childID).select2({dropdownAutoWidth : true});
+});
+
+
+function sourceChannel_create_reload(){
+    var childID = "#sourceChannel_create";
+
+    var currentSelection = {};
+    $(childID).find("option:selected").each(function() {
+    	currentSelection[$(this).val()]=$(this).val();
+    });
+    
+    if (!VT.isSet(currentSelection.value)) {
+    	currentSelection[''] = '';
+    }
+		
+	var extraWhereClause = $('#create_sourceChannel_extraWhereClause').val();
+	var parentFieldName = $('#create_sourceChannel_parentFieldName').val();
+	if(VT.isSet(parentFieldName) && !VT.isSet(extraWhereClause)) {
+	    return;
+	}
+	
+	ajaxExecuteController(function(data) {
+		$(childID).html("");
+	    
+			$(childID).append($('<option>', { value : ' ',text : 'Not Specified' }));
+		
+    	data = JSON.parse($.trim(data));
+		$.each(data, function(i, item) {
+			if(currentSelection.hasOwnProperty(item.value)) {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display, selected: "selected" }));
+			}
+			else {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display }));
+			}
+		});
+		
+		$(childID).select2({dropdownAutoWidth : true});
+		
+		setTimeout(function() {
+		}, 3000);
+    }, "listOfValue", "loadFromLOV", {
+		lovType : "CLIENT_SOURCE",
+		moduleName : "broker", 
+		fieldName : "sourceChannel",
+		extraWhereClause : extraWhereClause
+	});
+}
+
+function sourceChannel_create_add() {
+	// lov add opens in a dialog now. 
+	var layoutDef = '';
+	layoutDef += '<LayoutDef>';
+	layoutDef += '	<Panel>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>type</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>dispVal</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>val</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>parent</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '	</Panel>';
+	layoutDef += '</LayoutDef>';
+
+	showProgress();
+	ajaxExecuteController(function(data) {
+		hideProgress();
+		sourceChannel_open_lov_create_dialog(data, layoutDef);
+	}, 'ajax', 'renderCreateView', {"ajax_module": "listOfValue", "ajax_layoutDef": layoutDef, "recordData.fields['type'].value": 'CLIENT_SOURCE'});
+}
+
+function sourceChannel_open_lov_create_dialog(lovCreateFormMarkup, lovCreateFormLayoutDef) {
+	$('#sourceChannel_lov_inline_create').remove();
+	$('body').append($('<div id="sourceChannel_lov_inline_create" style="display: none;"> ' + lovCreateFormMarkup + '</div>'));
+
+	// open the locality create form in a dialog box. 
+	openDialog("Create List Of Val", '#sourceChannel_lov_inline_create', '650', 'auto', {
+		"Save": function() {
+			var dialog = $(this);
+			var formData = VT.getFormObject($('#sourceChannel_lov_inline_create #createViewForm'));
+			formData['ajax_module'] = formData['module'];
+			formData['ajax_layoutDef'] = lovCreateFormLayoutDef;
+			formData['module'] = 'ajax';
+			formData['action'] = 'create';
+			showProgress();
+			$.ajax({
+				type : "POST",
+				url : "index.html",
+				data : formData,
+				success : function(data) {
+					hideProgress();
+					try {
+						// if lov was created successfully then we get a json response. 
+						// else we get HTML representing the form again to be rendered with the error messages, this we are doing in the catch block. 
+						var jsData = JSON.parse($.trim(data));
+						if (jsData.status === 'SUCCESS') {
+							$(dialog).dialog('close');
+
+							// first reload the new value. 
+							sourceChannel_create_reload()
+
+							openDialog("Alert", "New Value added. You can start typing to select the new value.", '350', '150');
+						}
+					}
+					catch (error) {
+						// could not parse as json, so must be HTML carrying the invalid error message.
+						sourceChannel_open_lov_create_dialog(data, lovCreateFormLayoutDef);
+					}
+				}
+			});
+		}, 
+		"Cancel": function() {
+			$(this).dialog('close');
+			$('#sourceChannel_lov_inline_create').remove();
+		}
+	}, {
+		"close": function() {
+			$('#sourceChannel_lov_inline_create').remove();
+		}
+	});
+}
+</script>
+<!-- Bind the value of this IField instance. -->
+<div class="select2-container dropDown_create" id="s2id_sourceChannel_create"><a href="javascript:void(0)" onclick="return false;" class="select2-choice" tabindex="-1">   <span class="select2-chosen">Not Specified</span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow"><b></b></span></a><input class="select2-focusser select2-offscreen" type="text" id="s2id_autogen8"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input">   </div>   <ul class="select2-results">   </ul></div></div><select class="dropDown_create select2-offscreen" id="sourceChannel_create" name="recordData.fields['sourceChannel'].value" tabindex="-1">
+	
+	<option value="">Not Specified</option>
+	
+	<option value="Business Network" rid="480154438357703480">Business Network</option><option value="Rotary Club" rid="480154438357703534">Rotary Club</option><option value="The Real Club" rid="498628494145672799">The Real Club</option><option value="Email Leads" rid="CLIENT_SOURCE_EMAIL_TO_LEAD_102">Email Leads</option><option value="Walkin / Direct Client" rid="2S1002123">Walkin / Direct Client</option><option value="Old Client" rid="428886279560199972">Old Client</option><option value="Website (SQFT)" rid="2S100268">Website (SQFT)</option><option value="Real Estate Portals" rid="442914840023703280">Real Estate Portals</option><option value="SQFT Ref (Branch)" rid="442914840023703372">SQFT Ref (Branch)</option><option value="SQFT (Marketing Project)" rid="442914840023703383">SQFT (Marketing Project)</option><option value="Newspapers" rid="442914840023703316">Newspapers</option><option value="Social Media  Websites / App" rid="442914840023703365">Social Media  Websites / App</option><option value="Square Feet Campaigning" rid="442914840023703343">Square Feet Campaigning</option><option value="Brokers" rid="442914840023703317">Brokers</option><option value="Banner and Hoarding" rid="442914840023703382">Banner and Hoarding</option><option value="Exhibition &amp; Events" rid="442914840023703282">Exhibition &amp; Events</option><option value="Area Survey " rid="442914840023703845">Area Survey </option><option value="Builder" rid="443177051401703860">Builder</option><option value="Information Providers" rid="445605261414703807">Information Providers</option>
+</select>
+
+
+	<a tabindex="-1" href="javascript:sourceChannel_create_add();" class="ddLink"> <!-- Add --> <i class="icon-new"></i>
+	</a>
+	<i class="icn-seperator"></i>
+
+
+<a tabindex="-1" href="javascript:sourceChannel_create_reload();" class="ddLink"> <!-- Reload --> <i class="icon-loop"></i>
+</a>
+
+<input type="hidden" name="create_sourceChannel_extraWhereClause" id="create_sourceChannel_extraWhereClause" value="">
+<input type="hidden" name="create_sourceChannel_extraAddParam" id="create_sourceChannel_extraAddParam" value="">
+<input type="hidden" name="recordData.fields['sourceChannel'].name" id="sourceChannel_createViewForm" value="sourceChannel">
+<input type="hidden" name="recordData.fields['sourceChannel'].module" id="sourceChannel_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['sourceChannel'].type" id="sourceChannel_type_createViewForm" value="DropDown">
+<input type="hidden" name="create_sourceChannel_parentFieldName" id="create_sourceChannel_parentFieldName" value="">
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_subSource">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Sub Source type through which the respective broker came to know about your orgnization. Ads Times of India/Magicbricks.com." class=""> 
+ 		
+			Sub Source Channel
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_subSource">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var childID = "#subSource_create";
+	$(childID).select2({dropdownAutoWidth : true});
+});
+
+
+function subSource_create_reload(){
+    var childID = "#subSource_create";
+
+    var currentSelection = {};
+    $(childID).find("option:selected").each(function() {
+    	currentSelection[$(this).val()]=$(this).val();
+    });
+    
+    if (!VT.isSet(currentSelection.value)) {
+    	currentSelection[''] = '';
+    }
+		
+	var extraWhereClause = $('#create_subSource_extraWhereClause').val();
+	var parentFieldName = $('#create_subSource_parentFieldName').val();
+	if(VT.isSet(parentFieldName) && !VT.isSet(extraWhereClause)) {
+	    return;
+	}
+	
+	ajaxExecuteController(function(data) {
+		$(childID).html("");
+	    
+			$(childID).append($('<option>', { value : ' ',text : 'Not Specified' }));
+		
+    	data = JSON.parse($.trim(data));
+		$.each(data, function(i, item) {
+			if(currentSelection.hasOwnProperty(item.value)) {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display, selected: "selected" }));
+			}
+			else {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display }));
+			}
+		});
+		
+		$(childID).select2({dropdownAutoWidth : true});
+		
+		setTimeout(function() {
+		}, 3000);
+    }, "listOfValue", "loadFromLOV", {
+		lovType : "SUB_SOURCE",
+		moduleName : "broker", 
+		fieldName : "subSource",
+		extraWhereClause : extraWhereClause
+	});
+}
+
+function subSource_create_add() {
+	// lov add opens in a dialog now. 
+	var layoutDef = '';
+	layoutDef += '<LayoutDef>';
+	layoutDef += '	<Panel>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>type</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>dispVal</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>val</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>parent</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '	</Panel>';
+	layoutDef += '</LayoutDef>';
+
+	showProgress();
+	ajaxExecuteController(function(data) {
+		hideProgress();
+		subSource_open_lov_create_dialog(data, layoutDef);
+	}, 'ajax', 'renderCreateView', {"ajax_module": "listOfValue", "ajax_layoutDef": layoutDef, "recordData.fields['type'].value": 'SUB_SOURCE'});
+}
+
+function subSource_open_lov_create_dialog(lovCreateFormMarkup, lovCreateFormLayoutDef) {
+	$('#subSource_lov_inline_create').remove();
+	$('body').append($('<div id="subSource_lov_inline_create" style="display: none;"> ' + lovCreateFormMarkup + '</div>'));
+
+	// open the locality create form in a dialog box. 
+	openDialog("Create List Of Val", '#subSource_lov_inline_create', '650', 'auto', {
+		"Save": function() {
+			var dialog = $(this);
+			var formData = VT.getFormObject($('#subSource_lov_inline_create #createViewForm'));
+			formData['ajax_module'] = formData['module'];
+			formData['ajax_layoutDef'] = lovCreateFormLayoutDef;
+			formData['module'] = 'ajax';
+			formData['action'] = 'create';
+			showProgress();
+			$.ajax({
+				type : "POST",
+				url : "index.html",
+				data : formData,
+				success : function(data) {
+					hideProgress();
+					try {
+						// if lov was created successfully then we get a json response. 
+						// else we get HTML representing the form again to be rendered with the error messages, this we are doing in the catch block. 
+						var jsData = JSON.parse($.trim(data));
+						if (jsData.status === 'SUCCESS') {
+							$(dialog).dialog('close');
+
+							// first reload the new value. 
+							subSource_create_reload()
+
+							openDialog("Alert", "New Value added. You can start typing to select the new value.", '350', '150');
+						}
+					}
+					catch (error) {
+						// could not parse as json, so must be HTML carrying the invalid error message.
+						subSource_open_lov_create_dialog(data, lovCreateFormLayoutDef);
+					}
+				}
+			});
+		}, 
+		"Cancel": function() {
+			$(this).dialog('close');
+			$('#subSource_lov_inline_create').remove();
+		}
+	}, {
+		"close": function() {
+			$('#subSource_lov_inline_create').remove();
+		}
+	});
+}
+</script>
+<!-- Bind the value of this IField instance. -->
+<div class="select2-container dropDown_create" id="s2id_subSource_create"><a href="javascript:void(0)" onclick="return false;" class="select2-choice" tabindex="-1">   <span class="select2-chosen">Not Specified</span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow"><b></b></span></a><input class="select2-focusser select2-offscreen" type="text" id="s2id_autogen9"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input">   </div>   <ul class="select2-results">   </ul></div></div><select class="dropDown_create select2-offscreen" id="subSource_create" name="recordData.fields['subSource'].value" tabindex="-1">
+	
+	<option value="">Not Specified</option>
+	
+	
+</select>
+
+
+	<a tabindex="-1" href="javascript:subSource_create_add();" class="ddLink"> <!-- Add --> <i class="icon-new"></i>
+	</a>
+	<i class="icn-seperator"></i>
+
+
+<a tabindex="-1" href="javascript:subSource_create_reload();" class="ddLink"> <!-- Reload --> <i class="icon-loop"></i>
+</a>
+
+<input type="hidden" name="create_subSource_extraWhereClause" id="create_subSource_extraWhereClause" value="">
+<input type="hidden" name="create_subSource_extraAddParam" id="create_subSource_extraAddParam" value="">
+<input type="hidden" name="recordData.fields['subSource'].name" id="subSource_createViewForm" value="subSource">
+<input type="hidden" name="recordData.fields['subSource'].module" id="subSource_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['subSource'].type" id="subSource_type_createViewForm" value="DropDown">
+<input type="hidden" name="create_subSource_parentFieldName" id="create_subSource_parentFieldName" value="sourceChannel">
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_registrationDate">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="The date on which this broker was registered first in our database." class=""> 
+ 		
+			Registration Date
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_registrationDate">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.datepicker').datetimepicker({
+		timepicker : false,
+		closeOnDateSelect : true,
+		format : 'd-m-Y',
+		scrollMonth : false,
+		scrollInput : false
+		});
+		$('#registrationDate_datepicker_create_trigger').click(function() {
+			$('#registrationDate_create').datetimepicker('show'); //support hide,show and destroy command
+		});
+	});
+</script>
+<!-- Bind the value of this IField instance. -->
+<input class="date_create datepicker" type="text" name="recordData.fields['registrationDate'].value" id="registrationDate_create" value="" autocomplete="off">
+<button type="button" id="registrationDate_datepicker_create_trigger" class="ui-datepicker-trigger">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/calendar.png?v=127" alt="Select date" title="Select date">
+</button>
+<br>
+<span style="font-size: 10px;">Eg. 13-06-2014</span>
+<input type="hidden" name="recordData.fields['registrationDate'].name" id="registrationDate_createViewForm" value="registrationDate">
+<input type="hidden" name="recordData.fields['registrationDate'].module" id="registrationDate_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['registrationDate'].type" id="registrationDate_type_createViewForm" value="Date">
+
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_website">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Website Url of the broker." class=""> 
+ 		
+			Website
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+//Autocomplete functionality on the field
+
+	
+</script>
+
+<!-- Bind the value of this IField instance. -->
+<input class="textField_create" type="text" name="recordData.fields['website'].value" id="website" value="" autocomplete="off">
+<input type="hidden" name="recordData.fields['website'].name" id="website_createViewForm" value="website">
+<input type="hidden" name="recordData.fields['website'].module" id="website_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['website'].type" id="website_type_createViewForm" value="TextField">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_rating">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="A 5 point rating, used to rate this broker based on our interactions with him / her." class=""> 
+ 		
+			Rating
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_rating">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var childID = "#rating_create";
+	$(childID).select2({dropdownAutoWidth : true});
+});
+
+
+function rating_create_reload(){
+    var childID = "#rating_create";
+
+    var currentSelection = {};
+    $(childID).find("option:selected").each(function() {
+    	currentSelection[$(this).val()]=$(this).val();
+    });
+    
+    if (!VT.isSet(currentSelection.value)) {
+    	currentSelection[''] = '';
+    }
+		
+	var extraWhereClause = $('#create_rating_extraWhereClause').val();
+	var parentFieldName = $('#create_rating_parentFieldName').val();
+	if(VT.isSet(parentFieldName) && !VT.isSet(extraWhereClause)) {
+	    return;
+	}
+	
+	ajaxExecuteController(function(data) {
+		$(childID).html("");
+	    
+			$(childID).append($('<option>', { value : ' ',text : 'Not Specified' }));
+		
+    	data = JSON.parse($.trim(data));
+		$.each(data, function(i, item) {
+			if(currentSelection.hasOwnProperty(item.value)) {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display, selected: "selected" }));
+			}
+			else {
+				$(childID).append($('<option>', {rid:item.rowID, value : item.value, text : item.display }));
+			}
+		});
+		
+		$(childID).select2({dropdownAutoWidth : true});
+		
+		setTimeout(function() {
+		}, 3000);
+    }, "listOfValue", "loadFromModule", {
+		lovType : "",
+		moduleName : "broker", 
+		fieldName : "rating",
+		extraWhereClause : extraWhereClause
+	});
+}
+
+function rating_create_add() {
+	// lov add opens in a dialog now. 
+	var layoutDef = '';
+	layoutDef += '<LayoutDef>';
+	layoutDef += '	<Panel>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>type</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>dispVal</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>val</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '		<Row>';
+	layoutDef += '			<Column>parent</Column>';
+	layoutDef += '		</Row>';
+	layoutDef += '	</Panel>';
+	layoutDef += '</LayoutDef>';
+
+	showProgress();
+	ajaxExecuteController(function(data) {
+		hideProgress();
+		rating_open_lov_create_dialog(data, layoutDef);
+	}, 'ajax', 'renderCreateView', {"ajax_module": "listOfValue", "ajax_layoutDef": layoutDef, "recordData.fields['type'].value": ''});
+}
+
+function rating_open_lov_create_dialog(lovCreateFormMarkup, lovCreateFormLayoutDef) {
+	$('#rating_lov_inline_create').remove();
+	$('body').append($('<div id="rating_lov_inline_create" style="display: none;"> ' + lovCreateFormMarkup + '</div>'));
+
+	// open the locality create form in a dialog box. 
+	openDialog("Create List Of Val", '#rating_lov_inline_create', '650', 'auto', {
+		"Save": function() {
+			var dialog = $(this);
+			var formData = VT.getFormObject($('#rating_lov_inline_create #createViewForm'));
+			formData['ajax_module'] = formData['module'];
+			formData['ajax_layoutDef'] = lovCreateFormLayoutDef;
+			formData['module'] = 'ajax';
+			formData['action'] = 'create';
+			showProgress();
+			$.ajax({
+				type : "POST",
+				url : "index.html",
+				data : formData,
+				success : function(data) {
+					hideProgress();
+					try {
+						// if lov was created successfully then we get a json response. 
+						// else we get HTML representing the form again to be rendered with the error messages, this we are doing in the catch block. 
+						var jsData = JSON.parse($.trim(data));
+						if (jsData.status === 'SUCCESS') {
+							$(dialog).dialog('close');
+
+							// first reload the new value. 
+							rating_create_reload()
+
+							openDialog("Alert", "New Value added. You can start typing to select the new value.", '350', '150');
+						}
+					}
+					catch (error) {
+						// could not parse as json, so must be HTML carrying the invalid error message.
+						rating_open_lov_create_dialog(data, lovCreateFormLayoutDef);
+					}
+				}
+			});
+		}, 
+		"Cancel": function() {
+			$(this).dialog('close');
+			$('#rating_lov_inline_create').remove();
+		}
+	}, {
+		"close": function() {
+			$('#rating_lov_inline_create').remove();
+		}
+	});
+}
+</script>
+<!-- Bind the value of this IField instance. -->
+<div class="select2-container dropDown_create" id="s2id_rating_create"><a href="javascript:void(0)" onclick="return false;" class="select2-choice" tabindex="-1">   <span class="select2-chosen"><img class="rating" src="resources/images/rating0.png"></span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow"><b></b></span></a><input class="select2-focusser select2-offscreen" type="text" id="s2id_autogen16"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input">   </div>   <ul class="select2-results">   </ul></div></div><select class="dropDown_create select2-offscreen" id="rating_create" name="recordData.fields['rating'].value" tabindex="-1">
+	
+	<option value="">Not Specified</option>
+	
+	<option value="1" rid="null">1</option><option value="2" rid="null">2</option><option value="3" rid="null">3</option><option value="4" rid="null">4</option><option value="5" rid="null">5</option>
+</select>
+
+<input type="hidden" name="create_rating_extraWhereClause" id="create_rating_extraWhereClause" value="">
+<input type="hidden" name="create_rating_extraAddParam" id="create_rating_extraAddParam" value="">
+<input type="hidden" name="recordData.fields['rating'].name" id="rating_createViewForm" value="rating">
+<input type="hidden" name="recordData.fields['rating'].module" id="rating_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['rating'].type" id="rating_type_createViewForm" value="DropDown">
+<input type="hidden" name="create_rating_parentFieldName" id="create_rating_parentFieldName" value="">
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+				<tr>
+					
+					
+					
+					<td class="labelFieldTd " id="label_for_brokerEmployee" style="display: none;">
+
+<!-- This is the Module Field Data use to render the label Field. -->
+
+
+
+
+<span title="Employee details." class=""> 
+ 		
+			Employee
+</span>
+
+
+ </td>
+					<td class="" id="markup_for_brokerEmployee" style="display: none;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	
+	//validate and clear invalid text from related fields
+	function relatedField_validateAndClear_brokerEmployee_createViewForm() 
+	{
+		
+		if($("#relatedField_brokerEmployee_createViewForm").val().trim()=='')
+		{
+			relatedField_clearTextBox_brokerEmployee_createViewForm();
+		} 
+	}
+	function relatedField_clearTextBox_brokerEmployee_createViewForm(element) {
+		jQuery(function($) {
+			$('#relatedField_brokerEmployee_createViewForm').val('').change();
+			$('#relatedField_brokerEmployee_UserKeyValue_createViewForm').val('');
+		});
+	}
+	function relatedField_openPopUp_brokerEmployee() {
+		var moduleName="employee";
+		showProgress();
+		ajaxExecuteController(function(data) {
+			hideProgress();
+			brokerEmployee_open_create_dialog(data);
+		}, 'ajax', 'renderCreateView', {"ajax_module":moduleName});
+	}
+	
+	function brokerEmployee_open_create_dialog(createFormMarkup) {
+		$('#brokerEmployee_inline_create').remove();
+		$('body').append($('<div id="brokerEmployee_inline_create" style="display: none;"> ' + createFormMarkup + '</div>'));
+		$('#brokerEmployee_inline_create #markup_for_owners').hide();
+		$('#brokerEmployee_inline_create #label_for_owners').hide();
+		$('#brokerEmployee_inline_create #markup_for_teams').hide();
+		$('#brokerEmployee_inline_create #label_for_teams').hide();
+		
+		// open the  create form in a dialog box. 
+		openDialog("Create", '#brokerEmployee_inline_create', '650', 'auto', {
+			"Save": function() {
+				var dialog = $(this);
+				var formData = VT.getFormObject($('#brokerEmployee_inline_create #createViewForm'));
+				formData['ajax_module'] = formData['module'];
+				formData['module'] = 'ajax';
+				formData['action'] = 'create';
+				showProgress();
+				$.ajax({
+					type : "POST",
+					url : "index.html",
+					data : formData,
+					success : function(data) {
+						hideProgress();
+						try {
+							//with the error messages, this we are doing in the catch block. 
+							var jsData = JSON.parse($.trim(data));
+							if (jsData.status === 'SUCCESS') {
+								$(dialog).dialog('close');
+								//openDialog("Alert", formData['module'] +" Added Successfully.", '350', '150');
+								$('div#broker_create_view #relatedField_brokerEmployee_createViewForm').val(jsData.record.rowID);
+								$('div#broker_create_view #relatedField_brokerEmployee_UserKeyValue_createViewForm').val(jsData.record['employeeID']);
+								$('div#broker_create_view #relatedField_brokerEmployee_createViewForm').change();
+							}
+						}
+						catch (error) {
+							brokerEmployee_open_create_dialog(data);
+						}
+					}
+				});
+			}, 
+			"Cancel": function() {
+				$(this).dialog('close');
+				$('#brokerEmployee_inline_create').remove();
+			}
+		}, {
+			"close": function() {
+				$('#brokerEmployee_inline_create').remove();
+			}
+		});
+	}
+	
+	function relatedField_openNewWindow_brokerEmployee_createViewForm() {
+		jQuery(function($) {
+			var moduleName="employee";
+			var childModuleName="broker";
+			var childModuleFormName = "createViewForm";
+			var childModuleRelatedFieldName = "brokerEmployee";
+			var name="Users";
+			var popupExtraWhereClause = ($('#relatedField_brokerEmployee_popupExtraWhereClause').val()).toString();
+			window.open("index.html?module="+moduleName+"&action=renderPopupListView&childModuleName="+childModuleName+"&childModuleFormName=" +childModuleFormName+"&childModuleRelatedFieldName="+childModuleRelatedFieldName+"&"+popupExtraWhereClause, name, 'scrollbars=yes,width=1360,height=768');
+			return false;
+		});
+	}
+	
+	// Autocomplete functionality on the field
+	
+	$(document).ready(function() {
+		$('#relatedField_brokerEmployee_UserKeyValue_createViewForm').autocomplete({
+			source : function(request, response) {
+				$('#relatedField_brokerEmployee_UserKeyValue_createViewForm').addClass('showLoader');
+				var key = "%"+request.term+"%";
+				var autoCompleteExtraWhereClause = $('#relatedField_brokerEmployee_autoCompleteExtraWhereClause').val();
+
+				ajaxExecuteController(function(data) {
+					data = JSON.parse($.trim(data));
+					$('#relatedField_brokerEmployee_UserKeyValue_createViewForm').removeClass('showLoader');
+					response($.map(data, function(item) {
+						return {label : item.display, value : item.display, rowID : item.value};
+				    }));
+				}, "broker", "loadForAutoComplete", {
+					fieldName : "brokerEmployee",						
+					key : key,
+					extraWhereClause : autoCompleteExtraWhereClause
+				});
+			},
+			minLength : 2,
+			select : function(event, ui) {
+			    $("#relatedField_brokerEmployee_createViewForm").attr("value", ui.item.rowID).change();
+			}
+		});
+	});
+	
+	
+	
+</script>
+
+<input type="hidden" name="recordData.fields['brokerEmployee'].value" id="relatedField_brokerEmployee_createViewForm" value="">
+<!-- Used to inject values when this related field is used as a dependent related field.  -->
+<input type="hidden" name="relatedField_brokerEmployee_autoCompleteExtraWhereClause" id="relatedField_brokerEmployee_autoCompleteExtraWhereClause" value="">
+<input type="hidden" name="relatedField_brokerEmployee_popupExtraWhereClause" id="relatedField_brokerEmployee_popupExtraWhereClause" value="">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="related_create ui-autocomplete-input" placeholder="Type to select" onblur="relatedField_validateAndClear_brokerEmployee_createViewForm();" type="text" name="relatedField_brokerEmployee_UserKeyValue_createViewForm" id="relatedField_brokerEmployee_UserKeyValue_createViewForm" value="" autocomplete="off">
+  
+ 
+
+ <button tabindex="-1" class="related_btn_clear" type="button" name="relatedFieldClearBtn_brokerEmployee_createViewForm" id="relatedFieldClearBtn_brokerEmployee_createViewForm" onclick="relatedField_clearTextBox_brokerEmployee_createViewForm();">
+	<img src="http://d1ssr30v5bb069.cloudfront.net/RR-Consultants/resources/images/id-ff-clear.png?v=127" border="0">
+</button>
+
+<input type="hidden" name="recordData.fields['brokerEmployee'].name" id="brokerEmployee_createViewForm" value="brokerEmployee">
+<input type="hidden" name="recordData.fields['brokerEmployee'].module" id="brokerEmployee_moduleName_createViewForm" value="broker">
+<input type="hidden" name="recordData.fields['brokerEmployee'].type" id="brokerEmployee_type_createViewForm" value="Related">
+
+
+
+
+
+
+
+
+
+
+
+</td>
+					
+				</tr>
+				
+			</tbody></table>
+			
+		</div>
+		
+	</div>
+	<input type="hidden" name="moduleName" value="broker">
+	<input type="hidden" name="module" id="module" value="broker">
+
+	<!-- This parameter is required for the create form to redirect back to the appopriate view on create. -->
+	<input type="hidden" id="redirectView" name="redirectView" value="">
+
+	<!-- Request parameters to be replicated for create being rendered from the popup list, so that it redirects back to the appropriate popup. -->
+	<input type="hidden" id="childModuleFormName" name="childModuleFormName" value="">
+	<input type="hidden" id="childModuleName" name="childModuleName" value="">
+	<input type="hidden" id="childModuleRelatedFieldName" name="childModuleRelatedFieldName" value="">
+	<input type="hidden" id="multiSelect" name="multiSelect" value="">
+
+	<!-- Request parameters to be replicated for create being rendered from the sub panel list, so that it redirects back to the appropriate subpanel. -->
+	<input type="hidden" id="parentModuleName" name="parentModuleName" value="">
+	<input type="hidden" id="parentModuleRelationName" name="parentModuleRelationName" value="">
+	<input type="hidden" id="parentModuleID" name="parentModuleID" value="">
+
+	<input type="hidden" id="action" name="action" value="create">
+	
+	<div class="subhead">
+		<div class="container-fluid">
+			<div id="createViewActionsPanel_Bottom" class="btn-toolbar">
+				
+				<div class="btn-wrapper" style="margin-left: 0;">
+					<i class="icon-new icon-white"></i><input type="button" name="Submit" class="gradientBtnBlue btn btn-small btn-success" value="Submit" onclick="broker_handleSubmit()">
+				</div>
+				<div class="btn-wrapper">
+					<i class="icon-unpublish"></i><input type="button" value="Cancel" class="gradientBtnBlue btn btn-small" id="Cancel_Bottom" onclick="createView_CancelHandler()">
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+<div>
+<input type="hidden" name="_csrf" value="21ed8466-299e-4a8f-b1f7-a6e506a9e68a">
+</div><input type="hidden" name="recordData.fields['clientSourceType'].value" id="clientSourceType" value="Broker"><input type="hidden" name="recordData.fields['clientType'].value" id="clientType" value="Either"><input type="hidden" name="recordData.fields['clientTxnType'].value" id="clientTxnType" value="Buyer/Seller/Landlord/Tenant"><input type="hidden" name="recordData.fields['groups'].value" id="groups" value=""></form>

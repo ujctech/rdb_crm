@@ -1,0 +1,150 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" ng-if="view_rights">
+    <!--<a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;">Add Employee Leave</a>-->
+    <!--<a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/employee_leave_add" style="margin:10px;">Add Employee Leave</a>-->
+    <a class="btn btn-primary" href="#/employee_leave_add" style="margin:10px;">Add Employee Leave</a>
+    <!--<a href="javascript:void(0)" style="float:right;margin-right:20px;" ng-click="import_enquiries()">Import</a>-->
+</div>
+<div class="clearfix"></div>
+<div class="row" id="des" style="margin-top:115px;" ng-if="view_rights">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#rolestab" data-toggle="tab">Employee Leave</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="rolestab">
+                        
+                        <div class="box-body table-responsive">
+                            <div class="row">
+                                <div class="right-side"  style="text-align:right;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-group">
+                                    <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                            <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                                <!--<div class="row">-->
+                                                <!--    <div class="col-md-12">-->
+                                                <!--        <div class="col-md-2">-->
+                                                <!--            <div class="form-group">-->
+                                                <!--                <label for="employee_name">Name</label>-->
+                                                <!--                <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.employee_name" id= "employee_name" name= "employee_name" ng-options="employee_name.employee_name as employee_name.employee_name for employee_name in employee_names" style="width:100%;"></select>-->
+                
+                                                <!--            </div>-->
+                                                <!--        </div>-->
+                                                <!--    </div>-->
+                                                <!--</div>-->
+                                                <!--pks code added 05-05-2023-->
+                                                <div class="row" style="margin-top:1%">
+                                                    <div class="col-md-2">
+                                                        <label for="employee_name">Filter Leaves</label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row" style="margin-top:2%">
+                                                    <div class="col-md-12">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="employee_name" style="margin-bottom:10%">Name</label>
+                                                                <div class="input-group" id="employee_name">
+                                                                    <input style="width: 140%;" class="form-control" type="text" ng-model="searchdata.employee_name" >
+                                                                    <!-- <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.employee_name" id= "employee_name" ng-options="employee_name.employee_name as employee_name.employee_name for employee_name in employee_names" style="width:100%;"></select> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">       
+                                                            <div class="form-group">
+                                                                <label for="employee_leave_start_date" style="margin-bottom:10%">Start Date</label>
+                                                                <div class="input-group date" id="employee_leave_start_date" date-directive="">
+                                                                    <input class="form-control" type="text" ng-model="searchdata.employee_leave_start_date" >
+                                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">       
+                                                            <div class="form-group">
+                                                                <label for="employee_leave_end_date" style="margin-bottom:10%">End Date</label>
+                                                                <div class="input-group date" id="employee_leave_end_date" date-directive="">
+                                                                    <input class="form-control" type="text" ng-model="searchdata.employee_leave_end_date" >
+                                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-12">                                            
+                                                        <div class="col-md-2" style="margin-top:25px;">        
+                                                            <div class="form-group">
+                                                                <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_leaves(searchdata)">Search Now </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2" style="margin-top:25px;">       
+                                                            <div class="form-group">
+                                                                <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2" style="margin-top:25px;">       
+                                                            <div class="form-group">
+                                                            <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()">Clear Filters</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>  
+                            <table class="table table-bordered table-striped" datatable-setupnosort1=""  data-page-length='30'>
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Leave Start Date</th>
+                                        <th>Leave End Date</th>
+                                        <th>Days</th>
+                                        <th>Leave Reason</th>
+                                        <th>Leave Status</th>
+                                        <!--<th ng-if="!(hasRoles.includes('Sub Admin'))"></th>-->
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="employee_leave in employee_leaves">
+                                        <td>{{employee_leave.employee_name}}</td>
+                                        <td>{{employee_leave.leave_date_from}}</td>
+                                        <td>{{employee_leave.leave_date_to}}</td>
+                                        <td>{{employee_leave.days}}</td>
+                                        <td>{{employee_leave.leave_reason}}</td>
+                                        <td>{{employee_leave.leave_status}}</td>
+                                        <td><a href="#/employee_leave_edit/{{employee_leave.employee_leave_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Leave Start Date</th>
+                                        <th>Leave End Date</th>
+                                        <th>Days</th>
+                                        <th>Leave Reason</th>
+                                        <th>Leave Status</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
