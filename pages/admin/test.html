@@ -1,0 +1,72 @@
+<canvas id="paint_board" width="500" height="800" style="border: 1px solid;"></canvas>
+
+<script>
+var el = document.getElementById('paint_board');
+// rect gets the cavas left top value in browser
+var rect = el.getBoundingClientRect();
+var ctx = el.getContext('2d');
+    ctx.lineJoin = ctx.lineCap = 'round';
+    ctx.lineWidth = 1;
+var isDrawing, pen_type=1;
+var screenWidth=500, screenHeight=500;  //set canvas width and height
+var strokes=20;                         //how many strokes to draw
+var color = [0, 0, 0]; // color val RGB 0-255, 0-255, 0-255
+var painters = [], unpainters = [], timers = [];
+var brushPressure=1; // brush Opacity
+var easing = 0.7; // kind of "how loopy" higher= bigger loops
+var refreshRate = 30; // set this higher if performace is an issue directly affects easing
+var mouseX = screenWidth / 2, mouseY = screenHeight / 2;
+var testinterval;
+
+pen_init();
+function pen_init(){
+    for(var i = 0; i < strokes; i++) {
+        var ease = Math.random() * 0.05 + easing;
+        painters.push({
+            dx : screenWidth / 2,
+            dy : screenHeight / 2,
+            ax : 0,
+            ay : 0,
+            div : 0.1,
+            ease : ease
+        });
+    }
+    testinterval = setInterval(update, refreshRate);
+    function update() {
+        var i;
+        ctx.strokeStyle = "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + brushPressure + ")";
+        for( i = 0; i < painters.length; i++) {
+            ctx.beginPath();
+            var dx = painters[i].dx;
+            var dy = painters[i].dy;
+            ctx.moveTo(dx, dy);
+            var dx1 = painters[i].ax = (painters[i].ax + (painters[i].dx - mouseX) * painters[i].div) * painters[i].ease;
+            painters[i].dx -= dx1;
+            var dx2 = painters[i].dx;
+            var dy1 = painters[i].ay = (painters[i].ay + (painters[i].dy - mouseY) * painters[i].div) * painters[i].ease;
+            painters[i].dy -= dy1;
+            var dy2 = painters[i].dy;
+            ctx.lineTo(dx2, dy2);
+            ctx.stroke();
+        }
+    }
+}
+el.onmousedown = function(e) {
+    isDrawing = true;
+    mouseX = e.clientX+window.scrollX-rect.left;
+    mouseY = e.clientY+window.scrollY-rect.top;
+    var i = 0, paintersLen = painters.length;
+    for(i; i < paintersLen; i++) {
+                painters[i].dx = mouseX;
+                painters[i].dy = mouseY;
+    }
+};
+el.onmousemove = function(e) {
+    if (!isDrawing) return;
+    mouseX = e.clientX+window.scrollX-rect.left;
+    mouseY = e.clientY+window.scrollY-rect.top;
+};
+el.onmouseup = function() {
+    isDrawing = false;
+};
+</script>
