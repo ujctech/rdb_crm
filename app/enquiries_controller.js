@@ -54,7 +54,9 @@ app.controller('Enquiries_List_Ctrl', function ($scope, $rootScope, $routeParams
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;    
-    $str = ($("#permission_string").val());
+    
+    $timeout(function() {
+        $str = ($("#permission_string").val());
     if ($scope.cat=='residential')
     {
         if ((($str).indexOf("enquiries_residential_view"))!=-1)
@@ -180,6 +182,7 @@ app.controller('Enquiries_List_Ctrl', function ($scope, $rootScope, $routeParams
         alert("You don't have rights to use this option..");
         return;
     }
+    }, 2000)
 
     $scope.select_assign_to = function(teams,sub_teams)
     {
@@ -807,7 +810,8 @@ app.controller('Enquiries_Add_Ctrl', function ($scope, $rootScope, $routeParams,
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;    
-    $str = ($("#permission_string").val());
+    $timeout(function() {
+        $str = ($("#permission_string").val());
     if ($scope.cat=='residential')
     {
         if ((($str).indexOf("enquiries_residential_view"))!=-1)
@@ -933,6 +937,7 @@ app.controller('Enquiries_Add_Ctrl', function ($scope, $rootScope, $routeParams,
         alert("You don't have rights to use this option..");
         return;
     }
+    }, 2000)
     $timeout(function () { 
         Data.get('selectteams').then(function (results) {
             $scope.teams = results;
@@ -1425,7 +1430,8 @@ app.controller('Enquiries_Edit_Ctrl', function ($scope, $rootScope, $routeParams
         $scope.view_rights = false;
         $scope.export_rights = false;  
       
-        $str = ($("#permission_string").val());
+        $timeout(function() {
+            $str = ($("#permission_string").val());
         if ($scope.cat=='residential')
         {
             if ((($str).indexOf("enquiries_residential_view"))!=-1)
@@ -1551,6 +1557,7 @@ app.controller('Enquiries_Edit_Ctrl', function ($scope, $rootScope, $routeParams
             alert("You don't have rights to use this option..");
             return;
         }
+        }, 2000)
         $timeout(function () { 
             Data.get('selecttask').then(function (results) {
                 $scope.task_list = results;

@@ -48,34 +48,36 @@ app.controller('Project_List_Ctrl', function ($scope, $rootScope, $routeParams, 
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;    
-    $str = ($("#permission_string").val());
-    if ((($str).indexOf("project_view"))!=-1)
-    {
-        $scope.view_rights = true;
-        console.log($scope.view_rights);
-    }
-    if ((($str).indexOf("project_create"))!=-1)
-    {
-        $scope.create_rights = true;
-        console.log($scope.create_rights);
-    }
-    if ((($str).indexOf("project_update"))!=-1)
-    {
-        $scope.update_rights = true;
-        console.log($scope.update_rights);
-    }
-    if ((($str).indexOf("project_delete"))!=-1)
-    {
-        $scope.delete_rights = true;
-        console.log($scope.delete_rights);
-    }
-
-    if (!$scope.view_rights)
-    {
-        $scope.listprojects = {};
-        alert("You don't have rights to use this option..");
-        return;
-    }
+    $timeout(function() {
+        $str = ($("#permission_string").val());
+        if ((($str).indexOf("project_view"))!=-1)
+        {
+            $scope.view_rights = true;
+            console.log($scope.view_rights);
+        }
+        if ((($str).indexOf("project_create"))!=-1)
+        {
+            $scope.create_rights = true;
+            console.log($scope.create_rights);
+        }
+        if ((($str).indexOf("project_update"))!=-1)
+        {
+            $scope.update_rights = true;
+            console.log($scope.update_rights);
+        }
+        if ((($str).indexOf("project_delete"))!=-1)
+        {
+            $scope.delete_rights = true;
+            console.log($scope.delete_rights);
+        }
+    
+        if (!$scope.view_rights)
+        {
+            $scope.listprojects = {};
+            alert("You don't have rights to use this option..");
+            return;
+        }
+    }, 2000)
     Data.get('project_list_ctrl/'+id+'/'+$scope.next_page_id).then(function (results) {
         $scope.listprojects = {};
         $scope.listprojects = results;
@@ -632,34 +634,36 @@ app.controller('Project_Add_Ctrl', function ($scope, $rootScope, $routeParams, $
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;    
-    $str = ($("#permission_string").val());
-    if ((($str).indexOf("project_view"))!=-1)
-    {
-        $scope.view_rights = true;
-        console.log($scope.view_rights);
-    }
-    if ((($str).indexOf("project_create"))!=-1)
-    {
-        $scope.create_rights = true;
-        console.log($scope.create_rights);
-    }
-    if ((($str).indexOf("project_update"))!=-1)
-    {
-        $scope.update_rights = true;
-        console.log($scope.update_rights);
-    }
-    if ((($str).indexOf("project_delete"))!=-1)
-    {
-        $scope.delete_rights = true;
-        console.log($scope.delete_rights);
-    }
-
-    if (!$scope.create_rights)
-    {
-        $scope.project = {};
-        alert("You don't have rights to use this option..");
-        return;
-    }
+    $timeout(function() {
+        $str = ($("#permission_string").val());
+        if ((($str).indexOf("project_view"))!=-1)
+        {
+            $scope.view_rights = true;
+            console.log($scope.view_rights);
+        }
+        if ((($str).indexOf("project_create"))!=-1)
+        {
+            $scope.create_rights = true;
+            console.log($scope.create_rights);
+        }
+        if ((($str).indexOf("project_update"))!=-1)
+        {
+            $scope.update_rights = true;
+            console.log($scope.update_rights);
+        }
+        if ((($str).indexOf("project_delete"))!=-1)
+        {
+            $scope.delete_rights = true;
+            console.log($scope.delete_rights);
+        }
+    
+        if (!$scope.create_rights)
+        {
+            $scope.project = {};
+            alert("You don't have rights to use this option..");
+            return;
+        }
+    }, 2000)
     $timeout(function () { 
         Data.get('selectteams').then(function (results) {
             $scope.teams = results;
