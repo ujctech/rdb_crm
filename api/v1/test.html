@@ -1,0 +1,37 @@
+<script>
+
+const options = {
+  method: 'GET',
+  headers: {
+    Accept: 'application/json',
+    Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvY2xvdWRwaG9uZS50YXRhdGVsZXNlcnZpY2VzLmNvbVwvYXBpXC92MVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2NDczMzg3MjAsImV4cCI6MTY0NzM0MjMyMCwibmJmIjoxNjQ3MzM4NzIwLCJqdGkiOiJyeXBxOTI2aHQyMjJ0MFJZIiwic3ViIjoyNTk0Njl9.zdJjnZbNIOvVcsgUNRuZKwmgWuxDw16_Saix_-yqjLs'
+  }
+};
+
+/*fetch('https://api-smartflo.tatateleservices.com/v1/call/records?to_date=20-01-2022', options)
+
+
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));*/
+response = "";
+  fetch('https://api-smartflo.tatateleservices.com/v1/call/records?to_date=20-03-2022', options)
+        .then(response => response.json())
+        .then(response => {
+            console.log(response.results);
+            console.log(response.results[0].id);
+            var mainContainer = document.getElementById("myData");
+            for (var i = 0; i < response.results.length; i++) {
+                var div = document.createElement("div");
+                div.innerHTML = 'ID: ' + response.results[i].id + ' Agent Name: ' + response.results[i].agent_name  + ' Client Number: ' + response.results[i].client_number  + ' Time: ' + response.results[i].date + ' ' + response.results[i].time + ' Remark: ' + response.results[i].description ;
+                mainContainer.appendChild(div);
+            }
+
+        })
+        .catch(err => console.error(err));
+
+</script>
+<div id = "myData">
+
+</div>
+  
