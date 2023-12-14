@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body
+        {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+        table
+        {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+        table th
+        {
+            background-color: #F7F7F7;
+            color: #333;
+            font-weight: bold;
+        }
+        table th, table td
+        {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('MyApp', [])
+        app.controller('MyController', function ($scope) {
+            $scope.Customers = [
+                { CustomerId: 1, Name: "John Hammond", Country: "United States" },
+                { CustomerId: 2, Name: "Mudassar Khan", Country: "India" },
+                { CustomerId: 3, Name: "Suzanne Mathews", Country: "France" },
+                { CustomerId: 4, Name: "Robert Schidner", Country: "Russia" }
+               ];
+
+            $scope.Export = function () {
+                html2canvas(document.getElementById('tblCustomers'), {
+                    onrendered: function (canvas) {
+                        var data = canvas.toDataURL();
+                        var docDefinition = {
+                            content: [{
+                                image: data,
+                                width: 500
+                            }]
+                        };
+                        pdfMake.createPdf(docDefinition).download("Table.pdf");
+                    }
+                });
+            }
+        });
+    </script>
+    <div ng-app="MyApp" ng-controller="MyController">
+        <table id="tblCustomers" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>Customer Id</th>
+                <th>Name</th>
+                <th>Country</th>
+            </tr>
+            <tbody ng-repeat="m in Customers">
+                <tr>
+                    <td>{{m.CustomerId}}</td>
+                    <td>{{m.Name}}</td>
+                    <td>{{m.Country}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <input type="button" value="Export" ng-click="Export()" />
+    </div>
+</body>
+</html>

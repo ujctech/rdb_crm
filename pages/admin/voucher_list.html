@@ -1,0 +1,188 @@
+<div class="hidden-xs hidden-sm" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <a class="btn btn-primary" href="#/voucher_add" style="margin:10px;margin-right:2px;" ng-if="create_rights">Add Voucher</a>
+     
+</div>
+<div class="clearfix"></div>
+
+<div class="box boxpadding"  style="border-top:0px;" ng-if="view_rights"> 
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" style="background: #f1f1f1;">
+            <li class="active" ><a data-target="#myvoucher" data-toggle="tab">Voucher</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="myvoucher">
+                <div class="right-side"  style="text-align:right;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group">
+                    <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                            <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-12"> 
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="voucher_id">Voucher ID</label>
+                                                <select class="select2 form-control" id="voucher_id" name="voucher_id" multiple="multiple" ng-model="searchdata.voucher_id" ng-options="voucher_id.voucher_id as voucher_id.voucher_id for voucher_id in voucher_ids"   style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>                                          
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="agreement_id">Agreement ID</label>
+                                                <select class="select2 form-control" id="agreement_id" name="agreement_id" multiple="multiple" ng-model="searchdata.agreement_id" ng-options="agreement_id.agreement_id as agreement_id.agreement_id for agreement_id in agreement_ids"   style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div> 
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="contributions_ids">Contributions ID</label>
+                                                <select class="select2 form-control" id="contributions_id" name="contributions_id" multiple="multiple" ng-model="searchdata.contributions_id" ng-options="contributions_id.contributions_id as contributions_id.contributions_id for contributions_id in contributions_ids"   style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>  
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="user_id">Employee Name<span class="required">*</span></label>
+                                                <select class="select2 form-control" id="user_id" name="user_id"  ng-model="searchdata.user_id" ng-options="user.user_id as user.name for user in users"  required style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>  
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="teams">Teams</label>
+                                                <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams)">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="assign_to">Assign to<span class="required">*</span></label>
+                                                <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2new ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">                                           
+                                        
+                                        <div class="col-md-2">       
+                                            <div class="form-group">
+                                                <label for="transaction_date_from">Transaction Date from</label>
+                                                <div class="input-group date" id="transaction_date_from" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="searchdata.transaction_date_from" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">       
+                                            <div class="form-group">
+                                                <label for="transaction_date_to">To</label>
+                                                <div class="input-group date" id="transaction_date_to" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="searchdata.transaction_date_to" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                   <div class="col-md-12">
+                                       <div class="col-md-2" style="margin-top:25px;">        
+                                           <div class="form-group">
+                                               <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_voucher(searchdata,'form')">Search Now </button>
+                                           </div>
+                                       </div>
+                                       <div class="col-md-2" style="margin-top:25px;">       
+                                           <div class="form-group">
+                                               <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                           </div>
+                                       </div>
+                                       <div class="col-md-2" style="margin-top:25px;">       
+                                           <div class="form-group">
+                                           <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                           </div>
+                                       </div>
+                                   </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped" datatable-setup=""  >
+                        <thead>
+                            <tr>
+                                <th>Voucher ID</th>
+                                <th>Agreement ID</th>
+                                <th>Contribution ID</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>Assigned to</th>                                
+                                <th>Transaction Date</th>
+                                <th>Emp Name</th>
+                                <th>Payment Type</th>
+                                <th>Amount</th>
+                                <th>Voucher No</th>
+                                <th>Voucher Date</th>
+                                <th>Cheque No</th>
+                                <th>Cheque Date</th>
+                                <th>Drawn On</th>
+                                <th>Branch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="voucher in voucherlist">
+                                <td><a href="#/voucher_edit/{{voucher.voucher_id}}"  title="Edit">VOUCHERID_{{voucher.voucher_id}}</a></td>
+                                <td><a href="#/agreement_edit/{{voucher.agreement_id}}" title="Edit">AGREEMENTID_{{voucher.agreement_id}}</a></td>
+                                <td>CONTRIBUTIONID_{{voucher.contributions_id}}</a></td>
+                                <td>{{voucher.team}}</td>
+                                <td>{{voucher.subteam}}</td>
+                                <td>{{voucher.assign_to}}</td>
+                                <td>{{voucher.transaction_date}}</td>
+                                <td>{{voucher.emp_name}}</td>
+                                <td>{{voucher.payment_type}}</td>
+                                <td>{{voucher.amount}}</td>
+                                <td>{{voucher.voucher_no}}</td>
+                                <td>{{voucher.voucher_date}}</td>
+                                <td>{{voucher.cheque_no}}</td>
+                                <td>{{voucher.cheque_date}}</td>
+                                <td>{{voucher.drawn_on}}</td>
+                                <td>{{voucher.branch}}</td>
+                            </tr>
+                            <div class="loading-main-div">
+                                <div id="loading" ng-if="voucherlist && !voucherlist.length>0"></div>
+                            </div> 
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Voucher ID</th>
+                                <th>Agreement ID</th>
+                                <th>Contribution ID</th>
+                                <th>Teams</th>
+                                <th>Sub Teams</th>
+                                <th>Assigned to</th>   
+                                <th>Transaction Date</th>
+                                <th>Emp Name</th>
+                                <th>Payment Type</th>
+                                <th>Amount</th>
+                                <th>Voucher No</th>
+                                <th>Voucher Date</th>
+                                <th>Cheque No</th>
+                                <th>Cheque Date</th>
+                                <th>Drawn On</th>
+                                <th>Branch</th>
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

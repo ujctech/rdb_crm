@@ -1,0 +1,349 @@
+<div class="" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+        <a href="javascript:void(0);" ng-click="pagenavigation( 'next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+    </div>
+    <a class="btn btn-primary" href="#/task_add" style="margin:10px;margin-right:2px;" ng-if="create_rights">Create task</a>
+
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-if="hasRoles.includes('Admin')" ng-click="task_export()">Export to Excel</a>
+    
+</div>
+<div class="clearfix"></div>
+
+<div class="box boxpadding"  style="border-top:0px;" ng-if="view_rights"> 
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" style="background: #f1f1f1;">
+            <li class="active" ><a data-target="#mytask" data-toggle="tab">Tasks&nbsp;&nbsp; {{task_count}}</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="mytask">
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <table class="table table-bordered table-striped" datatable-setupnosort="">
+                        <thead>
+                            <tr>
+                                <th>Task ID</th>
+                                <th>Task Title</th>
+                                <th>Task</th>
+                                <th>Client</th>
+                                <th>Teams</th>
+                                <th>Assign To</th>
+                                <th>Status</th>
+                                <th>Task Status</th>
+                                <th>Created By</th>
+                                <th>Updated On</th>
+                                <!--<th></th>-->
+                                <!--<th></th>-->
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="task in listtasks">
+				                <td>TaskID_{{task.task_id}}</td>
+                                <td>{{task.task_title}}</td>
+                                <td>{{task.description}}</td>
+                                <td>{{task.client}}</td>
+                                <td>{{task.teams}}</td>
+                                <td>{{task.assign_to}}</td>
+                                <td>{{task.status}}</td>
+                                <td>{{task.task_status}}</td>
+                                <td>{{task.created_by}}</td>
+				                <td><span ng-if="task.modified_date!='00-00-0000 00:00' " >{{task.modified_date}}</span><span ng-if="task.modified_date=='00-00-0000 00:00'">{{task.created_date}}</span></td>
+                                <!--<td><a href="#/task_edit/{{task.task_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+                                <!--<td><a href="javascript:void(0)" class="btn btn-default btn-sm" title="Show Comments" ng-click="show_task_comments(task.task_id)">Comments</a></td>-->
+                                <td><a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/task_edit/{{task.task_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                <td><a ng-if="!(hasRoles.includes('Sub Admin'))" href="javascript:void(0)" class="btn btn-default btn-sm" title="Show Comments" ng-click="show_task_comments(task.task_id)">Comments</a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Task ID</th>
+                                <th>Task Title</th>
+                                <th>Task</th>
+                                <th>Client</th>
+                                <th>Teams</th>
+                                <th>Assign To</th>
+                                <th>Status</th>
+                                <th>Task Status</th>
+                                <th>Created By</th>
+                                <th>Updated On</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>  
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="exportdetails" class="modal" role="dialog">    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Export Data</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" id="listofvalues">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="option_value" id="option_value" value="current_page" checked="checked" ng-model="option_value">
+                                            Current Page
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="option_value" id="option_value" value="selected" ng-model="option_value">
+                                            Selected
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="option_value" id="option_value" value="all_records" ng-model="option_value">
+                                            All Records
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" ng-click="exportdata()">Export</button>
+                            <button class="btn btn-primary" ng-click="configurecolumns()">Configure Columns</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="task_comment" >
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;">Task Comment<a  href="javascript:void(0)" ng-click="close_task_comment()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a></div>
+    <div style="padding:20px;width:100%;overflow-y:auto;height:350px;">
+        <div id="task_comment_div" class="html_content"  compile-html="trustedHtml_task_comment"></div>
+    </div>
+</div>
+
+<div id="view_download">
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;"><span>Export to Excel</span>
+        <a  href="javascript:void(0)" ng-click="close()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="from_date">From Date</label>
+                    <div class="input-group date" id="from_date" date-directive="">
+                    <input class="form-control" type="text" ng-model="from_date" >
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="to_date">To Date</label>
+                    <div class="input-group date" id="to_date" date-directive="">
+                    <input class="form-control" type="text" ng-model="to_date" >
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="user_id">User</label>
+                    <select class="form-control" id = "user_id"  ng-model="user_id" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                    </select>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="javascript:void(0)" ng-click="excel_download(from_date,to_date,user_id)" style="margin-left:150px;color: #000000;font-size: 24px;">Download</a></p>
+        </div>
+    </div>
+</div>
+<style>
+    #view_download
+    {
+        position:fixed;
+        top:38%;
+        left:38%;
+        background-color:#ffffff;
+        width:30%;
+        height:250px;
+        display:none;
+        z-index:9001;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+</style>
+
+<style>
+    #task_comment
+    {
+        position:fixed;
+        top:28%;
+        left:28%;
+        background-color:#ffffff;
+        width:50%;
+        height:400px;
+        display:none;
+        z-index:9001;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+.modal-dialog {
+
+    width:25%;
+}
+.bottomborder{
+    border-bottom:1px solid #959191;
+}
+
+@media (max-width:991px){
+    .bottomborder{
+        border-bottom:0px;
+    }
+
+     div.dataTables_wrapper div.dataTables_filter {
+     text-align: left; 
+     float: left; 
+     margin-left: -15px;
+     margin-top:-35px;
+    }
+    div.dataTables_wrapper div.dataTables_filter input 
+    {
+        width: 150px;
+    }
+     .btndiv{
+        position: absolute;
+        top: -2px;
+        width:100%;
+    }
+    .act_desc{
+        left: 150px;
+        height: 100px;
+       
+    }
+    .act_img{
+        margin-bottom: -120px;
+    }
+    .buttombtn{
+        margin-top: -48px;
+    }
+  
+    .right-side{
+        height: 50px;
+    } 
+   .cls_name{
+ margin-top: 30px;
+   } 
+   .cls_width{
+    width: 45%;
+   }
+}
+</style>
+
+<style>
+    #pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+
+    @media screen and (max-width: 991px)  {
+        .act_desc{
+            left: 5px;
+            height: 100%;
+        
+        }
+        
+        .act_img{
+            margin-bottom: 0px;
+        }
+    }
+
+</style>

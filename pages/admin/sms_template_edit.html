@@ -1,0 +1,71 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="sms_template_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+		<form  ng-repeat="sms_template in sms_templates" novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+			<div class="row" id="sms_template_data">
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">Edit SMS Template</h3>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="module_name">Module Name</label>
+												<select class="select2 form-control"  id="module_name" name="module_name" select2 ng-model="sms_template.module_name"  data-placeholder="Select module_name" style="width:100%;">
+													<option value="Project" >Project</option>
+													<option value="Property" >Property</option>
+													<option value="Enquiry" >Enquiry</option>
+													<option value="Agreement" >Argreement</option>
+													<option value="Employee" >Employee</option>
+													<option value="Activity" >Activity</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="template_title">Template Title</label>
+												<input type="text" class="form-control" id="template_title" name="template_title"  placeholder="Template Title" ng-model="sms_template.template_title"  />
+											</div>
+											<div class="form-group">
+												<label for="sequence_number">Sequence Number</label>
+												<input type="text" class="form-control" id="sequence_number" name="sequence_number"  placeholder="Sequence Number" ng-model="sms_template.sequence_number"  />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label for="text_message">Text Message</label>
+												<textarea class="form-control" wysihtml5-textarea id="text_message" rows="30" name="text_message"  placeholder="Text Message" ng-model="sms_template.text_message" ></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">                 
+											<div class="form-group">
+												<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(sms_template)" id="add-new-btn" ng-click="sms_template_update(sms_template)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+												<button class="btn btn-danger" ng-click="sms_template_delete(sms_template)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+												<a href="#/sms_template_list" class="btn">Cancel</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script>
+	$(function () {
+		$('.select2').select2();
+		//$('.textarea').wysihtml5();
+	});
+	
+	</script>
+	

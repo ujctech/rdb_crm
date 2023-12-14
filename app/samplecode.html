@@ -1,0 +1,516 @@
+
+
+<!-- ADD these lines in app.js -->
+
+        // GENERATE FORM
+
+        .when("/generate_form", { controller:'Generate_Form', templateUrl: 'pages/admin/genform.html?nd=' + Date.now() })
+
+<!-- end app.js -->
+
+<!-- Add these line in genform.html page -->
+
+<div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Generate Form</h3> 
+        </div>
+        <aside class="right-side">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="table_name">Select Table</label>
+                            <select class="selectpicker form-control" ng-model="table_name" ng-options="tablelist.table_name as tablelist.table_name for tablelist in tablelists">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-primary" ng-click="showcolumns(table_name)" style="margin-top:22px;">Show Columns</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" id="show">
+    
+                <div class="col-md-12">
+                    <div class="row" ng-if="columnlists.length">
+                        <div class="col-md-12">
+                            <a class="btn btn-primary" ng-click="generateform(table_name)" style="margin-right:10px;float:right;">Generate Form</a>
+                        </div>
+                    </div>
+    
+                    <div class="box-body table-responsive">
+                        <table class="table table-bordered table-striped" ng-if="columnlists.length"><!-- datatable-setup="">-->
+                            <thead>
+                                <tr>
+                                    <th>Column Name</th>
+                                    <th>Data Type</th>
+                                    <th style="text-align:right">Width</th>
+                                    <th>Element Type</th>
+                                    <th>Column Heading</th>
+                                    <th>Link Table</th>
+                                    <th>Required Field</th>
+                                    <th>Show On Form</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    <tr ng-repeat="columnlist in columnlists">
+                                        <td>{{columnlist.column_name}}</td>
+                                        <td>{{columnlist.data_type}}</td>
+                                        <td  style="text-align:right">{{columnlist.character_maximum_length}}</td>
+                                        <td>
+                                            <select class="selectpicker form-control" id="element_type" name="element_type" ng-model="columnlist.element_type" ng-change="update_direct('element_type',columnlist.genforms_id,columnlist.element_type)" >
+                                                <option value="Input">Input</option>
+                                                <option value="Textarea">Textarea</option>
+                                                <option value="Date">Date</option>
+                                                <option value="Select">Select</option>
+                                                <option value="Select From Table">Select From Table</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="column_heading" name="column_heading"  placeholder="Column Heading" ng-model="columnlist.column_heading" ng-change="update_direct('column_heading',columnlist.genforms_id,columnlist.column_heading)" ng-model-options="{updateOn: 'blur'}"/>
+                                        </td>
+                                        <td>
+                                            <select class="selectpicker form-control" ng-model="columnlist.link_table" ng-options="tablelist.table_name as tablelist.table_name for tablelist in tablelists" ng-change="update_direct('link_table',columnlist.genforms_id,columnlist.link_table)">
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="selectpicker form-control" id="required_field" name="required_field" ng-model="columnlist.required_field" ng-change="update_direct('required_field',columnlist.genforms_id,columnlist.required_field)">
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="selectpicker form-control" id="show_on_form" name="show_on_form" ng-model="columnlist.show_on_form" ng-change="update_direct('show_on_form',columnlist.genforms_id,columnlist.show_on_form)">
+                                                <option value="No">No</option>
+                                                <option value="Yes">Yes</option>
+                                            </select>
+                                        </td>                                  
+                                    </tr>
+                                </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Column Name</th>
+                                    <th>Data Type</th>
+                                    <th>Width</th>
+                                    <th>Element Type</th>
+                                    <th>Column Heading</th>
+                                    <th>Link Table</th>
+                                    <th>Required Field</th>
+                                    <th>Show On Form</th>
+                                </tr>
+                            </tfoot>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="row" id="showhtml">
+            <div class="col-md-12">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-target="#html" data-toggle="tab">HTML Code</a></li>
+                        <li><a data-target="#jsscript" data-toggle="tab">Java Script</a></li>
+                        <li><a data-target="#phpcode" data-toggle="tab">PHP Code</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="html">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="html">Copy & Paste to your Project</label>
+                                        <textarea class="form-control" ng-model="html" id="html" rows="15"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="jsscript">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="jsscript">Copy & Paste to your Project</label>
+                                        <textarea class="form-control" ng-model="jsscript" id="jsscript" rows="15"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="phpcode">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="phpcode">Copy & Paste to your Project</label>
+                                        <textarea class="form-control" ng-model="phpcode" id="phpcode" rows="15"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <style>
+            #showhtml
+            {
+                display: none;
+            }
+        </style>
+
+<!-- end genform.html -->
+
+<!-- Add these line in maincontroller.js -->
+
+// GENERATE FORM
+
+app.controller('Generate_Form', function ($scope, $rootScope, $routeParams, $location, $http, $timeout, $sce, Data) {
+$scope.activePath = null;
+Data.get('tablelist').then(function (results) {
+    $rootScope.tablelists = results;
+});
+
+$scope.showcolumns = function (table_name) {
+    
+    $("#show").css("display","block");
+    $("#showhtml").css("display","none");
+
+    Data.get('showcolumns/'+table_name).then(function (results) {
+        $rootScope.columnlists = results;
+    });
+};
+
+$scope.update_direct = function(column_name,form_id,value)
+{
+    Data.get('update_direct/'+column_name+'/'+form_id+'/'+value).then(function (results) {
+
+    });
+}
+
+$scope.generateform = function(table_name)
+{
+    $timeout(function () { 
+        Data.get('generateform/'+table_name).then(function (results) {
+            $("#show").css("display","none");
+            $("#showhtml").css("display","block");
+            $scope.html = results[0].htmlstring;
+            $scope.jsscript = results[0].jsscript;
+            $scope.phpcode = results[0].phpcode;
+        });
+    }, 100);
+};
+});
+
+<!-- end maincontroller.js -->
+
+<!-- Add these lines in dataaccess.php -->
+
+
+// GENERATE FORM
+
+$app->get('/tablelist', function() use ($app) {
+    $sql  = "";
+    $db = new DbHandler();
+    $session = $db->getSession();
+    if ($session['username']=="Guest")
+    {
+        return;
+    }
+    $sql = "SELECT table_name FROM information_schema.tables where table_schema='rhp';";
+    $tablelists = $db->getAllRecords($sql);
+    echo json_encode($tablelists);
+});
+
+$app->get('/showcolumns/:table_name', function($table_name) use ($app) {
+    $sql  = "";
+    $db = new DbHandler();
+    $session = $db->getSession();
+    if ($session['username']=="Guest")
+    {
+        return;
+    }
+    $isTableExists = $db->getOneRecord("select 1 from genforms where table_name='".$table_name."'");
+    
+    $senddata =  array();
+    $htmldata = array();
+    $htmlstring = '';
+    if(!$isTableExists)
+    {
+        $sql = "SELECT COLUMN_NAME,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='rhp' AND TABLE_NAME='".$table_name."'";    
+        $stmt = $db->getRows($sql);
+
+        if($stmt->num_rows > 0)
+        {
+            while($row = $stmt->fetch_assoc())
+            { 
+                $element_type = 'Input';
+                if ($row['DATA_TYPE']=='text')
+                {
+                    $element_type = 'Textarea';
+                }
+                if ($row['DATA_TYPE']=='date' or $row['DATA_TYPE']=='datetime')
+                {
+                    $element_type = 'Date';
+                }
+                $column_name = $row['COLUMN_NAME'];
+                $data_type = $row['DATA_TYPE'];
+                $character_maximum_length = $row['CHARACTER_MAXIMUM_LENGTH'];
+                $column_heading = $row['COLUMN_NAME'];
+
+                $query = "INSERT INTO genforms (column_name,data_type,character_maximum_length,element_type,required_field,column_heading,table_name,show_on_form,created_date)   VALUES('$column_name', '$data_type', '$character_maximum_length', '$element_type', 'No', '$column_name', '$table_name', 'Yes', NOW() )";
+                $result = $db->insertByQuery($query);
+            }
+        }
+    }
+    
+    $sql = "SELECT * FROM genforms WHERE table_name='".$table_name."'";
+    $columnlists = $db->getAllRecords($sql);
+    echo json_encode($columnlists);
+});
+
+$app->get('/generateform/:table_name', function($table_name) use ($app) {
+    $sql  = "";
+    $db = new DbHandler();
+    $session = $db->getSession();
+    if ($session['username']=="Guest")
+    {
+        return;
+    }
+    $jsscript = '';
+    $phpcode = '';
+    $htmlstring = '';
+
+    $jsscript .= '// DOCUMENTS
+
+    app.controller(\''.$table_name.'_List_Ctrl\', function ($scope, $rootScope, $routeParams, $location, $http, Data, $timeout ) {
+        
+        $timeout(function () { 
+            Data.get(\''.$table_name.'_list_ctrl\').then(function (results) {
+                $rootScope.'.$table_name.'s = results;
+            });
+        }, 100);
+    });
+        
+        
+    app.controller(\''.$table_name.'_Add_Ctrl\', function ($scope, $rootScope, $routeParams, $location, $http, Data) {
+        
+        $scope.'.$table_name.'_add_new = {'.$table_name.':\'\'};
+        $scope.'.$table_name.'_add_new = function ('.$table_name.') {
+            Data.post(\''.$table_name.'_add_new\', {
+                '.$table_name.': '.$table_name.'
+            }).then(function (results) {
+                Data.toast(results);
+                if (results.status == "success") {
+                    $location.path(\''.$table_name.'_list\');
+                }
+            });
+        };
+    });
+        
+    app.controller(\''.$table_name.'_Edit_Ctrl\', function ($scope, $rootScope, $routeParams, $location, $http, Data) {
+        var '.$table_name.'_id = $routeParams.'.$table_name.'_id;
+        $scope.activePath = null;
+        
+        Data.get(\''.$table_name.'_edit_ctrl/\'+'.$table_name.'_id).then(function (results) {
+            $rootScope.'.$table_name.'s = results;
+        });
+        
+        
+        $scope.'.$table_name.'_update = function ('.$table_name.') {
+            Data.post(\''.$table_name.'_update\', {
+                '.$table_name.': '.$table_name.'
+            }).then(function (results) {
+                Data.toast(results);
+                if (results.status == "success") {
+                    $location.path(\''.$table_name.'_list\');
+                }
+            });
+        };
+        
+        $scope.'.$table_name.'_delete = function ('.$table_name.') {
+            //console.log(business_unit);
+            var delete'.$table_name.' = confirm(\'Are you absolutely sure you want to delete?\');
+            if (delete'.$table_name.') {
+                Data.post(\''.$table_name.'_delete\', {
+                    '.$table_name.': '.$table_name.'
+                }).then(function (results) {
+                    Data.toast(results);
+                    if (results.status == "success") {
+                        $location.path(\''.$table_name.'_list\');
+                    }
+                });
+            }
+        };
+        
+    });
+        
+    app.controller(\'Select'.$table_name.'\', function ($scope, $rootScope, $routeParams, $location, $http, Data, $timeout ) {
+
+        $timeout(function () { 
+            Data.get(\'select'.$table_name.'\').then(function (results) {
+                $rootScope.'.$table_name.'s = results;
+            });
+        }, 100);
+    });';
+
+
+    $htmlstring .= '<div id="'.$table_name.'_info" >
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="'.$table_name.'_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add '.$table_name.'</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    ';
+
+    $sql = "SELECT * FROM genforms WHERE table_name='".$table_name."'";    
+    $stmt = $db->getRows($sql);
+
+    if($stmt->num_rows > 0)
+    {
+        while($row = $stmt->fetch_assoc())
+        {
+            $table_name = $row['table_name'];
+            $column_name = $row['column_name'];
+            $data_type = $row['data_type'];
+            $character_maximum_length = $row['character_maximum_length'];
+            $element_type = $row['element_type'];
+            $column_heading = $row['column_heading'];
+            $link_table = $row['link_table'];
+            $required_field = $row['required_field'];
+            $show_on_form = $row['show_on_form'];
+            $required_flag = '';
+            if ($required_field=='Yes')
+            {
+                $required_flag = ' required ';
+            }
+            if ($show_on_form=='Yes')
+            {     
+                if ($element_type=='Input')
+                {
+                    $htmlstring .= '        
+                    <div class="form-group">
+                        <label for="'.$column_name.'">'.$column_heading.'</label>';
+                    $htmlstring .= '<input type="text" class="form-control" id="'.$column_name.'" name="'.$column_name.'"  placeholder="'.$column_heading.'" ng-model="'.$table_name.'.'.$column_name.'" '.$required_flag.' />';
+                    $htmlstring .='</div>
+                    ';
+                }
+                if ($element_type=='Textarea')
+                {
+                    $htmlstring .= '        
+                    <div class="form-group">
+                        <label for="'.$column_name.'">'.$column_heading.'</label>';
+                    $htmlstring .= '<textarea class="form-control" id="'.$column_name.'" name="'.$column_name.'"  placeholder="'.$column_heading.'" ng-model="'.$table_name.'.'.$column_name.'" '.$required_flag.'></textarea>';
+                    $htmlstring .='</div>
+                    ';
+                }
+                if ($element_type=='Date')
+                {
+                    $htmlstring .= '        
+                    <div class="form-group">
+                        <label for="'.$column_name.'">'.$column_heading.'</label>';
+                    $htmlstring .= '<div class="input-group date" id="'.$column_name.'" date-directive="">
+                        <input class="form-control" type="text" ng-model="'.$table_name.'.'.$column_name.'" '.$required_flag.'>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                    ';
+                }
+                if ($element_type=='Select')
+                {
+                    $htmlstring .= '        
+                    <div class="form-group">
+                        <label for="'.$column_name.'">'.$column_heading.'</label>';
+                    $htmlstring .='
+                        <select class="selectpicker form-control" id="'.$column_name.'" name="'.$column_name.'" ng-model="'.$table_name.'.'.$column_name.'" '.$required_flag.'>
+                            <option value="Not Specified" selected>Not Specified</option>
+                        </select>
+                        ';
+                    $htmlstring .='</div>
+                        ';
+                }
+                if ($element_type=='Select From Table')
+                {
+                    $htmlstring .= '<div class="form-group" ng-controller="Select'.$link_table.'">
+                        <label for="'.$column_name.'">'.$column_heading.'</label>
+                    <select class="selectpicker form-control" ng-model="'.$table_name.'.'.$column_name.'" ng-options="'.$link_table.'.'.$column_name.' as '.$link_table.'.name for '.$link_table.' in '.$link_table.'s" '.$required_flag.'>
+                    </select>';
+                    $htmlstring .='</div>
+                    ';
+                }
+            }
+        }
+    }
+
+$htmlstring.='                          
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged('.$table_name.')" id="add-new-btn" ng-click="'.$table_name.'_add_new('.$table_name.')">Save </button>
+                                            <a href="#/'.$table_name.'_list" class="btn">Cancel</a>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>';
+
+    $senddata =  array();
+    $htmldata = array();
+    
+    $htmldata['htmlstring']=$htmlstring;
+    $htmldata['jsscript']=$jsscript;
+    $htmldata['phpcode']=$phpcode;
+    $senddata[]=$htmldata;
+    echo json_encode($senddata);
+});
+
+$app->get('/update_direct/:column_name/:form_id/:value', function($column_name, $form_id,$value) use ($app) {
+    $sql  = "";
+    $db = new DbHandler();
+    $session = $db->getSession();
+    if ($session['username']=="Guest")
+    {
+        return;
+    }
+    $sql = "UPDATE genforms set $column_name = '$value' where genforms_id = $form_id " ;  
+    $result = $db->updateByQuery($sql);
+    echo json_encode($result);
+});
+
+<!-- end dataaccess.php -->
+
+
+<!-- Run this query to add table -->
+
+
+CREATE TABLE `genforms` (
+    `genforms_id` int(11) NOT NULL,
+    `table_name` varchar(200) NOT NULL,
+    `column_name` varchar(250) NOT NULL,
+    `data_type` varchar(200) NOT NULL,
+    `character_maximum_length` int(10) NOT NULL,
+    `element_type` varchar(200) NOT NULL,
+    `required_field` varchar(3) NOT NULL,
+    `column_heading` varchar(250) NOT NULL,
+    `link_table` varchar(200) NOT NULL,
+    `show_on_form` varchar(3) NOT NULL,
+    `created_date` datetime NOT NULL,
+    `modified_date` datetime NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  
+  ALTER TABLE `genforms`
+    ADD PRIMARY KEY (`genforms_id`);
+ 
+  ALTER TABLE `genforms`
+    MODIFY `genforms_id` int(11) NOT NULL AUTO_INCREMENT;
+  
+
+    
+<!-- end sql query -->
+

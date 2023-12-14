@@ -1,0 +1,77 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+        
+</div>
+<div class="clearfix"></div>
+
+
+<div class="box" style="margin-top:115px;">
+
+    <div class="box-header">
+
+        <h3 class="box-title">Documents</h3> 
+
+    </div>
+
+    <aside class="right-side">
+
+        <a class="btn btn-primary" href="#/document_add" style="margin:10px;" >Add Document</a>
+
+    </aside>
+
+    <div class="box-body table-responsive">
+
+        <table class="table table-bordered table-striped" datatable-setup=""  >
+
+            <thead>
+
+                <tr>
+
+                    <th>User Name</th>
+
+                    <th>Branch Office</th>
+
+                    <th>Role</th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+             <tbody>
+
+                <tr ng-repeat="user in users">
+
+                    <td>{{user.username}}</td>
+
+                    <td>{{user.bo_name}}</td>
+
+                    <td>{{user.role}}</td>
+
+                    <td><a href="#/user_edit/{{user.user_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button></td>
+
+                </tr>
+
+            </tbody>
+
+            <tfoot>
+
+                <tr>
+
+                    <th>User Name</th>
+
+                    <th>Branch Office</th>
+
+                    <th>Role</th>
+
+                    <th></th>
+
+                </tr>
+
+            </tfoot>
+
+        </table>    
+
+    </div>
+
+</div>

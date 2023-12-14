@@ -1,0 +1,111 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+
+    <div class="row" style="margin-top:5px;">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" id="find_what" name="find_what"  placeholder="Find ?" ng-model="find_what" /> 
+                <div class="input-group-addon">
+                    <a href="javascript:void(0)" ng-click="searchall(find_what)"><i class="fa fa-search"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="clearfix"></div>
+
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+
+    <div class="nav-tabs-custom">
+
+        <ul class="nav nav-tabs">
+
+            <li class="active" ><a data-target="#documenttab" data-toggle="tab">Search Result</a></li>
+
+        </ul>
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="documenttab">
+
+                <div class="box-body table-responsive">
+                    <div compile-html="trustedHtml_searchall"></div>
+                    <!--table class="table table-bordered table-striped" datatable-setup=""  >
+
+                        <thead>
+
+                            <tr>
+                                <th>Category</th>
+                                <th>Group Title</th>
+
+                                <th>Document Type</th>
+
+                                <th>Document Title</th>
+
+                                <th>Description</th>
+
+                                <th>File Name</th>
+
+                                <th></th>
+
+                                <th></th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr ng-repeat="tdocument in tdocuments">
+                                <td>{{tdocument.category}}</td>
+                                <td>{{tdocument.group_title}}</td>
+
+                                <td>{{tdocument.doc_type}}</td>
+
+                                <td>{{tdocument.doc_title}}</td>
+
+                                <td>{{tdocument.description}}</td>
+
+                                <td>{{tdocument.filenames}}</td>
+
+                                <td><a href="api/v1/uploads/document//{{tdocument.filenames}}" title="Download File" alt="Download File" ><span class="glyphicon glyphicon-download-alt"></span></a></td>
+
+                                <td><a href="javascript:void(0)" ng-click="document_delete(tdocument.tdocument_id)" title="Delete File" alt="Delete File"><span class="glyphicon glyphicon-trash"></span></a></td>
+
+                            </tr>
+
+                        </tbody>
+
+                        <tfoot>
+
+                            <tr>
+                                <th>Category</th>
+                                <th>Group Title</th>
+
+                                <th>Document Type</th>
+
+                                <th>Document Title</th>
+
+                                <th>Description</th>
+
+                                <th>File Name</th>
+
+                                <th></th>
+
+                                <th></th>
+
+                            </tr>
+
+                        </tfoot>
+
+                    </table-->   
+
+                </div> 
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

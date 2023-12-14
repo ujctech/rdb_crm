@@ -1,0 +1,219 @@
+<div class="mainheader" style="margin-top:45px;height:70px;position:fixed;width:100%;">
+		
+</div>
+<div class="clearfix"></div>
+
+<div class="boxpadding" id="task_info"  style="border-top:0px;" ng-if="create_rights">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="task_data">
+			<div class="col-md-12">
+				<div class="box box-primary" style="border-top:0px;border-radius:0px;background: #ffffff;">
+					<div class="box-header">
+						<h3 class="box-title">Add Task</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#task_tab" data-toggle="tab">Task</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="task_tab">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="task_title">Task Title</label>
+														<input type="text" class="form-control" id="task_title" name="task_title"  placeholder="Task Title"  ng-model="taskdata.task_title" required focus />
+													</div>
+													<div class="form-group">
+														<label for="task">Task</label>
+														<textarea class="form-control" id="description" name="description"  placeholder="Task"  ng-model="taskdata.description" rows="5"></textarea>
+													</div>
+													<div class="form-group">
+														<label for="client_id">Client</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="taskdata.client_id" id="client_id" name="client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;">
+																<option value="" disabled selected>Select Client</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)" ng-click="addclient()"><i class="fa fa-plus"></i></a>
+															</div>
+															</a>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="teams">Teams</label>
+														<select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="taskdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" >
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="assign_to">Assign To</label>
+														<select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="taskdata.assign_to" ng-options="user.user_id as user.name for user in users" style="width:100%;">
+														</select>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(taskdata)" id="add-new-btn" ng-click="task_add_new(taskdata)" ng-if="create_rights">Save </button>
+									<a href="#/task_list" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<div id="addclient">
+    <div clas="row">
+        <div class="col-md-12">
+            <form novalidate name="CAddNewForm" id="Cadd-new-form" role="form" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-12" style="border-bottom:1px solid#dfd8d8;">
+                        <h4>Add Contact</h4>
+                        <div style="margin-top:-40px;float:right;">
+                            <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+                            <button id="save_button"class="btn btn-primary" ng-click="contact_save_new(contact)" style="float:right;margin-left:10px;" ng-disabled="CAddNewForm.$invalid || isUnchanged(contact)" aria-hidden="true">Save</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="contact.name_title">Salutation</label>
+                                        <select class="select2 form-control" select2  id="contact.name_title" name="contact.name_title" ng-model="contact.name_title"  data-placeholder="Select Name Title" style="width:100%;">
+                                            <option value="Not Specified" selected="selected">Not Specified</option>
+                                            <option value="Mr.">Mr.</option>
+                                            <option value="Mrs." >Mrs.</option>
+                                            <option value="Ms." >Ms.</option>
+                                            <option value="Dr." >Dr.</option>
+                                            <option value="Mohd.." >Mohd.</option>
+                                            <option value="Cmdr." >Cmdr.</option>
+                                            <option value="Capt." >Capt.</option>
+                                            <option value="Maj." >Maj.</option>
+                                            <option value="Col." >Col.</option>
+                                            <option value="Flt.Lt." >Flt.Lt.</option>
+                                            <option value="Prof." >Prof.</option>
+                                            <option value="Brig." >Brig.</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="contact.f_name">First Name<span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="contact.f_name" name="contact.f_name"  placeholder="First Name" ng-model="contact.f_name" required pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed"/>
+                                    </div>
+                                </div>	
+                                <div class="col-md-4">	
+                                    <div class="form-group">
+                                        <label for="contact.l_name">Last Name</label>
+                                        <input type="text" class="form-control" id="contact.l_name" name="contact.l_name"  placeholder="Last Name" ng-model="contact.l_name" pattern="[A-Za-z ]+"  hide-zero title="Only Alphabates Allowed"/>
+                                    </div>
+                                </div>
+                            </div>	
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label >Contact Off</label>
+                                        <div class="radio" >
+                                            <label>
+                                                <input type="radio" name="contact_off" id="contact_off" value="Client" checked ng-model="contact.contact_off">
+                                                Client &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--(Resale)-->
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="contact_off" id="contact_off" value="Developer" ng-model="contact.contact_off">
+                                                Developer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--(First Sale)-->
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="contact_off" id="contact_off" value="Broker" ng-model="contact.contact_off">
+                                                Broker &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--(First Sale)-->
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">	
+                                    <div class="form-group">
+                                        <label for="contact.mob_no">Mobile No.<span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="contact.mob_no" name="contact.mob_no"  placeholder="Mobile No." ng-model="contact.mob_no" ng-blur = "checkcontact(contact.mob_no,'mob_no')" required pattern="[0-9 ]{10}"  hide-zero title="Only Numbers Allowed"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="contact.email">Email Id</label>
+                                        <input type="text" class="form-control" id="contact.email" name="contact.email"  placeholder="Email Id" ng-model="contact.email" ng-blur = "checkcontact(contact.email,'email')" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.modal-dialog {
+
+	width:25%;
+}
+
+.mainheader{
+  background-color:#cecece;
+  z-index:1000;
+  height:70px;
+  padding:10px;
+}
+#addclient
+    {
+        position:absolute;
+        top:6%;
+        left:30%;
+        background-color:#ffffff;
+        width:40%;
+        height:350px;
+        display:none;
+        z-index:9000;
+        -moz-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+        padding:30px;
+        padding-top:5px;
+    }
+@media (max-width:991px){
+  .mainheader{
+    background-color:transparent;
+    z-index:0;
+    height:0px;
+    padding:0px;
+  }
+}
+
+</style>
+
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+
+</script>
+

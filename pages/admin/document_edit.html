@@ -1,0 +1,226 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="tdocument_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+
+	<form  ng-repeat="tdocument in tdocuments"  novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+
+		<div class="row" id="tdocument_data">
+
+			<div class="col-md-12">
+
+				<div class="box box-primary">
+
+					<div class="box-header">
+
+						<h3 class="box-title">Edit Document</h3>
+
+					</div>
+
+					<div class="box-body">
+
+						<div class="row">
+
+							<div class="col-md-12">
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+										<div class="form-group">
+											<label for="category">Category</label>
+
+											<select class="select2 form-control"  id = "category" name = "category" select2 ng-model="tdocument.category" ng-options="sub_team.sub_team_name as sub_team.sub_team_name for sub_team in sub_teams"   style="width:100%;">
+                                            </select>
+
+											<!--select class="select2 form-control"  id="category" name="category" ng-model="tdocument.category"  data-placeholder="Select category" style="width:100%;" >
+												<option value="" disabled selected>Select Option</option>
+												<option value="Residential">Residential</option>
+												<option value="Commercial">Commercial</option>
+												<option value="HR">HR</option>
+												<option value="Accounts">Accounts</option>
+												<option value="Other">Other</option>
+											</select-->
+										</div> 
+                                            
+
+										<div class="form-group">
+
+											<label for="group_title">Group Title</label>
+
+											<input type="text" class="form-control" id="group_title" name="group_title"  placeholder="Group Title" ng-model="tdocument.group_title"  />
+
+										</div>
+
+										<div class="form-group">
+
+											<label for="doc_type">Document Type</label>
+
+											<input type="text" class="form-control" id="doc_type" name="doc_type"  placeholder="Document Type" ng-model="tdocument.doc_type"  />
+
+										</div>
+
+										<div class="form-group">
+
+											<label for="doc_title">Document Title<span class="required">*</span></label>
+
+											<input type="text" class="form-control" id="doc_title" name="doc_title"  placeholder="Document Title" ng-model="tdocument.doc_title"  required  />
+
+										</div>        
+
+										<div class="form-group">
+
+											<label for="description">Description</label>
+
+											<textarea class="form-control" id="description" name="description"  placeholder="Description" ng-model="tdocument.description" ></textarea>
+
+										</div>
+
+										<div class="form-group">
+
+											<label for="file-1">Document <span class="required">*</span> </label>
+
+											<input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" required>
+
+											<input type="hidden" name="file_name" id="file_name" value="" ng-model="tdocument.file_name" />
+
+										</div>
+
+												
+
+										<div class="form-group">
+
+											<label for="priority">Priority</label>
+
+											<select class="select2 form-control"  id="priority" name="priority" ng-model="tdocument.priority"  data-placeholder="Select priority" style="width:100%;">
+
+												<option value="Not Specified" selected="selected">Not Specified</option>
+
+												<option value="1" >1</option>
+
+												<option value="2" >2</option>
+
+												<option value="3" >3</option>
+
+												<option value="4" >4</option>
+
+												<option value="5" >5</option>
+
+												<option value="6" >6</option>
+
+												<option value="7" >7</option>
+
+												<option value="8" >8</option>
+
+												<option value="9" >9</option>
+
+												<option value="10" >10</option>
+
+											</select>
+
+										</div>        
+
+										<div class="form-group">
+
+											<label for="status">Status</label>
+
+											<select class="select2 form-control"  id="status" name="status" ng-model="tdocument.status"  data-placeholder="Select status" style="width:100%;">
+
+												<option value="Not Specified" selected="selected">Not Specified</option>
+
+												<option value="Active" >Active</option>
+
+												<option value="InActive" >InActive</option>
+
+											</select>
+
+										</div>                          
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(tdocument)" id="add-new-btn" ng-click="document_update(tdocument)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+
+											<button class="btn btn-danger" ng-click="document_delete(tdocument)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+
+											<a href="#/document_list" class="btn">Cancel</a>
+
+                                        </div>
+
+                                    </div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+</div>
+
+<script>
+
+$("#file-1").fileinput({
+
+	uploadAsync: false,
+
+	showUpload: false,
+
+	uploadUrl: './api/v1/tdocument_uploads',
+
+	allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','xlsx','docx','pdf','pptx'],
+
+	overwriteInitial: false,
+
+	maxFileSize: 15000000,
+
+	maxFilesNum: 25,
+
+	maxFileCount:100,
+
+	slugCallback: function(filename) {
+
+		return filename.replace('(', '_').replace(']', '_');
+
+	}
+
+});
+
+
+
+$('#file-1').on('fileloaded', function(event, file, previewId, index, reader) {
+
+	$("#file_name").val(file.name);
+
+	console.log("fileloaded");
+
+});
+
+
+
+$(function () {
+
+    	//Initialize Select2 Elements
+
+		$('.select2').select2();
+
+
+
+		//$('.textarea').wysihtml5();
+
+
+
+	});
+
+
+
+</script>
+

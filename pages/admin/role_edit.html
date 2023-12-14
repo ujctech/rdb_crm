@@ -1,0 +1,48 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+        
+</div>
+<div class="clearfix"></div>
+
+<div id="role_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+    <form  novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+        <input type="hidden" ng-model="zrole.role_id" value="{{zrole.role_id}}" />
+        <div class="row" id="role">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Edit Role</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="role">Role Name<span class="required">*</span></label>
+                            <input type="text" class="form-control" id="role" name="role"  placeholder="Role" ng-model="zrole.role" value="{{zrole.role}}" required focus/>
+                        </div>
+                        <!--div class="form-group" ng-controller="SelectPermission">
+                            <label for="permissions">Permissions<span class="required">*</span></label>
+                            <select class="select2 form-control" multiple="multiple" id = "permissions" ng-model="zrole.permissions" ng-options="permission.permission_id as permission.permission for permission in permissions"   style="width:100%;" required>
+                                <!--option value="" disabled selected>Select Permissions</option-->
+                            <!--/select>
+                        </div-->
+                        <div class="form-group">
+                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(zrole)" id="add-new-btn" ng-click="role_update(zrole)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            <button class="btn btn-danger" ng-click="role_delete(zrole)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+                             <a href="#/role_list" class="btn">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+    
+        //$('.textarea').wysihtml5();
+    
+    });
+    
+    </script>
+

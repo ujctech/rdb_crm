@@ -1,0 +1,4 @@
+RewriteEngine On
+SetEnv BASE_PATH C:/xampp/htdocs/mr_portal/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

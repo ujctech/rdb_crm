@@ -1,0 +1,491 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+        
+</div>
+<div class="clearfix"></div>
+
+<div id="employee_info" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;"> 
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data"> 
+		<div class="row" id="employee_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Edit Employee</h3>
+					</div>
+					<div class="box-body">
+						<div class="row"> 
+							<div class="col-md-12">
+                                <div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#personal" data-toggle="tab">Personal</a></li>
+										<li><a data-target="#profile_pic" data-toggle="tab">Profile Pic</a></li>
+										<li><a data-target="#documents" data-toggle="tab">Documents</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="personal">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="salu">Title</label>
+                                                                <select class="select2 form-control"  id="salu" name="salu" ng-model="employee.salu"  data-placeholder="Select Salu" style="width:100%;">
+                                                                    <option value="Mr.">Mr.</option>
+                                                                    <option value="Mrs." >Mrs.</option>
+                                                                    <option value="Ms." >Ms.</option>
+                                                                    <option value="Dr." >Dr.</option>
+                                                                    <option value="Mohd.." >Mohd.</option>
+                                                                    <option value="Cmdr." >Cmdr.</option>
+                                                                    <option value="Capt." >Capt.</option>
+                                                                    <option value="Maj." >Maj.</option>
+                                                                    <option value="Col." >Col.</option>
+                                                                    <option value="Flt.Lt." >Flt.Lt.</option>
+                                                                    <option value="Prof." >Prof.</option>
+                                                                    <option value="Brig." >Brig.</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="fname">First Name<span class="required">*</span></label>
+                                                                <input type="text" class="form-control" id="fname" name="fname"  placeholder="First Name" ng-model="employee.fname"  required  />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="lname">Last Name</label>
+                                                                <input type="text" class="form-control" id="lname" name="lname"  placeholder="Last Name" ng-model="employee.lname"  />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="emp_user">User Name</label>
+                                                        <input type="text" class="form-control" id="emp_user" name="emp_user"  placeholder="User Name" ng-model="employee.emp_user" readonly="true"/>
+                                                    </div>
+                                                    <div class="form-group" ng-controller="SelectBranch_Office">
+                                                        <label for="bo_id">Branch Office<span class="required">*</span></label>
+                                                        <select class="select2 form-control" ng-model="employee.bo_id" ng-options="branch_office.bo_id as branch_office.bo_name for branch_office in branch_offices"  required   style="width:100%;">
+                                                            <!--option value="" disabled selected>Select Branch Office</option-->
+                                                        </select>
+                                                    </div> 
+                                                    <div class="form-group">
+                                                        <label for="teams">Teams<span class="required">*</span></label>
+                                                        <select class="select2 form-control" multiple="multiple"  id = "teams" name = "teams" select2 ng-model="employee.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required>
+                                                        </select>
+                                                    </div> 
+                                                    <div class="form-group">
+                                                        <label for="sub_teams">Sub Teams<span class="required">*</span></label>
+                                                        <select class="select2 form-control" multiple="multiple"  id = "sub_teams" name = "sub_teams" select2 ng-model="employee.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams"   style="width:100%;" required>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="company_name">Company Name</label>
+                                                        <input type="text" class="form-control" id="company_name" name="company_name"  placeholder="Company Name" ng-model="employee.company_name"  />
+                                                    </div>
+                                                            
+                                                    <div class="form-group">
+                                                        <label for="mobile_no">Mobile No</label>
+                                                        <input type="text" class="form-control" id="mobile_no" name="mobile_no"  placeholder="Mobile No" ng-model="employee.mobile_no"  />
+                                                    </div>
+                                                            
+                                                    <div class="form-group">
+                                                        <label for="alt_mobile_no">Alternate Mobile No</label>
+                                                        <input type="text" class="form-control" id="alt_mobile_no" name="alt_mobile_no"  placeholder="Alternate Mobile No" ng-model="employee.alt_mobile_no"  />
+                                                    </div>
+                                                            
+                                                    <div class="form-group">
+                                                        <label for="off_phone">Off Phone</label>
+                                                        <input type="text" class="form-control" id="off_phone" name="off_phone"  placeholder="Off Phone" ng-model="employee.off_phone"  />
+                                                    </div>
+                                                            
+                                                    <div class="form-group">
+                                                        <label for="off_email">Off Email</label>
+                                                        <input type="text" class="form-control" id="off_email" name="off_email"  placeholder="Off Email" ng-model="employee.off_email" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="address">Address</label>
+                                                        <textarea class="form-control" id="address" name="address"  placeholder="Address" ng-model="employee.address" ></textarea>
+                                                    </div>
+                                                    <div class="form-group" ng-controller="SelectDesignation">
+                                                        <label for="designation_id">Designation</label>
+                                                        <select class="select2 form-control" ng-model="employee.designation_id" ng-options="designation.designation_id as designation.designation for designation in designations"   style="width:100%;">
+                                                            <option value="" disabled selected>Select Designation</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group" ng-controller="SelectEmployee">
+                                                        <label for="manager_id">Manager<span class="required">*</span></label>
+                                                        <select class="select2 form-control" ng-model="employee.manager_id" ng-options="employee.emp_id as employee.name for employee in employees"  required   style="width:100%;">
+                                                            <option value="" disabled selected>Select Manager</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="doj">Date of Joining</label><div class="input-group date" id="doj" date-directive="">
+                                                                <input class="form-control" type="text" ng-model="employee.doj" >
+                                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="dob">Date of Birth</label><div class="input-group date" id="dob" date-directive="">
+                                                                <input class="form-control" type="text" ng-model="employee.dob" >
+                                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="basic_salary">Basic Salary</label>
+                                                                <input class="form-control numbers" type="text" ng-model="employee.basic_salary" id="basic_salary" name="basic_salary" placeholder="Basic Salary">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6"> 
+                                                            <div class="form-group">
+                                                                <div class="form-group">
+                                                                    <label for="incentive_per">Incentive Per</label>
+                                                                    <input class="form-control numbers" type="text" ng-model="employee.incentive_per" id="incentive_per" name="incentive_per" placeholder="Incentive Per">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="increment_per">Increment Per</label>
+                                                                <input class="form-control numbers" type="text" ng-model="employee.increment_per" id="increment_per" name="increment_per" placeholder="Increment Per">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="doj">Increment Date</label><div class="input-group date" id="increment_date" date-directive="">
+                                                                <input class="form-control" type="text" ng-model="employee.increment_date" >
+                                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">  
+                                                            <div class="form-group">
+                                                                <label for="rera_no">Rera No</label>
+                                                                <input type="text" class="form-control" id="rera_no" name="rera_no"  placeholder="Rera No" ng-model="employee.rera_no" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6"> 
+                                                            <div class="form-group">
+                                                                <label for="weekly_off">Weekly Off</label>
+                                                                <select class="select2 form-control"  id="weekly_off" name="weekly_off" ng-model="employee.weekly_off"  data-placeholder="Select Weekly Off" style="width:100%;"  >
+                                                                    <option value="" disabled selected>Select Option</option>
+                                                                    <option value="SUNDAY">SUNDAY</option>
+                                                                    <option value="MONDAY">MONDAY</option>
+                                                                    <option value="TUESDAY">TUESDAY</option>
+                                                                    <option value="WEDNESDAY">WEDNESDAY</option>
+                                                                    <option value="THURSDAY">THURSDAY</option>
+                                                                    <option value="FRIDAY">FRIDAY</option>
+                                                                    <option value="SATURDAY">SATURDAY</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="sharing_per">Sharing Per</label>
+                                                                <input class="form-control numbers" type="text" ng-model="employee.sharing_per" id="sharing_per" name="sharing_per" placeholder="Sharing Per">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6"> 
+                                                            <div class="form-group">
+                                                                <label for="employee_type">Employee Type</label>
+                                                                <select class="select2 form-control"  id="employee_type" name="employee_type" ng-model="employee.employee_type"  data-placeholder="Select Employee Type" style="width:100%;"  >
+                                                                    <option value="" disabled selected>Select Employee Type</option>
+                                                                    <option value="Employee">Employee</option>
+                                                                    <option value="Agent">Agent</option>
+                                                                    <option value="Franchisee">Franchisee</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="row">-->
+                                                    <!--    <div class="col-md-6">-->
+                                                    <!--        <div class="form-group">-->
+                                                    <!--            <label for="leave_allowed">Leave Allowed</label>-->
+                                                    <!--            <input class="form-control numbers" type="text" ng-model="employee.leave_allowed" id="leave_allowed" name="leave_allowed" placeholder="Leave Allowed">-->
+                                                    <!--        </div>-->
+                                                    <!--    </div>-->
+                                                    <!--    <div class="col-md-6"> -->
+                                                    <!--        <label for="leave_opening">Leave Opening</label>-->
+                                                    <!--        <input class="form-control numbers" type="text" ng-model="employee.leave_opening" id="leave_opening" name="leave_opening" placeholder="Leave Opening">-->
+                                                    <!--    </div>-->
+                                                    <!--</div>-->
+                                                   
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                            <label for="year1">Select Year</label><br>
+                                                            <select class="form-control" id="year1" name="year1" ng-model="employee.year1" data-placeholder="Select Year" style="width:100%;">
+                                                            <option value="" disabled selected>Select Year</option>
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                            <label for="leave_allowed">Leave Allowed</label>
+                                                            <input class="form-control numbers" type="text" ng-model="employee.leave_allowed" id="leave_allowed" name="leave_allowed" placeholder="Leave Allowed">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6"> 
+                                                        <label for="leave_opening">Leave Opening</label>
+                                                        <input class="form-control numbers" type="text" ng-model="employee.leave_opening" id="leave_opening" name="leave_opening"  placeholder="Leave Opening">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="travel_allowance">Travel Allowance</label>
+                                                                <input class="form-control numbers" type="text" ng-model="employee.travel_allowance" id="travel_allowance" name="travel_allowance" placeholder="Travel Allowance">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="form-group">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" id="allow_mobile" name="allow_mobile" ng-model="employee.allow_mobile" >Allow Mobile
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="allowed_ip">Allowed IP</label>
+                                                        <textarea class="form-control" id="allowed_ip" name="allowed_ip"  placeholder="Allowed IP" ng-model="employee.allowed_ip" ></textarea>
+                                                    </div>
+                                                     
+                                                    <div class="form-group">
+                                                        <label for="mobile_device_id">Mobile Device ID</label>
+                                                        <input type="text" class="form-control" id="mobile_device_id" name="mobile_device_id"  placeholder="Mobile Device ID" ng-model="employee.mobile_device_id"  />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <select class="select2 form-control"  id="status" name="status" ng-model="employee.status"  data-placeholder="Select Status" style="width:100%;"  >
+                                                            <option value="" disabled selected>Select Option</option>
+                                                            <option value="Active">Active</option>
+                                                            <option value="InActive">InActive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="profile_pic">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="file_profile_pic">Profile Pic</label>
+                                                        <input id="file_profile_pic" name="file_profile_pic[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+                                                        <input type="hidden" name="file_name_profile_pic" id="file_name_profile_pic" value="" ng-model="employee.file_name_profile_pic" />
+                                                    </div> 
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr style="display:none;">
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="employee_image in employee_images">
+                                                                <td style="width:100%">
+                                                                    <img src="dist/img/no_image.jpg" ng-if="employee_image.filenames==null " style="width:245px; height:185px;" ng-disabled="disableAll"/> 
+                                                                    <img src="api/v1/uploads/employee/{{employee_image.filenames}}" ng-if="employee_image.filenames!=null " style="width:245px; height:185px;" ng-disabled="disableAll"/> <a href="javascript:void();" class="btn btn-default btn-sm" style="position:absolute;" title="Remove Image" alt="Remove Image" ng-click="removeimage(employee_image.attachment_id)"><i class="glyphicon glyphicon-trash" style="font-size:20px;"></i></a> 
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="documents">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="file_documents">Documents</label>
+                                                        <input id="file_documents" name="file_documents[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+                                                        <input type="hidden" name="file_name_documents" id="file_name_documents" value="" ng-model="employee.file_name_documents" />
+                                                    </div> 
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr style="display:none;">
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="employee_document in employee_documents">
+                                                                <td style="width:100%">
+                                                                    <img src="dist/img/no_image.jpg" ng-if="employee_document.filenames==null " style="width:245px; height:185px;" /> 
+
+                                                                    <!--img src="api/v1/uploads/employee_docs/{{employee_document.filenames}}" ng-if="employee_document.filenames!=null " style="width:245px; height:185px;" /--> 
+                                                                    
+                                                                    <a href="javascript:void();" class="btn btn-default btn-sm" style="position:absolute;" title="Remove Image" alt="Remove Image" ng-click="removedocuments(employee_document.attachment_id)"><i class="glyphicon glyphicon-trash" style="font-size:20px;"></i></a> 
+
+                                                                    <a href="api/v1/uploads/employee_docs/{{employee_document.filenames}}" title="Download or View File" alt="Download or View File" target="_blank"> <img src="api/v1/uploads/employee_docs/{{employee_document.filenames}}" ng-if="employee_document.filenames!=null " style="width:245px; height:185px;" /><p style="position:absolute;margin-top:-22px;margin-left:50px;" >{{employee_document.filenames}}</p> </a>	
+
+                                                                </td>
+                                                                <td>
+                                                                    <p><select id="file_category" name="file_category" ng-model="employee_document.file_category"   ng-change="employee_image_update(employee_document.attachment_id,'file_category',employee_document.file_category)">
+                                                                        <option value="">Select Certificate</option>
+                                                                        <option value="Not Specified">Not Specified</option>
+                                                                        <option value="Activity Certificate">Activity Certificate</option>
+                                                                        <option value="Resume">Resume</option>
+                                                                        <option value="Pan Card">Pan Card</option>
+                                                                        <option value="Aadhar Card">Aadhar Card</option>
+                                                                        <option value="CRM Form">CRM Form</option>
+                                                                        <option value="Education Marksheet">Education Marksheet</option>
+                                                                        <option value="Salary Slip (Previous Company)">Salary Slip (Previous Company)</option>
+                                                                        <option value="Bank Statement">Bank Statement</option>
+                                                                        <option value="Relieving Letter">Relieving Letter</option>
+                                                                        <option value="Appointment Letter">Appointment Letter</option>
+                                                                        <option value="Increment Letter">Increment Letter</option>
+                                                                        <option value="Experience Letter">Experience Letter</option>
+                                                                        <option value="Form 16">Form 16</option>
+                                                                        </select>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(employee)" id="add-new-btn" ng-click="employee_update(employee)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                        <button class="btn btn-danger" ng-click="employee_delete(employee)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+                                        <a href="#/employee_list" class="btn">Cancel</a>
+                                    </div>
+
+                                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<style>
+    .kv-file-upload
+{
+	display:none;
+}
+
+</style>
+<script>
+  let dateDropdown = document.getElementById('year1'); 
+  let currentYear = new Date().getFullYear();    
+  let earliestYear = 2020;     
+  while (currentYear >= earliestYear) {      
+    let dateOption = document.createElement('option');          
+    dateOption.text = currentYear;      
+    dateOption.value = currentYear;        
+    dateDropdown.add(dateOption);      
+    currentYear -= 1;    
+    }
+</script>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+
+        $('.textarea').wysihtml5();
+
+    });
+    var footerTemplate_cert = '<div class="file-thumbnail-footer" style ="height:94px">\n' +
+        
+    '<select id="cert_category" name="cert_category" class="cert_images kv-input kv-new form-control input-sm form-control-sm text-center {TAG_CSS_NEW}">'+
+                    '<option value="">Select Certificate</option>'+
+                    '<option value="Not Specified">Not Specified</option>'+
+                    '<option value="Activity Certificate">Activity Certificate</option>'+
+                    '<option value="Resume">Resume</option>'+
+                    '<option value="Pan Card">Pan Card</option>'+
+                    '<option value="Aadhar Card">Aadhar Card</option>'+
+                    '<option value="CRM Form">CRM Form</option>'+
+                    '<option value="Education Marksheet">Education Marksheet</option>'+
+                    '<option value="Salary Slip (Previous Company)">Salary Slip (Previous Company)</option>'+
+                    '<option value="Bank Statement">Bank Statement</option>'+
+                    '<option value="Relieving Letter">Relieving Letter</option>'+
+                    '<option value="Appointment Letter">Appointment Letter</option>'+
+                    '<option value="Increment Letter">Increment Letter</option>'+
+                    '<option value="Experience Letter">Experience Letter</option>'+
+					'<option value="Form 16">Form 16</option>'+
+					'</select>\n'+
+	
+	'   <div class="small" style="margin:15px 0 2px 0">{size}</div> {progress}\n{indicator}\n{actions}\n' +
+	'</div>';
+    $( document ).ready(function() {
+	
+        $("#file_profile_pic").fileinput({
+            uploadAsync: false,
+            showUpload: false,
+            uploadUrl: './api/v1/employee_uploads',
+            allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','pptx','pdf','docx','xlsx'],
+            overwriteInitial: false,
+            maxFileSize: 15000000,
+            maxFilesNum: 25,
+            maxFileCount:100,
+            
+            slugCallback: function(filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+
+        $('#file_profile_pic').on('fileloaded', function(event, file, previewId, index, reader) {
+            $("#file_name_profile_pic").val(file.name);
+            console.log("fileloaded");
+        });
+        
+            
+        $("#file_documents").fileinput({
+            uploadAsync: false,
+            showUpload: false,
+            uploadUrl: './api/v1/employee_documents_uploads',
+            allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','pptx','pdf','docx','xlsx'],
+            overwriteInitial: false,
+            maxFileSize: 1500000,
+            maxFilesNum: 25,
+            maxFileCount:100,
+            layoutTemplates: {footer: footerTemplate_cert},
+	
+			uploadExtraData: function() {  
+                var out = {}, key,  z=1;
+                $('.kv-input').each(function() {
+					$el = $(this);
+					if ($($el).hasClass('cert_images'))
+					{
+						
+						value = $el.val();
+						key = 'cert_category_'+z;
+						out[key] = value;
+					}
+				});
+				return out;
+            },
+            slugCallback: function(filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        });
+
+        $('#file_documents').on('fileloaded', function(event, file, previewId, index, reader) {
+            $("#file_name_documents").val(file.name);
+            console.log("fileloaded");
+        });
+
+    });
+</script>

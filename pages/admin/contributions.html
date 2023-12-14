@@ -1,0 +1,211 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" ng-if="view_rights">
+    
+    
+</div>
+<div class="clearfix"></div>
+
+
+<div class="box boxpadding" id="properties" style="border-top:0px;" ng-if="view_rights">
+    <div class="box-header">
+        
+    </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#contributionstab" data-toggle="tab" >Contributions</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="contributionstab">   
+                <div class="right-side"  style="text-align:right;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group">
+                    <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                            <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                <div class="row">
+                                    <div class="col-md-12"> 
+                                                                               
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="agreement_id">Agreement ID</label>
+                                                <select class="select2 form-control" id="agreement_id" name="agreement_id" multiple="multiple" ng-model="searchdata.agreement_id" ng-options="agreement_id.agreement_id as agreement_id.agreement_id for agreement_id in agreement_ids"   style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div> 
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="agreement_details_id">Contributions ID</label>
+                                                <select class="select2 form-control" id="agreement_details_id" name="agreement_details_id" multiple="multiple" ng-model="searchdata.agreement_details_id" ng-options="contributions_id.agreement_details_id as contributions_id.agreement_details_id for contributions_id in contributions_ids"   style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>  
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="user_id">Employee Name<span class="required">*</span></label>
+                                                <select class="select2 form-control" id="user_id" name="user_id"  ng-model="searchdata.user_id" ng-options="user.user_id as user.name for user in users"  required style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>  
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="teams">Teams</label>
+                                                <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams)">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="assign_to">Assign to<span class="required">*</span></label>
+                                                <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2new ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">                                           
+                                        
+                                        <div class="col-md-2">       
+                                            <div class="form-group">
+                                                <label for="created_date_from">Created Date from</label>
+                                                <div class="input-group date" id="created_date_from" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">       
+                                            <div class="form-group">
+                                                <label for="created_date_to">To</label>
+                                                <div class="input-group date" id="created_date_to" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                   <div class="col-md-12">
+                                       <div class="col-md-2" style="margin-top:25px;">        
+                                           <div class="form-group">
+                                               <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_contributions(searchdata,'form')">Search Now </button>
+                                           </div>
+                                       </div>
+                                       <div class="col-md-2" style="margin-top:25px;">       
+                                           <div class="form-group">
+                                               <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                           </div>
+                                       </div>
+                                       <div class="col-md-2" style="margin-top:25px;">       
+                                           <div class="form-group">
+                                           <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()" data-toggle="collapse" data-target="#searchoptions">Clear Filters</a>
+                                           </div>
+                                       </div>
+                                   </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped" datatable-setup=""  >
+                        <thead>
+                            <tr>
+                                <th>ContributionID</th>
+                                <th>Agreement ID</th>
+                                <th>Date</th>
+                                <th>By</th>
+                                <th>Name</th>
+                                <th>Contribution Per</th>
+                                <th class="numbers">Amount</th>
+                                <th>Payment Type</th>
+                                <th>Payment Date</th>
+                                <th>Transaction ID</th>
+                                <th class="numbers">Payment Made </th>
+                                <th class="numbers">Remaining Balance </th>
+                                <th>Amount Paid</th>
+                                <th>Client</th>
+                                <th>Assign To</th>
+                                <th>Team</th>
+                                <th>Sub Team</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <!--ng-class="{ 'green_color' : collection.collection_status=='Received', 'red_color' : collection.collection_status!='Received'}"-->
+
+                            <tr ng-repeat="contribution in contributions" ng-class="{ 'green_color' : contribution.amount_paid == 'Yes' , 'red_color' : contribution.amount_paid != 'Yes'} ">
+                                <!--<td><a href="#/contributions_edit/{{contribution.agreement_details_id}}" title="Edit" target="_blank">CONTRIBUTIONID:{{contribution.agreement_details_id}}</a></td>-->
+                                <!--<td><a href="#/agreement_edit/{{contribution.agreement_id}}" title="Edit" ng-if="contribution.agreement_id>0" target="_blank">AGREEMENTID:{{contribution.agreement_id}}</a></td>-->
+                                <td><a ng-if="hasRoles.includes('Sub Admin')" href="" title="Edit">CONTRIBUTIONID:{{contribution.agreement_details_id}}</a>
+                                <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/contributions_edit/{{contribution.agreement_details_id}}" title="Edit" target="_blank">CONTRIBUTIONID:{{contribution.agreement_details_id}}</a></td>
+                                <td><a ng-if="hasRoles.includes('Sub Admin')" href="" title="Edit">AGREEMENTID:{{contribution.agreement_id}}</a>
+                                <a ng-if="!(hasRoles.includes('Sub Admin')) && contribution.agreement_id>0" href="#/agreement_edit/{{contribution.agreement_id}}" title="Edit" target="_blank">AGREEMENTID:{{contribution.agreement_id}}</a></td>
+                                <td>{{contribution.created_date}}</td>
+                                <td>{{contribution.contribution_by}}</td>
+                                <td>{{contribution.name}}</td>
+                                <td>{{contribution.contribution_per}}</td>
+                                <td class="numbers">{{contribution.contribution_amount}}</td>
+                                <td>{{contribution.payment_type}}</td>
+                                <td>{{contribution.transaction_date}}</td>
+                                <td><a href="#/voucher_edit/{{contribution.voucher_id}}" title="Edit" ng-if="contribution.voucher_id>0" target="_blank">VOUCHERID:{{contribution.voucher_id}}</a></td>
+                                <td  class="numbers">{{contribution.amount}}</td>
+                                <td class="numbers">{{contribution.contribution_amount-contribution.amount}}</td>
+                                <td>{{contribution.amount_paid}}</td>
+                                <td>{{contribution.client_name}}</td>
+                                <td>{{contribution.assign_to}}</td>
+                                <td>{{contribution.team}}</td>
+                                <td>{{contribution.subteam}}</td>
+                            </tr>
+                            <div class="loading-main-div">
+                                <div id="loading" ng-if="contributions && !contributions.length>0"></div>
+                            </div> 
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>ContributionID</th>
+                                <th>Agreement ID</th>
+                                <th>Date</th>
+                                <th>By</th>
+                                <th>Name</th>
+                                <th>Contribution Per</th>
+                                <th class="numbers">Amount</th>
+                                <th>Payment Type</th>
+                                <th>Payment Date</th>
+                                <th>Transaction ID</th>
+                                <th class="numbers">Payment Made </th>
+                                <th class="numbers">Remaining Balance </th>
+                                <th>Amount Paid</th>
+                                <th>Client</th>
+                                <th>Assign To</th>
+                                <th>Team</th>
+                                <th>Sub Team</th>
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .red_color
+    {
+        color:#a61111;
+    }
+    .green_color
+    {
+        color:#30d718;
+    }
+
+    .black_color
+    {
+        color:#000000;
+    }
+
+</style>

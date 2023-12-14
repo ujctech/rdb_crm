@@ -1,0 +1,94 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+
+</div>
+<div class="clearfix"></div>
+<div id="group_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+
+        <div class="row" id="group">
+
+            <div class="col-md-6">
+
+                <div class="box box-primary">
+
+                    <div class="box-header">
+
+                        <h3 class="box-title">Add Group</h3>
+
+                    </div>
+
+                    <div class="box-body">
+
+                        <div class="form-group">
+
+                            <label for="group_name">Group<span class="required">*</span></label>
+
+                            <input type="text" class="form-control" id="group_name" name="group_name"  placeholder="Group Name" ng-model="groupdata.group_name" required focus/>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="description">Description</label>
+
+                            <textarea class="form-control" id="description" name="description"  placeholder="Description" ng-model="groupdata.description"></textarea>
+
+                        </div>
+
+                        <!--div class="form-group" ng-controller="SelectTeams">
+
+                            <label for="teams">Teams<span class="required">*</span></label>
+
+                            <select class="select2 form-control" multiple="multiple"  id = "teams" ng-model="groupdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required>
+
+                                <option value="" disabled selected>Select Teams</option>
+
+                            </select>
+
+                        </!--div-->
+
+
+
+                        <div class="form-group">
+
+                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(groupdata)" id="add-new-btn" ng-click="group_add_new(groupdata)">Save </button>
+
+                             <a href="#/group_list" class="btn">Cancel</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+$(function () {
+
+    //Initialize Select2 Elements
+
+    $('.select2').select2();
+
+
+
+    //$('.textarea').wysihtml5();
+
+
+
+});
+
+
+
+</script>
+
+
+

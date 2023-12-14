@@ -1,0 +1,187 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		 
+</div>
+<div class="clearfix"></div>
+<div id="agreement_info" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;"><!--ng-if="create_rights"-->
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="payments_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Edit Payments</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#payment_details" data-toggle="tab">Payment Details</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="payment_details">
+											<div class="row">
+												<div class="col-md-6"  style="padding-left: 0px;">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="agreement_id">Agreement ID</label>
+															<input type="text" class="form-control" id="agreement_id" name="agreement_id"  placeholder="Agreement ID" ng-model="paymentsdata.agreement_id" readonly="true" />
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="client_category">Category</label>
+															<input type="text" class="form-control" id="client_category" name="client_category"  placeholder="Category" ng-model="paymentsdata.client_category" readonly="true" />
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="client_id">Client Name</label>
+														<select class="select2 form-control" id="client_id" name="client_id" ng-model="paymentsdata.client_id" ng-options="client.contact_id as client.name for client in clients" style="width:100%;" >
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="billing_name">Billing Name<span class="required">*</span></label>
+														<input type="text" class="form-control" id="billing_name" name="billing_name"  placeholder="Billing Name" ng-model="paymentsdata.billing_name" required/>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="due_date">Due Date<span  class="required">*</span></label><div class="input-group date" id="due_date" date-directive="">
+														<input class="form-control" type="text" ng-model="paymentsdata.due_date" required>
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="next_pay_date">Next Date<span  class="required">*</span></label><div class="input-group date" id="next_pay_date" date-directive="">
+														<input class="form-control" type="text" ng-model="paymentsdata.next_pay_date" required>
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="checkbox">
+															<label>
+																<input type="checkbox" id="reminder_due_date" name="reminder_due_date" ng-model="paymentsdata.reminder_due_date" >Send Due Date Reminder Email
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="brokerage">Brokerage</label>
+														<input type="text" class="form-control numbers" id="brokerage" name="brokerage"  placeholder="Brokerage" ng-model="paymentsdata.brokerage" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="service_tax">Service Tax</label>
+														<input type="text" class="form-control numbers" id="service_tax" name="service_tax" placeholder="Service Tax" ng-model="paymentsdata.service_tax" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="cgst">CGST</label>
+														<input type="text" class="form-control numbers" id="cgst" name="cgst" placeholder="CGST" ng-model="paymentsdata.cgst" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="sgst">SGST</label>
+														<input type="text" class="form-control numbers" id="sgst" name="sgst"  placeholder="SGST" ng-model="paymentsdata.sgst" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="tds">TDS</label>
+														<input type="text" class="form-control numbers" id="tds" name="tds"  placeholder="TDS" ng-model="paymentsdata.tds" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="total_brokerage">Total Brokerage</label>
+														<input type="text" class="form-control numbers" id="total_brokerage" name="total_brokerage"  placeholder="Total Brokerage" ng-model="paymentsdata.total_brokerage" readonly="true"/>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="collection_status">Collection Status<span  class="required">*</span></label>
+														<select class="select2 form-control"  id="collection_status" name="collection_status" select2 ng-model="paymentsdata.collection_status"  required  data-placeholder="Select Collection Status" style="width:100%;" >
+															<option value="Pending" selected="selected">Pending</option>
+															<option value="Partial Recieved" >Partial Recieved</option>
+															<option value="Received" >Received</option>
+														</select>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="payment_received">Payment Received<span  class="required">*</span></label>
+														<select class="select2 form-control"  id="payment_received" name="payment_received" select2 ng-model="paymentsdata.payment_received"  required  data-placeholder="Select Collection Status" style="width:100%;" >
+															<option value="Yes" selected="selected">Yes</option>
+															<option value="No" >No</option>
+														</select>
+													</div>
+												</div>
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+								<div class="form-group"> 
+									<button class="btn btn-primary" id="add-new-btn" ng-click="payments_update(paymentsdata)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+									<button class="btn btn-danger" ng-click="payments_delete(paymentsdata)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+									<a href="#/collections" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+</script>

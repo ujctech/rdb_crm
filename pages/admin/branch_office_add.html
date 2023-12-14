@@ -1,0 +1,83 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+<div id="bu_info"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:114px;">
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+        <div class="row" id="bu">
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Add Branch Office</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="bo_name">Branch Name<span class="required">*</span></label>
+                            <input type="text" class="form-control" id="bo_name" name="bo_name"  placeholder="Branch Name" ng-model="branch_office.bo_name" required focus/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="office_description">Details</label>
+                            <textarea class="form-control" id="office_description" name="office_description"  placeholder="Details" ng-model="branch_office.office_description" ></textarea>
+                        </div>
+                        <div class="form-group" ng-controller="SelectEmployee">
+                            <label for="office_lead_id">Office Lead<span class="required">*</span></label>
+                            <select class="select2 form-control" ng-model="branch_office.office_lead_id" ng-options="employee.emp_id as employee.name for employee in employees"  required   style="width:100%;">
+                                <option value="" disabled selected>Select Employee</option>
+                            </select>
+                        </div>
+                                
+                        <div class="form-group">
+                            <label for="address1">Address-1</label>
+                            <textarea class="form-control" id="address1" name="address1"  placeholder="Address-1" ng-model="branch_office.address1" ></textarea>
+                        </div>
+                                
+                        <div class="form-group">
+                            <label for="address2">Address - 2</label>
+                            <textarea class="form-control" id="address2" name="address2"  placeholder="Address - 2" ng-model="branch_office.address2" ></textarea>
+                        </div>
+
+                        <div class="form-group" ng-controller="SelectLocality">
+                            <label for="locality_id">Locality</label>
+                            <select class="select2 form-control" ng-model="branch_office.locality_id" id= "locality_id" ng-change="showlocality('locality_id',branch_office.locality_id);" ng-options="locality.locality_id as locality.locality for locality in localities"   style="width:100%;">
+                                <option value="" disabled selected>Select Locality</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-controller="SelectArea">
+                            <label for="area_id">Area<span class="required">*</span></label>
+                            <select class="select2 form-control" id = "area_id" ng-change="showlocality('area_id',branch_office.area_id);" ng-model="branch_office.area_id" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" required>
+                                <option value="" disabled selected>Select Area</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="city"  placeholder="city" ng-model="branch_office.city"  disabled/>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control" id="state" name="state"  placeholder="state" ng-model="branch_office.state"   disabled />
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" class="form-control" id="country" name="country"  placeholder="country" ng-model="branch_office.country"   disabled />
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(branch_office)" id="add-new-btn" ng-click="branch_office_add_new(branch_office)">Save !</button>
+                             <a href="#/branch_office_list" class="btn">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+
+        $('.textarea').wysihtml5();
+
+    });
+</script>
+

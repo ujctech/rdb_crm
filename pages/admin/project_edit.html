@@ -1,0 +1,2919 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+<div id="project_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px; " >
+	<div ng-init="disableAll=enable_disable">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data" ng-if="update_rights">
+		<div class="row" id="project">
+			<div class="col-md-12">
+				<div class="box box-primary" style="border-top:0px;border-radius:0px;background: #ffffff;">
+					<div class="box-header">
+						<h3 class="box-title"><span ng-if="disableAll==false">Edit</span><span ng-if="disableAll==true">View</span> Project - Project ID_{{project.project_id}}</h3>
+						<button class="btn btn-primary" ng-click="modify()" style="margin-left:10px;" ng-if="update_rights">Modify</button>
+						<a href="#/project_list/0" class="btn">Cancel</a>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs"  id="tab_menu">
+										<li ><a data-target="#information" data-toggle="tab">Property Information</a></li>
+										<li><a data-target="#contact_person" data-toggle="tab">Contact Person</a></li>
+										<li><a data-target="#attributes" data-toggle="tab">Project Details</a></li>
+										<li><a data-target="#image" data-toggle="tab">Image</a></li>
+										<li><a data-target="#project_videos" data-toggle="tab">Videos</a></li>
+										<li><a data-target="#tdescription" data-toggle="tab">Description</a></li>
+										<li><a data-target="#additional" data-toggle="tab">Office Use</a></li>
+										<li class="active"><a data-target="#properties" data-toggle="tab">Properties</a></li>
+										
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane" id="information">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+														<label for="project_type">Project Type<span class="required">*</span></label>
+														<div class="input-group">
+															<select class="form-control select2" select2  ng-model="project.project_type" ng-options="dropdown.value as dropdown.display_value for dropdown in proj_type" style="width:100%;" required ng-disabled="disableAll">
+																<option value="" disabled selected>Select</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('PROJ_TYPE')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+															<div class="form-group">
+																<label for="project_name">Project Name<span class="required">*</span></label>
+																<input type="text" class="form-control" id="project_name" name="project_name" placeholder="Project Name" ng-model="project.project_name"  required  ng-disabled="disableAll"/>
+															</div>
+															<div class="form-group">
+																<label for="developer_id">Developer<span class="required">*</span></label>
+																<div class="input-group">
+																	<select class="select2 form-control" select2 ng-model="project.developer_id" ng-options="contact.contact_id as contact.name for contact in contacts"  required   style="width:100%;" ng-disabled="disableAll">
+																		<option value="" disabled selected>Select Developer</option>
+																	</select>
+																	<div class="input-group-addon">
+																	    <!--pks change 05052023-->
+																		<!--<a href="javascript:void(0)"  data-toggle="modal" data-target="#adddeveloper" ng-click="AddDeveloper()"><i class="fa fa-plus"></i></a>-->
+																	    <a href="javascript:void(0)"  data-toggle="modal" data-target="#adddeveloper" ng-click="AddDeveloper()" ng-if="hasRoles.includes('Admin') || hasPermissions.includes('devloper_project_edit')"><i class="fa fa-plus"></i></a>
+											
+																	</div>
+																</div>
+															</div>
+															<div class="form-group"> 
+																<label for="project_for">Project For<span class="required">*</span></label>
+																<select class="select2 form-control"  select2 id="project_for" name="project_for" ng-model="project.project_for"  style="width:100%;" required ng-disabled="disableAll">
+																	<option value="Sale" selected="selected">Sale</option>
+																	<option value="Rent">Rent</option>
+																</select>
+															</div>        
+															<div class="form-group">
+																<label for="con_status">Construction Status<span class="required">*</span></label>
+																<select class="select2 form-control"  id="con_status" name="con_status" select2 ng-model="project.con_status"  style="width:100%;" required ng-disabled="disableAll">
+																	<option value="Not Specified" selected="selected">Not Specified</option>
+																	<option value="Under Construction">Under Construction</option>
+																	<option value="Completed">Completed</option>
+																	<option value="Upcoming">Upcoming</option>
+																	<option value="Postponed">Postponed</option>
+																</select>
+															</div>
+															<div class="form-group" ng-show="project.con_status == 'Under Construction' || project.con_status == 'Upcoming' || project.con_status == 'Postponed'" >
+																<label for="possession_date">Possession Date</label>
+																<div class="input-group date" id="possession_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="project.possession_date" ng-disabled="disableAll">
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+															<div class="form-group" ng-show="project.con_status == 'Under Construction' ">
+																<label for="completion_date">Completion Date</label>
+																<div class="input-group date" id="completion_date" date-directive="">
+																	<input class="form-control" type="text" ng-model="project.completion_date" ng-disabled="disableAll">
+																	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+																</div>
+															</div>
+															<!--div class="form-group">
+																<label for="rera_num">Project Rera Number</label>
+																<input type="text" class="form-control" id="rera_num" name="rera_num"  placeholder="Project Rera Number" ng-model="project.rera_num"  ng-disabled="disableAll"/>
+															</div-->
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label for="add1">Address 1</label>
+																<textarea class="form-control" id="add1" name="add1"  placeholder="Address 1" ng-model="project.add1" ng-blur="geocodeAddress('add1',project.add1);" ng-disabled="disableAll" ></textarea>
+															</div>
+															<!-- <div class="form-group">
+																<label for="add2">Address 2</label>
+																<textarea class="form-control" id="add2" name="add2"  placeholder="Address 2" ng-model="project.add2" ng-disabled="disableAll"></textarea>
+															</div> -->
+															<div class="form-group">
+																<div class="checkbox">
+																	<label>
+																		<input type="checkbox" id="exlocation" name="exlocation" ng-model="project.exlocation" ng-change="geocodeAddress('exlocation',project.exlocation);" ng-disabled="disableAll" > Show Exact Location
+																	</label>
+																</div>
+															</div>
+															<div class="form-group">
+															<label for="road_no">Road No./Name</label>
+															<input type="text" class="form-control" id="road_no" name="road_no"  placeholder="Road No./Name" ng-model="project.road_no" ng-disabled="disableAll" />
+															</div>
+														
+														<div class="form-group">
+															<label for="landmark">Landmark</label>
+															<input type="text" class="form-control" id="landmark" name="landmark"  placeholder="Landmark" ng-model="project.landmark"  ng-disabled="disableAll"/>
+														</div>
+															<div class="form-group" ng-controller="SelectLocality">
+																<label for="locality_id">Locality</label>
+																<select class="select2 form-control" ng-model="project.locality_id" id= "locality_id" select2  ng-change="geocodeAddress('locality_id',project.locality_id);" ng-options="locality.locality_id as locality.locality for locality in localities"   style="width:100%;" ng-disabled="disableAll">
+																	<option value="" disabled selected>Select Locality</option>
+																</select>
+															</div>
+															<div class="form-group" ng-controller="SelectArea">
+																<label for="area_id">Area<span class="required">*</span></label>
+																<select class="select2 form-control" id = "area_id" ng-change="geocodeAddress('area_id',project.area_id);" select2  ng-model="project.area_id" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" required ng-disabled="disableAll">
+																	<option value="" disabled selected>Select Area</option>
+																</select>
+															</div>
+															<div class="form-group">
+																<label for="city">City</label>
+																<input type="text" class="form-control" id="city" name="city"  placeholder="city" ng-model="project.city"  disabled />
+															</div>
+															<div class="form-group">
+																<label for="state">State</label>
+																<input type="text" class="form-control" id="state" name="state"  placeholder="state" ng-model="project.state"   disabled />
+															</div>
+															<div class="form-group">
+																<label for="country">Country</label>
+																<input type="text" class="form-control" id="country" name="country"  placeholder="country" ng-model="project.country"   disabled />
+															</div>
+															<div class="form-group">
+																<label for="zip">Zip</label>
+																<input type="text" class="form-control" id="zip" name="zip"  placeholder="Zip" ng-model="project.zip" ng-disabled="disableAll" />
+															</div>
+															<!-- <div class="form-group">
+																<label for="lattitude">Lattitude</label>
+																<input type="text" class="form-control numbers" id="lattitude" name="lattitude"  placeholder="Lattitude" ng-model="project.lattitude"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll"/>
+															</div>
+															<div class="form-group">
+																<label for="longitude">Longitude</label>
+																<input type="text" class="form-control numbers" id="longitude" name="longitude"  placeholder="Longitude" ng-model="project.longitude" pattern="[0-9 .]+" ng-disabled="disableAll"/>
+															</div> -->
+														</div>
+														<div class="col-md-6">
+															<div id="map" style="height:300px;overflow:auto;" ></div>
+															<div id="address"></div>
+															
+															<!--p>{{currentaddress}}</p-->
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="contact_person">
+											<h4><b>Contact Person - 1</b></h4>
+													<hr>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-4">
+															<div class="form-group">
+																<label for="salu">Salutation</label>
+																<select class="select2 form-control"  id="salu" name="salu" ng-model="project.salu"  data-placeholder="Select salu" style="width:100%;" ng-disabled="disableAll">
+																	<option value="Mr.">Mr.</option>
+																	<option value="Mrs." >Mrs.</option>
+																	<option value="Ms." >Ms.</option>
+																	<option value="Dr." >Dr.</option>
+																	<option value="Mohd.." >Mohd.</option>
+																	<option value="Cmdr." >Cmdr.</option>
+																	<option value="Capt." >Capt.</option>
+																	<option value="Maj." >Maj.</option>
+																	<option value="Col." >Col.</option>
+																	<option value="Flt.Lt." >Flt.Lt.</option>
+																	<option value="Prof." >Prof.</option>
+																	<option value="Brig." >Brig.</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label for="fname">First Name</label>
+																<input type="text" class="form-control" id="fname" name="fname"  placeholder="First Name" ng-model="project.fname"  ng-disabled="disableAll"/>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label for="lname">Last Name</label>
+																<input type="text" class="form-control" id="lname" name="lname"  placeholder="Last Name" ng-model="project.lname" ng-disabled="disableAll"/>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="mob1">Mobile No.</label>
+														<input type="text" class="form-control" id="mob1" name="mob1"  placeholder="Mobile No." ng-model="project.mob1"  ng-disabled="disableAll"/>
+													</div>
+													<div class="form-group">
+														<label for="mob2">Alternative Mobile No.</label>
+														<input type="text" class="form-control" id="mob2" name="mob2"  placeholder="Alternative Mobile No." ng-model="project.mob2" ng-disabled="disableAll" />
+													</div>
+													<div class="form-group">
+														<label for="email">Email ID</label>
+														<input type="text" class="form-control" id="email" name="email"  placeholder="Email ID" ng-model="project.email"  ng-disabled="disableAll"/>
+													</div>
+													<div class="form-group" >
+														<label for="designation">Designation</label>
+														<input type="text" class="form-control" id="designation" name="designation"  placeholder="Designation" ng-model="project.designation" ng-disabled="disableAll" />
+													</div>
+												</div>
+											</div>
+											<h4><b>Contact Person - 2</b></h4>
+													<hr>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-4">
+															<div class="form-group">
+																<label for="salu_2">Salutation</label>
+																<select class="select2 form-control"  id="salu" name="salu_2" ng-model="project.salu_2"  data-placeholder="Select salu_2" style="width:100%;" ng-disabled="disableAll">
+																	<option value="Mr.">Mr.</option>
+																	<option value="Mrs." >Mrs.</option>
+																	<option value="Ms." >Ms.</option>
+																	<option value="Dr." >Dr.</option>
+																	<option value="Mohd.." >Mohd.</option>
+																	<option value="Cmdr." >Cmdr.</option>
+																	<option value="Capt." >Capt.</option>
+																	<option value="Maj." >Maj.</option>
+																	<option value="Col." >Col.</option>
+																	<option value="Flt.Lt." >Flt.Lt.</option>
+																	<option value="Prof." >Prof.</option>
+																	<option value="Brig." >Brig.</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label for="fname_2">First Name</label>
+																<input type="text" class="form-control" id="fname_2" name="fname_2"  placeholder="First Name" ng-model="project.fname_2"  ng-disabled="disableAll"/>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label for="lname_2">Last Name</label>
+																<input type="text" class="form-control" id="lname_2" name="lname_2"  placeholder="Last Name" ng-model="project.lname_2" ng-disabled="disableAll"/>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="mob1_2">Mobile No.</label>
+														<input type="text" class="form-control" id="mob1_2" name="mob1_2"  placeholder="Mobile No." ng-model="project.mob1_2"  ng-disabled="disableAll"/>
+													</div>
+													<div class="form-group">
+														<label for="mob2">Alternative Mobile No.</label>
+														<input type="text" class="form-control" id="mob2_2" name="mob2_2"  placeholder="Alternative Mobile No." ng-model="project.mob2_2" ng-disabled="disableAll" />
+													</div>
+													<div class="form-group">
+														<label for="email_2">Email ID</label>
+														<input type="text" class="form-control" id="email_2" name="email_2"  placeholder="Email ID" ng-model="project.email_2"  ng-disabled="disableAll"/>
+													</div>
+													<div class="form-group" >
+														<label for="designation_2">Designation</label>
+														<input type="text" class="form-control" id="designation_2" name="designation_2"  placeholder="Designation" ng-model="project.designation_2" ng-disabled="disableAll" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="attributes">
+											<div class="row">
+												<div class="col-md-6" >
+													<div class="form-group" >
+														<label for="tot_area">Total Plot Area</label>
+														<div class="col-md-12" style="padding-left:0px;">
+															<input type="text" class="form-control" id="tot_area" name="tot_area" placeholder="Total Plot Area" ng-model="project.tot_area" style="width:70%;float:left;" ng-disabled="disableAll"/>
+															<select  class="select2 form-control" id="area_parameter" name="area_parameter" select2  ng-model="project.area_parameter"  data-placeholder="Select area_parameter" style="width:30%;float:left;" ng-disabled="disableAll">
+															<option value="Sq Ft" selected="selected">Sq Ft</option>
+															<option value="Sq Mt" >Sq Mt</option>
+															<option value="Acres">Acres</option>
+															<option value="Bigha I">Bigha I</option>
+															<option value="Bigha II">Bigha II</option>
+															<option value="Kottah (B)">Kottah (B)</option>
+															<option value="Marla">Marla</option>
+															<option value="Cents">Cents</option>
+															<option value="Perch">Perch</option>
+															<option value="Guntha">Guntha</option>
+															<option value="Area">Area</option>
+															<option value="Chataks">Chataks</option>
+															<option value="Rood">Rood</option>
+															<option value="Aankadam">Aankadam</option>
+															<option value="Grounds">Grounds</option>
+															<option value="Kanal">Kanal</option>
+															<option value="Hectares">Hectares</option>
+															<option value="Biswa I">Biswa I</option>
+															<option value="Biswa II">Biswa II</option>
+															<option value="Sq Yards">Sq Yards</option>
+															</select>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="numof_building">Number of Buildings</label>
+														<input type="text" class="form-control" id="numof_building" name="numof_building"  placeholder="Number of Buildings" ng-model="project.numof_building"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll" />
+													</div>
+													<div class="form-group">
+														<label for="numof_floor">Number of Floors</label>
+														<input type="text" class="form-control" id="numof_floor" name="numof_floor"  placeholder="Number of Floors" ng-model="project.numof_floor" pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll"  />
+													</div>
+													<div class="form-group">
+														<label for="tot_unit">Total Units</label>
+														<input type="text" class="form-control" id="tot_unit" name="tot_unit"  placeholder="Total Units" ng-model="project.tot_unit"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll"/>
+													</div>
+													<div class="form-group">
+														<label for="lifts">Number of Lifts</label>
+														<input type="text" class="form-control" id="numof_lift" name="lifts"  placeholder="Number of Lifts" ng-model="project.lifts" pattern="[0-9 .]+"  hide-zero  ng-disabled="disableAll" />
+													</div>
+													<div class="form-group" ng-show="project.project_for == 'Rent'">
+														<label for="price_unit_carpet">Rent per Sq Ft - Carpet Area</label>
+														<input type="text" class="form-control" id="rent_unit_carpet" name="rent_unit_carpet"  placeholder="Rent per Sq Ft - Carpet Area" ng-model="project.rent_unit_carpet"   ng-disabled="disableAll"/>
+													</div>		
+													<div class="form-group" ng-show="project.project_for == 'Sale'">
+														<label for="pack_price">Package Price</label>
+														<input type="text" class="form-control numbers" id="pack_price" name="pack_price"  placeholder="Package Price" ng-model="project.pack_price" pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll"/>
+													</div>
+													<div class="form-group" ng-show="project.project_for == 'Sale'">
+														<label for="pack_price_comments">Package Price Comments</label>
+														<textarea class="form-control" id="pack_price_comments" name="pack_price_comments"  placeholder="Pack Price Comments" ng-model="project.pack_price_comments" ng-disabled="disableAll"></textarea>
+													</div>
+													<div class="form-group">
+														<label for="app_bankloan">Approved Banks for Loans</label>
+														<div class="input-group">
+															<select class="select2 form-control"  multiple="multiple" select2 ng-model="project.app_bankloan" ng-options="dropdown.value as dropdown.display_value for dropdown in bank_loans" style="width:100%;" ng-disabled="disableAll">
+																<!--option value="" disabled selected>Select</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('BANK_LOANS')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="amenities_avl">Amenities Available</label>
+														<div class="input-group">
+															<select class="select2 form-control"  multiple="multiple" select2 ng-model="project.amenities_avl" ng-options="dropdown.value as dropdown.display_value for dropdown in amenities"   style="width:100%;" ng-disabled="disableAll">
+																<!--option value="" disabled selected>Select</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('AMENITIES')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="pro_specification">Project Flooring</label>
+														<div class="input-group">
+															<select class="select2 form-control"  multiple="multiple" select2 ng-model="project.pro_specification" ng-options="dropdown.value as dropdown.display_value for dropdown in pro_specifications" style="width:100%;" ng-disabled="disableAll" >
+																<!--option value="" disabled selected>Select</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)" data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('PRJ_SPECIFICATIONS')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div> 
+													<h4><b>Parking Details</b></h4>
+													<hr> 
+													<div class="form-group">
+														<label for="car_park">No of Parking</label>
+														<!--select class="select2 form-control"  id="car_park" name="car_park" select2 ng-model="project.car_park"  data-placeholder="Select Parking" style="width:100%;" ng-disabled="disableAll" >
+															<option value="" disabled selected>Select</option>
+															<option value="1">1</option>
+															<option value="2" >2</option>
+															<option value="3" >3</option>
+															<option value="4" >4</option>
+															<option value="5" >5</option>
+															<option value="6" >6</option>
+															<option value="7" >7</option>
+															<option value="8" >8</option>
+														</select-->
+														<input type="text" class="form-control" id="car_park" name="car_park"  placeholder="No of Parking" ng-model="project.car_park"  pattern="[A-Z0-9a-z .,_+-]+" title="Only Alpha Numeric Allowed " ng-disabled="disableAll"/>
+													</div>              
+													<div class="form-group">
+														<label for="parking">Type Of Parking</label>
+														
+														<div class="input-group" style="margin-bottom: 15px;">
+															<select class="select2 form-control" select2 multiple="multiple" ng-model="project.parking" ng-options="dropdown.value as dropdown.display_value for dropdown in parkings" style="width:100%;" ng-disabled="disableAll" >
+																<!--option value="" disabled selected>Select</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('PARKING_DIR')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+														
+													<div class="form-group">
+														<label for="park_charge">Parking Charges</label>
+														<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+														<input type="text" class="form-control" id="park_charge" name="park_charge"  placeholder="Parking Charge" style="width:65%;float:left;margin-right: 10px; " ng-model="project.park_charge"  ng-disabled="disableAll" />
+													    <select  class="select2 form-control" id="park_charge_para" name="park_charge_para" select2 ng-model="project.park_charge_para"  data-placeholder="Select park_charge_para" style="width:30%;float:left;" ng-init="project.park_charge_para='Abs'">
+																<option value="Abs" >Abs</option>
+																<option value="Th" >Th</option>
+																<option value="Lac" >Lac</option>
+																<option value="Cr" >Cr</option>
+															</select>
+															</div>
+													</div>   
+												</div>
+
+												<h4><b>Facing Direction</b></h4>
+													<hr>
+													<div class="form-group">
+														<label for="mainroad">
+															Main Road &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+																<input type="radio" id="mainroad" name="mainroad" ng-model="project.mainroad"  value="Yes" ng-disabled="disableAll" >&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+																<input type="radio" id="mainroad" name="mainroad" ng-model="project.mainroad" value="No" ng-disabled="disableAll" >&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													</div>
+													<div class="form-group">
+														<label for="internalroad">
+															Internal Road &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+																<input type="radio" id="internalroad" name="internalroad" ng-model="project.internalroad"  value="Yes" ng-disabled="disableAll" >&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																<input type="radio" id="internalroad" name="internalroad" ng-model="project.internalroad" value="No" ng-disabled="disableAll"  >&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													</div>
+													<h4><b>Specification</b></h4>
+													<hr>
+													<div class="form-group">
+														<div class="checkbox">
+															<label>
+																<input type="checkbox" id="vastu_comp" name="vastu_comp" ng-model="project.vastu_comp" ng-disabled="disableAll" >Vastu Compliant
+															
+															</label>
+														</div>
+													</div> 
+
+													<div class="form-group">
+														<label for="distfrm_station">Distance From Station (KMS)</label>
+														<input type="text" class="form-control" id="distfrm_station" name="distfrm_station"  placeholder="Distance From Station (KMS)" ng-model="project.distfrm_station"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll" />
+													</div>
+															
+													<div class="form-group">
+														<label for="distfrm_dairport">Distance From Airport (KMS)</label>
+														<input type="text" class="form-control" id="distfrm_dairport" name="distfrm_dairport"  placeholder="Distance From Domestic Airport (KMS)" ng-model="project.distfrm_dairport"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll" />
+													</div>
+
+													<div class="form-group">
+														<label for="distfrm_highway">Distance From Highway (KMS)</label>
+														<input type="text" class="form-control" id="distfrm_school" name="distfrm_highway"  placeholder="Distance From Highway (KMS)" ng-model="project.distfrm_highway"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll" />
+													</div>
+													<div class="form-group" >
+														<label>
+														Occupation Certificate : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+														<input type="radio" id="occu_certi" name="occu_certi" ng-model="project.occu_certi"  value="Yes" ng-disabled="disableAll" >&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<input type="radio" id="occu_certi" name="occu_certi" ng-model="project.occu_certi" value="No" ng-disabled="disableAll" >&nbsp;&nbsp;No
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group" ng-show="project.occu_certi == 'Yes'">
+																<input id="file_occu" name="file_occu[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" ng-disabled="disableAll">
+																<input type="hidden" name="file_occu_name" id="file_occu_name" value="" ng-model="project.file_occu_name" />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<table class="table">
+																<thead>
+																	<tr style="display:none;">
+																		<th></th>
+																		<th></th>
+																		<th></th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr ng-repeat="project_occu_cert in project_occu_certs">
+																		<td style="width:100%">
+																			<img src="dist/img/no_image.jpg" ng-if="project_occu_cert.filenames==null " style="width:245px; height:185px;" ng-disabled="disableAll"/> 
+																			<img src="api/v1/uploads/project/occu_cert/{{project_occu_cert.filenames}}" ng-if="project_occu_cert.filenames!=null " style="width:245px; height:185px;" ng-disabled="disableAll"/> 
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label>Society Registration :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+														<input type="radio" id="soc_reg" name="soc_reg" ng-model="project.soc_reg"  value="Yes" ng-disabled="disableAll" >&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<input type="radio" id="soc_reg" name="soc_reg" ng-model="project.soc_reg" value="No" ng-disabled="disableAll" >&nbsp;&nbsp;No
+													</div>
+
+													<div class="form-group">
+														<label>Commencement Certificate : </label>
+														<input type="radio" id="cc" name="cc" ng-model="project.cc"  value="Yes" ng-disabled="disableAll" >&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<input type="radio" id="cc" name="cc" ng-model="project.cc" value="No" ng-disabled="disableAll" >&nbsp;&nbsp;No
+													</div>	
+
+													<h4><b>Other Charges</b></h4>
+													<hr>	
+													<div class="form-group">
+														<label for="maintenance_charges">Maintenance Charges Per Month</label>
+														<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+														<input type="text" class="form-control numbers" id="maintenance_charges" name="maintenance_charges"  placeholder="Maintenance Charges" style="width:68%;float:left;margin-right: 10px; "  ng-model="project.maintenance_charges" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" ng-disabled="disableAll" />
+														<select  class="select2 form-control" id="main_charge_para" name="main_charge_para" select2 ng-model="project.main_charge_para"  data-placeholder="Select main_charge_para" style="width:30%;float:left;" ng-disabled="disableAll" ng-init="project.main_charge_para='Abs'" >
+																	<option value="Abs" >Abs</option>
+																	<option value="Th" >Th</option>
+																	<option value="Lac" >Lac</option>
+																	<option value="Cr" >Cr</option>
+																</select>
+													</div>													</div>
+													<div class="form-group">
+														<label for="prop_tax">Total Property Tax Per Month</label>
+														<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+														<input type="text" class="form-control numbers" id="prop_tax" name="prop_tax"  placeholder="Property Tax" style="width:68%;float:left;margin-right: 10px; " ng-model="project.prop_tax" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" ng-disabled="disableAll"/>
+														<select  class="select2 form-control" id="prop_tax_para" name="prop_tax_para" select2 ng-model="project.prop_tax_para"  data-placeholder="Select prop_tax_para" style="width:30%;float:left;" ng-disabled="disableAll" ng-init="project.prop_tax_para='Abs'" >
+																	<option value="Abs" >Abs</option>
+																	<option value="Th" >Th</option>
+																	<option value="Lac" >Lac</option>
+																	<option value="Cr" >Cr</option>
+																</select>
+													</div>													</div>
+													<div class="form-group">
+														<label for="transfer_charge">Transfer/Registration Charges</label>
+														<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+														<input type="text" class="form-control numbers" id="transfer_charge" name="prop_tax"  placeholder="Transfer/Registration Charges" style="width:68%;float:left;margin-right: 10px; " ng-model="project.transfer_charge" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed" ng-disabled="disableAll"/>
+														<select  class="select2 form-control" id="transfer_charge_para" name="transfer_charge_para" select2 ng-model="project.transfer_charge_para"  data-placeholder="Select transfer_charge_para" style="width:30%;float:left;" ng-disabled="disableAll" ng-init="project.transfer_charge_para='Abs'" >
+																	<option value="Abs" >Abs</option>
+																	<option value="Th" >Th</option>
+																	<option value="Lac" >Lac</option>
+																	<option value="Cr" >Cr</option>
+																</select>
+													</div>													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="image">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="file-1">Project Images</label>
+														<input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1"  >
+														<input type="hidden" name="file_name" id="file_name" value="" ng-model="project.file_name" />
+													</div>
+												</div>
+												<div class="col-md-6">
+													<table class="table">
+														<thead>
+															<tr style="display:none;">
+																<th></th>
+																<th></th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="project_image in project_images">
+																<td style="width:100%">
+																	<img src="dist/img/no_image.jpg" ng-if="project_image.filenames==null " style="width:245px; height:185px;" ng-disabled="disableAll"/> 
+																	<a href="javascript:void();" class="btn btn-default btn-sm" style="position:absolute;" title="Remove Image" alt="Remove Image" ng-click="removeimage(project_image.attachment_id)"><i class="glyphicon glyphicon-trash" style="font-size:20px;"></i></a> 
+
+																	<img src="api/v1/uploads/project/thumb/{{project_image.filenames}}" ng-if="project_image.filenames!=null " style="width:245px; height:185px;" ng-disabled="disableAll" />
+																	<p><a href="api/v1/uploads/project/{{project_image.filenames}}" title="Click to Download" alt="Click to Download" download>Download Image</a></p>
+																	
+																</td>
+																<td>
+																	<p><input type="text" class="form-control" id="description" name="description"  placeholder="File Title" ng-model="project_image.description"  ng-disabled="disableAll" ng-change="project_image_update(project_image.attachment_id,'description',project_image.description)"/></p>	
+																	<p><select id="file_category" name="file_category" ng-model="project_image.file_category" ng-disabled="disableAll" ng-change="project_image_update(project_image.attachment_id,'file_category',project_image.file_category)">
+																		<option value="">Select Category</option>
+																		<option value="Special Offer Detail">Special Offer Detail</option>
+																		<option value="Amenities">Amenities</option>
+																		<option value="Site Plan">Site Plan</option>
+																		<option value="Special Offer Listing">Special Offer Listing</option>
+																		<option value="special offer">special offer</option>
+																		<option value="Elevation">Elevation</option>
+																		<option value="Location">Location</option>
+																		<option value="Floor Plans">Floor Plans</option>
+																		<option value="General">General</option>
+																		<option value="Sample Flat">Sample Flat</option>
+																		</select>
+																	</p>
+																	<p><input type="text" class="form-control" id="file_sub_category" name="file_sub_category"  placeholder="File Sub Category" ng-model="project_image.file_sub_category"  ng-disabled="disableAll" ng-change="project_image_update(project_image.attachment_id,'file_sub_category',project_image.file_sub_category)"/></p>	
+																	<p><div class="form-group">
+																		<div class="checkbox">
+																			<label>
+																				<input type="checkbox" id="isdefault" name="isdefault" ng-model="project_image.isdefault" ng-disabled="disableAll" ng-checked="{{project_image.isdefault}}" ng-change="project_image_update(project_image.attachment_id,'isdefault',project_image.isdefault)" ng-true-value="true" ng-false-value="false" >Set as Main Image
+																			</label>
+																		</div>
+																	</div></p>
+																	<p><div class="form-group">
+																		<div class="checkbox">
+																			<label>
+																				<input type="checkbox" id="share_on_web" name="share_on_web" ng-model="project_image.share_on_web" ng-disabled="disableAll"  ng-checked="{{project_image.share_on_web}}" ng-change="project_image_update(project_image.attachment_id,'share_on_web',project_image.share_on_web)" ng-true-value="true" ng-false-value="false" >Share
+																			</label>
+																		</div>
+																	</div></p>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+
+											</div>
+										</div>
+										<div class="tab-pane" id="project_videos">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="file_videos">Project Videos</label>
+														<input id="file_videos" name="file_videos[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" >
+														<input type="hidden" name="file_videos_name" id="file_videos_name" value="" ng-model="project.file_videos_name" />
+													</div>
+												</div>
+												<div class="col-md-6">
+													<table class="table">
+														<thead>
+															<tr style="display:none;">
+																<th></th>
+																
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-repeat="project_video in project_videos">
+																<td style="width:100%">
+																	<img src="dist/img/no_image.jpg" ng-if="project_video.filenames==null " style="width:245px; height:185px;" /> 
+																	<a href="javascript:void();" class="btn btn-default btn-sm" style="position:absolute;" title="Remove Image" alt="Remove Image" ng-click="removeimage(project_video.attachment_id)"><i class="glyphicon glyphicon-trash" style="font-size:20px;"></i></a>
+																	<a href="api/v1/uploads/project/videos/{{project_video.filenames}}" title="Download or View File" alt="Download or View File" target="_blank"> <img src="api/v1/uploads/project/videos/{{project_video.filenames}}" ng-if="project_video.filenames!=null " style="width:245px; height:185px;" /><p style="position:absolute;margin-top:-22px;margin-left:50px;" >{{project_video.filenames}}</p> </a>	
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="tdescription">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="internal_comment">Internal Comment (Private Comments)</label>
+														<textarea class="form-control textarea" id="internal_comment" name="internal_comment"  placeholder="Internal Comment (Private Comments)" ng-model="project.internal_comment" ></textarea>
+													</div>
+															
+													<div class="form-group">
+														<label for="external_comment">External Comment (public comments that will be shown on the website)</label>
+														<textarea class="form-control textarea" id="external_comment" name="external_comment"  placeholder="External Comment (public comments that will be shown on the website)" ng-model="project.external_comment" ></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane" id="additional">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="teams">Teams<span class="required">*</span></label>
+														<select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="project.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required ng-change="select_assign_to(project.teams)" ng-disabled="disableAll">
+															<!--option value="" disabled selected>Select</option-->
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="sub_teams">Sub Teams</label>
+														<select class="select2 form-control" multiple="multiple"  id = "sub_teams" name = "sub_teams" select2 ng-model="project.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams"   style="width:100%;">
+														</select>
+													</div>
+													<div class="form-group" ng-controller="SelectUsers">
+														<label for="assign_to">Assign To<span class="required">*</span></label>
+														<select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="project.assign_to" ng-options="user.user_id as user.name  +' '+user.sub_team_name for user in users"   style="width:100%;" required ng-disabled="disableAll">
+															<!--option value="" disabled selected>Select</option-->
+														</select>
+													</div>
+													<div class="form-group">
+														<div class="checkbox">
+															<label>
+																<input type="checkbox" id="sms_saletrainee" name="sms_saletrainee"  ng-model="project.sms_saletrainee" ng-disabled="disableAll">SMS Sales Executive
+															</label>
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="checkbox">
+															<label>
+																<input type="checkbox" id="email_saletrainee" name="email_saletrainee" ng-model="project.email_saletrainee" ng-disabled="disableAll">Email Sales Executive
+															</label>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="source_channel">Source Channel</label>
+														<div class="input-group">
+															<select class="select2 form-control" multiple="multiple" ng-model="project.source_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in client_sources" style="width:100%;" ng-disabled="disableAll" ng-change="change_sub_source(project.source_channel)">
+																<!--option value="" disabled selected>Select</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('CLIENT_SOURCE')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="subsource_channel">Subsource Channel</label>
+														<div class="input-group">
+															<select class="select2 form-control" multiple="multiple" select2 ng-model="project.subsource_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in sub_sources" style="width:100%;" ng-disabled="disableAll">
+																<!--option value="" disabled selected>Select</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)" data-toggle="modal" data-target="#addvalues"  ng-click="AddListValue('SUB_SOURCE')"><i class="fa fa-plus"></i></a>
+															</div>
+															</a>
+														</div>
+													</div>
+
+													<!-- <div class="form-group" ng-controller="SelectGroup">
+														<label for="groups">Groups</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="project.groups" multiple="multiple" ng-options="group.group_id as group.group_name for group in groups"   style="width:100%;" ng-disabled="disableAll">
+																<option value="" disabled selected>Select</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)" ng-click="AddGroup()"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+ -->
+
+
+
+													<!-- <div class="form-group">
+														<label for="numof_building">Number of Buildings</label>
+														<input type="text" class="form-control numbers" id="numof_building" name="numof_building"  placeholder="Number of Buildings" ng-model="project.numof_building"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll"/>
+													</div>
+															
+													<div class="form-group">
+														<label for="numof_floor">Number of Floors</label>
+														<input type="text" class="form-control numbers" id="numof_floor" name="numof_floor"  placeholder="Number of Floors" ng-model="project.numof_floor" pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll"/>
+													</div> -->
+														
+															
+													
+															
+													
+															
+													<!-- <div class="form-group">
+														<label for="distfrm_school">Distance From School (KMS)</label>
+														<input type="text" class="form-control numbers" id="distfrm_school" name="distfrm_school"  placeholder="Distance From School (KMS)" ng-model="project.distfrm_school"  pattern="[0-9 .]+"  hide-zero ng-disabled="disableAll"/>
+													</div>
+															 -->
+													
+															
+													
+															
+													<!-- <div class="form-group">
+														<label for="youtube_link">Youtube Video Link</label>
+														<textarea class="form-control" id="youtube_link" name="youtube_link"  placeholder="Youtube Video Link" ng-model="project.youtube_link" ng-disabled="disableAll"></textarea>
+													</div> -->
+															
+													<!-- <div class="form-group">
+														<label for="rating">Rating</label>
+														<select class="select2 form-control"  id="rating" name="rating" select2 ng-model="project.rating"  data-placeholder="Select rating" style="width:100%;" ng-disabled="disableAll">
+															<option value="Not Specified" selected="selected">Not Specified</option>
+															<option value="Not Specified1" >Not Specified1</option>
+															<option value="Not Specified2" >Not Specified2</option>
+														</select>
+													</div>         -->
+													<!-- <div class="form-group">
+														<label for="review">Review</label>
+														<textarea class="form-control textarea" id="review" name="review"  placeholder="Review" ng-model="project.review" ng-disabled="disableAll"></textarea>
+													</div> -->
+													<div class="form-group"  ng-if="hasRoles.includes('Admin')  || hasRoles.includes('CRM Executive')">
+														<label for="share_on_website">Share On WebSite</label>
+														<select class="select2 form-control"  id="share_on_website" name="share_on_website" select2 ng-model="project.share_on_website"  data-placeholder="Select Share on Website" style="width:100%;" ng-disabled="disableAll">
+															<option value="Yes" selected="selected">Yes</option>
+															<option value="No" >No</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="share_on_99">Share On 99acers</label>
+														<select class="select2 form-control"  id="share_on_99" name="share_on_99" select2 ng-model="project.share_on_99"  data-placeholder="Select Share on 99acers" style="width:100%;" ng-disabled="disableAll">
+															<option value="Yes" selected="selected">Yes</option>
+															<option value="No" >No</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="acers_99_projid">99 Acers Proj ID</label>
+														<input type="text" class="form-control numbers" id="acers_99_projid" name="acers_99_projid"  placeholder="99 Acers Proj ID" ng-model="project.acers_99_projid" ng-disabled="disableAll"/>
+													</div> 
+													<div class="form-group">
+														<label for="task_id">Task ID</label>
+														<select class="select2 form-control" select2 ng-model="project.task_id" ng-options="task.task_id as task.task for task in task_list" style="width:100%;" ng-disabled="disableAll">					
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="proj_status">Proj Status</label>
+														<div class="input-group">
+															<select class="select2 form-control" select2 ng-model="project.proj_status" ng-options="dropdown.value as dropdown.display_value for dropdown in prop_statuss" style="width:100%;" ng-disabled="disableAll">
+																<option value="" disabled selected>Select</option>
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('PROP_STATUS')"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div> 
+
+													<div class="form-group">
+														
+															<label>
+																Is Project Inspected ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+																<input type="radio" id="pro_inspect" name="pro_inspect" ng-model="project.pro_inspect"  value="Yes" ng-disabled="disableAll" >&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																<input type="radio" id="pro_inspect" name="pro_inspect" ng-model="project.pro_inspect" value="No" ng-disabled="disableAll" >&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														
+													</div>
+													<div class="form-group">
+														
+															<label>
+																Marketing Project ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+																<input type="radio" id="market_project" name="market_project" ng-model="project.market_project"  value="1" ng-disabled="disableAll">&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																<input type="radio" id="market_project" name="market_project" ng-model="project.market_project" value="0" ng-disabled="disableAll" >&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane  active" id="properties">
+											<div class="box box-primary" style="border-top:0px;border-radius:0px;" id="propertiestable">
+												<div class="panel-group">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4 class="panel-title">
+																<!--<a class="btn btn-primary" href="javascript:void(0)" data-toggle="collapse" data-target="#collapse" id = "addbutton" ng-click="addproperty(project.project_id)">Add Multiple Property</a>-->
+																<a data-toggle="collapse" data-target="#collapse1" class="btn btn-primary" style="color:#ffffff;" ng-disabled="disableAll">Add Multiple Property</a>
+																<a class="btn btn-primary" style="color:#ffffff;" ng-disabled="disableAll" ng-click="copy_project_images(project.project_id)">Copy Project Images</a>
+																<a href="javascript:void(0)" class="btn" data-toggle="collapse" data-target="#collapse1" style="float:right;">X</a>
+															</h4>
+														</div>
+														<div id="collapse1" class="panel-collapse collapse" ng-if="disableAll==false">
+															<div class="panel-body">
+																<div id="multiproperty" >
+																	<form novalidate name="MultiAddNewForm" id="Multiadd-new-form" role="form" autocomplete="off">
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="proptype">Property Type<span class="required">*</span></label>
+																					<select class="select2 form-control" select2 id="proptype" name="proptype" select2 ng-model="multiproperty.proptype"  data-placeholder="Select proptype" style="width:100%;" tabindex="10" ng-change="change_propsubtype(multiproperty.proptype)" >
+																						<option value="Residential" selected="selected">Residential</option>
+																						<option value="Commercial">Commercial</option>
+																						<option value="Retail">Retail</option>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="propsubtype">Property Sub Type</label>
+																					<select class="form-control select2" select2  ng-model="multiproperty.propsubtype" ng-options="dropdown.value as dropdown.display_value for dropdown in propsubtypes" style="width:100%;" tabindex="11">
+																					</select>
+																				</div>
+																			</div>
+
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="building_name">Plot / Building</label>
+																					<input type="text" class="form-control" id="building_name" name="building_name"  placeholder="Plot / Building" ng-model="multiproperty.building_name" tabindex="12" />
+																				</div>
+																			</div>
+																			
+																			<div class="col-md-3">
+																				<div class="col-md-6" style="padding-left:0px;">
+																					<div class="form-group">
+																						<label for="wing">Wing</label>
+																						<input type="text" class="form-control" id="wing" name="wing" placeholder="Wing" ng-model="multiproperty.wing" tabindex="13"/>
+																					</div>
+																				</div>
+
+																				<div class="col-md-6"  style="padding-left:0px;">
+																					<div class="form-group">
+																						<label for="floor">Floor</label>
+																						<input type="text" class="form-control" id="floor" name="floor" placeholder="Floor" ng-model="multiproperty.floor" tabindex="14"/>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="rera_num">Rera No.</label>
+																					<input type="text" class="form-control" id="rera_num" name="rera_num"  placeholder="Rera No." ng-model="multiproperty.rera_num"  pattern="[A-Z0-9a-z ]{12}"   tabindex="40"/>
+																				</div>
+																			</div>
+																			<div class="col-md-3" style="margin-top:20px;">
+																				<div class="form-group">
+																					<div class="checkbox">
+																						<label>
+																							<input type="checkbox" id="multi_size" name="multi_size" ng-model="multiproperty.multi_size">Multi Sizes Available 
+																						</label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-3" ng-if="multiproperty.proptype=='Residential' ">
+																				<div class="form-group">
+																					<label for="bedrooms">Bedrooms</label>
+																					<input type="text" class="form-control numbers" id="bedrooms" name="bedrooms"  placeholder="Bedrooms" ng-model="multiproperty.bedrooms" pattern="[0-9 .]+" hide-zero  tabindex="42"/>
+																				</div>
+																			</div>
+																			<div class="col-md-3" ng-if="multiproperty.proptype=='Residential' ">
+																				<div class="form-group">
+																					<label for="bathrooms">Bathrooms</label>
+																					<input type="text" class="form-control numbers" id="bathrooms" name="bathrooms"  placeholder="Bathrooms" ng-model="multiproperty.bathrooms" pattern="[0-9 .]+" hide-zero  tabindex="43"/>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="sale_area">Saleable Area</label>
+																					<input type="text" class="form-control numbers" id="sale_area" name="sale_area"  placeholder="Saleable Area" ng-model="multiproperty.sale_area" pattern="[0-9 .]+"  hide-zero  tabindex="20" />
+																				</div>
+																			</div>
+																			<div class="col-md-3" ng-if="multiproperty.multi_size=='1' ">
+																				<div class="form-group">
+																					<label for="sale_area2">Saleable Area Range</label>
+																					<input type="text" class="form-control numbers" id="sale_area2" name="sale_area2"  placeholder="Saleable Area" ng-model="multiproperty.sale_area2"  pattern="[0-9 .]+" hide-zero  tabindex="21" />
+																				</div>
+																			</div>
+																			<div class="col-md-3" >
+																				<div class="form-group" style="margin-top:25px;">
+																					<select  class="select2 form-control" id="pro_sale_para" name="pro_sale_para" select2 ng-model="multiproperty.pro_sale_para"  data-placeholder="Select pro_sale_para" style="width:100%;float:left;"  ng-init="multiproperty.pro_sale_para='Sq Ft'">
+																						<option value="">Not Specified</option>
+																						<option value="Sq Ft" selected="selected">Sq Ft</option>
+																						<option value="Sq Mt" >Sq Mt</option>
+																						<option value="Acres">Acres</option>
+																						<option value="Bigha I">Bigha I</option>
+																						<option value="Bigha II">Bigha II</option>
+																						<option value="Kottah (B)">Kottah (B)</option>
+																						<option value="Marla">Marla</option>
+																						<option value="Cents">Cents</option>
+																						<option value="Perch">Perch</option>
+																						<option value="Guntha">Guntha</option>
+																						<option value="Area">Area</option>
+																						<option value="Chataks">Chataks</option>
+																						<option value="Rood">Rood</option>
+																						<option value="Aankadam">Aankadam</option>
+																						<option value="Grounds">Grounds</option>
+																						<option value="Kanal">Kanal</option>
+																						<option value="Hectares">Hectares</option>
+																						<option value="Biswa I">Biswa I</option>
+																						<option value="Biswa II">Biswa II</option>
+																						<option value="Sq Yards">Sq Yards</option>
+																					</select>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="carp_area">Carpet Area</label>
+																					<input type="text" class="form-control numbers" id="carp_area" name="carp_area"  placeholder="Carpet Area" ng-model="multiproperty.carp_area"  pattern="[0-9 .]+" hide-zero  tabindex="30" />
+																				</div>
+																			</div>
+																			<div class="col-md-3" ng-if="multiproperty.multi_size=='1' ">
+																				<div class="form-group">
+																					<label for="carp_area2">Carpet Area Range</label>
+																					<input type="text" class="form-control numbers" id="carp_area2" name="carp_area2" placeholder="Carpet Area Range" ng-model="multiproperty.carp_area2"  pattern="[0-9 .]+" hide-zero  tabindex="31"/>
+																				</div>
+																			</div>
+																			<div class="col-md-3" >
+																				<div class="form-group"  style="margin-top:25px;">
+																					<select  class="select2 form-control" id="carp_area_para" name="carp_area_para" select2 ng-model="multiproperty.carp_area_para"  data-placeholder="Select carp_area_para" style="width:100%;float:left;margin-top:25px;"  ng-init="multiproperty.carp_area_para='Sq Ft'" >
+																						<option value="">Not Specified</option>
+																						<option value="Sq Ft" selected="selected">Sq Ft</option>
+																						<option value="Sq Mt" >Sq Mt</option>
+																						<option value="Acres">Acres</option>
+																						<option value="Bigha I">Bigha I</option>
+																						<option value="Bigha II">Bigha II</option>
+																						<option value="Kottah (B)">Kottah (B)</option>
+																						<option value="Marla">Marla</option>
+																						<option value="Cents">Cents</option>
+																						<option value="Perch">Perch</option>
+																						<option value="Guntha">Guntha</option>
+																						<option value="Area">Area</option>
+																						<option value="Chataks">Chataks</option>
+																						<option value="Rood">Rood</option>
+																						<option value="Aankadam">Aankadam</option>
+																						<option value="Grounds">Grounds</option>
+																						<option value="Kanal">Kanal</option>
+																						<option value="Hectares">Hectares</option>
+																						<option value="Biswa I">Biswa I</option>
+																						<option value="Biswa II">Biswa II</option>
+																						<option value="Sq Yards">Sq Yards</option>
+																					</select>
+																				</div>
+																			</div>
+																		</div>
+																		
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="exp_price">Exp.Price</label>
+																					<div class="input-group">
+																						<input type="text" class="form-control numbers" id="exp_price" name="exp_price" placeholder="Price" ng-model="multiproperty.exp_price" pattern="[0-9 .]+" hide-zero  tabindex="22" ng-change="calculate_loading('exp_price')" style="float:left;"/>
+																						<span class="input-group-addon" style="border:0px;padding-top:0px;">
+																							<select  class="select2 form-control" id="exp_price_para" name="exp_price_para" select2 ng-model="multiproperty.exp_price_para"  data-placeholder="Select exp_price_para" style="float:left;width:100%;" ng-init="multiproperty.exp_price_para='Abs'" ng-change="calculate_loading('exp_price_para')">
+																							<option value="Abs" >Abs</option>
+																							<option value="Th" >Th</option>
+																							<option value="Lac" >Lac</option>
+																							<option value="Cr" >Cr</option>
+																							</select>
+																						</span>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-md-3" ng-if="multiproperty.multi_size=='1' ">
+																				<div class="form-group">
+																					<label for="exp_price2">Exp.Price Range</label>
+																					<div class="input-group">
+																						<input type="text" class="form-control numbers" id="exp_price2" name="exp_price2" placeholder="Exp. Price Range" ng-model="multiproperty.exp_price2" pattern="[0-9 .]+" hide-zero  tabindex="23" style="float:left;"/>
+																						<span class="input-group-addon" style="border:0px;padding-top:0px;">
+																							<select  class="select2 form-control" id="exp_price2_para" name="exp_price2_para" select2 ng-model="multiproperty.exp_price2_para"  data-placeholder="Select exp_price2_para" style="float:left;width:100%;" ng-init="multiproperty.exp_price2_para='Abs'" ng-change="calculate_loading('exp_price2_para')">
+																								<option value="Abs" >Abs</option>
+																								<option value="Th" >Th</option>
+																								<option value="Lac" >Lac</option>
+																								<option value="Cr" >Cr</option>
+																							</select>
+																						</span>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-6">
+																				<div class="form-group" ng-show="project.project_for == 'Sale'">
+																					<label for="price_unit">Price per Sq Ft - Saleable Area</label>
+																					<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+																						<input type="text" class="form-control numbers" id="price_unit" name="price_unit"  placeholder="Price per Sq Ft - Saleable Area" ng-model="multiproperty.price_unit" ng-change="calculate_loading('price_unit')" style="width:68%;float:left;margin-right: 10px; " />
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-6">
+																				<div class="form-group" ng-show="project.project_for == 'Sale'">
+																					<label for="price_unit_carpet">Price per Sq Ft - Carpet Area</label>
+																					<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+																						<input type="text" class="form-control numbers" id="price_unit_carpet" name="price_unit_carpet"  placeholder="Price per Sq Ft - Carpet Area" ng-model="multiproperty.price_unit_carpet" ng-change="calculate_loading('price_unit_carpet')" style="width:68%;float:left;margin-right: 10px; "/>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-6">
+																				<div class="form-group" ng-show="project.project_for == 'Rent' ">
+																					<label for="price_unit">Rent per Sq Ft - Saleable Area</label>
+																					<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+																						<input type="text" class="form-control numbers" id="price_unit" name="price_unit"  placeholder="Price per Sq Ft - Saleable Area" ng-model="multiproperty.price_unit"  ng-change="calculate_loading('price_unit')" style="width:68%;float:left;margin-right: 10px; " />
+																				
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-6">
+																				<div class="form-group" ng-show="project.project_for == 'Rent'">
+																					<label for="price_unit_carpet">Rent per Sq Ft - Carpet Area</label>
+																					<div class="col-md-12" style="padding-left:0px; margin-bottom: 15px;">
+																						<input type="text" class="form-control numbers" id="price_unit_carpet" name="price_unit_carpet"  placeholder="Price per Sq Ft - Carpet Area" ng-model="multiproperty.price_unit_carpet"  ng-change="calculate_loading('parice_unit_carpet')" style="width:68%;float:left;margin-right: 10px; "/>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="pack_price">Package Price</label>
+																					
+																					<div class="input-group">
+
+																						<input type="text" class="form-control numbers" id="pack_price" name="pack_price"  placeholder="Package Price" ng-model="multiproperty.pack_price" pattern="[0-9 .]+" hide-zero  tabindex="41" style="float:left;"  />
+																						<span class="input-group-addon" style="border:0px;padding-top:0px;">
+																							<select  class="select2 form-control" id="pack_price_para" name="pack_price_para" select2 ng-model="multiproperty.pack_price_para"  data-placeholder="Select pack_price_para" style="width:100%;float:left;" ng-init="multiproperty.pack_price_para='Abs'" ng-change="calculate_loading('pack_price_para')">
+																							<option value="Abs" >Abs</option>
+																							<option value="Th" >Th</option>
+																							<option value="Lac" >Lac</option>
+																							<option value="Cr" >Cr</option>
+																							</select>
+																						</span>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="floor_rise">Floor Rise (PSF)</label>
+																					<input type="text" class="form-control numbers" id="floor_rise" name="floor_rise"  placeholder="Floor Rise (PSF)" ng-model="multiproperty.floor_rise"  pattern="[0-9 .]+"  hide-zero/>
+																				</div>
+																			</div>
+																		</div>
+
+
+																		<div class="row">
+																			<div class="col-md-3">
+																				<div class="form-group">
+																					<label for="oth_charges">Other Charges</label>
+																					<input type="text" class="form-control numbers" id="oth_charges" name="oth_charges"  placeholder="Other Charges" ng-model="multiproperty.oth_charges"  pattern="[0-9 .]+" hide-zero  tabindex="40"/>
+																				</div>
+																			</div>
+																		</div>
+																		
+																		<div class="row">
+																			<div class="col-md-4">
+																				<div class="form-group">
+																					<label>No.of Properties</label>
+																					<input type="text" class="form-control numbers" id="no_property" name="no_property"  placeholder="No of properties" ng-model="multiproperty.no_property" pattern="[0-9 .]+" hide-zero  tabindex="60" />
+																				</div>
+																			</div>
+																			<div class="col-md-3" style="margin-top:24px;">	
+																				<div class="form-group">
+																					<button class="btn btn-primary" ng-disabled="MultiAddNewForm.$invalid || isUnchanged(multiproperty)" id="Multiadd-new-btn" ng-click="multiproperty_add(multiproperty)">Add Properties</button>
+																					<a href="javascript:void(0)" class="btn" data-toggle="collapse" data-target="#collapse1" >Cancel</a>
+																				</div>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="box-body table-responsive" ng-if="properties.length">
+													<table class="table table-bordered table-striped" datatable-setup="" >
+														<thead>
+															<tr>
+																<th</th>
+															</tr>
+														</thead>
+														  <tbody>
+                            <!--<tr ng-repeat="property in properties | filter: projectsearch"  style="height:260px;min-height:260px;">-->
+                            <!--tr ng-repeat="property in properties" style="height:260px;min-height:260px;">
+                                <td style="width:100%">
+                                    <div class="row">
+                                        <div class="col-md-3" style="min-width:250px;">
+                                            <div class="cornerno" ng-if="property.property_image_count>0">{{property.property_image_count}}</div>
+                                            <div class="prostatus" ng-if="property.proj_status">{{property.proj_status}}</div>
+                                            <a href="javascript:void(0)"  ng-click="showimages(property.property_id,property.project_name)"><img src="dist/img/no_image.jpg" ng-if="property.filenames==null " style="width:245px; height:185px;" /> 
+                                            <img src="api/v1/uploads/property/thumb/{{property.filenames}}" ng-if="property.filenames!=null " style="width:245px; height:185px;" /> </a>
+                                            <br>
+                                            <!-- <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{property.property_id}}"/></label></div> -->
+                                            <!--p ><span ng-if="property.modified_date!='00-00-0000 00:00' " >Last Updated:{{property.modified_date}}</span><span ng-if="property.modified_date=='00-00-0000 00:00'">Created On:{{property.created_date}}</span></p><!-- Edited:&nbsp; a month ago </p>-->
+                                        <!--/div>
+                                        <div class="col-md-6">
+                                            <a class="ex1" href="#/properties_edit/{{property.property_id}}">
+                                                <p style="font-size:20px;color:#ff0000;margin-top:5px;">
+                                                    <span ng-if="property.project_name">{{property.project_name}}</span>
+                                                    <span ng-if="!property.project_name">{{property.building_name}}</span>
+                                                    <span ng-if="property.project_name || property.building_name">:</span>{{property.propsubtype}} for {{property.property_for}}
+                                                </p>
+                                                </a><br>
+                                            <p style="font-size:16px";>
+                                                <b>Locality :</b>{{property.locality}} 
+                                                
+                                                 <span><b>Area :</b>{{property.area_name}} </span>
+                                                 <span><b>City :</b>{{property.city}}</span>
+                                                  
+                                              </p>
+                                              <p style="font-size:16px";>
+                                                <span style="font-weight:bold;margin-right:5px;">Assigned To:</span>{{property.assign_to}}   
+                                                 <span style="font-weight:bold;margin-right:5px;text-overflow: ellipsis;line-height:normal;">Teams:</span>{{property.team}}
+                                             </p>
+                                            <p>
+                                                <span style="font-weight:bold;margin-right:5px;">Project Contact:</span>{{property.project_contact}} 
+                                            </p>
+                                             <p style="font-size:16px";>
+                                                <span style="font-weight:bold;margin-right:5px;">Price:</span>{{showAmount(property.exp_price)}}&nbsp;
+                                                <span style="font-weight:bold;margin-right:5px;">&nbsp;Total Area:</span>&nbsp;{{property.sale_area}}&nbsp;&nbsp;{{property.pro_sale_para}}
+                                                <span style="font-weight:bold;margin-right:5px;">&nbsp;Carpet Area:</span>&nbsp;{{property.carp_area}}&nbsp;&nbsp;{{property.carp_area_para}}
+                                            </p>
+                                            <p style="font-size:16px";> 
+                                                <span ng-if="property.propfrom == 'Developer'">
+                                                 <b> Rera No. :</b> {{property.rera_num}} </span> 
+                                                 <span ng-if="property.possession_date!='00-00-0000' "><span class="dot">.</span> <b>Possession Date:</b>{{property.possession_date}}</span>
+                                                  <!--<span ng-if="property.con_status!=null "><span class="dot">.</span> <b>{{property.con_status}}</b></span>-->
+                                              <!--/p>
+                                            <p ng-if="property.agreement_stage"><span style="font-weight:bold;margin-right:5px;">Agreement Stage:</span>{{property.agreement_stage)}}</p>
+                                        </div>
+                                        <div class="col-md-3" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+                                            <a class="ex1" href="#/properties_edit/{{property.property_id}}"><p style="font-size:16px;text-align:center;color:#ff0000">Property ID:{{property.proptype | uppercase}}_{{property.property_id}}</p></a><br>
+                                            <a class="ex2" href="#/contacts_edit/{{property.dev_owner_id}}"><div style="font-size: 27px;text-align: center;background-color: #f72424;color: #ffffff;border-radius: 25px;width: 40px;height: 40px;margin-left:100px;">{{property.f_char}}</div><br>
+                                            <p style="font-size:16px;text-align:center;line-height:normal">
+                                                <span ng-if="property.contact_off=='Developer'"><b>{{property.contact_off}}</b> : {{property.company_name}}
+                                                </span>
+                                                <span ng-if="property.contact_off=='Client' && property.company_name"><b>{{property.contact_off}}</b> : {{property.company_name}}
+                                                </span><br>
+                                            
+                                                <span ng-if="property.owner_name"><b>Contact Person:</b>&nbsp;{{property.owner_name}}</span>
+                                            </p></a>
+                                            <p style="font-size:16px;text-align:center;">
+                                               <a class="ex2" href="javascript:void(0)" data-toggle="modal" data-target="#sendsms" ng-click="SendSMS()">{{property.mob_no}}</a>
+                                            </p>
+                                            <p style="font-size:14px;text-align:center;">
+                                                <a class="ex2" href="#/mails_client/property/{{property.property_id}}">{{property.email}}</a>
+                                            </p><br>
+                                                <p style="text-align:center;"> 
+                                                    <div class="dropdown" > 
+                                                        <a class="btn btn-primary" href="#/mails_client/property/{{property.property_id}}" style="margin:0px;margin-left:0px;padding:7px;" >Send Email &nbsp;&nbsp;</a>
+                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#sendsms" class="btn btn-primary" style="margin:10px;" ng-click="SendSMS()">Send SMS</a>
+                                                    </div>
+                                                     </p> 
+                                        
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;width:99%;">
+                                           <!--  <div class="col-md-3">
+                                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#enqcollapse{{property.property_id}}" ng-click="pmatchingenquiries(property.property_id)" ng-if="hasPermissions.includes('View')">Matching Enquiries &nbsp;<i class="fa fa-angle-down"></i></a>
+                                             </div>
+                                              -->
+                                            <!--  <div class="col-md-9" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-if="hasPermissions.includes('Update')">Share on Website</a>
+                                                    <a class="btn btn-primary" href="#/activity_add/property/{{property.property_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" ng-if="hasPermissions.includes('Create')">Create Activity</i></a> -->
+                                                    <!--<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" >RMarket</a>-->
+                                                    <!--a class="btn btn-primary" data-toggle="modal" data-target="#changeproperty"  ng-click="changeproperty(property.property_id)" style="margin:10px;margin-right:2px;float:right;margin-top:6px;" ng-if="update_rights" ><i class="glyphicon glyphicon-pencil"  ></i>&nbsp;Edit </a>
+                                                   <!--  <td><a href="javascript:void(0)" data-toggle="modal" data-target="#changeproperty" ng-click="changeproperty(property.property_id)" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td> -->
+                                                    <!-- <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-if="hasPermissions.includes('Update')" ng-click="deal_done(property.property_id)" >Deal Close</a> -->
+                                                    <!--<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" >More &nbsp;<i class="fa fa-angle-down"></i></a>-->
+                                                <!--/div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div id="enqcollapse{{property.property_id}}" class="panel-collapse collapse html_content" compile-html="enqtrustedHtml_{{property.property_id}}">Nothing to show</div>
+                                        </div>
+                                    </div>
+								</td-->
+							<tr ng-repeat="property in properties" >
+								<td style="width:100%;" >
+									<!--td style="width:100%"-->
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-3" style="min-width:250px;">
+												<div class="cornerno" ng-if="property.property_image_count>0">{{property.property_image_count}}</div>
+												<div class="prostatus" ng-if="property.proj_status">{{property.proj_status}}</div>
+												<div class="dropdown hidden-xl hidden-lg" style="position: absolute;">
+													<button  class="dropbtn glyphicon glyphicon-option-vertical" style="padding: 5px;
+													font-size: 14px;background-color: #3362e6;"></button>
+													<div  class="dropdown-content" style="z-index: 99;">
+														<a href="javascript:void(0)" style="margin:5px;margin-right:2px;margin-top:3px;" data-toggle="collapse" data-target="#enqcollapse{{property.property_id}}" ng-click="pmatchingenquiries(property.property_id)" ng-if="view_rights">Matching Enquiries &nbsp;<i class="fa fa-angle-down"></i></a>    
+	
+														<a  href="#/activity_add/property/{{property.property_id}}" style="margin:5px;margin-right:2px;margin-top:3px;" >Create Activity</a>
+															
+														<a  href="#/mails_client/property/{{property.property_id}}" style="margin:5px;margin-right:2px;margin-top:3px;">Send Email &nbsp;&nbsp;</a>
+															
+														<a href="javascript:void(0)" data-toggle="modal" data-target="#sendsms" style="margin:5px;margin-right:2px;margin-top:3px;" ng-click="SendSMS()">Send SMS</a> 
+													</div>
+												</div>
+												<a href="javascript:void(0)"  ng-click="showimages(property.property_id,property.project_name)"><img class="img_size" src="dist/img/no_image.jpg" ng-if="property.filenames==null " style="height:185px;" /> 
+												<img class="img_size" src="api/v1/uploads/property/thumb/{{property.filenames}}" ng-if="property.filenames!=null " style="height:185px;" /> </a>
+												<br>
+												 <a class="ex1 hidden-lg hidden-xl" style="position: absolute; top:125px;" href="#/properties_edit/{{property.property_id}}">
+													<p style="font-size:16px;text-align:center;color:#ffffff;font-weight: bold;">{{cat | uppercase}}_{{property.property_id}}</p></a>   
+	
+												   <div class="col-md-3 hidden-xl hidden-lg" style=" position: absolute; top: 155px;right: 0px">
+												 <a href="tel:{{property.mob_no}}"><i class="fa fa-phone-square" style="font-size:30px; color: #2b57a0;"></i>&nbsp;</a>
+												</div>
+												 
+												<div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{property.property_id}}"/></label>
+												<span ng-if="property.modified_date!='00-00-0000 00:00' " style="vertical-align: super;" >Last Updated:{{property.modified_date}}</span><span ng-if="property.modified_date=='00-00-0000 00:00'"  style="vertical-align: super;">Created On:{{property.created_date}}</span></div><!-- Edited:&nbsp; a month ago </p>-->
+											</div>
+											<div class="col-md-6">
+												<a class="ex1" href="#/properties_edit/{{property.property_id}}">
+													<p style="font-size:20px;color:#2b57a0; margin-top:5px;">
+														<span ng-if="property.project_name">{{property.project_name}}</span>
+														<span ng-if="!property.project_name">{{property.building_name}}</span>
+														<span ng-if="property.project_name || property.building_name">:</span><span ng-if="property.bedrooms>0">{{property.bedrooms}}BHK &nbsp;</span>{{property.propsubtype}} for {{property.property_for}}
+													</p>
+												</a>
+													<p class="hidden-xs hidden-sm" style="font-size:14px;line-height:normal;";>
+														<span ng-if="property.wing">{{property.wing}},&nbsp;</span><span ng-if="property.unit">{{property.unit}},&nbsp;</span><span ng-if="property.floor">{{property.floor}},&nbsp;</span><span ng-if="property.road_no">{{property.road_no}},&nbsp;</span><span ng-if="!property.project_name">{{property.building_name}},&nbsp;</span><span ng-if="property.landmark">{{property.landmark}},&nbsp;</span><span ng-if="property.locality">{{property.locality}},&nbsp;</span><span ng-if="property.area_name">{{property.area_name}},&nbsp;</span><span ng-if="property.city">{{property.city}}</span></p>
+													<br>
+												<div class="row">
+												<div class="col-md-6">  
+												  <p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom:10px;";>
+													<span style="font-weight:bold;margin-right:5px;">Assigned To:</span>{{property.assign_to}} </p> 
+												</div>
+												<div class="col-md-6">  
+													<p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom:10px;">
+													 <span style="font-weight:bold;margin-right:5px;text-overflow: ellipsis;">Teams:</span>{{property.team}}
+													</p>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-md-4">
+												 <p class="hidden-xs hidden-sm" style="font-size:14px;">
+													<span style="font-weight:bold;margin-right:5px;">Price:</span></p>
+												</div>
+												<div class="col-md-4">
+													<p><span style="font-weight:bold;margin-right:5px;font-size:14px;">Total Area:</span>
+													</p>
+												</div>
+												<div class="col-md-4">
+													<p><span style="font-weight:bold;margin-right:5px;font-size:14px;">Carpet Area:</span>
+													</p>
+												</div>
+												</div>
+												<div class="row">
+												<div class="col-md-4">
+													<p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom: 10px;">
+													{{(property.exp_price)}}&nbsp;&nbsp;{{property.exp_price_para}}&nbsp;&nbsp;&nbsp;&nbsp;@{{property.price_unit}}/sqft</p>
+												</div>
+												<div class="col-md-4">
+													<p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom: 10px;">
+													{{property.sale_area}}&nbsp;-&nbsp;{{property.pro_sale_para}}
+													</p>
+												</div>
+												<div class="col-md-4">
+													<p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom: 10px;">
+													{{property.carp_area}}&nbsp;-&nbsp;{{property.carp_area_para}}
+													</p>
+												</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<!--p class="hidden-xs hidden-sm" style="font-size:16px;";>
+															{{property.amenities_avl}}&nbsp;
+														</p-->
+														<p class="hidden-xs hidden-sm" style="font-size:15px;line-height: normal;" >
+															<span ng-if="property.floor" >{{property.floor}}&nbsp;</span>
+															<span ng-if="property.area_name" >{{property.area_name}},&nbsp;</span>
+														</p>
+														<p class="hidden-xs hidden-sm" style="font-size:15px;line-height: normal;" >
+															<span ng-if="property.door_fdir" class="showbullet">Door Facing:{{property.door_fdir}}&nbsp;&nbsp;</span><span ng-if="property.furniture" class="showbullet">{{property.furniture}}&nbsp;&nbsp;&nbsp;</span><span ng-if="property.pro_inspect" class="showbullet">Inspected &nbsp;{{property.pro_inspect}}&nbsp;&nbsp;</span><span ng-if="property.numof_floor" class="showbullet">Total Floor :{{property.numof_floor}}&nbsp;&nbsp;</span><span ng-if="property.washrooms" class="showbullet">Washrooms :{{property.washrooms}}&nbsp;&nbsp;</span><span ng-if="property.keywith" class="showbullet">Keys:{{property.keywith}}&nbsp;&nbsp;</span><span ng-if="property.parking" class="showbullet">Parking :{{property.parking}}&nbsp;&nbsp;</span><span ng-if="property.car_park" >{{property.car_park}}&nbsp;&nbsp;</span>
+															<span ng-if="property.occu_certi" class="showbullet">OC :{{property.occu_certi}}&nbsp;&nbsp;</span>
+														</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<p class="hidden-xs hidden-sm" style="font-size:16px";> 
+															<span ng-if="property.propfrom == 'Developer'">
+															<b> Rera No. :</b> {{property.rera_num}} </span> </p>
+													</div>
+													<div class="col-md-6">
+															<p><span ng-if="property.possession_date!='00-00-0000' "><span class="showbullet"></span> <b>Possession Date:</b>{{property.possession_date}}</span>
+															<!--<span ng-if="property.con_status!=null "><span class="dot">.</span> <b>{{property.con_status}}</b></span>-->
+														</p>
+													</div>
+												</div>
+												<p ng-if="property.agreement_stage"><span style="font-weight:bold;margin-right:5px;">Agreement Stage:</span>{{property.agreement_stage)}}</p>
+											</div>
+											<div class="col-md-3 hidden-xs hidden-sm" style="text-align:center;padding:5px;border-left:1px solid #000000;">
+												<a class="ex1" href="#/properties_edit/{{property.property_id}}"><p style="font-size:16px;text-align:center;color:#2b57a0">Property ID:{{cat | uppercase}}_{{property.property_id}}</p></a><br>
+												<a class="ex2" href="#/contacts_edit/{{property.dev_owner_id}}"><div style="font-size: 27px;text-align: center;background-color: #2b57a0;color: #ffffff;border-radius: 25px;width: 40px;height: 40px;margin-left:100px;">{{property.f_char}}</div><br>
+												<p  ng-if="property.contact_off=='Client'"><b>Owner</b></p>
+												<p  ng-if="property.contact_off!='Client'"><b>{{property.contact_off}}</b></p>
+												<p style="font-size:16px;text-align:center;line-height:normal">
+													<span ng-if="property.contact_off=='Developer'"><b>{{property.contact_off}}</b> : {{property.company_name}}
+													</span>
+													<span ng-if="property.contact_off=='Client' && property.company_name"><b>{{property.contact_off}}</b> : {{property.company_name}}
+													</span>                                            
+													<span ng-if="property.owner_name"><b>Contact Person:</b>&nbsp;{{property.owner_name}}</span>
+												</p></a>
+												<p style="font-size:16px;text-align:center;">
+												   <a class="ex2" href="javascript:void(0)" data-toggle="modal" data-target="#sendsms" ng-click="SendSMS()">{{property.mob_no}}</a>
+												</p>
+												<p style="font-size:14px;text-align:center;">
+													<a class="ex2" href="#/mails_client/property/{{property.property_id}}">{{property.email}}</a>
+												</p><br>
+													<p style="text-align:center;"> 
+														<div class="dropdown" > 
+															<a class="btn btn-primary" href="#/mails_client/property/{{property.property_id}}" style="margin:0px;margin-left:0px;padding:7px;" >Send Email &nbsp;&nbsp;</a>
+															 <a href="javascript:void(0)" data-toggle="modal" data-target="#sendsms" class="btn btn-primary" style="margin:10px;" ng-click="SendSMS()">Send SMS</a>
+														</div>
+														 </p> 
+											
+											</div>
+										</div>
+										<div class="row hidden-xs hidden-sm">
+											<div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;">
+												<div class="col-md-3">
+													<a class="btn btn-primary" href="#/enquiries_list/{{cat}}/{{property.property_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" ng-if="view_rights"   ng-mouseover="me_count(property.property_id)">Matching Enquiries<!--&nbsp;<i class="fa fa-angle-down"></i>--></a><p id="me{{property.property_id}}" style="font-size: 15px;text-align: center;background-color: #2b57a0;color: #ffffff;border-radius: 12px;width: 22px;height: 22px;float:right;margin:10px;padding:4px;margin-right:30px;"  ng-mouseover="me_count(property.property_id)">.</p>
+													<!--a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#enqcollapse{{property.property_id}}" ng-click="pmatchingenquiries(property.property_id)" ng-if="view_rights">Matching Enquiries &nbsp;<i class="fa fa-angle-down"></i></a-->
+												 </div>
+												 
+												 <div class="col-md-9" >
+													<div style="float:right;">
+														
+														<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="share_on_website(property.property_id)" ng-if="property.share_on_website!='Yes' && (hasRoles.includes('Admin')  || hasRoles.includes('CRM Executive'))" >Share on Website</a>
+	
+														<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;background-color:green;" ng-if="property.share_on_website=='Yes'" >Share on Website</a>
+														
+														<a class="btn btn-primary" href="#/activity_add/property/{{property.property_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" >Create Activity</i></a>
+														<a class="btn btn-primary" href="#/activity_list/property/{{property.property_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" >Related Activities</i></a>
+														<!--<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" >RMarket</a>-->
+														
+
+														<a class="btn btn-primary" data-toggle="modal" data-target="#changeproperty"  ng-click="changeproperty(property.property_id)" style="margin:10px;margin-right:2px;float:right;margin-top:6px;" ng-if="update_rights" ><i class="glyphicon glyphicon-pencil"  ></i>&nbsp;Edit </a>
+
+														<a class="btn btn-primary" href="#/agreement_add/property/{{property.property_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" >Deal Close</a>
+														<!--<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" >More &nbsp;<i class="fa fa-angle-down"></i></a>-->
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel-group">
+											<div class="panel panel-default">
+												<div id="enqcollapse{{property.property_id}}" class="panel-collapse collapse html_content" compile-html="enqtrustedHtml_{{property.property_id}}">Nothing to show</div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							
+                        </tbody>
+													</table>    
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+								<div class="form-group" ng-if="disableAll==false">
+									<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(project)" id="add-new-btn" ng-click="project_update(project)" ng-if="update_rights" >Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+									<button class="btn btn-danger" ng-click="project_delete(project)" ng-if="delete_rights" >Delete <span class="glyphicon glyphicon-trash"></span></button>
+									<a href="#/project_list/0" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+
+<!--div id="multiproperty" class="modal" role="dialog">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+		<div class="modal-dialog modal-lg" style="width:65%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Multiple Properties</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row" id="propertydetails">
+								<div class="col-md-12">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="proptype">Property Type</label>
+											<select class="select2 form-control" select2 id="proptype" name="proptype" ng-model="multiproperty.proptype"  data-placeholder="Select proptype" style="width:100%;" tabindex="10">
+												<option value="Residential" selected="selected">Residential</option>
+												<option value="Commercial">Commercial</option>
+												<option value="Retail">Retail</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="sale_area">Saleable Area</label>
+											<input type="text" class="form-control numbers" id="sale_area" name="sale_area"  placeholder="Saleable Area" ng-model="multiproperty.sale_area" pattern="[0-9 .]+"  hide-zero  tabindex="20" />
+										</div>
+										<div class="form-group">
+											<label for="carp_area">Carpet Area</label>
+											<input type="text" class="form-control numbers" id="carp_area" name="carp_area"  placeholder="Carpet Area" ng-model="multiproperty.carp_area"  pattern="[0-9 .]+" hide-zero  tabindex="30"/>
+										</div>
+										<div class="form-group">
+											<label for="oth_charges">Other Charges</label>
+											<input type="text" class="form-control numbers" id="oth_charges" name="oth_charges"  placeholder="Other Charges" ng-model="multiproperty.oth_charges"  pattern="[0-9 .]+" hide-zero  tabindex="40"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="propsubtype">Property Sub Type</label>
+											<select class="form-control select2" select2  ng-model="multiproperty.propsubtype" ng-options="dropdown.value as dropdown.display_value for dropdown in propsubtypes" style="width:100%;" tabindex="11">
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="sale_area_upside">Saleable Upside</label>
+											<input type="text" class="form-control numbers" id="sale_area_upside" name="sale_area_upside"  placeholder="Saleable Area Upside" ng-model="multiproperty.sale_area_upside"  pattern="[0-9 .]+" hide-zero  tabindex="21"/>
+											<!--<select id="area_parameter" name="area_parameter" ng-model="project.area_parameter"  data-placeholder="Select area_parameter">
+												<option value="">Not Specified</option>
+												<option value="Sq Ft" selected="selected">Sq Ft</option>
+												<option value="Sq Mt" >Sq Mt</option>
+												<option value="Acres">Acres</option>
+												<option value="Bigha I">Bigha I</option>
+												<option value="Bigha II">Bigha II</option>
+												<option value="Kottah (B)">Kottah (B)</option>
+												<option value="Marla">Marla</option>
+												<option value="Cents">Cents</option>
+												<option value="Perch">Perch</option>
+												<option value="Guntha">Guntha</option>
+												<option value="Area">Area</option>
+												<option value="Chataks">Chataks</option>
+												<option value="Rood">Rood</option>
+												<option value="Aankadam">Aankadam</option>
+												<option value="Grounds">Grounds</option>
+												<option value="Kanal">Kanal</option>
+												<option value="Hectares">Hectares</option>
+												<option value="Biswa I">Biswa I</option>
+												<option value="Biswa II">Biswa II</option>
+												<option value="Sq Yards">Sq Yards</option>
+											</select>-->										
+										<!--/div>
+										<div class="form-group">
+											<label for="carp_area_upside">Carpet Upside</label>
+											<input type="text" class="form-control numbers" id="carp_area_upside" name="carp_area_upside" placeholder="Carpet Area Upside" ng-model="multiproperty.carp_area_upside"  pattern="[0-9 .]+" hide-zero  tabindex="31"/>
+										</div>
+										<div class="form-group">
+											<label for="pack_price">Package Price</label>
+											<input type="text" class="form-control numbers" id="pack_price" name="pack_price"  placeholder="Package Price" ng-model="multiproperty.pack_price" pattern="[0-9 .]+" hide-zero  tabindex="41" />
+										</div>
+										
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="building_plot">Plot / Building</label>
+											<input type="text" class="form-control numbers" id="building_plot" name="building_plot"  placeholder="Plot / Building" ng-model="multiproperty.building_plot" tabindex="12" />
+										</div>
+										<div class="form-group">
+											<label for="exp_price">Price</label>
+											<input type="text" class="form-control numbers" id="exp_price" name="exp_price" placeholder="Price" ng-model="multiproperty.exp_price" pattern="[0-9 .]+" hide-zero  tabindex="22" />
+										</div>
+										<div class="form-group">
+											<label for="price_unit">Price/Unit</label>
+											<input type="text" class="form-control numbers" id="price_unit" name="price_unit" placeholder="Price Unit" ng-model="multiproperty.price_unit" pattern="[0-9 .]+" hide-zero  tabindex="32" />
+										</div>
+										<div class="form-group">
+											<label for="bedrooms">Bedrooms</label>
+											<input type="text" class="form-control numbers" id="bedrooms" name="bedrooms"  placeholder="Bedrooms" ng-model="multiproperty.bedrooms" pattern="[0-9 .]+" hide-zero  tabindex="42"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="col-md-6" style="padding-left:0px;">
+											<div class="form-group">
+												<label for="wing">Wing</label>
+												<input type="text" class="form-control" id="wing" name="wing" placeholder="Wing" ng-model="multiproperty.wing" tabindex="13"/>
+											</div>
+										</div>
+										<div class="col-md-6"  style="padding-left:0px;">
+											<div class="form-group">
+												<label for="floor">Floor</label>
+												<input type="text" class="form-control" id="floor" name="floor" placeholder="Floor" ng-model="multiproperty.floor" tabindex="14"/>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="exp_price_upside">Price Upside</label>
+											<input type="text" class="form-control numbers" id="exp_price_upside" name="exp_price_upside" placeholder="Price Upside" ng-model="multiproperty.exp_price_upside" pattern="[0-9 .]+" hide-zero  tabindex="23"/>
+										</div>
+										<div class="form-group">
+											<label for="price_unit_carpet">Price/Unit Carpet</label>
+											<input type="text" class="form-control numbers" id="price_unit_carpet" name="price_unit_carpet" placeholder="Price Unit Carpet" ng-model="multiproperty.price_unit_carpet" pattern="[0-9 .]+" hide-zero  tabindex="33"/>
+										</div>
+										<div class="form-group">
+											<label for="bathrooms">Bathrooms</label>
+											<input type="text" class="form-control numbers" id="bathrooms" name="bathrooms"  placeholder="Bathrooms" ng-model="multiproperty.bathrooms" pattern="[0-9 .]+" hide-zero  tabindex="43"/>
+										</div>
+										<!--<div class="form-group">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" id="multi_size" name="multi_size" ng-model="multiproperty.multi_size" >Multi Sizes Available 
+												</label>
+											</div>
+										</div>-->
+									<!--/div>	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="col-md-6">
+								<label>No.of Properties</label>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" class="form-control numbers" id="no_property" name="no_property"  placeholder="No of properties" ng-model="multiproperty.no_property" pattern="[0-9 .]+" hide-zero  tabindex="60" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">	
+							<div class="form-group">
+								<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(multiproperty)" id="add-new-btn" ng-click="multiproperty_add(multiproperty)">Add Properties</button>
+								<a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+							</div>
+						</div>
+					</div>
+					<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>-->
+				<!--/div>
+			</div>
+		</div>
+	</form>
+</div>-->
+
+<div id="changeproperty" class="modal" role="dialog">
+	<form ng-repeat="multiproperty in multiproperties" novalidate name="MAddNewForm" id="madd-new-form" role="form" autocomplete="off">
+		<div class="modal-dialog modal-lg" style="width:65%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Change Property</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row" id="propertydetails">
+								<div class="col-md-12">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="proptype">Property Type</label>
+											<select class="select2 form-control" select2 id="proptype" name="proptype" ng-model="multiproperty.proptype"  data-placeholder="Select proptype" style="width:100%;" tabindex="10">
+												<option value="Residential" selected="selected">Residential</option>
+												<option value="Commercial">Commercial</option>
+												<option value="Retail">Retail</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="sale_area">Saleable Area</label>
+											<input type="text" class="form-control numbers" id="sale_area" name="sale_area"  placeholder="Saleable Area" ng-model="multiproperty.sale_area" pattern="[0-9 .]+" title="Hello" hide-zero  tabindex="20" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="carp_area">Carpet Area</label>
+											<input type="text" class="form-control numbers" id="carp_area" name="carp_area"  placeholder="Carpet Area" ng-model="multiproperty.carp_area"  pattern="[0-9 .]+" hide-zero  tabindex="30"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="oth_charges">Other Charges</label>
+											<input type="text" class="form-control numbers" id="oth_charges" name="oth_charges"  placeholder="Other Charges" ng-model="multiproperty.oth_charges"  pattern="[0-9 .]+" hide-zero  tabindex="40"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="propsubtype">Property Sub Type</label>
+											<select class="form-control select2" select2  ng-model="multiproperty.propsubtype" ng-options="dropdown.value as dropdown.display_value for dropdown in propsubtypes" style="width:100%;" tabindex="11">
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<div class="checkbox">
+												<label>
+													<input type="checkbox" id="multi_size" name="multi_size" ng-model="multiproperty.multi_size" >Multi Sizes Available 
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+									<div class="form-group" ng-if="multiproperty.multi_size=='1' ">
+											<label for="sale_area_upside">Saleable Upside</label>
+											<input type="text" class="form-control numbers" id="sale_area_upside" name="sale_area_upside"  placeholder="Saleable Area Upside" ng-model="multiproperty.sale_area_upside"  pattern="[0-9 .]+" hide-zero  tabindex="21"/>
+											<!-- <select id="area_parameter" name="area_parameter" ng-model="project.area_parameter"  data-placeholder="Select area_parameter">
+												<option value="">Not Specified</option>
+												<option value="Sq Ft" selected="selected">Sq Ft</option>
+												<option value="Sq Mt" >Sq Mt</option>
+												<option value="Acres">Acres</option>
+												<option value="Bigha I">Bigha I</option>
+												<option value="Bigha II">Bigha II</option>
+												<option value="Kottah (B)">Kottah (B)</option>
+												<option value="Marla">Marla</option>
+												<option value="Cents">Cents</option>
+												<option value="Perch">Perch</option>
+												<option value="Guntha">Guntha</option>
+												<option value="Area">Area</option>
+												<option value="Chataks">Chataks</option>
+												<option value="Rood">Rood</option>
+												<option value="Aankadam">Aankadam</option>
+												<option value="Grounds">Grounds</option>
+												<option value="Kanal">Kanal</option>
+												<option value="Hectares">Hectares</option>
+												<option value="Biswa I">Biswa I</option>
+												<option value="Biswa II">Biswa II</option>
+												<option value="Sq Yards">Sq Yards</option>
+											</select>	 -->								
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group" ng-if="multiproperty.multi_size=='1' ">
+											<label for="carp_area_upside">Carpet Upside</label>
+											<input type="text" class="form-control numbers" id="carp_area_upside" name="carp_area_upside" placeholder="Carpet Area Upside" ng-model="multiproperty.carp_area_upside"  pattern="[0-9 .]+" hide-zero  tabindex="31"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="pack_price">Package Price</label>
+											<input type="text" class="form-control numbers" id="pack_price" name="pack_price"  placeholder="Package Price" ng-model="multiproperty.pack_price" pattern="[0-9 .]+" hide-zero  tabindex="41" />
+										</div>
+										
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="building_plot">Plot / Building</label>
+											<input type="text" class="form-control numbers" id="building_plot" name="building_plot"  placeholder="Plot / Building" ng-model="multiproperty.building_name" tabindex="12" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="exp_price">Price</label>
+											<input type="text" class="form-control numbers" id="exp_price" name="exp_price" placeholder="Price" ng-model="multiproperty.exp_price" pattern="[0-9 .]+" hide-zero  tabindex="22" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="price_unit">Price/Unit</label>
+											<input type="text" class="form-control numbers" id="price_unit" name="price_unit" placeholder="Price Unit" ng-model="multiproperty.price_unit" pattern="[0-9 .]+" hide-zero  tabindex="32" />
+										</div>
+									</div>
+									
+									<div class="col-md-3">
+											<div class="form-group">
+												<label for="wing">Wing</label>
+												<input type="text" class="form-control" id="wing" name="wing" placeholder="Wing" ng-model="multiproperty.wing" tabindex="13"/>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="floor">Floor</label>
+												<input type="text" class="form-control" id="floor" name="floor" placeholder="Floor" ng-model="multiproperty.floor" tabindex="14"/>
+											</div>
+										</div>
+										<div class="col-md-3">
+										<div class="form-group">
+											<label for="exp_price_upside">Price Upside</label>
+											<input type="text" class="form-control numbers" id="exp_price_upside" name="exp_price_upside" placeholder="Price Upside" ng-model="multiproperty.exp_price_upside" pattern="[0-9 .]+" hide-zero  tabindex="23"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="price_unit_carpet">Price/Unit Carpet</label>
+											<input type="text" class="form-control numbers" id="price_unit_carpet" name="price_unit_carpet" placeholder="Price Unit Carpet" ng-model="multiproperty.price_unit_carpet" pattern="[0-9 .]+" hide-zero  tabindex="33"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group" ng-if="multiproperty.proptype=='Residential' ">
+											<label for="bedrooms">Bedrooms</label>
+											<input type="text" class="form-control numbers" id="bedrooms" name="bedrooms"  placeholder="Bedrooms" ng-model="multiproperty.bedrooms" pattern="[0-9 .]+" hide-zero  tabindex="42"/>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group" ng-if="multiproperty.proptype=='Residential' ">
+											<label for="bathrooms">Bathrooms</label>
+											<input type="text" class="form-control numbers" id="bathrooms" name="bathrooms"  placeholder="Bathrooms" ng-model="multiproperty.bathrooms" pattern="[0-9 .]+" hide-zero  tabindex="43"/>
+										</div>
+										
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="floor_rise">Floor Rise (PSF)</label>
+											<input type="text" class="form-control numbers" id="floor_rise" name="floor_rise"  placeholder="Floor Rise (PSF)" ng-model="multiproperty.floor_rise"  pattern="[0-9 .]+"  hide-zero  />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-md-3">	
+							<div class="form-group">
+								<button class="btn btn-primary" ng-disabled="MAddNewForm.$invalid || isUnchanged(project)" id="madd-new-btn" ng-click="multiproperty_update(multiproperty)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+								<button class="btn btn-danger" ng-click="multiproperty_delete(multiproperty)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+								<a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+							</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="addvalues" class="modal" role="dialog">
+	<form novalidate name="MAddNewForm" id="madd-new-form" role="form" autocomplete="off">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">List of Values</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row" id="listofvalues">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="type">Type</label>
+										<input type="text" class="form-control" id="type" name="type"  placeholder="Type" ng-model="listvalues.type" disabled />
+									</div>
+									<div class="form-group">
+										<label for="display_value">Display Value<span class="required">*</span></label>
+										<input type="text" class="form-control" id="display_value" name="display_value"  placeholder="Display Value" ng-model="listvalues.display_value" required/>
+									</div>
+									<div class="form-group">
+										<label for="value">Value<span class="required">*</span></label>
+										<input type="text" class="form-control" id="value" name="value" placeholder="Value" ng-model="listvalues.value" required/>
+									</div>
+									<div class="form-group">
+										<label for="parent_type">Parent Value</label>
+										<select class="select2 form-control" select2 ng-model="listvalues.parent_type" ng-options="parentlist.display_value as parentlist.parent_type for parentlist in parentlists" style="width:100%;">
+											<option value="" disabled selected>Select Parent Value</option>
+										</select>
+									</div> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-md-12">	
+							<div class="form-group">
+								<button class="btn btn-primary" ng-disabled="MAddNewForm.$invalid || isUnchanged(listvalues)" id="madd-new-btn" ng-click="listvalues_add(listvalues)">Save</button>
+								<a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="adddeveloper" class="modal" role="dialog" >
+	<form novalidate name="CAddNewForm" id="cadd-new-form" role="form" autocomplete="off">
+		<div class="modal-dialog modal-lg" style="width:50%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a href="javascript:void(0)" class="btn" data-dismiss="modal"  style="float:right;">Cancel</a>
+					<button class="btn btn-primary" ng-disabled="CAddNewForm.$invalid || isUnchanged(contact)" id="cadd-new-btn" ng-click="contact_add_new(contact)" class="close"  aria-hidden="true" style="float:right;">Save </button>
+					
+					<h3 class="modal-title" style="float:left;">Add Developer</h3>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="nav-tabs-custom">
+								<ul class="nav nav-tabs" >
+									<li class="active"><a data-target="#ccompany" data-toggle="tab">Company</a></li>
+									<li><a data-target="#cpersonal" data-toggle="tab">Personal</a></li>
+									<li><a data-target="#cattributes" data-toggle="tab">Attributes</a></li>
+									<li><a data-target="#ccompany_logo" data-toggle="tab">Company Logo</a></li>
+									<li><a data-target="#coffice" data-toggle="tab">Office</a></li>
+									<li><a data-target="#cadditional" data-toggle="tab">Additional Info</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="ccompany">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="contact.company_name">Company Name<span  class="required">*</span></label>
+													<input type="text" class="form-control" id="contact.company_name" name="contact.company_name"  placeholder="Company Name" ng-model="contact.company_name"  required ng-if="cat=='Developer'" pattern="[A-Z0-9a-z .,_+-]+"  hide-zero title="Only Alphabates Allowed"/>
+													<input type="text" class="form-control" id="company_name" name="company_name"  placeholder="Company Name" ng-model="contact.company_name"  ng-if="cat!='Developer'" pattern="[A-Z0-9a-z .,_+-]+"  hide-zero title="Only Alphabates Allowed"/>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.add1">Address 1</label>
+													<input type="text" class="form-control" id="contact.add1" name="contact.add1"  placeholder="Address 1" ng-model="contact.add1"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.add2">Address 2</label>
+													<input type="text" class="form-control" id="contact.add2" name="contact.add2"  placeholder="Address 2" ng-model="contact.add2"  />
+												</div>
+														<div class="form-group" ng-controller="SelectLocality">
+															<label for="contact.locality_id">Locality<span class="required">*</span></label>
+															<select class="select2 form-control" id = "contact.locality_id" select2 ng-change="contact_details('locality_id',contact.locality_id);" ng-model="contact.locality_id" ng-options="locality.locality_id as locality.locality for locality in localities"   style="width:100%;" required>
+																<option value="" disabled selected>Select Locality</option>
+															</select>
+														</div>
+														<div class="form-group" ng-controller="SelectArea">
+															<label for="contact.area_id">Area<span class="required">*</span></label>
+															<select class="select2 form-control" id = "contact.area_id" select2 ng-change="contact_details('area_id',contact.area_id);" ng-model="contact.area_id" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" required>
+																<!--option value="" disabled selected>Select Area</option-->
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="contact.city">City</label>
+															<input type="text" class="form-control" id="contact.city" name="contact.city"  placeholder="city" ng-model="contact.city"  disabled/>
+														</div>
+														<div class="form-group">
+															<label for="contact.state">State</label>
+															<input type="text" class="form-control" id="state" name="contact.state"  placeholder="state" ng-model="contact.state"   disabled />
+														</div>
+														<div class="form-group">
+															<label for="contact.country">Country</label>
+															<input type="text" class="form-control" id="contact.country" name="contact.country"  placeholder="country" ng-model="contact.country"   disabled />
+														</div>
+														<div class="form-group">
+															<label for="contact.zip">Zip</label>
+															<input type="text" class="form-control" id="contact.zip" name="contact.zip"  placeholder="Zip" ng-model="contact.zip"  />
+														</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="file_visiting_card">Visiting Card</label>
+													<input id="file_visiting_card" name="file_visiting_card[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+													<input type="hidden" name="file_name_visiting_card" id="file_name_visiting_card" value="" ng-model="contact.file_name_visiting_card" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane " id="cpersonal">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="row">
+													<div class="col-md-4">
+												<div class="form-group">
+													<label for="contact.name_title">Salutation</label>
+													<select class="select2 form-control" select2  id="contact.name_title" name="contact.name_title" ng-model="contact.name_title"  data-placeholder="Select Name Title" style="width:100%;">
+														<option value="Not Specified" selected="selected">Not Specified</option>
+																<option value="Mr.">Mr.</option>
+																<option value="Mrs." >Mrs.</option>
+																<option value="Ms." >Ms.</option>
+																<option value="Dr." >Dr.</option>
+																<option value="Mohd.." >Mohd.</option>
+																<option value="Cmdr." >Cmdr.</option>
+																<option value="Capt." >Capt.</option>
+																<option value="Maj." >Maj.</option>
+																<option value="Col." >Col.</option>
+																<option value="Flt.Lt." >Flt.Lt.</option>
+																<option value="Prof." >Prof.</option>
+																<option value="Brig." >Brig.</option>
+															</select>
+													
+												</div>
+												
+												</div>
+												<div class="col-md-4">
+												<div class="form-group">
+													<label for="contact.f_name">First Name<span class="required">*</span></label>
+													<input type="text" class="form-control" id="contact.f_name" name="contact.f_name"  placeholder="First Name" ng-model="contact.f_name" required />
+												</div>
+													</div>	
+												<div class="col-md-4">	
+												<div class="form-group">
+													<label for="contact.l_name">Last Name</label>
+													<input type="text" class="form-control" id="contact.l_name" name="contact.l_name"  placeholder="Last Name" ng-model="contact.l_name"/>
+												</div>
+												</div>
+												</div>		
+												<div class="form-group">
+													<label for="contact.mob_no">Mobile No.</label>
+													<input type="text" class="form-control" id="contact.mob_no" name="contact.mob_no"  placeholder="Mobile No." ng-model="contact.mob_no"  ng-blur = "checkcontact(contact.mob_no,'mob_no')" />
+													<!--p style="color:#fa0404;">{{mob_error}}</p-->
+												</div>
+												
+												<div class="form-group">
+													<label for="contact.alt_phone_no">Alternate Phone No </label>
+													<input type="text" class="form-control" id="contact.alt_phone_no" name="contact.alt_phone_no"  placeholder="Alternate Phone No " ng-model="contact.alt_phone_no"  />
+												</div>		
+												<!--<div class="form-group">
+													<label for="mob_no1">Mobile No-2</label>
+													<input type="text" class="form-control" id="mob_no1" name="mob_no1"  placeholder="Mobile No-2" ng-model="contact.mob_no1"  />
+												</div>-->
+														
+												<div class="form-group">
+													<label for="contact.email">Email Id</label>
+													<input type="text" class="form-control" id="contact.email" name="contact.email"  placeholder="Email Id" ng-model="contact.email" ng-blur = "checkcontact(contact.email,'email')"  ng-if="cat=='Developer'" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+													<input type="text" class="form-control" id="email" name="email"  placeholder="Email Id" ng-model="contact.email" ng-blur = "checkcontact(contact.email,'email')" ng-if="cat!='Developer'" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+													<p style="color:#fa0404;">{{email_error}}</p>
+												</div>
+														
+												
+														
+											<!--	<div class="form-group">
+													<label for="alt_phone_no1">Alternate Phone No 2</label>
+													<input type="text" class="form-control" id="alt_phone_no1" name="alt_phone_no1"  placeholder="Alternate Phone No 2" ng-model="contact.alt_phone_no1"  />
+												</div>-->
+														
+												
+												<div class="form-group">
+													<div class="checkbox">
+														<label>
+															<input type="checkbox" id="contact.dnd" name="contact.dnd" ng-model="contact.dnd" >DND
+														</label>
+													</div>
+												</div>
+														
+											<!--	<div class="form-group">
+													<label for="other_phone">Other Phone</label>
+													<input type="text" class="form-control" id="other_phone" name="other_phone"  placeholder="Other Phone" ng-model="contact.other_phone"  />
+												</div>-->
+														
+												<div class="form-group">
+													<label for="contact.pan_no">PAN No</label>
+													<input type="text" class="form-control" id="contact.pan_no" name="contact.pan_no"  placeholder="PAN No" ng-model="contact.pan_no"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.tan_no">TAN  No</label>
+													<input type="text" class="form-control" id="contact.tan_no" name="contact.tan_no"  placeholder="TAN No" ng-model="contact.tan_no"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.occupation">Occupation</label>
+													<input type="text" class="form-control" id="contact.occupation" name="contact.occupation"  placeholder="Occupation" ng-model="contact.occupation"  ng-disabled="disableAll" />
+												</div>
+												<!--<div class="form-group">
+													<label for="file-1">Contact Picture</label>
+													<input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" required>
+													<input type="hidden" name="contact_pic" id="contact_pic" value="" ng-model="contact.contact_pic" />
+												</div>-->
+												<!--div class="form-group">
+													<label for="contact.contact_pic">Contact Picture</label>
+													<input type="text" class="form-control" id="contact.contact_pic" name="contact.contact_pic"  placeholder="Contact Picture" ng-model="contact.contact_pic"  />
+												</div-->
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="file_contact_pic">Contact Picture</label>
+													<input id="file_contact_pic" name="file_contact_pic[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+													<input type="hidden" name="file_name_contact_pic" id="file_name_contact_pic" value="" ng-model="contact.file_name_contact_pic" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="cattributes">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group" >
+													<label for="contact.designation">Designation</label>
+													<input type="text" class="form-control" id="contact.designation" name="contact.designation"  placeholder="designation" ng-model="contact.designation"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.birth_date">Birth Date</label><div class="input-group date" id="contact.birth_date" date-directive="">
+													<input class="form-control" type="text" ng-model="contact.birth_date" >
+													<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+													</div>
+												</div>
+														
+												<!--<div class="form-group" ng-controller="SelectTeams">
+													<label for="teams">Teams</label>
+													<div class="input-group">
+														<select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="contact.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required>
+															<option value="" disabled selected>Select</option>
+														</select>
+														<div class="input-group-addon">
+															<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddTeam()"><i class="fa fa-plus"></i></a>
+														</div>
+													</div>
+												</div>
+												<div class="form-group" ng-controller="SelectUsers">
+													<label for="assigned_to">assigned_to</label>
+													<select class="select2 form-control" ng-model="contact.assigned_to" ng-options="users.name as users.name for users in userss"   style="width:100%;">
+														</select>
+												</div>-->
+												<div class="form-group" ng-controller="SelectTeams">
+													<label for="contact.teams">Teams<span class="required">*</span></label>
+													<select class="select2 form-control" multiple="multiple"  id = "contact.teams" select2 ng-model="contact.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required>
+															<!--option value="" disabled selected>Select</option-->
+													</select>
+												</div>
+												<div class="form-group">
+                                                    <label for="contact.sub_teams">Sub Teams<span class="required">*</span></label>
+                                                    <select class="select2 form-control" multiple="multiple" id="contact.sub_teams"  name="contact.sub_teams" select2 ng-model="contact.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams" style="width:100%;" required>
+                                                    </select>
+													<p class="required" ng-if="CAddNewForm.contact.teams.$invalid">Invalid or Empty Sub Team</p>
+                                                </div>
+												<div class="form-group" ng-controller="SelectUsers">
+													<label for="contact.assign_to">Assign To<span class="required">*</span></label>
+													<select class="select2 form-control" multiple="multiple"  id = "contact.assign_to" select2 ng-model="contact.assign_to" ng-options="user.user_id as user.name  +' - '+user.sub_team_name for user in users"   style="width:100%;" required>
+														<!--option value="" disabled selected>Select</option-->
+													</select>
+												</div>
+												<!--div class="form-group" ng-controller="SelectGroup">
+													<label for="contact.groups">Groups</label>
+													<div class="input-group">
+														<select class="select2 form-control" ng-model="contact.groups" select2  multiple="multiple" ng-options="group.group_id as group.group_name for group in groups"   style="width:100%;">
+															<!--option value="" disabled selected>Select</option-->
+														<!--/select>
+														<div class="input-group-addon">
+															<a href="javascript:void(0)" ng-click="AddGroup()"><i class="fa fa-plus"></i></a>
+														</div>
+													</div>
+												</div-->
+												<!--<div class="form-group" ng-controller="SelectGroup">
+													<label for="groups">groups</label>
+													<select class="select2 form-control" ng-model="contact.groups" ng-options="groups.groups as groups.name for groups in groupss"   style="width:100%;">
+														</select>
+												</div>-->
+														
+												<div class="form-group">
+													<label for="contact.rera_no">Rera No<span  class="required">*</span></label>
+													<input type="text" class="form-control" id="contact.rera_no" name="contact.rera_no"  placeholder="Rera No" ng-model="contact.rera_no" required ng-if="cat=='Developer'" pattern="[a-z0-9A-Z]{12}"  hide-zero title="Only Alpha Numeric Allowed"/>
+													<input type="text" class="form-control" id="contact.rera_no" name="contact.rera_no"  placeholder="Rera No" ng-model="contact.rera_no" ng-if="cat!='Developer'" pattern="[a-z0-9A-Z]{12}"  hide-zero title="Only Alpha Numeric Allowed"/>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.gst_no">GST No</label>
+													<input type="text" class="form-control" id="contact.gst_no" name="contact.gst_no"  placeholder="GST No" ng-model="contact.gst_no"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.comments">Comments</label>
+													<textarea class="form-control" id="contact.comments" name="contact.comments"  placeholder="Comments" ng-model="contact.comments" ></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="ccompany_logo">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="file_company_logo">Company Logo</label>
+													<input id="file_company_logo" name="file_company_logo[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+													<input type="hidden" name="file_name_company_logo" id="file_name_company_logo" value="" ng-model="contact.file_name_company_logo" />
+												</div>
+											</div>
+										</div>
+										<!--<div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="comp_logo">Company Logo</label>
+													<input type="text" class="form-control" id="comp_logo" name="comp_logo"  placeholder="Company Logo" ng-model="contact.comp_logo"  />
+												</div>
+											</div>
+										</div>-->
+									</div>
+									<div class="tab-pane" id="coffice">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="contact.off_email">Office Email</label>
+													<input type="text" class="form-control" id="contact.off_email" name="contact.off_email"  placeholder="Office Email" ng-model="contact.off_email"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.off_phone">Office Phone</label>
+													<input type="text" class="form-control" id="contact.off_phone" name="contact.off_phone"  placeholder="Office Phone " ng-model="contact.off_phone"  />
+												</div>
+														
+												<!--<div class="form-group">
+													<label for="off_phone1">Office Phone 2</label>
+													<input type="text" class="form-control" id="off_phone1" name="off_phone1"  placeholder="Office Phone 2" ng-model="contact.off_phone1"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="off_phone2">Office Phone 3</label>
+													<input type="text" class="form-control" id="off_phone2" name="off_phone2"  placeholder="Office Phone 3" ng-model="contact.off_phone2"  />
+												</div>-->
+														
+												<div class="form-group">
+													<label for="contact.off_fax">Office Fax</label>
+													<input type="text" class="form-control" id="contact.off_fax" name="contact.off_fax"  placeholder="Office Fax" ng-model="contact.off_fax"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.off_add1">Office Address</label>
+													<input type="text" class="form-control" id="contact.off_add1" name="contact.off_add1"  placeholder="Office Address " ng-model="contact.off_add1"  />
+												</div>
+												<!--<div class="form-group" ng-controller="SelectLocality">
+													<label for="off_locality">off_locality</label>
+													<select class="select2 form-control" ng-model="contact.off_locality" ng-options="locality.locality as locality.locality for locality in localities"   style="width:100%;">
+													</select>
+												</div>
+												<div class="form-group" ng-controller="SelectArea">
+													<label for="off_area">Office Area</label>
+													<select class="select2 form-control" ng-model="contact.off_area" ng-options="area.area_name as area.area_name for area in areas"   style="width:100%;">
+														</select>
+												</div>
+														
+												<div class="form-group" ng-controller="SelectCity">
+													<label for="off_city">Office City</label>
+													<select class="select2 form-control" ng-model="contact.off_city" ng-options="city.city as city.city for city in cities"   style="width:100%;">
+														</select>
+												</div>
+												<div class="form-group" ng-controller="SelectState">
+													<label for="off_state">Office State</label>
+													<select class="select2 form-control"    ng-model="contact.off_state" ng-options="state.off_city as city.city for city in cities"   style="width:100%;">
+													</select>
+												</div>
+												<div class="form-group" ng-controller="SelectCountry">
+													<label for="off_country">Office Country</label>
+													<select class="select2 form-control" ng-model="contact.off_country" ng-options="country.country as country.country for country in countries"   style="width:100%;">
+													</select>
+												</div>-->
+														<div class="form-group" ng-controller="SelectLocality">
+															<label for="contact.off_locality">Office Locality</label>
+															<select class="select2 form-control" id = "contact.off_locality" select2 ng-change="contact_details('off_locality',contact.off_locality);" ng-model="contact.off_locality" ng-options="locality.locality_id as locality.locality for locality in localities"   style="width:100%;">
+																<option value="" disabled selected>Select Locality</option>
+															</select>
+														</div>
+														<div class="form-group" ng-controller="SelectArea">
+															<label for="off_area">Office Area</label>
+															<select class="select2 form-control" id = "contact.off_area" select2 ng-change="contact_details('off_area',contact.off_area);" ng-model="contact.off_area" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" >
+																<!--option value="" disabled selected>Select Area</option-->
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="contact.off_city">Office City</label>
+															<input type="text" class="form-control" id="contact.off_city" name="contact.off_city"  placeholder="Office city" ng-model="contact.off_city"  disabled/>
+														</div>
+														<div class="form-group">
+															<label for="contact.off_state">Office State</label>
+															<input type="text" class="form-control" id="contact.off_state" name="contact.off_state"  placeholder="Office state" ng-model="contact.off_state"   disabled />
+														</div>
+														<div class="form-group">
+															<label for="off_country">Office Country</label>
+															<input type="text" class="form-control" id="contact.off_country" name="contact.off_country"  placeholder="Office country" ng-model="contact.off_country"   disabled />
+														</div>
+														
+												<div class="form-group">
+													<label for="contact.off_zip">Office Zip Code</label>
+													<input type="text" class="form-control" id="contact.off_zip" name="contact.off_zip"  placeholder="Office Zip Code" ng-model="contact.off_zip"  />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="cadditional">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group">
+													<label for="contact.source_channel">Source Channel <span class="required">*</span></label>
+													<div class="input-group">
+														<select class="select2 form-control" multiple="multiple" select2 required ng-model="contact.source_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in client_sources" style="width:100%;" ng-change="change_sub_source(contact.source_channel)" >
+															<!--option value="" disabled selected>Select</option-->
+														</select>
+														<div class="input-group-addon">
+															<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('CLIENT_SOURCE')"><i class="fa fa-plus"></i></a>
+														</div>
+													</div>
+												</div>        
+												<div class="form-group">
+													<label for="contact.source_sub_channel">Sub source Channel</label>
+													<div class="input-group">
+														<select class="select2 form-control" multiple="multiple" select2 ng-model="contact.source_sub_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in sub_sources" style="width:100%;">
+															<!--option value="" disabled selected>Select</option-->
+														</select>
+														<div class="input-group-addon">
+															<a href="javascript:void(0)"  data-toggle="modal" data-target="#addvalues" ng-click="AddListValue('SUB_SOURCE')"><i class="fa fa-plus"></i></a>
+														</div>
+													</div>
+												</div>
+												<!--<div class="form-group">
+													<label for="source_channel">Source Channel</label>
+													<select class="select2 form-control"  id="source_channel" name="source_channel" ng-model="contact.source_channel"  data-placeholder="Select source_channel" style="width:100%;">
+														<option value="Not Specified" selected="selected">Not Specified</option>
+														<option value="Not Specified1" >Not Specified1</option>
+														<option value="Not Specified2" >Not Specified2</option>
+													</select>
+												</div>        
+												<div class="form-group">
+													<label for="source_sub_channel">Sub Source Channel</label>
+													<select class="select2 form-control"  id="source_sub_channel" name="source_sub_channel" ng-model="contact.source_sub_channel"  data-placeholder="Select source_sub_channel" style="width:100%;">
+														<option value="Not Specified" selected="selected">Not Specified</option>
+														<option value="Not Specified1" >Not Specified1</option>
+														<option value="Not Specified2" >Not Specified2</option>
+													</select>
+												</div>  -->    
+									
+												<!--<div class="form-group">
+													<label for="reg_date">Registration Date</label><div class="input-group date" id="reg_date" date-directive="">
+													<input class="form-control" type="text" ng-model="contact.reg_date" >
+													<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+													</div>
+												</div>-->
+												<!-- <div class="form-group">
+													<label for="reg_date">Registration Date</label><div class="input-group date" id="reg_date" date-directive="">
+													<input class="form-control" type="text" ng-model="contact.reg_date" >
+													<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+													</div>
+												</div> -->
+														
+												<div class="form-group">
+													<label for="contact.website">Website</label>
+													<input type="text" class="form-control" id="contact.website" name="contact.website"  placeholder="Website" ng-model="contact.website"  />
+												</div>
+														
+												<div class="form-group">
+													<label for="rating">Rating</label>
+													<input id="rating" name="rating" ng-model = "contact.rating" value="0" type="number" min=0 max=5 step=0.5 data-size="xs" rating-setup="" >
+												</div>
+												<div class="form-group" ng-controller="SelectArea">
+													<label for="contact.opp_area">Opperates in Area</label>
+													<select class="select2 form-control" id = "contact.opp_area" select2 ng-change="contact_details('opp_area',contact.opp_area);" ng-model="contact.opp_area" ng-options="area.area_id as area.area_name for area in areas"   style="width:100%;" multiple="multiple">
+													</select>
+												</div>
+												<div class="form-group">
+													<label for="contact.opp_city">Opperates in City</label>
+													<input type="text" class="form-control" id="contact.opp_city" name="contact.opp_city"  placeholder="Operated in City" ng-model="contact.opp_city"   disabled />
+													</select>
+												</div>
+												
+														
+												<div class="form-group">
+													<label for="contact.about">About Developer</label>
+													<textarea class="form-control" id="contact.about" name="contact.about"  placeholder="About Developer" ng-model="contact.about" ></textarea>
+												</div>
+														
+												<div class="form-group">
+													<label for="contact.invoice_name">Invoice Name</label>
+													<input type="text" class="form-control" id="contact.invoice_name" name="contact.invoice_name"  placeholder="Invoice Name" ng-model="contact.invoice_name"  />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="modal-footer">
+					
+				</div>-->
+			</div>
+		</div>
+	</form>
+</div>
+
+<style>
+.modal-dialog {
+
+	width:25%;
+}
+.kv-file-upload
+{
+	display:none;
+}
+</style>
+
+<script>
+
+	$(function () {
+    	//Initialize Select2 Elements
+		/*$('.select2').select2();
+
+		$('.textarea').wysihtml5();*/
+
+	});
+	var geocoder;
+	var map;
+	var footerTemplate = '<div class="file-thumbnail-footer" style ="height:94px">\n' +
+	'  <input class="kv-input kv-new form-control input-sm form-control-sm text-center {TAG_CSS_NEW}"  value="" placeholder="Enter Title...">\n' +
+	'  <input class="kv-input kv-new  {TAG_CSS_NEW}" type="checkbox" value="true" >Set as main image' +
+	'  <input class="kv-input kv-new  {TAG_CSS_NEW}" type="checkbox" value="true" checked>Share' +
+	'<select id="file_category" name="file_category" class="kv-input kv-new form-control input-sm form-control-sm text-center {TAG_CSS_NEW}">'+
+					'<option value="">Select Category</option>'+
+					'<option value="Special Offer Detail">Special Offer Detail</option>'+
+					'<option value="Amenities">Amenities</option>'+
+					'<option value="Site Plan">Site Plan</option>'+
+					'<option value="Special Offer Listing">Special Offer Listing</option>'+
+					'<option value="special offer">special offer</option>'+
+					'<option value="Elevation">Elevation</option>'+
+					'<option value="Location">Location</option>'+
+					'<option value="Floor Plans">Floor Plans</option>'+
+					'<option value="General">General</option>'+
+					'<option value="Sample Flat">Sample Flat</option>'+
+					'</select>\n'+
+	'  <input class="kv-input kv-new form-control input-sm form-control-sm text-center {TAG_CSS_NEW}"  value="" placeholder="Enter Sub Category...">\n' +
+	
+	'   <div class="small" style="margin:15px 0 2px 0">{size}</div> {progress}\n{indicator}\n{actions}\n' +
+	'</div>';
+	$( document ).ready(function() {
+		$("#file-1").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/project_uploads',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			layoutTemplates: {footer: footerTemplate},
+		
+			uploadExtraData: function() {  
+				var out = {}, key, i = 0,j=1,z=1;
+				$('.kv-input').each(function() {
+					$el = $(this);
+					value = $el.val();
+					if (j==1)
+					{
+						key = 'file_title_'+z;
+					}
+					if (j==2)
+					{
+						key = 'main_image_'+z;
+						if ($(this).is(':checked'))
+						{
+							value = true;
+						}
+						else{
+							value = false;
+						}
+					}
+					if (j==3)
+					{
+						key = 'share_on_web_'+z;
+						if ($(this).is(':checked'))
+						{
+							value = true;
+						}
+						else{
+							value = false;
+						}
+					}
+					if (j==4)
+					{
+						key = 'file_category_'+z;
+					}
+					if (j==5)
+					{
+						key = 'file_sub_category_'+z;
+						j=0;
+						z++;
+					}
+					j++;
+					//key = $el.hasClass('kv-new') ? 'new_' + i : 'init_' + i;
+					out[key] = value;
+					i++;
+				});
+				return out;
+			},
+	
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+		$('#file-1').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_name").val(file.name);
+			console.log("fileloaded");
+		});
+
+		$("#file_occu").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/project_uploads_occu',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','pdf','docx'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+
+		$('#file_occu').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_occu_name").val(file.name);
+			console.log("fileloaded");
+		});
+
+		$("#file_company_logo").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/contact_uploads',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+	
+		$('#file_company_logo').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_name_company_logo").val(file.name);
+			console.log("fileloaded");
+		});
+
+		$("#file_visiting_card").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/contact_uploads_visiting_card',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+	
+		$('#file_visitng_card').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_name_visiting_card").val(file.name);
+			console.log("fileloaded");
+		});
+
+		$("#file_contact_pic").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/contact_uploads_contact_pic',
+			allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp'],
+			overwriteInitial: false,
+			maxFileSize: 1500000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+	
+		$('#file_contact_pic').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_name_contact_pic").val(file.name);
+			console.log("fileloaded");
+		});
+		$("#file_videos").fileinput({
+			uploadAsync: false,
+			showUpload: false,
+			uploadUrl: './api/v1/project_uploads_videos',
+			allowedFileExtensions : ['MP4','3GP','OGG','avi','vob'],
+			overwriteInitial: false,
+			maxFileSize: 999000000,
+			maxFilesNum: 25,
+			maxFileCount:100,
+			slugCallback: function(filename) {
+				return filename.replace('(', '_').replace(']', '_');
+			}
+		});
+
+		$('#file_videos').on('fileloaded', function(event, file, previewId, index, reader) {
+			$("#file_videos_name").val(file.name);
+			console.log("fileloaded");
+		});
+	});
+	
+</script>
+
+<style>
+
+#map {
+	height: 100%;
+	width:100%;
+	overflow: auto;
+	border:2px solid #000000;
+  }
+    
+	#changeproperty
+	{
+		display:none;
+	}
+	.horizontal-collapse {
+    height: 70px;
+  }
+  .navbar-collapse.in {
+    overflow-y: hidden;
+  }
+  
+  .mydropdown-menu {
+  		position: absolute;
+  		top: 64%;
+  		left: 13;
+  		z-index: 1000;
+  		display: none;
+  		float: left;
+  		min-width: 360px;
+		max-height: 250px;
+		overflow-y: auto;
+  		padding: 5px 0;
+  		margin: 2px 0 0;
+  		font-size: 14px;
+  		list-style: none;
+  		background-color: #ffffff;
+		border: 1px solid #cccccc;
+		border: 1px solid rgba(0, 0, 0, 0.15);
+		border-radius: 4px;
+		-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+		background-clip: padding-box;
+	}
+
+	.mydropdown-menu.pull-right {
+		  right: 0;
+		  left: auto;
+	}
+
+.mydropdown-menu .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+.mydropdown-menu > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.mydropdown-menu > li > a:hover,
+.mydropdown-menu > li > a:focus {
+  color: #262626;
+  text-decoration: none;
+  background-color: #428bca;
+}
+
+.mydropdown-menu > .active > a,
+.mydropdown-menu > .active > a:hover,
+.mydropdown-menu > .active > a:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #428bca;
+  outline: 0;
+}
+
+.mydropdown-menu > .disabled > a,
+.mydropdown-menu > .disabled > a:hover,
+.mydropdown-menu > .disabled > a:focus {
+  color: #999999;
+}
+
+.mydropdown-menu > .disabled > a:hover,
+.mydropdown-menu > .disabled > a:focus {
+  text-decoration: none;
+  cursor: not-allowed;
+  background-color: transparent;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.open > .mydropdown-menu {
+  display: block;
+}
+
+.open > a {
+  outline: 0;
+}
+
+.mydropdown-header {
+  display: block;
+  padding: 3px 20px;
+  font-size: 12px;
+  line-height: 1.428571429;
+  color: #999999;
+}
+
+.mydropdown-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 990;
+}
+
+.pull-right > .mydropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+#project_exists
+{
+	display:none;
+}
+
+
+
+</style>
+<style>
+    .modal-dialog {
+    
+        width:25%;
+    }
+    .slider
+    {
+        height:500px;
+        width:100%;
+        float: left;
+        margin-left:2px;
+    }
+    .slider p
+    {
+        margin: 0 0 5px 0;
+        line-height: 1.2em;
+    }
+
+    .enquiry_stage
+    {
+        width:10px;
+        height: 10px;
+        background-color:rgb(134, 132, 132);
+        border-radius: 3px;
+        float:left;
+
+    }
+    .flexslider
+    {
+        background:none;
+        border:0px;
+        width:97%;
+    }
+    .flex-control-nav
+    {
+        display: none;
+    }
+    .flex-direction-nav a
+    {
+        height:45px;
+        top:20%;
+    }
+    .flexslider:hover .flex-direction-nav .flex-prev
+    {
+        margin-left:-45px;
+    }
+    .flexslider:hover .flex-direction-nav .flex-next
+    {
+        right:-45px;
+    }
+    .flexslider ul.slides li:only-child{
+        display: block !important;
+    }
+
+    #upload
+    {
+        display: none;    
+    }
+    
+    p
+    {
+        line-height: 0.9;
+        font-size:16px;
+    }
+    table tr
+    {
+        margin-bottom:20px;
+        box-shadow: 0 0 12px rgba(0,0,0,.09);
+    }
+    .dot
+    {
+        font-size:20px;
+    }
+    .nav-tabs-custom {
+        margin-bottom: 20px;
+        background: #efefef;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        border-radius: 0px;
+    }
+
+    .nav-tabs-custom>.nav-tabs>li.active {
+        border-top-color: #f3f0f0;
+    }
+
+    .bottom-button
+    {
+        position:absolute;
+        margin-top:151px;
+        background-color:#d8d8d8;
+        width:99%;
+
+    }
+    .cornerno
+    {
+        background-color: #d2aa4b;;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 3px;
+        /*padding-left: 8px;*/
+        margin-left: 220px;
+        text-align:right;
+    }
+    .prostatus {
+        background-color: #3362e6;
+        /*width: 152px;*/
+        height: 22px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 2px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-top: 0px;
+        font-size: 12px;
+    }
+    div.dataTables_wrapper div.dataTables_filter {
+     /*text-align: left;*/ 
+     float: left; 
+     margin-left: -350px;
+     margin-top:5px;
+    }
+    div.dataTables_wrapper div.dataTables_filter input 
+    {
+        width: 387px;
+    }
+
+    a.ex1:active,a.ex1:hover
+    {
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: #337ab7;
+    }
+    a.ex2:active,a.ex2:hover
+    {
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: #337ab7;
+    }
+    
+    
+    .img_size{
+        width: 245px;
+    }
+    @media (max-width:991px){
+
+    .modal-dialog {
+    width: 95%;
+    }
+    .img_size{
+        width: 100%;
+    }
+    div.dataTables_wrapper div.dataTables_filter {
+     text-align: left; 
+     float: left; 
+     margin-left: -15px;
+     margin-top:-43px;
+    }
+    div.dataTables_wrapper div.dataTables_filter input 
+    {
+        width: 140px;
+    }
+    .c-check{
+        display: none;
+    }
+        .img_dev_1{
+            display: none;
+        }
+        .img_dev_2{
+            position: absolute;
+            left: 20px;
+            top: 125px;
+            display: inline;
+        }
+        .c-hide{
+            display: none;
+        }
+        .person_info{
+            text-align:left;   
+        }
+      
+        .contact_div_1{
+            font-size:16px;
+            position: absolute;
+            left: 15px;
+        }
+        .contact_div_2{
+            font-size:16px;
+            position: absolute;
+            left: 110px;
+        }
+        .panel-group{
+            margin-bottom: 0px;
+        }
+            .cornerno{
+        margin-left: 83%;
+    }
+    .pr_top{
+        position: absolute;
+        margin-top: -25px;
+    }
+    
+    }
+
+
+</style>
+
+ <script type="text/javascript">
+    function toggle_visibility(id) {
+       var e = document.getElementsByClassName("dataTables_filter")[0];
+       if(e.style.width < 800){
+        if(e.style.display == 'none')
+          e.style.display = 'block';
+        else
+          e.style.display = 'none';
+       }
+       
+    }
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2O6m-6CywgRBPeMmg4Fl_sU6U4DCTTKg&callback=myMap&libraries=places"
+async defer type="text/javascript"></script>
+
+<!--script src="dist/js/fileinput.js" type="text/javascript"></script-->
+
+<style>
+	#tab_menu
+	{
+		display: block;
+	}
+	
+	@media screen and (max-width: 991px)  {
+		#tab_menu
+		{
+			display: none;
+		}
+		
+		.tab-content > .tab-pane {
+			display: block;
+		}
+	}
+	
+	</style>

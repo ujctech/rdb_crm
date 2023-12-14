@@ -1,0 +1,63 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="eligibility_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="eligibility_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Eligibility</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+										<div class="form-group">
+											<label for="eligibility_title">Eligibility Title</label>
+											<input type="text" class="form-control" id="eligibility_title" name="eligibility_title"  placeholder="Eligibility Title" ng-model="eligibility.eligibility_title"  />
+										</div>
+										<div class="form-group">
+											<label for="team">Team</label>
+											<select class="form-control select2" select2 ng-model="eligibility.team"  name="team"  id="team"  ng-options="dropdown.value as dropdown.display_value for dropdown in dropdowns" style="width:100%;">
+												<option value="" disabled selected>Select</option>
+											</select>
+										</div>
+										<div class="form-group">
+                                            <label for="designation_id">Designation</label>
+                                            <select class="select2 form-control" ng-model="eligibility.designation_id" ng-options="designation.designation_id as designation.designation for designation in designations"  style="width:100%;">
+                                                <option value="" disabled selected>Select Designation</option>
+                                            </select>
+                                        </div>
+										<div class="form-group">
+											<label for="incentives">Incentives</label>
+											<textarea class="form-control"  id="incentives" name="incentives" rows="5" placeholder="Incentives" ng-model="eligibility.incentives" ></textarea>
+										</div>
+										<div class="form-group">
+											<label for="other_benefits">Other Benefits</label>
+											<textarea class="form-control"  id="other_benefits" name="other_benefits" rows="5" placeholder="Other Benefits" ng-model="eligibility.other_benefits" ></textarea>
+										</div>
+										<div class="form-group">
+											<label for="para_hike">Hike Parameter</label>
+											<textarea class="form-control"  id="para_hike" name="para_hike" rows="5" placeholder="Hike Parameter" ng-model="eligibility.para_hike" ></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">                    
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(eligibility)" id="add-new-btn" ng-click="eligibility_add_new(eligibility)">Save </button>
+                                            <a href="#/eligibility_list" class="btn">Cancel</a>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

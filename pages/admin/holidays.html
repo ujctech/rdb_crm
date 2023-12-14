@@ -1,0 +1,44 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" ng-if="view_rights">
+    
+    
+</div>
+<div class="clearfix"></div>
+
+
+<div class="box boxpadding" id="properties" style="border-top:0px;" ng-if="view_rights">
+    <div class="box-header">
+        
+    </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#attendancetab" data-toggle="tab" >Holidays</a></li>
+        </ul>
+        
+        <div class="tab-content">
+            <div class="tab-pane active" id="attendancetab">   
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped" datatable-setup=""  >
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Holiday Title</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <tr ng-repeat="holiday in holidaylist">
+                                <td>{{holiday.htdate}}</a></td>
+                                <td>{{holiday.holiday_title}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Date</th>
+                                <th>Holiday Title</th>
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

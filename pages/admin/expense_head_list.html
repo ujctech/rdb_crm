@@ -1,0 +1,50 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" ng-if="view_rights">
+    
+    <!--<a class="btn btn-primary" href="#/expense_head_add" style="margin:10px;">Add Expense Head</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;">Add Expense Head</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/expense_head_add" style="margin:10px;">Add Expense Head</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/expense_head_sub_type_list" style="margin:10px;">Expense Sub Type</a>
+    
+    <!--<a href="javascript:void(0)" style="float:right;margin-right:20px;" ng-click="import_enquiries()">Import</a>-->
+</div>
+<div class="clearfix"></div> 
+<div class="row" id="des" style="margin-top:115px;" ng-if="view_rights">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#rolestab" data-toggle="tab">Expense Heads</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="rolestab">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-striped" datatable-setup="" data-page-length='10'>
+                                <thead>
+                                    <tr>
+                                        <th>Expense Head</th>
+                                        <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="expense_head in expense_heads">
+                                        <td>{{expense_head.expense_title}}</td>
+                                        <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/expense_head_edit/{{expense_head.expense_head_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Expense Head</th>
+                                        <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

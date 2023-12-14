@@ -1,0 +1,592 @@
+<div style="background-color:#cecece;margin-top:45px;height:75px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+        <div class="row">
+             <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <div class="input-group date" id="start_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="goalsdata.start_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">       
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <div class="input-group date" id="end_date" date-directive="">
+                        <input class="form-control" type="text" ng-model="goalsdata.end_date" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="teams">Teams</label>
+                    <select class="select2 form-control" multiple="multiple"  select2 id = "goalsdata.teams"  name = "goalsdata.teams"   ng-model="goalsdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" ng-change="getsubodrniate(goalsdata.teams,0)">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="sub_teams">Sub Teams</label>
+                    <select class="select2 form-control" multiple="multiple"  id = "goalsdata.sub_teams" name = "goalsdata.sub_teams"  ng-model="goalsdata.sub_teams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"  style="width:100%;" ng-change="getsubodrniate(goalsdata.teams,goalsdata.sub_teams)">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="user_id">User Name</label>
+                    <select class="select2 form-control"  id = "user_id" select2 ng-model="goalsdata.user_id" ng-options="user.user_id as user.name for user in listusers" style="width:100%;" >
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2" style="margin-top:25px;">
+                <button class="btn btn-primary" id="add-new-btn" ng-click="getgoaldatanew(goalsdata)">Go</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="clearfix"></div>
+
+<div class="box" style="margin:5px;padding:10px;border-top:0px;border-radius:0px;margin-top:115px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; background-color:#ffffff;">
+    <div id="goals_div" class="html_content"  compile-html="goalsHtml"></div>
+</div>
+
+
+
+
+
+<!-- <div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+
+</div>
+<div class="clearfix"></div> -->
+<!--section class="content" style="padding:20px;min-height:100px;margin-top:60px;" id="topsheet">
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+    <div class="row">
+         <div class="col-md-2">       
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <div class="input-group date" id="start_date" date-directive="">
+                    <input class="form-control" type="text" ng-model="goalsdata.start_date" >
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">       
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <div class="input-group date" id="end_date" date-directive="">
+                    <input class="form-control" type="text" ng-model="goalsdata.end_date" >
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="user_id">User Name</label>
+                <select class="select2 form-control"  id = "user_id" select2 ng-model="goalsdata.user_id" ng-options="user.user_id as user.name for user in listusers" style="width:100%;" >
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary" id="add-new-btn" ng-click="getgoaldatanew(goalsdata)">Go</button>
+        </div>
+    </div>
+    </form>
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+    <!-- Small boxes (Stat box) -->
+    <!--div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <!--div class="small-box" style="background-color:#2cb5ab">
+                <div class="inner">
+                <h3>{{enquiry_count}}</h3>
+                <p>Enquiries</p>
+                <p>({{enquiry_goal}})</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-bag"></i>
+                </div>
+               
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <!--div class="small-box" style="background-color:#21c3eb">
+                <div class="inner">
+                <h3>{{site_visit_count}}</h3>
+
+                <p>Site Visit</p>
+                <p>({{site_visit_goal}})</p>
+                </div>
+                <div class="icon">
+                <i class="fa fa-building"></i>
+                </div>
+                <!--a href="#/goals_report/site_visit" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a-->
+            <!--/div>
+        </div>
+            <!-- ./col -->
+        <!--div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <!--div class="small-box" style="background-color:#18a55e">
+                <div class="inner">
+                <h3>{{client_meeting_count}}</h3>
+
+                <p>Client Meeting</p>
+                <p>({{client_meeting_goal}})</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-cup"></i>
+                </div>
+                <!--a href="#/goals_report/client_meeting" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a-->
+            <!--/div>
+        </div>
+            <!-- ./col -->
+            
+            <!-- ./col -->
+        <!--div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <!--div class="small-box" style="background-color:#f05b90">
+                <div class="inner">
+                <h3>{{deal_count}}</h3>
+
+                <p>Deal</p>
+                <p>({{deal_goal}})</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+                </div>
+                <!--a href="#/goals_report/deal" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a-->
+            <!--/div>
+        </div>
+        <!-- ./col -->
+    <!--/div>
+</section-->
+
+
+<!--div class="row" id="goals">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#goalstab" data-toggle="tab">Enquiries</a></li>
+                     <li><a data-target="#sitevisit" data-toggle="tab">Site Visit</a></li>
+                      <li><a data-target="#clientmeeting" data-toggle="tab">Client Meetings</a></li>
+                      <li><a data-target="#deals" data-toggle="tab">Deals</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="goalstab">
+                        <div class="box-body table-responsive">
+                            <h1>Enquiries</h1>
+                           
+                    <table class="table" data-page-length='10'>
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="enquiries in selectenquiries">
+                                <td style="width:100%">
+                                    <div class="row" style="border-bottom:1px solid #959191;padding:0px;margin-left:0px;margin-right:0px;">
+                                        <div class="col-md-4" style="min-width:250px;padding-left:0px;">
+                                           
+                                            <div class="col-md-12">
+                                                <p style="font-size:14px;color:blue;"><span style="background-color:#f72424;color:#ffffff;min-width:25px;" ng-if="enquiries.priority">{{enquiries.priority}}</span>&nbsp;&nbsp;<a class="ex2" href="#/enquiries_edit/{{enquiries.enquiry_id}}"><span>Looking to {{enquiries.enquiry_for}}  : {{enquiries.enquiry_type}}</span></a></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p>Status :
+                                            <span style="font-weight:bold;font-size:14px;color:#5db101;">{{enquiries.status}}</span></p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p>Edited : 
+                                            <span style="font-weight:bold;font-size:14px;"><span ng-if="enquiry.modified_date!='00-00-0000 00:00' " >{{enquiries.modified_date}}</span><span ng-if="enquiry.modified_date=='00-00-0000 00:00'">{{enquiries.created_date}}</span></span></p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p>Enquiry ID :
+                                            <a class="ex2" href="#/enquiries_edit/{{enquiries.enquiry_id}}"><span style="font-weight:bold;font-size:14px;">{{enquiries.enquiry_off.charAt(0).toUpperCase()+ enquiries.enquiry_off.substr(1).toLowerCase()}}_{{enquiries.enquiry_id}}</span></a></p>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-8" >
+                                            <div class="row">
+                                            <div class="col-md-4" >
+                                                <p>Budget Range : <span style="font-weight:bold;font-size:14px;" ng-if ="enquiries.budget_range2!=0"> {{showAmount(enquiries.budget_range1)}}-{{showAmount(enquiries.budget_range2)}}</span>
+                                               
+                                                <span style="font-weight:bold;font-size:14px;" ng-if ="enquiries.budget_range2==0"> {{showAmount(enquiries.budget_range1)}}-{{showAmount(enquiries.budget_range1)}}</span></p>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p>Preferred City : <span style="font-weight:bold;">{{enquiries.preferred_city}}</span></p>
+                                            </div>
+                                            <div class="col-md-4" ng-show="enquiries.enquiry_off == 'residential'">
+                                                <p>Bedrooms : <span style="font-weight:bold;">{{enquiries.bedrooms}}</span></p>
+                                            </div>
+                                            </div>
+                                           
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Preferred Locality : <span style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiries.preferred_locality}}</span></p>
+                                                </div>
+                                            </div>
+                                            
+                                            <p>Preferred Area : <span style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiries.preferred_area}}</span></p>
+                                            <p>Possession Status: <span style="font-weight:bold;font-size:14px;margin-left:10px;"> {{enquiries.con_status}}</span></p>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <p><span style="float:left;">Assigned To:<span style="font-size:14px;font-weight:bold;margin-left:10px;"> {{enquiries.assign_to}}</span></span></p>
+                                                </div>
+                                                <div class="col-md-4" >
+                                                    <p><span style="font-size:14px;"> Teams: </span><span style="font-weight:bold;">{{enquiries.team}}</span></p> 
+                                                                                                                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div style="font-size: 27px;text-align: center;background-color: #f72424;color: #ffffff;border-radius: 19px;width: 40px;height: 40px;margin-top:40px;">{{enquiries.client_first_char}}</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p style="font-size:16px;">Client:</p>
+                                            <a class="ex2" href="#/contacts_edit/{{enquiries.client_id}}"><p><span style="font-weight:bold;font-size:14px;">{{enquiries.client_name}}</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiries.client_mob}}</span></p>
+                                            <p><span style="font-weight:bold;font-size:14px;">{{enquiries.client_email}}</span></p>
+
+                                            <p style="text-align:center;">
+                                                <div class="dropdown">
+                                                    <a class="btn btn-primary" href="#/mails_client/enquiry/{{enquiries.enquiry_id}}" style="margin:10px;margin-right:2px;" ng-if="hasPermissions.includes('View')">Send Email</a>
+                                                    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" data-toggle="modal" data-target="#sendsms" ng-click="SendSMS();" ng-if="hasPermissions.includes('View')">Send SMS</a>
+                                                </div>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                           
+                                                <div class="col-md-6" >
+                                                    <ul style="margin-top:8px;font-size:10px;">
+                                                        <li title="New" ng-class="enquiries.stage=='New' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                            <p ng-if="enquiries.stage=='New'">New</p>
+                                                        </li>
+                                                        <li title="Site Visit"  ng-class="enquiries.stage=='Site Visit' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                            <p ng-if="enquiries.stage=='Site Visit'">Site Visit</p>
+                                                        </li>
+                                                        <li title="FollowUp" ng-class="enquiries.stage=='FollowUp' ? 'enquiry_stage_selected' : 'enquiry_stage' " >
+                                                            <p ng-if="enquiries.stage=='FollowUp'">FollowUp</p>
+                                                        </li>
+                                                        <li title="Negotiation" ng-class="enquiries.stage=='Negotiation' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                            <p ng-if="enquiries.stage=='Negotiation'">Negotiation</p>
+                                                        </li>
+                                                        <li title="Closed-Won" ng-class="enquiries.stage=='Closed-Won' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                            <p ng-if="enquiries.stage=='Closed-Won'">Closed-Won</p>
+                                                        </li>
+                                                        <li title="Closed-Dead" ng-class="enquiries.stage=='Closed-Dead' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                            <p ng-if="enquiries.stage=='Closed-Dead'">Closed-Dead</p>
+                                                        </li>
+                                                    </ul>
+                                                </div> 
+
+                                                <div class="col-md-6" >
+                                                    <div style="float:right;">
+                                                       <!--  <a class="btn btn-primary" href="#/activity_add/enquiry/{{enquiry.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" ng-click="create_activity(project.project_id);" ng-if="hasPermissions.includes('Create')">Create Activity</a> -->
+                                                        <!--div class="dropdown" >
+                                                            <a class="btn btn-primary dropbtn" href="javascript:void(0)" style="height:33px;padding-top:6px;">Save My Search &nbsp;&nbsp;</a>
+                                                            <div class="dropdown-content" style="margin-top:0px;">
+                                                                <a href="javascript:void(0)" ng-model="sortvalue1" style="text-align:left;" ng-repeat="lead_status in lead_statuss">{{lead_status.display_value}}</a>
+                                                            </div>
+                                                        </div-->
+                                                        <!--div class="dropdown">
+                                                            <a class="btn btn-primary dropbtn" href="javascript:void(0)" style="height:33px;margin:10px;padding:7px;margin-right:2px;margin-top:6px;" ng-if="hasPermissions.includes('Update')">Mark As&nbsp; <i class="fa fa-angle-down"></i></a>
+                                                            <div class="dropdown-content" style="margin-top:0px;">
+                                                                <a href="javascript:void(0)" ng-click="enquiryupdatestatus(lead_status.value,enquiries.enquiry_id)" style="text-align:left;" ng-repeat="lead_status in lead_statuss">{{lead_status.display_value}}</a>
+                                                            </div>
+                                                        </div>
+                                                        <a class="btn btn-primary" href="#/enquiries_edit/{{enquiries.enquiry_id}}" style="margin:10px;margin-top:6px;margin-right:8px;" ><i class="glyphicon glyphicon-pencil" ng-if="hasPermissions.includes('Update')"></i>&nbsp;Edit</a>
+                                                        
+                                                    </div>  
+                                                </div>
+                                                
+                                            </div> 
+                                        </div>
+                                   <!--  </div> -->
+                                    <!--div class="panel-group"> <div class="panel panel-default"> <div id="enqcollapse{{enquiry.enquiry_id}}" class="panel-collapse collapse html_content" compile-html="enqtrustedHtml_{{enquiry.enquiry_id}}">Nothing to show</div> </div> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                 </div>
+            </div>
+                    <div class="tab-pane" id="sitevisit">
+                        <div class="box-body table-responsive">
+                            <h1>Site Visit</h1>
+                             <table class="table" data-page-length='10'>
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="site_visit in selectsite_visits">
+                                <td style="width:100%">
+                                    <div class="row" style="border-bottom:1px solid #959191;padding:0px;margin-left:0px;margin-right:0px;">
+                                        <div class="col-md-3" style="min-width:250px;padding-left:0px;margin-bottom:5px;">
+                                            <!-- <div class="col-md-1" style="padding-left:0px;">
+                                                <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{site_visit.activity_id}}"/></label></div>
+                                            </div> -->
+                                            <!--div class="col-md-12"> 
+                                                <div style="background-color:#1497e4;border-radius:6px;padding:3px;padding-left:10px;margin-left:0px;text-align:center;min-width:100px;float:left;font-size:16px;color:#ffffff;">{{site_visit.activity_type}}</div><div ng-if="site_visit.status" style="background-color:#505355;border-radius:6px;padding:3px;padding-left:10px;margin-left:10px;text-align:center;min-width:100px;float:left;font-size:16px;color:#ffffff;">{{site_visit.status}}</div>
+                                          </div> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p style="font-weight:bold;font-size:16px;">Start Date & Time:{{site_visit.start_date}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p style="font-weight:bold;font-size:16px;">Edited:<span ng-if="site_visit.modified_date!='00-00-0000 00:00' " >{{site_visit.modified_date}}</span><span ng-if="site_visit.modified_date=='00-00-0000 00:00'">{{site_visit.created_date}}</span></p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#/activity_edit/{{site_visit.activity_id}}"><p style="font-weight:bold;font-size:16px;">Activity ID_{{site_visit.activity_id}}</p></a>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-2">
+                                            <img src="dist/img/no_image.jpg" ng-if="site_visit.filenames==null " style="width:145px; height:85px;" /> 
+                                            <img src="api/v1/uploads/activity/{{site_visit.filenames}}" ng-if="site_visit.filenames!=null " style="width:145px; height:185px;" /> 
+                                            <p style="font-weight:bold;text-align:center;">{{site_visit.employee_name}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <p style="font-size:16px;" ng-if="site_visit.enquiry_type">Enquiry:<span style="font-weight:bold;font-size:16px;">{{site_visit.enquiry_type}} to {{site_visit.enquiry_for}}</span></p>
+                                            <p style="font-size:16px;" ng-if="site_visit.client">Client:<span style="font-weight:bold;font-size:16px;">{{site_visit.client}}</span></p>
+                                            <p style="font-size:16px;">Description:<span style="font-weight:bold;font-size:16px;">{{site_visit.description}}</span></p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="col-md-3">
+                                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#scheduled_{{site_visit.activity_id}}" ng-click="scheduled_visits(site_visit.activity_id)" ng-if="hasPermissions.includes('View')">Scheduled Visit &nbsp;<i class="fa fa-angle-down"></i></a>
+                                                
+                                            </div>
+                                            <div class="col-md-9" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" ng-if="hasPermissions.includes('View') &&site_visit.enquiry_id" href="#/enquiries_edit/{{site_visit.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Enquiry</a>
+                                                    <a class="btn btn-primary" href="#/activity_edit/{{site_visit.activity_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" ><i class="glyphicon glyphicon-pencil" ng-if="hasPermissions.includes('Update')"></i>&nbsp;Edit</a>
+                                                </div>  
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div id="scheduled_{{site_visit.activity_id}}" class="panel-collapse collapse html_content" compile-html="visittrustedHtml_{{site_visit.activity_id}}">Nothing to show</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                          
+                    
+                            
+                
+                           
+                      
+            </div>
+        </div>
+        <div class="tab-pane" id="clientmeeting">
+                        <div class="box-body table-responsive">
+                            <h1>Client Meetings</h1>
+                             <table class="table" data-page-length='10'>
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="client_meeting in selectclient_meetings">
+                                <td style="width:100%">
+                                    <div class="row" style="border-bottom:1px solid #959191;padding:0px;margin-left:0px;margin-right:0px;">
+                                        <div class="col-md-3" style="min-width:250px;padding-left:0px;margin-bottom:5px;">
+                                            <!-- <div class="col-md-1" style="padding-left:0px;">
+                                                <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{site_visit.activity_id}}"/></label></div>
+                                            </div> -->
+                                            <!--div class="col-md-12"> 
+                                                <div style="background-color:#1497e4;border-radius:6px;padding:3px;padding-left:10px;margin-left:0px;text-align:center;min-width:100px;float:left;font-size:16px;color:#ffffff;">{{client_meeting.activity_type}}</div><div ng-if="client_meeting.status" style="background-color:#505355;border-radius:6px;padding:3px;padding-left:10px;margin-left:10px;text-align:center;min-width:100px;float:left;font-size:16px;color:#ffffff;">{{client_meeting.status}}</div>
+                                          </div> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p style="font-weight:bold;font-size:16px;">Start Date & Time:{{client_meeting.start_date}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p style="font-weight:bold;font-size:16px;">Edited:<span ng-if="client_meeting.modified_date!='00-00-0000 00:00' " >{{client_meeting.modified_date}}</span><span ng-if="client_meeting.modified_date=='00-00-0000 00:00'">{{client_meeting.created_date}}</span></p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#/activity_edit/{{client_meeting.activity_id}}"><p style="font-weight:bold;font-size:16px;">Activity ID_{{client_meeting.activity_id}}</p></a>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-2">
+                                            <img src="dist/img/no_image.jpg" ng-if="client_meeting.filenames==null " style="width:145px; height:85px;" /> 
+                                            <img src="api/v1/uploads/activity/{{client_meeting.filenames}}" ng-if="client_meeting.filenames!=null " style="width:145px; height:185px;" /> 
+                                            <p style="font-weight:bold;text-align:center;">{{client_meeting.employee_name}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <p style="font-size:16px;" ng-if="client_meeting.enquiry_type">Enquiry:<span style="font-weight:bold;font-size:16px;">{{client_meeting.enquiry_type}} to {{client_meeting.enquiry_for}}</span></p>
+                                            <p style="font-size:16px;" ng-if="client_meeting.client">Client:<span style="font-weight:bold;font-size:16px;">{{client_meeting.client}}</span></p>
+                                            <p style="font-size:16px;">Description:<span style="font-weight:bold;font-size:16px;">{{client_meeting.description}}</span></p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="col-md-3">
+                                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#scheduled_{{client_meeting.activity_id}}" ng-click="scheduled_visits(client_meeting.activity_id)" ng-if="hasPermissions.includes('View')">Scheduled Visit &nbsp;<i class="fa fa-angle-down"></i></a>
+                                                
+                                            </div>
+                                            <div class="col-md-9" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" ng-if="hasPermissions.includes('View') &&client_meeting.enquiry_id" href="#/enquiries_edit/{{client_meeting.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Enquiry</a>
+                                                    <a class="btn btn-primary" href="#/activity_edit/{{client_meeting.activity_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" ><i class="glyphicon glyphicon-pencil" ng-if="hasPermissions.includes('Update')"></i>&nbsp;Edit</a>
+                                                </div>  
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div id="scheduled_{{client_meeting.activity_id}}" class="panel-collapse collapse html_content" compile-html="visittrustedHtml_{{client_meeting.activity_id}}">Nothing to show</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  
+            </div>
+        </div>
+        <div class="tab-pane" id="deals">
+                        <div class="box-body table-responsive">
+                            <h1>Deals</h1>
+                             <table class="table" data-page-length='10'>
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="deal in selectdeals">
+                                <td style="width:100%">
+                                    <div class="row" style="border-bottom:1px solid #959191;padding:0px;margin-left:0px;margin-right:0px;">
+                                        <div class="col-md-3" style="min-width:250px;padding-left:0px;margin-bottom:5px;">
+                                            <!-- <div class="col-md-1" style="padding-left:0px;">
+                                                <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{site_visit.activity_id}}"/></label></div>
+                                            </div> -->
+                                            <!--div class="col-md-12"> 
+                                                <div style="background-color:#1497e4;border-radius:6px;padding:3px;padding-left:10px;margin-left:0px;text-align:center;min-width:100px;float:left;font-size:16px;color:#ffffff;">{{deal.activity_type}}</div><div ng-if="deal.status" style="background-color:#505355;border-radius:6px;padding:3px;padding-left:10px;margin-left:10px;text-align:center;min-width:80px;float:left;font-size:16px;color:#ffffff;">{{deal.status}}</div>
+                                          </div> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p style="font-weight:bold;font-size:16px;">Start Date & Time:{{deal.start_date}}</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p style="font-weight:bold;font-size:16px;">Edited:<span ng-if="deal.modified_date!='00-00-0000 00:00' " >{{deal.modified_date}}</span><span ng-if="deal.modified_date=='00-00-0000 00:00'">{{deal.created_date}}</span></p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="#/activity_edit/{{deal.activity_id}}"><p style="font-weight:bold;font-size:16px;">Activity ID_{{deal.activity_id}}</p></a>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-2">
+                                            <img src="dist/img/no_image.jpg" ng-if="deal.filenames==null " style="width:145px; height:85px;" /> 
+                                            <img src="api/v1/uploads/activity/{{deal.filenames}}" ng-if="deal.filenames!=null " style="width:145px; height:185px;" /> 
+                                            <p style="font-weight:bold;text-align:center;">{{deal.employee_name}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <p style="font-size:16px;" ng-if="deal.enquiry_type">Enquiry:<span style="font-weight:bold;font-size:16px;">{{deal.enquiry_type}} to {{deal.enquiry_for}}</span></p>
+                                            <p style="font-size:16px;" ng-if="deal.client">Client:<span style="font-weight:bold;font-size:16px;">{{deal.client}}</span></p>
+                                            <p style="font-size:16px;">Description:<span style="font-weight:bold;font-size:16px;">{{deal.description}}</span></p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="col-md-3">
+                                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#scheduled_{{deal.activity_id}}" ng-click="scheduled_visits(deal.activity_id)" ng-if="hasPermissions.includes('View')">Scheduled Visit &nbsp;<i class="fa fa-angle-down"></i></a>
+                                                
+                                            </div>
+                                            <div class="col-md-9" >
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" ng-if="hasPermissions.includes('View') &&deal.enquiry_id" href="#/enquiries_edit/{{deal.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Enquiry</a>
+                                                    <a class="btn btn-primary" href="#/activity_edit/{{deal.activity_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" ><i class="glyphicon glyphicon-pencil" ng-if="hasPermissions.includes('Update')"></i>&nbsp;Edit</a>
+                                                </div>  
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div id="scheduled_{{deal.activity_id}}" class="panel-collapse collapse html_content" compile-html="visittrustedHtml_{{deal.activity_id}}">Nothing to show</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  
+            </div>
+        </div>
+    </div>
+</div-->
+<style>
+    #topsheet p
+    {
+        margin-bottom:0px;
+    }
+
+     .enquiry_stage
+    {
+        width: 12px;
+        height: 12px;
+        background-color: rgb(134, 132, 132);
+        border-radius: 14px;
+        float: left;
+        /*padding: 8px;*/
+        margin-left: 10px;
+        list-style-type: none;
+
+
+    }
+
+    .enquiry_stage p{
+        margin-top:10px;
+        margin-left:-15px;
+        font-size:12px;
+    }
+
+    .enquiry_stage_selected
+    {
+        width: 18px;
+        height: 18px;
+        background-color: #ee0a0a;
+        border-radius: 18px;
+        float: left;
+        /*padding: 8px;*/
+        margin-left: 10px;
+        margin-top:-3px;
+        list-style-type: none;
+    }
+    .enquiry_stage_selected p
+    {
+        font-size:12px;
+        margin-top:22px;
+        margin-left:-5px;
+    }
+</style>

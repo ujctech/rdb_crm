@@ -1,0 +1,1391 @@
+
+<script type="text/javascript">
+    function group_clicked(mytab)
+    {
+        $(".tab-pane").removeClass('active');
+        $("#"+mytab).tab('show');
+        $("#"+mytab).addClass('active');
+        
+    }
+    /*jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+    });*/
+</script>    
+<style>
+    .nav-tabs {
+    /*border-bottom: 1px solid #A05555;
+    background-color: #C39A9A;
+    border:1px solid #ffffff;*/
+    border-bottom:none;
+            
+    }
+    .nav-tabs>li {
+        width: 135px;
+        background-color: #525D5D;
+        text-align: center;
+        font-size:15px;
+        color:#ffffff;
+        border-radius: 0px 20px 0px 0px;
+        border:1px solid #ffffff;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus
+    {
+        background-color: #1F2929;
+        color:#ffffff;
+        text-align:center;
+        font-size:15px;
+        border-radius: 0px 20px 0px 0px;
+        z-index:100;
+        
+        
+    }
+    .nav-tabs>li>a {
+        color:#ffffff;
+    }
+    .nav-tabs>li>a:hover
+    {
+       background-color: #1F2929;
+        color:#ffffff; 
+            border-radius: 0px 20px 0px 0px;
+    }
+</style>
+<div id="project_info">
+    
+	<!--<div class="row">
+		<div class="col-md-12" >
+            <!--<div class="html_content" compile-html="trustedHtml_menu" style="width:80%;margin-left:-25px;margin-top:-25px;"></div>-->
+			 <!--<div class="desktop_icons" ng:repeat="menu1 in menus" title="{{menu1.menu_title}}" alt="menu1.menu_title">
+				<a href="#/{{ menu1.menu_link }}">
+					<p style="margin-bottom:2px;"><img src="img/{{menu1.menu_icon}}" style="width:65px;height:65px;margin:4px;"/></p>
+					<p style="color:#1D030B;width:92px;margin:0 auto;font-size:12px;font-weight:bold;text-shadow: 2px 3px 5px #AB9090;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{{menu1.menu_title}}</p>
+				</a>
+			 </div>-->
+		<!--</div>
+	</div>-->
+    <!--<div class="row" id="open_projects" style="margin-top:5px;">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Project Status</h3>
+                </div>
+				<div class="box-body" ng-controller="project_dashboard">
+					<div class="html_content" compile-html="trustedHtml"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row"style="margin-top:20px;">
+        <div class="col-md-6"  id="today_calls" >
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Interview Summary</h3>
+                </div>
+				<div class="box-body" ng-controller="today_calls" style="overflow:auto;">
+					<div class="html_content" compile-html="trustedHtml_today_calls"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6"  id="task_assigned" >
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Task Assigned</h3>
+                </div>
+				<div class="box-body" ng-controller="task_assigned" style="overflow:auto;">
+					<div class="html_content" compile-html="trustedHtml_task_assigned"></div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="col-md-6"  id="task_status" >
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Task Status</h3>
+                </div>
+				<div class="box-body" ng-controller="task_status" style="overflow:auto;">
+					<div class="html_content" compile-html="trustedHtml_task_status"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 main"  id="project_status" >
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Project Status</h3>
+                </div>
+				<div class="box-body" ng-controller="project_status" style="overflow:auto;">
+					<div class="html_content" compile-html="trustedHtml_project_status"></div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>-->
+</div>
+
+
+<div id="layoutdashboard">
+    <div class="panel-group" id="accordion">
+        <div class="row">
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default" ng-controller="MDbAttendance">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Attendance
+                            </a>-->
+                            Attendance
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_mdbattendance" style="max-height:110px;height:110px;"></div>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="detmdbattendance()" title="Detailed Report">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default" ng-controller="MDbLateCount">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Late Count
+                            </a>-->
+                            Late Count (Top 5)
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_mdblatecount" style="max-height:110px;height:110px;"></div>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="detmdblatecount()" title="Detailed Report">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default" ng-controller="MDblowaverage">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Monthly Average
+                            </a>-->
+                            Low Average (Top 5)
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_mdblowaverage" style="max-height:110px;height:110px;"></div>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="detmdblowaverage()" title="Detailed Report">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default" ng-controller="MDbhighaverage">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">High Average (Top 5)
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_mdbhighaverage" style="max-height:110px;height:110px;"></div>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="detmdbhighaverage()" title="Detailed Report">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default" ng-controller="MDbApprovals">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Approvals
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_mdbapprovals" style="max-height:110px;height:110px;"></div>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="detmdbapprovals()" title="Detailed Report">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default" ng-controller="MDbAbsent">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Absent
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_mdbabsent" style="max-height:110px;height:110px;"></div>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" ng-click="detmdbabsent()" title="Detailed Report">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="detaileddashboard">
+    <div class="panel-group" id="accordion">
+        <div class="row">
+            <div class="col-md-12" style="padding-bottom:10px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">{{detheading}}
+                            </a>
+                            <a href="javascript:void(0)" ng-click="backmdashboard()" title="Back to Dashboard">
+                                <span class="pull-right"><i class="fa fa-arrow-circle-left"></i></span>
+                                <div class="clearfix"></div>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_detmdbattendance"></div>
+                        </div>
+                    </div>
+                    <!--<a href="javascript:void(0)" ng-click="detmdbattendance()">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+            <!--<div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default"  ng-controller="DbLeaves">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)">Leaves
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body" style="padding-top:1px;">
+                             <div compile-html="trustedHtml_dbleaves" style="max-height:110px;height:110px;"></div>
+                        </div>
+                    </div>
+                    <a href="#/myleaves">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default"  ng-controller="DbProfile">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)">My Profile
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body" style="font-size:14px;">
+                             <div compile-html="trustedHtml_dbprofile" style="max-height:95px;height:95px;"></div>
+                        </div>
+                    </div>
+                    <a href="#/myprofile">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default"  ng-controller="DbSearchExtn">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Extensions
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body">
+                             <div style="max-height:95px;height:95px;">
+                                <div class="row">
+                                    <div class="col-md-3">Name
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="name" name="name"  placeholder="Name" ng-model="name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary"  id="add-new-btn" ng-click="search_extn(name)">Search</button>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-3">Extn No
+                                    </div>
+                                     <div class="col-md-4">{{extn_no}}
+                                    </div>
+                                     <div class="col-md-2">Desk:{{desk_no}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#/contact_us">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default" ng-controller="DbPolicies">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Policy Library
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body">
+                             <div style="max-height:95px;height:95px;">
+                                 <div compile-html="trustedHtml_dbpolicies" style="max-height:95px;height:95px;"></div>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="#/policies">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)">My Reimbursement / Investment
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body">
+                             <div style="max-height:95px;height:95px;font-size:15px;">
+                                 <div class="row">
+                                     <div class="col-md-12">
+                                         <p>Please fill your Reimbusement details on time</p>
+                                         <p>Please fill your Investment details on time</p>
+                                    </div>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="#/myinvestments">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--<div class="row">
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">My Reimbursement
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body">
+                             <div style="max-height:95px;height:95px;">
+                                 
+                             </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">Policy
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body">
+                             <ul style="padding-left:2px;">
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                             </ul>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-bottom:10px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)">My Investments
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="1" class="panel-collapse collapse in">
+                         <div class="panel-body">
+                             <ul style="padding-left:2px;">
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                                <li><a href="javascript:void(0)" ng-click="showpolicy()"></a>Link 1</li>
+                             </ul>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>-->
+    <!--</div>
+</div>
+ <!--<div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">26</div>
+                                    <div>New Comments!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">12</div>
+                                    <div>New Tasks!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">124</div>
+                                    <div>New Orders!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">13</div>
+                                    <div>Support Tickets!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>-->
+
+
+
+
+                <div ng-controller="task_manager" ng-show="authenticated">
+                    <button ng-click="open_task_manager()" class="right_drawer_task">Tasks</button>
+                    <div style="width:40%;position:fixed;top:50px;right:-41%;height:580px;z-index:2000;" id="task_manager" >
+                        <button ng-click="close_task_manager()" class="close_drawer_task"><i class="fa fa-toggle-right"></i></button>
+                        <button title="Assign Task " alt="Assign Task" ng-click="assign_task()" style="width: 30px;border-radius: 20px; z-index:3000;
+font-size: 14px;background-color: red;color: rgb(255, 255, 255);height: 30px;margin-left: 5px;float: left;margin-top:5px;border:1px solid red;"><i class="glyphicon glyphicon-pencil"></i></button>
+                        <p style="text-align:center;font-size:20px;margin-top:5px;">Tasks & Reminders</p>
+                        <div class="html_content" id="tasks" compile-html="trustedHtml_task"></div>
+                    </div>
+                    <div class="modal fade" id="assign_task">
+                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Assign Task</h4>
+                                    <div style="margin-top:-30px;float:right;">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button id="save_button"class="btn btn-primary"  ng-click="task_save(task)" style="float:right;margin-left:10px;" ng-disabled="AddNewForm.$invalid || isUnchanged(task)">Assign</button>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="task_title">Task Title</label>
+                                                <input type="text" class="form-control" id="task_title" name="task_title"  placeholder="Task Title"  ng-model="task.task_title" required focus />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="assigned_to">Assigned To</label>
+                                                <select class="selectpicker form-control" id="assigned_to" name="assigned_to" ng-model="task.assigned_to" ng-options="teammember.emp_id as teammember.name for teammember in teammembers" ng-controller = "SelectTeamMember" multiple  ></select>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="task">Task</label>
+                                                <textarea class="form-control" id="task" name="task"  placeholder="Task"  ng-model="task.task"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="reminder_type">Reminder Type</label>
+                                                <select  style="margin-bottom:10px;margin-right:10px;" class="selectpicker form-control" id="reminder_type" name="reminder_type" ng-model="task.reminder_type" ng-change="changevalueinput(this)" required>
+                                                    <option value="Once">Once</option>
+                                                    <option value="Daily">Daily</option>
+                                                    <option value="Weekly">Weekly</option>
+                                                    <option value="Monthly">Monthly</option>
+                                                    <option value="Quarterly">Qualterly</option>
+                                                    <option value="Yearly">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="reminderdate">
+                                            <div class="form-group">
+                                                <label for="reminder_value">Reminder Value</label>
+							                    <div class="input-group date" id="reminder_value" date-directive="">
+                                                    <input class="form-control" type="text" ng-model="task.reminder_value"  ng-init="task.reminder_value = task.reminder_value">
+								                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							                     </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="reminderweek">
+                                            <div class="form-group">
+                                                <label for="reminder_value">Reminder Value</label>
+                                                <select  style="margin-bottom:10px;margin-right:10px;" class="selectpicker form-control" id="reminder_value" name="reminder_value" ng-model="task.reminder_value">
+                                                    <option value="Monday">Monday</option>
+                                                    <option value="Tuesday">Tuesday</option>
+                                                    <option value="Wednesday">Wednesday</option>
+                                                    <option value="Thursday">Thursday</option>
+                                                    <option value="Friday">Friday</option>
+                                                    <option value="Saturday">Saturday</option>
+                                                    <option value="Sunday">Sunday</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+
+
+<!-- FEEDBACK FORM -->
+
+<div class="modal fade" id="tc_feedback_form" ng-controller="tc_feedback_form"> <!-- ng-if="ftraining_calendar_feedback.length">-->
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Feedback Form</h4>
+                <div style="margin-top:-30px;float:right;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="save_button"class="btn btn-primary"  ng-click="tc_feedback_form(tc_ff)" style="float:right;margin-left:10px;" ng-disabled="AddNewForm.$invalid || isUnchanged(tc_ff)">Assign</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="trainer_name">Trainer Name</label>
+                            <input type="text" class="form-control" id="trainer_name" name="trainer_name"  placeholder="Trainer Name"  ng-model="feedback.trainer_name" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="topic">Topic</label>
+                            <input type="text" class="form-control" id="topic" name="topic"  placeholder="topic"  ng-model="feedback.topic" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped"  datatable-setupnosort2="" >
+                        <thead>
+                            <tr>
+                                <th>Sr.No.</th>
+                                <th>Question</th>
+                                <th>Rating</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="training_calendar_feedback in ftraining_calendar_feedback">
+                                <td>{{training_calendar_feedback.priority}}</td>
+                                <td>{{training_calendar_feedback.question}}</td>
+                                <td><!--<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>--></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Sr.No.</th>
+                                <th>Question</th>
+                                <th>Rating</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="most_useful">Most Useful Topics</label>
+                            <textarea class="form-control" id="most_useful" name="most_useful"  placeholder="Most Useful"  ng-model="feedback.most_useful"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="least_useful">Least Useful Topics</label>
+                            <textarea class="form-control" id="least_useful" name="least_useful"  placeholder="Least Useful"  ng-model="feedback.least_useful"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="key_learnings">Key Learnings</label>
+                            <textarea class="form-control" id="key_learnings" name="key_learnings"  placeholder="Key Learnings"  ng-model="feedback.key_learnings"></textarea>
+                        </div>
+                    </div>>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="future_topic">What Topic would you want to be trained on</label>
+                            <textarea class="form-control" id="future_topic" name="future_topic"  placeholder="What Topic would you want to be trained on"  ng-model="feedback.future_topic"></textarea>
+                        </div>
+                    </div>>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </form>
+</div>
+
+
+   <!--<section class="content">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- AREA CHART -->
+                            <!--<div class="box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">Area Chart</h3>
+                                </div>
+                                <div class="box-body chart-responsive">
+                                    <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+                                </div><!-- /.box-body -->
+                            <!--</div><!-- /.box -->
+
+                            <!-- DONUT CHART -->
+                            <!--<div class="box box-danger">
+                                <div class="box-header">
+                                    <h3 class="box-title">Donut Chart</h3>
+                                </div>
+                                <div class="box-body chart-responsive">
+                                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                                </div><!-- /.box-body -->
+                            <!--</div><!-- /.box -->
+                            
+                        <!--</div><!-- /.col (LEFT) -->
+                        <!--<div class="col-md-6">
+                            <!-- LINE CHART -->
+                           <!-- <div class="box box-info">
+                                <div class="box-header">
+                                    <h3 class="box-title">Line Chart</h3>
+                                </div>
+                                <div class="box-body chart-responsive">
+                                    <div class="chart" id="line-chart" style="height: 300px;"></div>
+                                </div><!-- /.box-body -->
+                            <!--</div><!-- /.box -->
+
+                            <!-- BAR CHART -->
+                            <!--<div class="box box-success">
+                                <div class="box-header">
+                                    <h3 class="box-title">Bar Chart</h3>
+                                </div>
+                                <div class="box-body chart-responsive">
+                                    <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                                </div><!-- /.box-body -->
+                            <!--</div><!-- /.box -->
+
+                        <!--</div><!-- /.col (RIGHT) -->
+                    <!--</div><!-- /.row -->
+
+                <!--</section> -->
+
+<!--<div class="content form_linechart" style="padding:0;">
+    <div class="box box-info" style="border-top-color: #ffffff;">
+        <div class="box-header" style="height:45px;">
+            <h3 class="box-title">Line Chart</h3>
+            <a href="javascript:void(0)" style="float:right;margin: 7px;color: #ffffff;font-size: 22px;margin-right:-20px;" ng-click="close()"><i class="glyphicon glyphicon-remove-sign"></i></a>
+        </div>
+        <div class="box-body chart-responsive">
+            <div class="chart" id="line-chart" style="height: 300px;"></div>
+        </div><!-- /.box-body -->
+    <!--</div><!-- /.box -->
+<!--</div>-->
+    
+<div class="content form_linechart" style="padding:0;">
+    <div class="box box-info" style="border-top-color: #ffffff;">
+        <div class="box-header" style="height:40px;">
+            <h3 class="box-title">Average Graph</h3>
+            <a href="javascript:void(0)" style="float:right;margin: 7px;color: #ffffff;font-size: 22px;margin-right:-20px;" ng-click="close()"><i class="glyphicon glyphicon-remove-sign"></i></a>
+        </div>
+        <div class="box-body chart-responsive">
+            <p style="text-align:center;font-size:17px;font-weight:bold;">{{employee_name}}</p>
+            
+            <div id="line-chart"  line-chart line-data='data' style="height: 300px;"></div>
+            
+            <!--<div id="line-chart"  line-chart line-data='data' line-xkey='y' line-ykeys='["a"]' line-labels='["Avg"]' line-colors='["#232C51"]' line-x-label-format="xLabelFormat" line-goal-line-colors='["#FCCB93"]'
+  line-goals= '[9]' line-date-format="dateFormat" style="height: 300px;"></div>-->
+            
+            <!--<div id="line-chart" line-chart line-data='data' line-xkey='y' line-ykeys='["a", "b"]' line-labels='["Avg", "Std"]' line-colors='["#232C51", "#FCCB93"]' line-x-label-format="xLabelFormat" line-date-format="dateFormat" style="height: 300px;" morris=""></div>-->
+            
+            
+            
+            <!--<div class="chart" id="line-chart" style="height: 300px;" morris-data=""></div>
+            
+            <!--<div line-chart line-data='data' line-xkey='y' line-ykeys='["a", "b"]' line-labels='["Avg", "Std"]' line-colors='["#232C51", "#FCCB93"]' line-x-label-format="xLabelFormat" line-date-format="dateFormat" style="height: 300px;" morris=""></div>-->
+            
+            <!--<div compile-html="trustedHtml_showgraph"></div>-->
+            
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</div>
+
+
+<div class="content form_attendance" style="padding:0;">
+    <div class="box box-info" style="border-top-color: #ffffff;">
+        <div class="box-header" style="height:40px;">
+            <h3 class="box-title">Attendance</h3>
+            <a href="javascript:void(0)" style="float:right;margin: 7px;color: #ffffff;font-size: 22px;margin-right:-20px;" ng-click="close()"><i class="glyphicon glyphicon-remove-sign"></i></a>
+        </div>
+        <div class="box-body chart-responsive">
+            <p style="text-align:center;font-size:17px;font-weight:bold;">{{employee_name}}</p>
+            <div compile-html="trustedHtml_mdbatt" style="max-height:300px;height:300px;overflow:scroll;"></div>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+</div>
+
+
+
+<style>
+    
+    .morris-hover{position:absolute;z-index:1000;}
+.morris-hover.morris-default-style{border-radius:10px;padding:6px;color:#666;background:rgba(255, 255, 255, 0.8);border:solid 2px rgba(230, 230, 230, 0.8);font-family:sans-serif;font-size:12px;text-align:center;}
+    .morris-hover.morris-default-style .morris-hover-row-label{font-weight:bold;margin:0.25em 0;}
+    
+    
+    #detaileddashboard
+    {
+        display: none;
+    }
+    
+    #detaileddashboard .panel-heading
+    {
+        height: 40px;
+        color:#ffffff;
+        margin-bottom: 0;
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#020202), to(#847c7c));
+        background-image: -webkit-linear-gradient(top, #020202, #847c7c);
+        background-image: -moz-linear-gradient(top, #020202, #847c7c);
+        filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0)";
+        background-image: -ms-linear-gradient(top, #020202, #847c7c);
+        background-image: -o-linear-gradient(top, #020202, #847c7c);
+    }
+    
+    .lihover:hover
+    {
+        background-color: #baafab;
+    }
+    
+    .lihover
+    {
+        cursor: pointer;
+    }
+    
+    .form_linechart
+         {
+            background-color: #F8F8F8;
+            color: #666;
+            /*padding: 20px;*/
+            position: absolute;
+            /*border: 1px solid #670A0A;*/
+            margin: auto;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            width: 720px;
+            min-width: 720px;
+            height: 395px;
+            -webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+             z-index: 8500;
+             display: none;
+             position: fixed;
+    top: 35%;
+    left: 30%;
+    margin-left: -100px;
+    margin-top: -100px;
+             
+             
+             /*border-radius:7px;*/
+        }
+    
+     .form_linechart .box-header
+     {   
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#020202), to(#847c7c));
+        background-image: -webkit-linear-gradient(top, #020202, #847c7c);
+        background-image: -moz-linear-gradient(top, #020202, #847c7c);
+        filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0)";
+        background-image: -ms-linear-gradient(top, #020202, #847c7c);
+        background-image: -o-linear-gradient(top, #020202, #847c7c);
+         color:#ffffff;
+    }
+    
+    
+    .form_linechart .box-title
+    {
+        color:#ffffff;
+    }
+    
+    .form_attendance
+     {
+        background-color: #F8F8F8;
+        color: #666;
+        /*padding: 20px;*/
+        position: absolute;
+        /*border: 1px solid #670A0A;*/
+        margin: auto;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        width: 720px;
+        min-width: 720px;
+        height: 395px;
+        -webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+         z-index: 8500;
+         display: none;
+         position: fixed;
+        top: 35%;
+        left: 30%;
+        margin-left: -100px;
+        margin-top: -100px;
+
+
+         /*border-radius:7px;*/
+    }
+    
+     .form_attendance .box-header
+     {   
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#020202), to(#847c7c));
+        background-image: -webkit-linear-gradient(top, #020202, #847c7c);
+        background-image: -moz-linear-gradient(top, #020202, #847c7c);
+        filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0)";
+        background-image: -ms-linear-gradient(top, #020202, #847c7c);
+        background-image: -o-linear-gradient(top, #020202, #847c7c);
+         color:#ffffff;
+    }
+    
+    
+    .form_attendance .box-title
+    {
+        color:#ffffff;
+    }
+    
+    #task_assigned 
+    {
+        display: none;
+    }
+    
+    #today_calls 
+    {
+        display: none;
+    }
+    
+    #task_status
+    {
+        display: none;
+    }
+    
+    #project_status
+    {
+        display: none;
+    }
+	
+    
+    
+    .desktop_iconso
+    {
+        text-align:center;
+        margin:3px;
+        width:96px;
+        height:95px;
+        float:left;
+        color:#000000;
+        font-size:10px;
+        box-shadow: 2px 2px 9px 3px #6F6464;
+        background-color:#ffffff;
+        border:1px solid #ffffff;
+        border-radius:5px;
+        
+    }
+   
+    .content-header a
+    {
+        color:black;
+    }
+    
+    .content-header a:hover
+    {
+        color:black;    
+        
+    }
+    .content-header div
+    {
+        /*-webkit-box-shadow: 5px 7px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+        /*-moz-box-shadow:    5px 7px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+        /*box-shadow:         5px 7px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+        /*border:1px solid #BBB0B0;*/
+        
+    }
+    #layoutdashboard .panel-heading
+    {
+        height: 40px;
+        color:#ffffff;
+        margin-bottom: 0;
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#020202), to(#847c7c));
+        background-image: -webkit-linear-gradient(top, #020202, #847c7c);
+        background-image: -moz-linear-gradient(top, #020202, #847c7c);
+        filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#020202', endColorStr='#847c7c', GradientType=0)";
+        background-image: -ms-linear-gradient(top, #020202, #847c7c);
+        background-image: -o-linear-gradient(top, #020202, #847c7c);
+    }
+    #layoutdashboard 
+    {
+        padding:25px;
+    }
+    
+    #reminderweek
+            {
+                display:none;
+            }
+            
+            .callout.callout-info {
+                background-color: #295F65;
+                border-color: #C2E274;
+           }
+            
+            .callout {
+                padding: 5px 10px 5px 5px;
+                margin-bottom:10px;
+                height:75px;
+            }
+    
+    .right_drawer_task {
+                word-wrap: break-word;
+                font-size: 14px;
+                width: 14px;
+                height: 120px;
+                font-weight: bold;
+                position: fixed;
+                right: -1px;
+                z-index: 5;
+                background-color: blue;
+                width: 25px;
+                padding: 7px;
+                color: white;
+                border: 1px solid;
+                border-left: 5px;
+                border-radius: 10px 0px 0px 10px;
+                top: 50px;
+                z-index:9999;
+            }
+            .close_drawer_task {
+                font-size: 26px;
+                float: left;
+                margin-left: -38px;
+                margin-top: -1px;
+                height: 39px;
+                display:none;
+            }
+            #task_manager
+            {
+                width:100%;
+                margin-right:10px;
+                font-size:13px;
+                float:left;
+        /* Safari 4+, Chrome 1-9 */                         background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#004574), to(#FFFFFF));
+        /* Safari 5.1+, Mobile Safari, Chrome 10+ */    background-image:   -webkit-linear-gradient(top, #004574, #FFFFFF);
+        /* Firefox 3.6+ */                                      background-image:   -moz-linear-gradient(top, #004574, #60A7D6);
+        /* IE 7-*/                                                  filter:                 progid:DXImageTransform.Microsoft.Gradient(startColorStr='#004574', endColorStr='#FFFFFF', GradientType=0);
+        /* IE 8+*/                                                  -ms-filter:             "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#004574', endColorStr='#FFFFFF', GradientType=0)";
+        /* IE 10+ */                                                background-image:   -ms-linear-gradient(top, #004574, #FFFFFF);
+        /* Opera 11.10+ */                                      background-image:   -o-linear-gradient(top, #004574, #FFFFFF);		
+
+            color:#ffffff;
+            font-size:14px;
+            /*	-moz-box-shadow: inset 0 0 3px 		#000000, 0 0 9px 		#000000;
+            -webkit-box-shadow: inset 0 0 3px 	#000000, 0 0 9px 		#000000 ;
+            box-shadow: inset 0 0 3px 			#000000, 0 0 9px 		#000000;*/
+
+
+            }
+            #tasks
+            {
+                min-height:300px;
+                width:100%;
+                color:#ffffff;
+                /* Safari 4+, Chrome 1-9 */                         background-image:   -webkit-gradient(linear, 0% 0%, 0% 100%, from(#004574), to(#FFFFFF));
+        /* Safari 5.1+, Mobile Safari, Chrome 10+ */    background-image:   -webkit-linear-gradient(top, #004574, #FFFFFF);
+        /* Firefox 3.6+ */                                      background-image:   -moz-linear-gradient(top, #004574, #60A7D6);
+        /* IE 7-*/                                                  filter:                 progid:DXImageTransform.Microsoft.Gradient(startColorStr='#004574', endColorStr='#FFFFFF', GradientType=0);
+        /* IE 8+*/                                                  -ms-filter:             "progid:DXImageTransform.Microsoft.Gradient(startColorStr='#004574', endColorStr='#FFFFFF', GradientType=0)";
+        /* IE 10+ */                                                background-image:   -ms-linear-gradient(top, #004574, #FFFFFF);
+        /* Opera 11.10+ */                                      background-image:   -o-linear-gradient(top, #004574, #FFFFFF);		
+
+                
+                font-size:14px;
+                
+            }
+    #tasks .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+        background-color: #597088;
+    }
+    
+    .panel-primary>.panel-heading {
+        color: #fff;
+        background-color: #42474c;
+        border-color: #42474c;
+    }
+    .panel-primary {
+        border-color: #42474c;
+    }
+    
+    
+</style>
+
+<script>
+    $(".main").popover();
+
+</script>
+
+
+<!--
+
+
+<section class="content-header">
+<div style="text-align:center;margin-left:0px;width:160px;height:145px;float:left;color:#000">
+    <a href="#/summary_report_list">
+        <p><img src="img/summary.png" style="width:140px;height:141px;"/></p>
+        <p>Gross Margin</p>
+    </a>
+</div>
+<div style="text-align:center;margin-left:0px;width:160px;height:145px;float:left;color:#000;">
+    <a href="#/gm_calculator">
+        <p><img src="img/fa.jpg" style="width:140px;height:141px;"/></p>
+        <p>Gross Margin Calculator</p>
+    </a>
+</div>
+</section>
+<style>
+    .content-header a
+    {
+        color:black;
+    }
+    
+    .content-header a:hover
+    {
+        color:black;    
+        
+    }
+    .content-header div
+    {
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+        -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+        box-shadow:         3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+        border:1px solid #BBB0B0;
+        margin-right:15px;
+    }
+</style>
+
+
+<script>
+var slider = new Slider('#ex1', {
+	formatter: function(value) {
+		return 'Current value: ' + value;
+	}
+});
+    </script>-->
+
+<script type="text/javascript">
+    
+            /*$(function() {
+                "use strict";
+
+                // AREA CHART
+                /*var area = new Morris.Area({
+                    element: 'revenue-chart',
+                    resize: true,
+                    data: [
+                        {y: '2011 Q1', item1: 2666, item2: 2666},
+                        {y: '2011 Q2', item1: 2778, item2: 2294},
+                        {y: '2011 Q3', item1: 4912, item2: 1969},
+                        {y: '2011 Q4', item1: 3767, item2: 3597},
+                        {y: '2012 Q1', item1: 6810, item2: 1914},
+                        {y: '2012 Q2', item1: 5670, item2: 4293},
+                        {y: '2012 Q3', item1: 4820, item2: 3795},
+                        {y: '2012 Q4', item1: 15073, item2: 5967},
+                        {y: '2013 Q1', item1: 10687, item2: 4460},
+                        {y: '2013 Q2', item1: 8432, item2: 5713}
+                    ],
+                    xkey: 'y',
+                    ykeys: ['item1', 'item2'],
+                    labels: ['Item 1', 'Item 2'],
+                    lineColors: ['#a0d0e0', '#3c8dbc'],
+                    hideHover: 'auto'
+                });
+
+                // LINE CHART
+                var line = new Morris.Line({
+                    element: 'line-chart',
+                    resize: true,
+                    data: [
+                        {y: '2016-04', item1: 8.5},
+                        {y: '2016-05', item1: 9.4},
+                        {y: '2016-06', item1: 7.3},
+                        {y: '2016-07', item1: 10}
+                    ],
+                    xkey: 'y',
+                    ykeys: ['item1'],
+                    labels: ['Item 1'],
+                    lineColors: ['#3c8dbc'],
+                    hideHover: 'auto'
+                });
+
+                
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+Morris.Line({
+  element: 'line-chart',
+  data: [ {
+    m: '2016-04',
+    a: 9.5,
+    b: 9
+  }, {
+    m: '2016-05',
+    a: 8.34,
+    b: 9
+  }, {
+    m: '2016-06',
+    a: 8.45,
+    b: 9
+  }, {
+    m: '2016-07',
+    a: 10,
+    b: 9
+  },
+    {
+    m: '2016-08',
+    a: null,
+    b: 9
+  },],
+  xkey: 'm',
+  ykeys: ['a', 'b'],
+  hideHover: 'auto',
+  lineColors: ['#0b62a4','#bd0707'],
+  pointFillColors: ['#00ff00','#000'],
+  labels: ['2014', '2015'],
+  xLabelFormat: function(x) { // <--- x.getMonth() returns valid index
+    var month = months[x.getMonth()];
+    return month;
+  },
+  dateFormat: function(x) {
+    var month = months[new Date(x).getMonth()];
+    return month;
+  },
+});
+                
+                //DONUT CHART
+                /*var donut = new Morris.Donut({
+                    element: 'sales-chart',
+                    resize: true,
+                    colors: ["#3c8dbc", "#f56954", "#00a65a"],
+                    data: [
+                        {label: "Download Sales", value: 12},
+                        {label: "In-Store Sales", value: 30},
+                        {label: "Mail-Order Sales", value: 20}
+                    ],
+                    hideHover: 'auto'
+                });*/
+                //BAR CHART
+                /*var bar = new Morris.Bar({
+                    element: 'bar-chart',
+                    resize: true,
+                    data: [
+                        {y: '2006', a: 100, b: 90},
+                        {y: '2007', a: 75, b: 65},
+                        {y: '2008', a: 50, b: 40},
+                        {y: '2009', a: 75, b: 65},
+                        {y: '2010', a: 50, b: 40},
+                        {y: '2011', a: 75, b: 65},
+                        {y: '2012', a: 100, b: 90}
+                    ],
+                    barColors: ['#00a65a', '#f56954'],
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['CPU', 'DISK'],
+                    hideHover: 'auto'
+                });
+            });*/
+        </script>

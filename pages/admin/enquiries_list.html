@@ -1,0 +1,1745 @@
+<div class=""
+    style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <div id="pagination">
+        <div id="page_range">{{page_range}}</div>
+        <div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);" ng-click="pagenavigation('prev')">
+            <div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div>
+        </a>
+        <a href="javascript:void(0);" ng-click="pagenavigation('next')">
+            <div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div>
+        </a>
+    </div>
+    <div id="top_menu_div">
+        <a class="btn btn-primary" href="#/enquiries_add/{{cat}}" style="margin:10px;" ng-if="create_rights">Add
+            Enquiries</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+            ng-click="audit_trail();" ng-if="hasRoles.includes('Admin')">Audit Trail</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+            ng-click="batch_update();" ng-if="hasRoles.includes('Admin')">Batch Update</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+            ng-click="manage_group();" ng-if="hasRoles.includes('Admin')">Manage Group</a>
+
+        <!--a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="mis_report();" ng-if="view_rights">Report</a-->
+
+        <div class="dropdown" ng-if="view_rights">
+            <a class="btn btn-primary dropbtn" href="javascript:void(0)"
+                style="height:33px;margin:10px;padding:6px;margin-right:2px;margin-top:9px;">Reports&nbsp; <i
+                    class="fa fa-angle-down"></i></a>
+            <div class="dropdown-content" style="margin-top:0px;min-width:175px;">
+                <a href="#/mis_enquiries" style="text-align:left;">MIS Report</a>
+            </div>
+        </div>
+
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" data-toggle="modal"
+            ng-click="export();" ng-if="hasRoles.includes('Admin')">Export</a>
+        <!--data-target="#exportdetails"-->
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+            ng-click="import_enquiries()" ng-if="hasRoles.includes('Admin')">Import</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+            ng-click="send_mails()" ng-if="view_rights">Send Mail</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+            ng-click="link_properties()" ng-if="view_rights">Link Properties</a>
+    </div>
+    <div id="top_menu_div_mobile">
+
+        <div class="dropdown">
+            <a class="dropbtn" href="javascript:void(0)" style="background-color:transparent;">
+                <i class="fa fa-ellipsis-v" style="margin-top:5px;font-size:20px;"></i>
+            </a>
+            <div class="dropdown-content">
+
+                <a href="#/enquiries_add/{{cat}}" style="" ng-if="create_rights">Add Enquiries</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="audit_trail();"
+                    ng-if="hasRoles.includes('Admin')">Audit Trail</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="batch_update();"
+                    ng-if="hasRoles.includes('Admin')">Batch Update</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="manage_group();"
+                    ng-if="hasRoles.includes('Admin')">Manage Group</a>
+                <a href="#/mis_enquiries" style="text-align:left;" ng-if="hasRoles.includes('Admin')">MIS Report</a>
+
+                <a href="javascript:void(0)" style="margin-right:2px;" data-toggle="modal" ng-click="export();"
+                    ng-if="hasRoles.includes('Admin')">Export</a>
+                <!--data-target="#exportdetails"-->
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="import_enquiries()"
+                    ng-if="hasRoles.includes('Admin')">Import</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="send_mails()" ng-if="view_rights">Send
+                    Mail</a>
+                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+                    ng-click="link_properties()" ng-if="view_rights">Link Properties</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+<div class="box boxpadding" id="enquiries" style="border-top:0px;" ng-if="view_rights">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" style="background: #f1f1f1;">
+            <li class="active"><a data-target="#myenquiries" data-toggle="tab">My {{cat.charAt(0).toUpperCase()+
+                    cat.substr(1).toLowerCase()}} Enquiries &nbsp;&nbsp; {{enquiry_count}}</a></li>
+            <!--<li style="border-top-color: #f3f0f0;"><a data-target="#agent" data-toggle="tab">Agent Search</a></li>-->
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="myenquiries">
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <div class="right-side">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <!--<input type="text" class="form-control" id="projectsearch" name="projectsearch"  placeholder="Search Project" ng-model="projectsearch" style="margin:10px;margin-right:2px;"/>-->
+                            </div>
+                            <!--<div class="col-md-5" style="float:right;text-align:right;">
+                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" >Save My Search</a>
+                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" >My Saved Search <i class="fa fa-angle-down"></i></a>
+                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" >Sort By <i class="fa fa-angle-down"></i></a>
+                            </div>-->
+
+                            <a class="btn btn-primary" href="javascript:void(0)"
+                                style="margin:10px;margin-right:15px;margin-top:12px;float:right;"
+                                data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search
+                                &nbsp;<i class="fa fa-angle-down"></i></a>
+                        </div>
+                    </div>
+                    <div class="panel-group">
+                        <div class="panel panel-default"
+                            style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                            <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+                                <div id="searchoptions" class="panel-collapse collapse"
+                                    style="border:1px solid #b3aeae;padding:10px;">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="status">Enquiry Status</label>
+                                                <select class="select2 form-control" select2
+                                                    ng-model="searchdata.status"
+                                                    ng-options="dropdown.value as dropdown.display_value for dropdown in lead_statuss"
+                                                    style="width:100%;" multiple="multiple" id="status" name="status">
+                                                </select><!-- ng-init="searchdata.status='Active'" -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="enquiry_for">Enquiry </label>
+                                                <select class="select2 form-control" select2 id="enquiry_for"
+                                                    name="enquiry_for" ng-model="searchdata.enquiry_for"
+                                                    data-placeholder="Select enquiry_for" style="width:100%;">
+                                                    <option value="Buy" selected="selected">Buy</option>
+                                                    <option value="Lease">Lease</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="enquiry_type">Enquiry Type<span
+                                                        class="required">*</span></label>
+                                                <select class="form-control select2" select2
+                                                    ng-model="searchdata.enquiry_type" id="enquiry.enquiry_type"
+                                                    name="enquiry.enquiry_type"
+                                                    ng-options="dropdown.value as dropdown.display_value for dropdown in propsubtypes"
+                                                    style="width:100%;"
+                                                    ng-change="change_enquirysubtype(searchdata.enquiry_type)"
+                                                    multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" ng-if="cat=='retail'">
+                                                <label for="enquiry_sub_type">Enquiry Sub Type</label>
+                                                <select class="form-control select2" select2
+                                                    ng-model="searchdata.enquiry_sub_type"
+                                                    ng-options="dropdown.value as dropdown.display_value for dropdown in enquirysubtypes"
+                                                    style="width:100%;" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="area_id">Area</label>
+                                                <select class="select2 form-control" id="area_id" select2
+                                                    ng-model="searchdata.area_id"
+                                                    ng-options="area.area_id as area.area_name for area in areas"
+                                                    style="width:100%;" multiple="multiple">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <a href="javascript:void(0)" class="btn"
+                                                    style="color:#ff000c;float:right;padding:0px;"
+                                                    ng-click="resetForm()">Clear Filters</a>
+                                                <label for="locality_id">Locality</label>
+                                                <select class="select2 form-control" select2
+                                                    ng-model="searchdata.locality_id" id="locality_id"
+                                                    ng-options="locality.locality_id as locality.locality for locality in localities"
+                                                    style="width:100%;" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="city_id">City</label>
+                                                <select class="select2 form-control" select2
+                                                    ng-model="searchdata.city_id" id="city_id"
+                                                    ng-options="city.city_id as city.city for city in cities"
+                                                    style="width:100%;" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="client_id">Client</label>
+                                                <select class="select2 form-control" select2
+                                                    ng-model="searchdata.client_id"
+                                                    ng-options="contact.contact_id as contact.name for contact in clients"
+                                                    style="width:100%;" multiple="multiple">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="broker_id">Broker</label>
+                                                <select class="select2 form-control" select2
+                                                    ng-model="searchdata.broker_id"
+                                                    ng-options="contact.contact_id as contact.name for contact in brokers"
+                                                    style="width:100%;" multiple="multiple">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="teams">Teams</label>
+                                                <select class="select2 form-control" multiple="multiple" id="teams"
+                                                    select2 ng-model="searchdata.teams"
+                                                    ng-options="team.team_id as team.team_name for team in teams"
+                                                    style="width:100%;"
+                                                    ng-change="select_assign_to(searchdata.teams,0)"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="sub_teams">Sub Teams</label>
+                                                <select class="select2 form-control" multiple="multiple" id="sub_teams"
+                                                    ng-model="searchdata.sub_teams"
+                                                    ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"
+                                                    style="width:100%;"
+                                                    ng-change="select_assign_to(searchdata.teams,searchdata.sub_teams)">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="assigned">Assign To</label>
+                                                <select class="select2 form-control" multiple="multiple" id="assigned"
+                                                    select2 ng-model="searchdata.assigned"
+                                                    ng-options="user.user_id as user.name for user in users"
+                                                    style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="budget_range1"><span
+                                                        ng-show="enquiry.enquiry_for == 'Lease'">Rent</span> Budget
+                                                    Range </label>
+                                                <input type="text" class="form-control  numbers" id="budget_range1"
+                                                    name="budget_range1" placeholder="Budget Range From"
+                                                    ng-model="searchdata.budget_range1" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" style="margin-top:24px;">
+                                                <select class="select2 form-control" id="budget_range1_para"
+                                                    name="budget_range1_para" select2
+                                                    ng-model="searchdata.budget_range1_para"
+                                                    data-placeholder="Select budget_range1_para"
+                                                    ng-init="searchdata.budget_range1_para='Abs'">
+                                                    <option value="Abs">Abs</option>
+                                                    <option value="Th">Th</option>
+                                                    <option value="Lac">Lac</option>
+                                                    <option value="Cr">Cr</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="budget_range2">-</label>
+                                                <input type="text" class="form-control numbers" id="budget_range2"
+                                                    name="budget_range2" placeholder="Budget Range To"
+                                                    ng-model="searchdata.budget_range2" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" style="margin-top:24px;">
+                                                <select class="select2 form-control" id="budget_range2_para"
+                                                    name="budget_range2_para" select2
+                                                    ng-model="searchdata.budget_range2_para"
+                                                    data-placeholder="Select budget_range2_para"
+                                                    ng-init="searchdata.budget_range2_para='Abs'">
+                                                    <option value="Abs">Abs</option>
+                                                    <option value="Th">Th</option>
+                                                    <option value="Lac">Lac</option>
+                                                    <option value="Cr">Cr</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="tot_area1">Plot Area Range</label>
+                                                <input type="text" class="form-control numbers" id="tot_area1"
+                                                    name="tot_area1" placeholder="Tota Area 1"
+                                                    ng-model="searchdata.tot_area1" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="tot_area2">-</label>
+                                                <input type="text" class="form-control numbers" id="tot_area2"
+                                                    name="tot_area2" placeholder="Total Area 2"
+                                                    ng-model="searchdata.tot_area2" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="sale_area1">Saleable Area </label>
+                                                <input type="text" class="form-control numbers" id="sale_area1"
+                                                    name="sale_area1" placeholder="Saleable Area From"
+                                                    ng-model="searchdata.sale_area1" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="sale_area2">-</label>
+                                                <input type="text" class="form-control numbers" id="sale_area2"
+                                                    name="sale_area2" placeholder="Saleable Area To"
+                                                    ng-model="searchdata.sale_area2" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" style="margin-top:24px;">
+                                                <select class="select2 form-control" id="area_para" name="area_para"
+                                                    select2 ng-model="searchdata.area_para"
+                                                    data-placeholder="Select area_parar"
+                                                    ng-init="searchdata.area_para='Sq Ft'">
+                                                    <option value="">Not Specified</option>
+                                                    <option value="Sq Ft" selected="selected">Sq Ft</option>
+                                                    <option value="Sq Mt">Sq Mt</option>
+                                                    <option value="Acres">Acres</option>
+                                                    <option value="Bigha I">Bigha I</option>
+                                                    <option value="Bigha II">Bigha II</option>
+                                                    <option value="Kottah (B)">Kottah (B)</option>
+                                                    <option value="Marla">Marla</option>
+                                                    <option value="Cents">Cents</option>
+                                                    <option value="Perch">Perch</option>
+                                                    <option value="Guntha">Guntha</option>
+                                                    <option value="Area">Area</option>
+                                                    <option value="Chataks">Chataks</option>
+                                                    <option value="Rood">Rood</option>
+                                                    <option value="Aankadam">Aankadam</option>
+                                                    <option value="Grounds">Grounds</option>
+                                                    <option value="Kanal">Kanal</option>
+                                                    <option value="Hectares">Hectares</option>
+                                                    <option value="Biswa I">Biswa I</option>
+                                                    <option value="Biswa II">Biswa II</option>
+                                                    <option value="Sq Yards">Sq Yards</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="carp_area1">Carpet Area</label>
+                                                <input type="text" class="form-control numbers" id="carp_area1"
+                                                    name="carp_area1" placeholder="Carpet Area From"
+                                                    ng-model="searchdata.carp_area1" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="carp_area2">-</label>
+                                                <input type="text" class="form-control numbers" id="carp_area2"
+                                                    name="carp_area2" placeholder="Carpet Area  To"
+                                                    ng-model="searchdata.carp_area2" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group" style="margin-top:24px;">
+                                                <select class="select2 form-control" id="carp_area_para"
+                                                    name="carp_area_para" select2 ng-model="searchdata.carp_area_para"
+                                                    data-placeholder="Select carp_area_para"
+                                                    ng-init="searchdata.carp_area_para='Sq Ft'">
+                                                    <option value="">Not Specified</option>
+                                                    <option value="Sq Ft" selected="selected">Sq Ft</option>
+                                                    <option value="Sq Mt">Sq Mt</option>
+                                                    <option value="Acres">Acres</option>
+                                                    <option value="Bigha I">Bigha I</option>
+                                                    <option value="Bigha II">Bigha II</option>
+                                                    <option value="Kottah (B)">Kottah (B)</option>
+                                                    <option value="Marla">Marla</option>
+                                                    <option value="Cents">Cents</option>
+                                                    <option value="Perch">Perch</option>
+                                                    <option value="Guntha">Guntha</option>
+                                                    <option value="Area">Area</option>
+                                                    <option value="Chataks">Chataks</option>
+                                                    <option value="Rood">Rood</option>
+                                                    <option value="Aankadam">Aankadam</option>
+                                                    <option value="Grounds">Grounds</option>
+                                                    <option value="Kanal">Kanal</option>
+                                                    <option value="Hectares">Hectares</option>
+                                                    <option value="Biswa I">Biswa I</option>
+                                                    <option value="Biswa II">Biswa II</option>
+                                                    <option value="Sq Yards">Sq Yards</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="created_date_from">Created Date from</label>
+                                                <div class="input-group date" id="created_date_from" date-directive="">
+                                                    <input class="form-control" type="text"
+                                                        ng-model="searchdata.created_date_from">
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="created_date_to">To</label>
+                                                <div class="input-group date" id="created_date_to" date-directive="">
+                                                    <input class="form-control" type="text"
+                                                        ng-model="searchdata.created_date_to">
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="bedrooms">Bedrooms</label>
+                                                <select class="select2 form-control" id="bedrooms" name="bedrooms"
+                                                    select2 ng-model="searchdata.bedrooms"
+                                                    data-placeholder="Select Bedrooms" style="width:100%;"
+                                                    multiple="multiple">
+                                                    <option value="1" selected="selected">1</option>
+                                                    <option value="1.5">1.5</option>
+                                                    <option value="2">2</option>
+                                                    <option value="2.5">2.5</option>
+                                                    <option value="3">3</option>
+                                                    <option value="3.5">3.5</option>
+                                                    <option value="4">4</option>
+                                                    <option value="4.5">4.5</option>
+                                                    <option value="5">5</option>
+                                                    <option value="5.5">5.5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="6.5">6.5</option>
+                                                    <option value="7">7</option>
+                                                    <option value="7.5">7.5</option>
+                                                    <option value="8">8</option>
+                                                    <option value="8.5">8.5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="furniture">Furnishings</label>
+                                                <select class="form-control select2" select2
+                                                    ng-model="searchdata.furniture"
+                                                    ng-options="dropdown.value as dropdown.display_value for dropdown in furnitures"
+                                                    style="width:100%;">
+                                                    <option value="" disabled selected>Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="floor_range1">Floor Range</label>
+                                                <input type="text" class="form-control numbers" id="floor_range1"
+                                                    name="floor_range1" placeholder="Floor Range From"
+                                                    ng-model="searchdata.floor_range1" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="floor_range2">-</label>
+                                                <input type="text" class="form-control numbers" id="floor_range2"
+                                                    name="floor_range2" placeholder="Floor Range To"
+                                                    ng-model="searchdata.floor_range2" pattern="[0-9 .]+" hide-zero
+                                                    title="Only Numbers Allowed" />
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="door_fdir">Door Facing</label>
+                                                <select class="select2 form-control" id="door_fdir" name="door_fdir"
+                                                    select2 ng-model="searchdata.door_fdir"
+                                                    data-placeholder="Door Facing Direction" style="width:100%;">
+                                                    <option value="" disabled selected>Select</option>
+                                                    <option value="E">E</option>
+                                                    <option value="W">W</option>
+                                                    <option value="S">S</option>
+                                                    <option value="N">N</option>
+                                                    <option value="SE">SE</option>
+                                                    <option value="SW">SW</option>
+                                                    <option value="NE">NE</option>
+                                                    <option value="NW">NW</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="loan_req">Loan Required</label>
+                                                <select class="select2 form-control" id="loan_req" name="loan_req"
+                                                    select2 ng-model="searchdata.loan_req"
+                                                    data-placeholder="Select Loan Required" style="width:100%;">
+                                                    <option value="Yes" selected="selected">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="source_channel">Source Channel</label>
+                                                <select class="select2 form-control" multiple="multiple" select2
+                                                    ng-model="searchdata.source_channel"
+                                                    ng-options="dropdown.value as dropdown.display_value for dropdown in client_sources"
+                                                    style="width:100%;"
+                                                    ng-change="change_sub_source(searchdata.source_channel)">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="subsource_channel">Subsource Channel</label>
+                                                <select class="select2 form-control" multiple="multiple" select2
+                                                    ng-model="searchdata.subsource_channel"
+                                                    ng-options="dropdown.value as dropdown.display_value for dropdown in sub_sources"
+                                                    style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="dt_poss_min">Possession Date (Min)</label>
+                                                <div class="input-group date" id="dt_poss_min" date-directive="">
+                                                    <input class="form-control" type="text"
+                                                        ng-model="searchdata.dt_poss_min">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="dt_poss_max">Possession Date (Max)</label>
+                                                <div class="input-group date" id="dt_poss_max" date-directive="">
+                                                    <input class="form-control" type="text"
+                                                        ng-model="searchdata.dt_poss_max">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="con_status">Possession Status</label>
+                                                <select class="select2 form-control" id="con_status" name="con_status"
+                                                    select2 ng-model="searchdata.con_status" multiple="multiple"
+                                                    style="width:100%;" required>
+                                                    <option value="Not Specified" selected="selected">Not Specified
+                                                    </option>
+                                                    <option value="Ready to move">Ready to move</option>
+                                                    <option value="Under Construction">Under Construction</option>
+                                                    <option value="Upcoming">Upcoming</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="priority">Priority</label>
+                                                <select class="select2 form-control" id="priority" name="priority"
+                                                    select2 ng-model="searchdata.priority"
+                                                    data-placeholder="Select priority" style="width:100%;">
+                                                    <option value="Not Specified" selected="selected">Not Specified
+                                                    </option>
+                                                    <option value="Hot">Hot</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="Low">Low</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="stage">Stage</label>
+                                                <select class="select2 form-control" select2 ng-model="searchdata.stage"
+                                                    ng-options="dropdown.value as dropdown.display_value for dropdown in enquiry_stages"
+                                                    style="width:100%;" multiple="multiple">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="enquiry_id">Enquiry ID</label>
+                                                <!--input type="text" class="form-control numbers" id="enquiry_id" name="enquiry_id"  placeholder="Enquiry ID" ng-model="searchdata.enquiry_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                                <select class="select2 form-control" select2 multiple="multiple"
+                                                    ng-model="searchdata.enquiry_id" id="enquiry_id" name="enquiry_id"
+                                                    ng-options="enquiry_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids"
+                                                    style="width:100%;"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="project_id">Project</label>
+                                                <select class="select2 form-control" select2
+                                                    ng-model="searchdata.project_id"
+                                                    ng-options="project.project_id as project.project_name for project in projects"
+                                                    style="width:100%;" multiple="multiple">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="created_by">Created By</label>
+                                                <select class="select2 form-control" multiple="multiple" id="created_by"
+                                                    name="created_by" select2 ng-model="searchdata.created_by"
+                                                    ng-options="user.user_id as user.name for user in users"
+                                                    style="width:100%;">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4" style="margin-top:25px">
+                                            <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse"
+                                                data-target="#searchoptions"
+                                                ng-click="search_enquiries(searchdata,'form')">Search Now </button>
+                                            <a href="javascript:void(0);" class="btn" data-toggle="collapse"
+                                                data-target="#searchoptions">Cancel</a>
+                                            <a href="javascript:void(0)" class="btn" style="color:#ff000c;"
+                                                ng-click="resetForm()">Clear Filters</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="checkbox " style="margin-top:12px;margin-left:7px;">
+                        <label>
+                            <input type="checkbox" class="selectall" name="selectall" id="selectall"
+                                ng-model="selectall" style="width:20px;height:20px;"
+                                ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All
+                        </label>
+                    </div>
+                    <!--table class="table" datatable-setupt="" data-page-length='10'>
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody-->
+                            <div class="loading-main-div">
+                                <div id="loading" ng-if="listenquiries && !listenquiries.length>0"></div>
+                            </div> 
+                    <div class="row" ng-repeat="enquiry in listenquiries" id="enquiry_list_div">
+                        <div class="col-md-12" style="width:100%">
+                            <div class="row rm_content"
+                                style="padding:0px;margin-left:0px;margin-right:0px;margin-top:10px;">
+                                <div class="col-md-6" style="min-width:250px;padding-left:0px;">
+                                    <div class="col-md-1" style="padding-left:0px;">
+                                        <div class="checkbox"><label><input type="checkbox" class="check_element"
+                                                    name="assign_all" id="assign_all" ng-model="assign_all"
+                                                    style="width:20px;height:20px;"
+                                                    value="{{enquiry.enquiry_id}}" /></label></div>
+                                    </div>
+                                    <div class="col-md-11" style="margin-top:5px;">
+                                        <p class="hd_title">
+                                            <span
+                                                style="background-color:#f72424;padding:3px;color:#ffffff;font-size:12px;min-width:25px;"
+                                                ng-if="enquiry.priority=='Hot'">Hot</span>
+                                            <span
+                                                style="background-color:#ffcc00;padding:3px;color:#ffffff;font-size:12px;min-width:25px;"
+                                                ng-if="enquiry.priority=='Medium'">Medium</span>
+                                            <span
+                                                style="background-color:#0000ff;padding:3px;color:#ffffff;font-size:12px;min-width:25px;"
+                                                ng-if="enquiry.priority=='Low'">Low</span>&nbsp;&nbsp;
+                                            <!--<a class="ex2" href="#/enquiries_edit/{{enquiry.enquiry_id}}" target="_blank">-->
+                                            <!--    <span style="line-height: normal;">Looking to {{enquiry.enquiry_for}}  : {{enquiry.enquiry_type}}</span>-->
+                                            <!--</a>-->
+                                            <a ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('enquiries_update')))"
+                                                class="ex2" href="">
+                                                <span style="line-height: normal;">Looking to {{enquiry.enquiry_for}} :
+                                                    {{enquiry.enquiry_type}}</span>
+                                            </a>
+                                            <a ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('enquiries_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('enquiries_update') || hasRoles.includes('Admin')"
+                                                class="ex2" href="#/enquiries_edit/{{enquiry.enquiry_id}}"
+                                                target="_blank">
+                                                <span style="line-height: normal;">Looking to {{enquiry.enquiry_for}} :
+                                                    {{enquiry.enquiry_type}}</span>
+                                            </a>
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <p class="">Status</p>
+                                    <p class="" style="font-weight:bold;font-size:14px;color:#5db101;">
+                                        {{enquiry.status}}</p>
+
+                                </div>
+                                <div class="col-md-2 ">
+                                    <p>Edited</p>
+                                    <p style="font-weight:bold;font-size:14px;">
+                                        <span>{{enquiry.modified_date}}</span><!--span ng-if="enquiry.modified_date=='00-00-0000 00:00'">{{enquiry.created_date}}</span-->
+                                    </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p>Enquiry ID</p>
+                                    <!--<a class="ex2" href="#/enquiries_edit/{{enquiry.enquiry_id}}" target="_blank"><p style="font-weight:bold;font-size:14px;">{{cat.charAt(0).toUpperCase()+ cat.substr(1).toLowerCase()}}_{{enquiry.enquiry_id}}</p></a>-->
+                                    <a class="ex2"
+                                        ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('enquiries_update')))"
+                                        href="">
+                                        <p style="font-weight:bold;font-size:14px;">{{cat.charAt(0).toUpperCase()+
+                                            cat.substr(1).toLowerCase()}}_{{enquiry.enquiry_id}}</p>
+                                    </a>
+                                    <a class="ex2"
+                                        ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('enquiries_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('enquiries_update') || hasRoles.includes('Admin')"
+                                        href="#/enquiries_edit/{{enquiry.enquiry_id}}" target="_blank">
+                                        <p style="font-weight:bold;font-size:14px;">{{cat.charAt(0).toUpperCase()+
+                                            cat.substr(1).toLowerCase()}}_{{enquiry.enquiry_id}}</p>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-8" style="border-right: 1px solid #000000;">
+                                    <div class="row">
+                                        <div class="col-md-4">&nbsp;
+                                            <p class="">Budget Range</p>
+                                            <p><span class="budget" style="font-weight:bold;font-size:14px;"
+                                                    ng-if="enquiry.budget_range2!=0">
+                                                    {{(enquiry.budget_range1)}}&nbsp;{{(enquiry.budget_range1_para)}}&nbsp;-&nbsp;{{(enquiry.budget_range2)}}&nbsp;{{(enquiry.budget_range2_para)}}</span>
+
+                                                <span style="font-weight:bold;font-size:14px;"
+                                                    ng-if="enquiry.budget_range2==0">
+                                                    {{(enquiry.budget_range1)}}&nbsp;{{(enquiry.budget_range1_para)}}&nbsp;-&nbsp;{{(enquiry.budget_range1)}}&nbsp;{{(enquiry.budget_range1_para)}}</span>
+                                            </p>
+
+                                        </div>
+                                        <div class="col-md-4">&nbsp;
+                                            <p class="">Saleable Area</p>
+                                            <p><span class="budget" style="font-weight:bold;font-size:14px;"
+                                                    ng-if="enquiry.sale_area2!=0">
+                                                    {{(enquiry.sale_area1)}}&nbsp;{{(enquiry.area_para)}}&nbsp;-&nbsp;{{(enquiry.sale_area2)}}&nbsp;{{(enquiry.area_para)}}</span>
+
+                                                <span style="font-weight:bold;font-size:14px;"
+                                                    ng-if="enquiry.sale_area2==0">
+                                                    {{(enquiry.sale_area1)}}&nbsp;{{(enquiry.area_para)}}&nbsp;-&nbsp;{{(enquiry.sale_area1)}}&nbsp;{{(enquiry.area_para)}}</span>
+                                            </p>
+
+                                        </div>
+                                        <div class="col-md-4">&nbsp;
+                                            <p class="">Carpet Area</p>
+                                            <p><span class="budget" style="font-weight:bold;font-size:14px;"
+                                                    ng-if="enquiry.carp_area2!=0">
+                                                    {{(enquiry.carp_area1)}}&nbsp;{{(enquiry.carp_area_para)}}&nbsp;-&nbsp;{{(enquiry.carp_area2)}}&nbsp;{{(enquiry.carp_area_para)}}</span>
+
+                                                <span style="font-weight:bold;font-size:14px;"
+                                                    ng-if="enquiry.carp_area2==0">
+                                                    {{(enquiry.carp_area1)}}&nbsp;{{(enquiry.carp_area_para)}}&nbsp;-&nbsp;{{(enquiry.carp_area1)}}&nbsp;{{(enquiry.carp_area_para)}}</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <!--div class="col-md-4 hidden-xs hidden-sm">
+                                        <p>Preferred City</p>
+                                        <p><span style="font-weight:bold;">{{enquiry.preferred_city}}</span></p>
+                                    </div>
+                                    <div class="col-md-4 hidden-xs hidden-sm" ng-show="cat == 'residential'">
+                                        <p>Bedrooms</p>
+                                        <p><span style="font-weight:bold;">{{enquiry.bedrooms}}</span></p>
+                                    </div>
+                                    </div-->
+                                    <!--p><span>Budget Range</span><span style="margin-left:60px;">Preferred City</span><span style="margin-left:60px;">Bedrooms</span></p>
+                                    <p><span style="font-weight:bold;font-size:14px;max-width:50px;"> {{enquiry.budget_range1}}-{{enquiry.budget_range2}}</span><span style="margin-left:125px;font-weight:bold;">{{enquiry.preferred_city}}</span><span style="margin-left:60px;font-weight:bold;">{{enquiry.bedrooms}}</span></p-->
+
+
+                                    <div class="row ">
+                                        <div class="col-md-8">
+                                            <p>Preferred City : <span
+                                                    style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.preferred_city}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-4" ng-show="cat == 'residential'">
+                                            <p>Bedrooms:<span
+                                                    style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.bedrooms}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row ">
+                                        <div class="col-md-12">
+                                            <p>Preferred Locality : <span
+                                                    style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.preferred_locality}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="">Preferred Area : <span
+                                            style="font-weight:bold;font-size:14px;margin-left:10px;">{{enquiry.preferred_area}}</span>
+                                    </p>
+                                    <p class="">Possession Status : <span
+                                            style="font-weight:bold;font-size:14px;margin-left:10px;">
+                                            {{enquiry.con_status}}</span></p>
+                                    <div class="row ">
+                                        <div class="col-md-8">
+                                            <p><span style="float:left;">Assigned To:<span
+                                                        style="font-size:14px;font-weight:bold;margin-left:10px;">
+                                                        {{enquiry.assigned}}</span></span></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p><span style="font-size:14px;"> Teams : </span><span
+                                                    style="font-weight:bold;">{{enquiry.team}}</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-md-8">
+                                            <p><span style="float:left;">Created By:<span
+                                                        style="font-size:14px;font-weight:bold;margin-left:10px;">
+                                                        {{enquiry.created_by}}</span></span></p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p><span style="float:left;margin-top: 10px;">Updated By:<span
+                                                        style="font-size:14px;font-weight:bold;margin-left:10px;">
+                                                        {{enquiry.modified_by}}</span></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 ">
+
+                                    <div style="font-size: 27px;text-align: center;background-color: #f72424;color: #ffffff;border-radius: 19px;width: 40px;height: 40px;margin-top:30px;"
+                                        ng-if="enquiry.client_id>0">{{enquiry.client_first_char}}</div>
+
+                                    <div style="font-size: 27px;text-align: center;background-color: #f72424;color: #ffffff;border-radius: 19px;width: 40px;height: 40px;margin-top:30px;"
+                                        ng-if="enquiry.client_id==0 && enquiry.broker_id>0">
+                                        {{enquiry.broker_first_char}}</div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="row">
+
+                                        <div class="col-md-6" ng-show="enquiry.client_id>0">
+                                            <p style="font-size:16px;" ng-if="enquiry.client_id>0">Client:</p>
+                                            <!--<a class="ex2" href="#/contacts_edit/{{enquiry.client_id}}"  ng-if="enquiry.client_id>0" target="_blank">-->
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;"  ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_name}}</span></p>-->
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;"  ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.company_name}}</span></p>-->
+
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;" ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_mob}}</span></p>-->
+
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;" ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_mob_alt}}</span></p>-->
+
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;"  ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_email}}</span></p>-->
+                                            <!--</a>-->
+                                            <a class="ex2"
+                                                ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update'))) && enquiry.client_id>0">
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_name}}</span>
+                                                </p>
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.company_name}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_mob}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_mob_alt}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_email}}</span>
+                                                </p>
+                                            </a>
+                                            <a class="ex2"
+                                                ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('contact_update') || hasRoles.includes('Admin')"
+                                                href="#/contacts_edit/{{enquiry.client_id}}" target="_blank">
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_name}}</span>
+                                                </p>
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.company_name}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_mob}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_mob_alt}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.client_email}}</span>
+                                                </p>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <p style="font-size:16px;" ng-if="enquiry.broker_id>0">Broker:</p>
+                                            <!--<a class="ex2" href="#/contacts_edit/{{enquiry.broker_id}}"  ng-if="enquiry.broker_id>0" target="_blank">-->
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;"  ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_name}}</span></p>-->
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;"  ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.brokerc_name}}</span></p>-->
+
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;"  ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_mob}}</span></p>-->
+
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;"  ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_mob_alt}}</span></p>-->
+
+                                            <!--    <p><span style="font-weight:bold;font-size:14px;" ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_email}}</span></p>-->
+                                            <!--</a>-->
+                                            <a class="ex2"
+                                                ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update'))) && enquiry.broker_id>0">
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_name}}</span>
+                                                </p>
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.brokerc_name}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_mob}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_mob_alt}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_email}}</span>
+                                                </p>
+                                            </a>
+                                            <a class="ex2"
+                                                ng-if="(!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('contact_update') || hasRoles.includes('Admin')) && enquiry.broker_id>0"
+                                                href="#/contacts_edit/{{enquiry.broker_id}}" target="_blank">
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_name}}</span>
+                                                </p>
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.brokerc_name}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_mob}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_mob_alt}}</span>
+                                                </p>
+
+                                                <p><span style="font-weight:bold;font-size:14px;"
+                                                        ng-if="(enquiry.created_by).includes(emp_name) || (enquiry.assigned).includes(emp_name) || hasRoles.includes('Admin')">{{enquiry.broker_email}}</span>
+                                                </p>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                    <p style="text-align:center;">
+                                        <!--<div class="dropdown">-->
+                                        <!--    <a class="btn btn-primary" href="#/mails_client/enquiry/{{enquiry.enquiry_id}}" style="margin:10px;margin-right:2px;" ng-if="view_rights">Send Email</a>-->
+                                        <!--    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" data-toggle="modal" data-target="#sendsms" ng-click="SendSMS();" ng-if="view_rights">Send SMS</a>-->
+                                        <!--</div>-->
+                                    <div class="dropdown">
+                                        <a class="btn btn-primary"
+                                            ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('send_mail_view')))"
+                                            href="" style="margin:10px;margin-right:2px;">Send Email</a>
+                                        <a class="btn btn-primary"
+                                            ng-if="(!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('send_mail_view'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('send_mail_view') || hasRoles.includes('Admin')) && view_rights"
+                                            href="#/mails_client/enquiry/{{enquiry.enquiry_id}}"
+                                            style="margin:10px;margin-right:2px;">Send Email</a>
+                                        <a class="btn btn-primary"
+                                            ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('send_sms_view')))"
+                                            href="javascript:void(0)" style="margin:10px;margin-right:2px;">Send SMS</a>
+                                        <a class="btn btn-primary"
+                                            ng-if="(!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('send_sms_view'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('send_sms_view') || hasRoles.includes('Admin')) && view_rights"
+                                            href="javascript:void(0)" style="margin:10px;margin-right:2px;"
+                                            data-toggle="modal" data-target="#sendsms" ng-click="SendSMS();">Send
+                                            SMS</a>
+                                    </div>
+                                    </p>
+                                </div>
+                                <div class="row footer_menu">
+                                    <div class="col-md-12 "
+                                        style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                        <div class="col-md-3">
+                                            <!-- <p style="font-size:20px;margin-top:12px;">Matching Enquiries</p>-->
+                                            <a class="btn btn-primary"
+                                                href="#/properties_list/{{cat}}/{{enquiry.enquiry_id}}/0"
+                                                style="margin:10px;margin-right:2px;margin-top:6px;"
+                                                ng-mouseover="mp_count(enquiry.enquiry_id)">Matching Properties </a>
+                                            <p id="mp{{enquiry.enquiry_id}}"
+                                                style="font-size: 15px;text-align: center;background-color: #2b57a0;color: #ffffff;border-radius: 12px;width: 22px;height: 22px;float:right;margin:10px;padding:4px;margin-right:30px;"
+                                                ng-mouseover="mp_count(enquiry.enquiry_id)">.</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ul style="margin-top:8px;font-size:7px;">
+                                                <li title="New"
+                                                    ng-class="enquiry.stage=='New' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                    <p ng-if="enquiry.stage=='New'">New</p>
+                                                </li>
+                                                <li title="FollowUp"
+                                                    ng-class="enquiry.stage=='FollowUp' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                    <p ng-if="enquiry.stage=='FollowUp'">FollowUp</p>
+                                                </li>
+                                                <li title="Site Visit"
+                                                    ng-class="enquiry.stage=='Site Visit' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                    <p ng-if="enquiry.stage=='Site Visit'">Site Visit</p>
+                                                </li>
+
+                                                <li title="Negotiation"
+                                                    ng-class="enquiry.stage=='Negotiation' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                    <p ng-if="enquiry.stage=='Negotiation'">Negotiation</p>
+                                                </li>
+                                                <li title="Closed-Won"
+                                                    ng-class="enquiry.stage=='Closed-Won' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                    <p ng-if="enquiry.stage=='Closed-Won'">Closed-Won</p>
+                                                </li>
+                                                <li title="Closed-Dead"
+                                                    ng-class="enquiry.stage=='Closed-Dead' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                    <p ng-if="enquiry.stage=='Closed-Dead'">Closed-Dead</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div style="float:right;">
+
+                                                <!--select ng-model="property_id" ng-options="matching_property.property_id as matching_property.select_property_value for matching_property in matching_properties_list" style="width:25%;" ng-change="link_to_property(property_id,enquiry.enquiry_id)">
+                                                    <option value="" disabled selected>Link Property</option>
+                                                </select-->
+
+                                                <!--<a class="btn btn-primary" href="#/activity_add/enquiry/{{enquiry.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" >Create Activity</a>-->
+                                                <a class="btn btn-primary"
+                                                    ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('activity_create')))"
+                                                    href="" style="margin:10px;margin-right:2px;margin-top:6px;">Create
+                                                    Activity</a>
+                                                <a class="btn btn-primary"
+                                                    ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('activity_create'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('activity_create') || hasRoles.includes('Admin')"
+                                                    href="#/activity_add/enquiry/{{enquiry.enquiry_id}}"
+                                                    style="margin:10px;margin-right:2px;margin-top:6px;">Create
+                                                    Activity</a>
+                                                <a class="btn btn-primary"
+                                                    href="#/activity_list/enquiry/{{enquiry.enquiry_id}}"
+                                                    style="margin:10px;margin-right:2px;margin-top:6px;">Activities</a>
+                                                <!--div class="dropdown" >
+                                                    <a class="btn btn-primary dropbtn" href="javascript:void(0)" style="height:33px;padding-top:6px;">Save My Search &nbsp;&nbsp;</a>
+                                                    <div class="dropdown-content" style="margin-top:0px;">
+                                                        <a href="javascript:void(0)" ng-model="sortvalue1" style="text-align:left;" ng-repeat="lead_status in lead_statuss">{{lead_status.display_value}}</a>
+                                                    </div>
+                                                </div-->
+                                                <div class="dropdown">
+                                                    <!--a class="btn btn-primary dropbtn" href="javascript:void(0)" style="height:33px;margin:10px;padding:7px;margin-right:2px;margin-top:6px;" ng-if="update_rights">Mark As&nbsp; <i class="fa fa-angle-down"></i></a-->
+                                                    <div class="dropdown-content" style="margin-top:0px;">
+                                                        <a href="javascript:void(0)"
+                                                            ng-click="enquiryupdatestatus(lead_status.value,enquiry.enquiry_id)"
+                                                            style="text-align:left;"
+                                                            ng-repeat="lead_status in lead_statuss">{{lead_status.display_value}}</a>
+                                                    </div>
+                                                </div>
+                                                <a class="btn btn-primary"
+                                                    ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('enquiries_update')))"
+                                                    href="" style="margin:10px;margin-top:6px;margin-right:2px;"><i
+                                                        class="glyphicon glyphicon-pencil"></i>&nbsp;Edit</a>
+                                                <a class="btn btn-primary"
+                                                    ng-if="(!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('enquiries_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('enquiries_update') || hasRoles.includes('Admin')) && update_rights"
+                                                    href="#/enquiries_edit/{{enquiry.enquiry_id}}"
+                                                    style="margin:10px;margin-top:6px;margin-right:2px;"
+                                                    target="_blank"><i
+                                                        class="glyphicon glyphicon-pencil"></i>&nbsp;Edit</a>
+                                                <a class="btn btn-primary"
+                                                    ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('deal_close_view')))"
+                                                    href="" style="margin:10px;margin-top:6px;margin-right:2px;">Deal
+                                                    Close</a>
+                                                <a class="btn btn-primary"
+                                                    ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('deal_close_view'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('deal_close_view') || hasRoles.includes('Admin')"
+                                                    href="#/agreement_add/enquiry/{{enquiry.enquiry_id}}"
+                                                    style="margin:10px;margin-top:6px;margin-right:2px;">Deal Close</a>
+
+                                                <!--<a class="btn btn-primary" href="#/enquiries_edit/{{enquiry.enquiry_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" target="_blank" ><i class="glyphicon glyphicon-pencil" ng-if="update_rights"></i>&nbsp;Edit</a>-->
+                                                <!--<a class="btn btn-primary" href="#/agreement_add/enquiry/{{enquiry.enquiry_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" >Deal Close</a>-->
+                                                <!-- <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-top:6px;margin-right:2px;" ng-if="view_rights">More &nbsp; <i class="fa fa-angle-down"></i></a>-->
+                                                <!--<a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:10px;margin-top:6px;background-color:#747475;" >More &nbsp;<i class="fa fa-angle-down"></i></a>-->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row footer_menu_mobile">
+                                    <div class="row">
+                                        <ul style="margin-top:8px;font-size:7px;">
+                                            <li title="New"
+                                                ng-class="enquiry.stage=='New' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                <p ng-if="enquiry.stage=='New'">New</p>
+                                            </li>
+                                            <li title="FollowUp"
+                                                ng-class="enquiry.stage=='FollowUp' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                <p ng-if="enquiry.stage=='FollowUp'">FollowUp</p>
+                                            </li>
+                                            <li title="Site Visit"
+                                                ng-class="enquiry.stage=='Site Visit' ? 'enquiry_stage_selected' : 'enquiry_stage' ">
+                                                <p ng-if="enquiry.stage=='Site Visit'">Site Visit</p>
+                                            </li>
+
+                                            <li title="Negotiation"
+                                                ng-class="enquiry.stage=='Negotiation' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                <p ng-if="enquiry.stage=='Negotiation'">Negotiation</p>
+                                            </li>
+                                            <li title="Closed-Won"
+                                                ng-class="enquiry.stage=='Closed-Won' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                <p ng-if="enquiry.stage=='Closed-Won'">Closed-Won</p>
+                                            </li>
+                                            <li title="Closed-Dead"
+                                                ng-class="enquiry.stage=='Closed-Dead' ? 'enquiry_stage_selected' : 'enquiry_stage'">
+                                                <p ng-if="enquiry.stage=='Closed-Dead'">Closed-Dead</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="row">
+
+                                        <p id="mp{{enquiry.enquiry_id}}"
+                                            style="font-size: 15px;text-align: center;background-color: #2b57a0;color: #ffffff;border-radius: 12px;width: 22px;height: 22px;float:right;margin:10px;padding:4px;margin-right:30px;"
+                                            ng-mouseover="mp_count(enquiry.enquiry_id)">.</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 "
+                                            style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="dropdown">
+                                                <a class="dropbtn" href="javascript:void(0)"
+                                                    style="background-color:transparent;">
+                                                    <i class="fa fa-ellipsis-v"
+                                                        style="margin-top:10px;font-size:20px;"></i>
+                                                </a>
+                                                <div class="dropdown-content">
+                                                    <a href="#/properties_list/{{cat}}/{{enquiry.enquiry_id}}"
+                                                        style="margin-right:2px;"
+                                                        ng-mouseover="mp_count(enquiry.enquiry_id)">Matching Properties
+                                                    </a>
+                                                    <a href="#/activity_add/enquiry/{{enquiry.enquiry_id}}"
+                                                        style="margin-right:2px;">Create Activity</a>
+                                                    <a href="#/activity_list/enquiry/{{enquiry.enquiry_id}}"
+                                                        style="margin-right:2px;">Activities</a>
+
+                                                    <a href="javascript:void(0)"
+                                                        ng-click="enquiryupdatestatus(lead_status.value,enquiry.enquiry_id)"
+                                                        style="text-align:left;"
+                                                        ng-repeat="lead_status in lead_statuss">{{lead_status.display_value}}</a>
+                                                    <a href="#/enquiries_edit/{{enquiry.enquiry_id}}"
+                                                        style="margin-right:2px;" target="_blank"><i
+                                                            class="glyphicon glyphicon-pencil"
+                                                            ng-if="update_rights"></i>&nbsp;Edit</a>
+                                                    <a href="#/agreement_add/enquiry/{{enquiry.enquiry_id}}"
+                                                        style="margin-right:2px;">Deal Close</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div id="enqcollapse{{enquiry.enquiry_id}}"
+                                        class="panel-collapse collapse html_content"
+                                        compile-html="enqtrustedHtml_{{enquiry.enquiry_id}}">Nothing to show</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="agent">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div id="upload">
+            <form novalidate name="UAddNewForm" id="Uadd-new-form" role="form" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Import Enquiries Data</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-top:20%;">
+                                        <div class="form-group">
+                                            <input id="file-1" name="file-1[]" type="file" multiple class="file"
+                                                data-overwrite-initial="false" data-min-file-count="1" required>
+                                            <input type="hidden" name="file_name" id="file_name" value=""
+                                                ng-model="convertdata.file_name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary"
+                                                ng-disabled="UAddNewForm.$invalid || isUnchanged(convertdata)"
+                                                id="Uadd-new-btn"
+                                                ng-click="uploadenquiry_data(convertdata)">Import</button>
+                                            <a href="#/enquiries_list" class="btn">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="exportdetails" class="modal" role="dialog">
+            <div class="modal-dialog" style="width:50%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <div class="radio">
+
+                                            <label>
+                                                <input type="radio" name="option_value" id="option_value"
+                                                    value="current_page" ng-model="option_value">
+                                                Current Page
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="option_value" id="option_value"
+                                                    value="selected" ng-model="option_value" checked="checked">
+                                                Selected
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="option_value" id="option_value"
+                                                    value="all_records" ng-model="option_value">
+                                                All Records
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary" ng-click="exportdata(option_value)">Export</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                        aria-hidden="true">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Un-Selected Columns</p>
+                                <ul class="todo-list"
+                                    style="height:325px;overflow-y:auto;overflow-x:hidden;border: 1px solid #d8cfcf;font-size:14px;">
+                                    <li ng-repeat="unselected_field in unselected_fields" class="callout callout-info"
+                                        style="background-color: #ffffff !important; color:#000000;border-right:4px solid rgb(236, 9, 9);border-left:none;font-size:16px;font-weight:none;"
+                                        ng-click="reportfieldsselect(unselected_field.report_fields_id,'select')">
+                                        <div class="row " style="color:#000000 !important;">
+                                            <div class="col-md-12">
+                                                <span class="text">{{unselected_field.column_heading}}</span>
+                                                <span style="float:right;"><i class="fa fa-forward"></i></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Selected Columns</p>
+                                <ul class="todo-list"
+                                    style="height:325px;overflow-y:auto;overflow-x:hidden;border: 1px solid #d8cfcf;font-size:14px;">
+                                    <li ng-repeat="selected_field in selected_fields" class="callout callout-info"
+                                        style="background-color: #ffffff !important; color:#000000;border-left:4px solid rgb(236, 9, 9);font-size:16px;font-weight:none;"
+                                        ng-click="reportfieldsselect(selected_field.report_fields_id,'unselect')">
+                                        <div class="row " style="color:#000000 !important;">
+                                            <div class="col-md-12">
+                                                <span><i class="fa fa-backward"></i></span>
+                                                <span class="text">{{selected_field.column_heading}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" ng-click="exportdata()">Export</button>
+                            <button class="btn btn-primary" ng-click="configurecolumns()">Configure Columns</button>
+                        </div>
+                    </div>
+                </div>
+            </div-->
+                </div>
+            </div>
+        </div>
+        <div id="sendsms" class="modal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Send SMS</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row" id="listofvalues">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="transport_name">Transport Name</label>
+                                            <select class="select2 form-control" id="transport_name"
+                                                name="transport_name" select2 ng-model="transport_name"
+                                                data-placeholder="Select transport_name" style="width:100%;">
+                                                <option value="Not Specified">Not Specified</option>
+                                                <option value="Gupshup_transport">Gupshup_transport</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sms_template_id">Select Template</label>
+                                            <select class="selectpicker form-control" select2 id="sms_template_id"
+                                                name="sms_template_id" ng-model="sms_template_id"
+                                                ng-options="sms_template.sms_template_id as sms_template.template_title for sms_template in sms_templates"
+                                                ng-change="select_sms_template(sms_template_id)"
+                                                style="width:100%;"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="receipient">Receipient</label>
+                                            <input type="text" class="form-control" id="receipient" name="receipient"
+                                                placeholder="receipient" ng-model="receipient" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message">Message</label>
+                                            <textarea class="form-control" id="message" name="message" rows="10"
+                                                placeholder="message" ng-model="message"
+                                                value="Please find the details of the project "></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button class="btn btn-primary" data-dismiss="modal"
+                                        ng-click="smssend()">Send</button>
+                                    <a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .modal-dialog {
+
+                width: 25%;
+            }
+
+            #upload {
+                display: none;
+            }
+
+            p {
+                line-height: 0.9;
+                font-size: 16px;
+            }
+
+            .enquiry_stage {
+                width: 12px;
+                height: 12px;
+                background-color: rgb(134, 132, 132);
+                border-radius: 14px;
+                float: left;
+                /*padding: 8px;*/
+                margin-left: 10px;
+                list-style-type: none;
+
+
+            }
+
+            .enquiry_stage p {
+                margin-top: 10px;
+                margin-left: -15px;
+                font-size: 12px;
+            }
+
+            .enquiry_stage_selected {
+                width: 18px;
+                height: 18px;
+                background-color: #ee0a0a;
+                border-radius: 18px;
+                float: left;
+                /*padding: 8px;*/
+                margin-left: 10px;
+                margin-top: -3px;
+                list-style-type: none;
+            }
+
+            .enquiry_stage_selected p {
+                font-size: 12px;
+                margin-top: 22px;
+                margin-left: -5px;
+            }
+
+            table tr {
+                margin-bottom: 20px;
+                box-shadow: 0 0 12px rgba(0, 0, 0, .09);
+            }
+
+            .dot {
+                font-size: 20px;
+            }
+
+            div.dataTables_wrapper div.dataTables_filter {
+                /*text-align: left;*/
+                float: left;
+                margin-left: -350px;
+                margin-top: 5px;
+            }
+
+            div.dataTables_wrapper div.dataTables_filter input {
+                width: 387px;
+            }
+
+            a.ex1:active,
+            a.ex1:hover {
+                background-color: transparent;
+                text-decoration: underline;
+                text-decoration-color: red;
+            }
+
+            a.ex2:active,
+            a.ex2:hover {
+                background-color: transparent;
+                text-decoration: underline;
+                text-decoration-color: #337ab7;
+            }
+
+            .hd_title {
+                font-size: 16px;
+                color: blue;
+            }
+
+            .rm_content {
+                border-bottom: 1px solid #959191;
+            }
+
+            .budget {
+
+                margin-top: 0px;
+            }
+
+            @media screen and (max-width: 800px) {
+                .modal-dialog {
+                    width: 95%;
+                }
+
+                .budget {
+                    float: right;
+                    margin-top: -15px;
+
+                }
+
+                .hd_title {
+                    font-size: 16px;
+                    color: blue;
+                    margin-left: 15px;
+                }
+
+                .rm_content {
+                    border-bottom: 0px;
+                }
+
+                div.dataTables_wrapper div.dataTables_filter {
+                    text-align: left;
+                    float: left;
+                    margin-left: -15px;
+                    margin-top: -40px;
+                }
+
+                div.dataTables_wrapper div.dataTables_filter input {
+                    width: 130px;
+                }
+
+                .panel-group {
+                    margin-bottom: 0px;
+                }
+
+            }
+        </style>
+
+        <script>
+            $("#file-1").fileinput({
+                uploadAsync: false,
+                showUpload: false,
+                uploadUrl: './api/v1/uploadenquiry_files',
+                allowedFileExtensions: ['csv', 'xls', 'xlsx'],
+                overwriteInitial: false,
+                maxFileSize: 1500000,
+                maxFilesNum: 1,
+                maxFileCount: 1,
+                slugCallback: function (filename) {
+                    return filename.replace('(', '_').replace(']', '_');
+                }
+            }).on("filebatchselected", function (event, files) {
+                $("#file-1").fileinput("upload");
+            });
+
+            $('#file-1').on('fileloaded', function (event, file, previewId, index, reader) {
+                $("#file_name").val(file.name);
+                console.log("fileloaded");
+            });
+        </script>
+
+        <!--script type="text/javascript">
+    function toggle_visibility() {
+       var e = document.getElementsByClassName("dataTables_filter")[0];
+       if(e.style.width < 800){
+        if(e.style.display == 'none')
+          e.style.display = 'block';
+        else
+          e.style.display = 'none';
+       }
+       
+    }
+</script-->
+        <style>
+            .dropbtnn {
+                background-color: #3362e6;
+                color: white;
+                padding: 5px;
+                font-size: 14px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtnn:hover,
+            .dropbtnn:focus {
+                background-color: #2980B9;
+            }
+
+            .dropdownn {
+                float: right;
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdownn-content {
+                display: none;
+                position: absolute;
+                background-color: #f1f1f1;
+                min-width: 170px;
+                overflow: auto;
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            .dropdownn-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdownn a:hover {
+                background-color: #ddd;
+            }
+
+            .show {
+                display: block;
+            }
+        </style>
+
+        <script>
+            /* When the user clicks on the button, 
+            toggle between hiding and showing the dropdown content */
+            function mydpFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtnn')) {
+
+                    var dropdowns = document.getElementsByClassName("dropdownn-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <style>
+            #pagination {
+                position: fixed;
+                right: 35px;
+                margin-top: 7px;
+                color: #000000;
+                font-size: 18px;
+            }
+
+            #page_range {
+                float: left;
+
+                color: #ffffff;
+                margin-left: 10px;
+                margin-top: 6px;
+            }
+
+            #total_records {
+                float: left;
+                color: #ffffff;
+                margin-left: 10px;
+                margin-top: 6px;
+
+            }
+
+            #previous_page {
+                float: left;
+                width: 30px;
+                height: 30px;
+                /*border:1px solid #ffffff;
+        border-radius:16px;*/
+                color: #ffffff;
+                margin-left: 10px;
+                margin-top: 3px;
+                padding: 4px;
+                padding-left: 5px;
+            }
+
+            #next_page {
+                float: left;
+                width: 30px;
+                height: 30px;
+                /*border:1px solid #ffffff;
+        border-radius:16px;*/
+                margin-left: 10px;
+                margin-top: 3px;
+                padding: 4px;
+                padding-left: 5px;
+                color: #ffffff;
+            }
+
+            #previous_page:hover {
+                /*border:1px solid #1a1919;*/
+                border-radius: 16px;
+                background-color: #1a1919;
+                opacity: 0.6;
+            }
+
+            #next_page:hover {
+                /*border:1px solid  #1a1919;*/
+                border-radius: 16px;
+                background-color: #1a1919;
+                opacity: 0.6;
+            }
+        </style>
+
+
+        <style>
+            #enquiry_list_div {
+                margin: 5px;
+                padding: 5px;
+                height: 350px;
+                min-height: 350px;
+                margin-bottom: 20px;
+                box-shadow: 0 0 12px rgba(0, 0, 0, .09);
+
+            }
+
+            #top_menu_div {
+                display: block;
+            }
+
+            #top_menu_div_mobile {
+                display: none;
+            }
+
+            .footer_menu {
+                display: block;
+            }
+
+            .footer_menu_mobile {
+
+                display: none;
+            }
+
+            .dropdown-content {
+                z-index: 1500;
+            }
+
+            @media screen and (max-width: 991px) {
+                #enquiry_list_div {
+                    height: 100%;
+                    min-height: 100%;
+                }
+
+                #top_menu_div {
+                    display: none;
+                }
+
+                #top_menu_div_mobile {
+                    display: block;
+                }
+
+                .footer_menu {
+                    display: none;
+
+                }
+
+                .footer_menu_mobile {
+                    display: block;
+
+                }
+            }
+        </style>

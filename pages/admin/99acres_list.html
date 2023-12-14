@@ -1,0 +1,42 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="users_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+        <div class="row" id="users_data">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">99 Acres Data</h3>  
+                    </div>
+                    <div class="box-body">
+                        <!--div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="for_month">Date</label>
+                                        <div class="input-group date" id="for_month" date-directive="">
+                                            <input class="form-control" type="text" ng-model="for_month" >
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" style="margin-top:25px;">
+                                        <button class="btn btn-primary" ng-click="show_99acres(for_month)">Show Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div compile-html="trustedHtml_99acres"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

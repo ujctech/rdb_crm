@@ -1,0 +1,154 @@
+﻿<div style="background-color:#cecece;margin-top:45px;height:75px;position:fixed;z-index:1000;width:100%;padding:10px;">
+ 
+</div>
+<div class="clearfix"></div>
+<div style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;">
+<section class="content" style="padding:20px;min-height:150px;margin-top:50px;" id="topsheet">
+    <div class="row" style="margin-left:0px;margin-top:55px;">
+        <div class="col-md-6">
+            <div class="panel-group" style="border: 1px solid #f4eeee;"> 
+                <!--ng-if="hasRoles.includes('Admin') || hasRoles.includes('Human Resource')"-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapse1">Main Menus</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body"> 
+                            <ul style="font-size:16px;">
+                                <li  ng-if="hasRoles.includes('Admin') || hasPermissions.includes('country_view')"><a href="#/country_list" onclick="myFunction()" >Countries</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('state_view')"><a href="#/state_list" onclick="myFunction()" >States</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('city_view')"><a href="#/city_list" onclick="myFunction()"  >Cities</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('area_view')"><a href="#/area_list" onclick="myFunction()"  >Areas</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('locality_view')"><a href="#locality_list" onclick="myFunction()"  >Localities / Street</a></li>
+                                
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('group_view')"><a href="#/group_list" onclick="myFunction()"  >Groups</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('teams_view')"><a href="#/teams_list" onclick="myFunction()"  >Teams</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('sub_teams_view')"><a href="#/sub_teams_list" onclick="myFunction()"  >Sub Teams</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('dropdowns_view')"><a href="#/dropdowns_list" onclick="myFunction()"  >Drop Down Option</a></li>
+                                
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('exportconfig_view')"><a href="#/exportconfig" onclick="myFunction()"  >Export Config</a></li>
+                                
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-6">
+            <div class="panel-group" style="border: 1px solid #f4eeee;" >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapse2">Human Resource</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body"> 
+                            <ul style="font-size:16px;">
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('employee_view')"><a href="#/employee_list" onclick="myFunction()"  >Employee</a></li>
+                                
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('employee_asset_view')"><a href="#/employee_asset_list" onclick="myFunction()"  >Employee Asset</a></li>
+                                
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('employee_leave_view')"><a href="#/employee_leave_list" onclick="myFunction()"  >Employee Leave</a></li>
+
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('attendance_view') || hasRoles.includes('Branch Head')"><a href="#/attendance" onclick="myFunction()"  >Attendance</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('daily_attendance_view') || hasRoles.includes('Branch Head') "><a href="#/daily_attendance" onclick="myFunction()"  >Daily Attendance</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('document_view')"><a href="#/document_list" onclick="myFunction()"   >Documents</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('branch_office_view')"><a href="#/branch_office_list" onclick="myFunction()"  >Branch Office</a></li>                                
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('designation_view')"><a href="#/designation_list" onclick="myFunction()"   >Designation</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('eligibility_view')"><a href="#/eligibility_list" onclick="myFunction()"   >Eligibility</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('goals_view')"><a href="#/goals_list" onclick="myFunction()"  >Goals</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('goals_achieved_view')"><a href="#/goals_achieved" onclick="myFunction()">Goals Achieved Report</a></li>
+                                <!--<li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('CRM_Behaviour_view')"><a href="#/behaviour_list" onclick="myFunction()"  >CRM & Behaviour</a></li>-->
+                                <li ng-if="(hasRoles.includes('Admin') || hasPermissions.includes('CRM_Behaviour_view')) && !(hasRoles.includes('Sub Admin'))"><a href="#/behaviour_list" onclick="myFunction()"  >CRM & Behaviour</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('social_media_view')"><a href="#/social_media_list" onclick="myFunction()">Social Media</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('holidays_view')"><a href="#/holidays_list" onclick="myFunction()"  >Holidays</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('crm_activities_view')"><a href="#/crm_activities" onclick="myFunction()"  >CRM Activities Report</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('activity_log_view')"><a href="#/activity_log" onclick="myFunction()"  >Activity Log</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('resume_view')"><a href="#/resume_list" onclick="myFunction()"  >Resumes</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('resume_view')"><a href="#/vendor_list" onclick="myFunction()"  >Vendor </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel-group" style="border: 1px solid #f4eeee;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapse1">Roles & Security</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body"> 
+                            <ul style="font-size:16px;">
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('user_view')"><a href="#/user_list" onclick="myFunction()"  >Users Role</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('role_view')"><a href="#/role_list" onclick="myFunction()"  >Roles</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('permission_view')"><a href="#/permission_list" onclick="myFunction()"  >Permissions</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-6">
+            <div class="panel-group" style="border: 1px solid #f4eeee;" >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapse1">Email & SMS</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body"> 
+                            <ul style="font-size:16px;">
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('mail_template_view')"><a href="#/mail_template_list" onclick="myFunction()"  >Mail Template</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('sms_template_view')"><a href="#/sms_template_list" onclick="myFunction()"  >SMS Template</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('email_accounts_view')"><a href="#/email_accounts_list" onclick="myFunction()"  >Email Accounts</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('sms_template_view')"><a href="#/sms_sent_list" onclick="myFunction()"  >SMS Log</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('email_sent_list_view')"><a href="#/email_sent_list" onclick="myFunction()"  >Email Log</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel-group" style="border: 1px solid #f4eeee;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" data-target="#collapseaccounts">Accounts</a>
+                        </h4>
+                    </div>
+                    <div id="collapseaccounts" class="panel-collapse collapse in">
+                        <div class="panel-body"> 
+                            <ul style="font-size:16px;">
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('expense_view')"><a href="#/expense_list" onclick="myFunction()"  >Expenses</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('expense_head_view')"><a href="#/expense_head_list" onclick="myFunction()"  >Expense Heads</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('franchisee_report_view')"><a href="#/franchisee_report" onclick="myFunction()"  >Franchisee Report</a></li>
+                                <li ng-if="hasRoles.includes('Admin') || hasPermissions.includes('expense_report_view')"><a href="#/expense_report" onclick="myFunction()"  >Expense Report</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</section>
+                

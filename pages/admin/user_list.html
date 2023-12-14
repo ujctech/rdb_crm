@@ -1,0 +1,93 @@
+
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    </div>
+    <div class="clearfix"></div>
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+
+    <div class="nav-tabs-custom">
+
+        <ul class="nav nav-tabs">
+
+            <li class="active" ><a data-target="#userstab" data-toggle="tab">Users</a></li>
+
+        </ul>
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="userstab">
+
+                <div class="box-body table-responsive">
+
+                    <table class="table table-bordered table-striped" datatable-setup=""  >
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Employee Name</th>
+
+                                <th>User Name</th>
+
+                                <th>Mobile</th>
+
+                                <th>Office Email</th>
+
+                                <th>Roles</th>
+
+                                <th></th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr ng-repeat="user in users">
+
+                                <td>{{user.name}}</td>
+
+                                <td>{{user.username}}</td>
+
+                                <td>{{user.mobile_no}}</td>
+
+                                <td>{{user.off_email}}</td>
+
+                                <td>{{user.roles}}</td>
+
+                                <td><a href="#/user_edit/{{user.user_id}}" class="btn btn-default btn-sm" title="Edit" ng-if="update_rights"><i class="glyphicon glyphicon-pencil"></i></button></td>
+
+                            </tr>
+
+                        </tbody>
+
+                        <tfoot>
+
+                            <tr>
+
+                                <th>Employee Name</th>
+
+                                <th>User Name</th>
+
+                                <th>Mobile</th>
+
+                                <th>Office Email</th>
+
+                                <th>Roles</th>
+
+                                <th></th>
+
+                            </tr>
+
+                        </tfoot>
+
+                    </table>   
+
+                </div> 
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

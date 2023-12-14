@@ -1,0 +1,299 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('img')">Export to Image</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('pptx')">Export to PPT</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('pdf')">Export to PDF</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('docx')">Export to DOC</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('xlsx')">Export to EXCEL</a>
+</div>
+<div class="clearfix"></div>
+
+<div class="box" style="margin:5px;padding:10px;border-top:0px;border-radius:0px;margin-top:115px;font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; background-color:#ffffff;" id="image_div">
+    <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+        <div class="row" id="createimage">
+            <div class="col-md-12">
+                <div style="width:1280px;background-color:#d2aa4b;">
+                    <div class="row">
+                        <div class="col-md-8" style="padding:40px;">
+                            <p style="font-size:18px;color:#ffffff;">Title</p>
+                            <input type="text" id="description" name="description" placeholder="Title" ng-model="slides.description"/>
+                        </div>
+                        <div class="col-md-4" style="position:absolute;right:5px;">
+                            <img class="mini_log_img" src="dist/img/onemailer_logo.jpeg"/>
+                        </div>
+                    </div>
+                    <div class="row" style="padding:20px;">
+                        <div class="col-md-8">
+                            <p style="font-size:18px;color:#ffffff;">Top Description</p>
+                            <textarea class="form-control" id="top_description" name="top_description"  placeholder="Top Description" ng-model="slides.top_description" style="font-size:16px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom:40px;">
+                        <div class="col-md-12">
+                            <p style="font-size:18px;color:#ffffff;margin-left:15px;">Select Images</p>
+                            <div class="col-md-3" style="height:243px;">
+                                <a href="javascript:void(0);" class="btn btn-default btn-sm" style="background: #d2aa4b;z-index:2;position:absolute;margin:15px;" title="Delete Image" ng-click="delete_image(1)"><i class="glyphicon glyphicon-trash"></i></a>
+                                <div id="image_1">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="height:243px;">
+                                <a href="javascript:void(0);" class="btn btn-default btn-sm" style="background: #d2aa4b;z-index:2;position:absolute;margin:15px;" title="Delete Image" ng-click="delete_image(2)"><i class="glyphicon glyphicon-trash"></i></a>
+                                <div id="image_2"></div>
+                            </div>
+                            <div class="col-md-3" style="height:243px;">
+                                <a href="javascript:void(0);" class="btn btn-default btn-sm" style="background: #d2aa4b;z-index:2;position:absolute;margin:15px;" title="Delete Image" ng-click="delete_image(3)"><i class="glyphicon glyphicon-trash"></i></a>
+                                <div id="image_3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:5px;background-color:#ffffff;">
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-6" style="font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;border:1px solid #918d8d;">
+                                <table style="margin-top:15px;width:100%;" cellspacing="0" cellpadding="0" >
+                                    <!--tr style="border:1px solid #000000;"><td style="padding-left:10px;">Carpet Area (sqft)</td>
+                                        <td ><input type="text" id="carp_area" name="carp_area" placeholder="Carpet Area (sqft)" ng-model="slides.carp_area"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Built Up Area (sqft)</td>
+                                        <td><input type="text"  id="sale_area" name="sale_area"  placeholder="Built Up Area (sqft)" ng-model="slides.sale_area"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Proposed  Floors</td>
+                                        <td ><input type="text" id="floor" name="floor"  placeholder="Proposed  Floors" ng-model="slides.floor"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Car Park</td>
+                                        <td ><input type="text" id="car_park" name="car_park"  placeholder="Car Park" ng-model="slides.car_park" /></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Quoted Rent  </td>
+                                        <td><input type="text"  id="price_unit" name="price_unit"  placeholder="Quoted Rent" ng-model="slides.price_unit" /></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Security Deposit</td>
+                                        <td ><input type="text"  id="security_depo" name="security_depo"  placeholder="Security Deposit" ng-model="slides.security_depo"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Lock in period  </td>
+                                        <td ><input type="text" id="lock_per" name="lock_per"  placeholder="Lock in period" ng-model="slides.lock_per"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Lease Tenure </td>
+                                        <td ><input type="text" id="lease_end" name="lease_end"  placeholder="Lease Tenure " ng-model="slides.lease_end"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Rent Escalation</td>
+                                        <td><input type="text"  id="escalation_lease" name="escalation_lease"  placeholder="Rent Escalation" ng-model="slides.escalation_lease"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Location</td>
+                                        <td ><input type="text" id="location" name="location"  placeholder="Location" ng-model="slides.location"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Furnishing Details </td>
+                                        <td><input type="text" id="furnishing" name="furnishing"  placeholder="Furnishing Details " ng-model="slides.furnishing" /></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;">
+                                        <td style="padding-left:10px;">Top Description:</td><td><textarea class="form-control" id="top_description" name="top_description"  placeholder="Top Description" ng-model="slides.top_description" ></textarea></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;">
+                                        <td style="padding-left:10px;">Disclaimer:</td><td><textarea class="form-control" id="disclaimer" name="disclaimer"  placeholder="Disclaimer" ng-model="slides.disclaimer" ></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;"><a href="javascript:void(0)" ng-click="saveslidedata(slides)" style="margin:5px;" class="btn btn-primary">Save Data</a></td>
+                                    </tr-->
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;width:50%;">Location</td>
+                                        <td ><input type="text" id="location" name="location" placeholder="Location" ng-model="slides.location" style="margin:10px;width:95%;"/></td>
+                                    </tr>
+                                    
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Area</td>
+                                        <td ><input type="text" id="carp_area" name="carp_area" placeholder="Area" ng-model="slides.carp_area" style="margin:10px;width:95%;"/></td>
+                                    </tr>
+                    
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Height / Fontage</td>
+                                        <td><input type="text"  id="frontage" name="frontage"  placeholder="Height / Frontage" ng-model="slides.frontage" style="margin:10px;width:95%;"/></td>
+                                    </tr>
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Rent  </td>
+                                        <td><input type="text"  id="exp_price" name="exp_price"  placeholder="Rent" ng-model="slides.exp_price" style="margin:10px;width:95%;"/></td>
+                                    </tr>
+                    
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">Suitable for</td>
+                                        <td ><input type="text"  id="suitable_for" name="suitable_for"  placeholder="Suitable for" ng-model="slides.suitable_for" style="margin:10px;width:95%;"/></td>
+                                    </tr>
+                    
+                                    <tr style="border:1px solid #000000;"><td style="padding-left:10px;">OC  </td>
+                                        <td ><input type="text" id="occu_certi" name="occu_certi"  placeholder="OC" ng-model="slides.occu_certi" style="margin:10px;width:95%;"/></td>
+                                    </tr>
+                                    
+                                   
+                                    <tr style="border:1px solid #000000;">
+                                        <td style="padding-left:10px;">Disclaimer:</td><td><textarea class="form-control" id="disclaimer" name="disclaimer"  placeholder="Disclaimer" ng-model="slides.disclaimer" style="margin:10px;width:95%;"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="text-align:center;"><a href="javascript:void(0)" ng-click="saveslidedata(slides)" style="margin:5px;" class="btn btn-primary">Save Data</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="height:448px;width:350px;overflow-x:scroll;border:1px solid #918d8d;">
+                                    <a href="javascript:void(0)"  ng-repeat="property_image in property_images_slide "  ng-click="addimage(property_image.attachment_id,property_image.filenames,property_image.description)">
+                                    <img class="page_links_img" src="api/v1/uploads/property/{{property_image.filenames}}" style="padding:10px;"/></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="text" id="image_1_id" name="image_1_id"  
+        ng-model="slides.image_1_id" style="width:0px;height:0px;" />
+        <input type="text" id="image_2_id" name="image_2_id"  
+        ng-model="slides.image_2_id"  style="width:0px;height:0px;"/>
+        <input type="text" id="image_3_id" name="image_3_id"  
+        ng-model="slides.image_3_id"  style="width:0px;height:0px;"/>
+
+
+        <input type="text" id="image_1_name" name="image_1_name"  
+        ng-model="slides.image_1_name" style="width:0px;height:0px;" />
+        <input type="text" id="image_2_name" name="image_2_name"  
+        ng-model="slides.image_2_name"  style="width:0px;height:0px;"/>
+        <input type="text" id="image_3_name" name="image_3_name"  
+        ng-model="slides.image_3_name"  style="width:0px;height:0px;"/> 
+    </form>
+</div>
+<div style="clear:both;"></div>
+<!--div id="image_page" style="width:1280px;height:933px;"></div-->
+<div id="image_page"></div>
+<div id="view_download">
+    <div style="border:1px solid #cecece;width:100%;height:40px;background-color:#cecece;color:#ffffff;font-size:24px;padding-left:12px;"><span>View One Mailer</span>
+        <a  href="javascript:void(0)" ng-click="close()" style="right: -4px;float: right;margin-right: 10px;color: #ffffff;font-size: 24px;">X</a>
+    </div>
+    <p style="color: #000000;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;">Click to View or Download One Mailer</p>
+    <p style="color: #000000;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;"><a href="api/v1/uploads/reports/{{image_to_view}}" target="_blank" style="text-align: center;color:#000000;">{{image_to_view}}</a></p>
+</div>
+<style>
+    #view_download
+    {
+        position:fixed;
+        top:38%;
+        left:38%;
+        background-color:#ffffff;
+        width:30%;
+        height:200px;
+        display:none;
+        z-index:9001;
+        -moz-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        -webkit-box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        box-shadow: 15px 15px 15px rgba(68, 68, 68, 0.6);
+        /*padding:30px;
+        padding-top:5px;*/
+        border:1px solid #f0d2d2;
+    }
+</style>
+<style>
+.lSAction > .lSNext {
+   
+    background-color: #383434;
+    border-radius: 20px;
+}
+
+.lSAction > .lSPrev {
+   
+    background-color: #383434;
+    border-radius: 20px;
+    margin-left:18px;
+}
+.page_links
+{
+    margin-bottom:15px;
+    /*-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);*/
+    border:1px solid #a39f9f;
+    padding:10px;
+}
+.page_links_img
+{
+    width:330px;
+    height: 243px;
+    padding:10px;
+
+}
+
+.page_view
+{
+    /*-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);*/
+    border:1px solid #a39f9f;
+    width:773px;
+    height: 465px;
+    padding:10px;
+}
+.page_view_img
+{
+    
+    width:750px;
+    height: 355px; 
+    overflow:hidden;
+
+}
+
+.page_view_img_1
+{
+    
+    width:100%;
+    height: 185px; 
+    overflow:hidden;
+    padding:10px;
+
+}
+
+.page_view_img_full
+{
+    
+    width:750px;
+    height: 442px; 
+    overflow:hidden;
+
+}
+
+
+.all
+{
+    display:none;
+}
+.mini_log_img
+{
+    width:197px;
+    height:177px;
+    float:right;
+    margin-right:15px;
+}
+.slide_heading
+{
+    font-size:24px;
+}
+hr{
+    border-bottom:1px solid #d2aa4c;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+
+#slide_view_99
+{
+    background-image: url('dist/img/thanks.jpg');
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+}
+
+#slide_view_3 input
+{
+    width:300px;
+}
+input{
+    width:100%;
+}
+/*#new_slide
+{
+    display: none;
+}*/
+</style>
+
+<script src="dist/pptxgenjs/jszip.min.js"></script>
+<script src="dist/pptxgenjs/pptxgen.min.js"></script>
+<script src="dist/js/html2canvas.js"></script>
+

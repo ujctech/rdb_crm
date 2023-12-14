@@ -1,0 +1,701 @@
+<div class="" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <div id="pagination" >
+        <div id="page_range">{{page_range}}</div><div id="total_records">of {{total_records}}</div>
+        <a href="javascript:void(0);"  ng-click="pagenavigation('prev')"><div id="previous_page"><i class="glyphicon  glyphicon-chevron-left"></i></div></a>
+        <a href="javascript:void(0);" ng-click="pagenavigation( 'next')"><div id="next_page"><i class="glyphicon  glyphicon-chevron-right"></i></div></a>
+    </div>
+    <div id="top_menu_div">
+        <a class="btn btn-primary" href="#/activity_add/direct/0" style="margin:10px;margin-right:2px;" ng-if="create_rights">Create Activity</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" ng-click="audit_trail();" ng-if="hasRoles.includes('Admin')">Audit Trail</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" ng-click="batch_update();" ng-if="hasRoles.includes('Admin')">Batch Update</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" data-toggle="modal" data-target="#exportdetails" ng-click="export()" ng-if="hasRoles.includes('Admin')">Export</a>
+        <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;background-color:#948c8c;" ng-click="import_activities()" ng-if="hasRoles.includes('Admin')">Import</a>
+    </div>
+    <div id="top_menu_div_mobile">
+        <div class="dropdown">
+            <a class="dropbtn" href="javascript:void(0)" style="background-color:transparent;">
+                <i class="fa fa-ellipsis-v" style="margin-top:5px;font-size:20px;"></i>
+            </a>
+            <div class="dropdown-content">
+                <a href="#/activity_add/direct/0" style="margin-right:2px;" ng-if="create_rights">Create Activity</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="audit_trail();" ng-if="hasRoles.includes('Admin')">Audit Trail</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="batch_update();" ng-if="hasRoles.includes('Admin')">Batch Update</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" data-toggle="modal" data-target="#exportdetails" ng-click="export()" ng-if="hasRoles.includes('Admin')">Export</a>
+                <a href="javascript:void(0)" style="margin-right:2px;" ng-click="import_activities()" ng-if="hasRoles.includes('Admin')">Import</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="box boxpadding" id="activities" style="border-top:0px;" ng-if="view_rights"> 
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs" style="background: #f1f1f1;">
+            <li class="active" ><a data-target="#myactivity" data-toggle="tab">Activities&nbsp;&nbsp; {{activity_count}}</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="myactivity">
+                <div class="box-body table-responsive" style="overflow: hidden;">
+                    <!--table class="table table-bordered table-striped" datatable-setupnosort="">
+                        <thead>
+                            <tr>
+                                <th><div class="checkbox" ><label><input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All</label></div></th>
+				                <th>Activity ID</th>
+                                <th>Activity Type</th>
+                                <th>Enquiry</th>
+                                <th>Client</th>
+                                <th>Developer</th>
+                                <th>Broker</th>
+                                <th>Teams</th>
+                                <th>Assign To</th>
+                                <th>Status</th>
+                                <th>Updated On</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="activity in activities">
+                                <td><div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{activity.activity_id}}"/></label></div></td>
+				                <td>Activity ID_{{activity.activity_id}}</td>
+                                <td>{{activity.activity_type}}</td>
+                                <td>{{activity.enquiry}}</td>
+                                <td>{{activity.client}}</td>
+                                <td>{{activity.developer}}</td>
+                                <td>{{activity.broker}}</td>
+                                <td>{{activity.teams}}</td>
+                                <td>{{activity.assign_to}}</td>
+                                <td>{{activity.status}}</td>
+				                <td><span ng-if="activity.modified_date!='00-00-0000 00:00' " >{{activity.modified_date}}</span><span ng-if="activity.modified_date=='00-00-0000 00:00'">{{activity.created_date}}</span></td>
+                                <td><a href="#/activity_edit/{{activity.activity_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Activity Type</th>
+                                <th>Enquiry</th>
+                                <th>Client</th>
+                                <th>Developer</th>
+                                <th>Broker</th>
+                                <th>Target List</th>
+                                <th>Teams</th>
+                                <th>Assign To</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table-->  
+                    
+                    <div class="right-side"  style="text-align:right;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:12px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group">
+                        <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                            <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                    <div class="row">
+                                         <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                    <select class="select2 form-control"  id="status" name="status" select2 ng-model="searchdata.status"  data-placeholder="Select status" style="width:100%;" ng-init="activity.status='Open' " multiple="multiple">
+                                                            <option value="Open">Open</option>
+                                                            <option value="Completed" >Completed</option>
+                                                            <option value="Cancelled" >Cancelled</option>
+                                                        </select>
+                                                </div> 
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="activity_type">Activity Type</label>
+                                                    <select class="select2 form-control" select2 ng-model="searchdata.activity_type" ng-options="dropdown.value as dropdown.display_value for dropdown in factivity_type" style="width:100%;" multiple="multiple">
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="teams">Teams</label>
+                                                    <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="searchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;"  ng-change="select_assign_to(searchdata.teams)">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="assign_to">Assign to</label>
+                                                    <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="searchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            
+
+                                            <div class="col-md-2" >
+                                                <div class="form-group">
+                                                    <label for="client_id">Owner</label>
+                                                    <select class="select2 form-control" select2 ng-model="searchdata.client_id" ng-options="contact.contact_id as contact.name for contact in clients" style="width:100%;" multiple="multiple">
+                                                    
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="broker_id">Broker</label>
+                                                    <a href="javascript:void(0)" class="btn" style="color:#ff000c;float:right;padding:0px;" ng-click="resetForm()">Clear Filters</a>
+                                                    <select class="select2 form-control" select2 ng-model="searchdata.broker_id" ng-options="contact.contact_id as contact.name for contact in brokers" style="width:100%;" multiple="multiple">
+                                                       
+                                                    </select>
+                                                </div>
+                                            </div>
+                                       </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="property_id">Property ID</label>
+                                                    <!--input type="text" class="form-control numbers" id="property_id" name="property_id"  placeholder="Property ID" ng-model="searchdata.property_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                                    
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.property_id" id= "property_id" name= "property_id" ng-options="property_id.property_id as property_id.property_id for property_id in property_ids" style="width:100%;"></select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="project_id">Project ID</label>
+                                                    <!--input type="text" class="form-control numbers" id="project_id" name="project_id"  placeholder="Project ID" ng-model="searchdata.project_id" /-->
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.project_id" id= "project_id" name= "project_id" ng-options="project_id.project_id as project_id.project_id for project_id in project_ids" style="width:100%;"></select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="enquiry_id">Enquiry ID</label>
+                                                    <!--input type="text" class="form-control numbers" id="enquiry_id" name="enquiry_id"  placeholder="Property ID" ng-model="searchdata.enquiry_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.enquiry_id" id= "enquiry_id" name= "enquiry_id" ng-options="project_id.enquiry_id as enquiry_id.enquiry_id for enquiry_id in enquiry_ids" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="activity_id">Activity ID</label>
+                                                    <!--input type="text" class="form-control numbers" id="activity_id" name="activity_id"  placeholder="ACtivity ID" ng-model="searchdata.activity_id"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/-->
+                                                    <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.activity_id" id= "activity_id" name= "activity_id" ng-options="activity_id.activity_id as activity_id.activity_id for activity_id in activity_ids" style="width:100%;"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">       
+                                                <div class="form-group">
+                                                    <label for="created_date_from">Created Date from</label>
+                                                    <div class="input-group date" id="created_date_from" date-directive="">
+                                                        <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">       
+                                                <div class="form-group">
+                                                    <label for="created_date_to">To</label>
+                                                    <div class="input-group date" id="created_date_to" date-directive="">
+                                                        <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="enquiry_id">Enquiry</label>
+                                                    <select class="select2 form-control" select2 ng-model="searchdata.enquiry_id" ng-options="enquiry.enquiry_id as enquiry.enquiry_title for enquiry in selectenquiries"  style="width:100%;" ng-change="GetProperties(activity.enquiry_id);">
+                                                        <option value="" disabled selected>Select Enquiry</option>
+                                                    </select>
+        										 </div>
+                                            </div-->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2">       
+                                                <div class="form-group">
+                                                    <label for="activity_start">Activity Start </label>
+                                                    <div class="input-group date" id="activity_start" date-directive="">
+                                                        <input class="form-control" type="text" ng-model="searchdata.activity_start" >
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">       
+                                                <div class="form-group">
+                                                    <label for="activity_end">Activity End</label>
+                                                    <div class="input-group date" id="activity_end" date-directive="">
+                                                        <input class="form-control" type="text" ng-model="searchdata.activity_end" >
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:25px;">        
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_activities(searchdata,'form')">Search Now </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:25px;">       
+                                                <div class="form-group">
+                                                    <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:25px;">       
+                                                <div class="form-group">
+                                                <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()">Clear Filters</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="checkbox" style="margin-top:12px;margin-left:7px;">
+                        <label>
+                            <input type="checkbox" class="selectall" name="selectall" id="selectall" ng-model="selectall" style="width:20px;height:20px;" ng-change="select_unselect(selectall)" />&nbsp;&nbsp;Select All
+                        </label>
+                    </div>
+                    <!--table class="table" datatable-setupt="" data-page-length='10'>
+                        <thead>
+                            <tr style="display:none;">
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody-->
+                            <div class="loading-main-div">
+                                <div id="loading" ng-if="listactivities && !listactivities.length>0"></div>
+                            </div> 
+                            <div class="row" ng-repeat="activity in listactivities track by activity.activity_id">
+                                <div class="col-md-12" style="width:100%">
+                                    <div class="row bottomborder" style="padding:0px;margin-left:0px;margin-right:0px;">
+                                        <div class="col-md-4" style="min-width:250px;padding-left:0px;margin-bottom:5px;">
+                                            <div class="col-md-1" style="padding-left:0px;">
+                                                <div class="checkbox"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{activity.activity_id}}"/></label></div>
+                                            </div>
+                                            <div class="col-md-11 btndiv">
+                                                <div class="cls_width" style="background-color:#1497e4;border-radius:6px;padding:3px;padding-left:10px;margin-left:10px;text-align:center;min-width:100px;float:left;font-size:16px;color:#ffffff;">{{activity.activity_type}}</div><div class="cls_width" ng-if="activity.status" style="background-color:#505355;border-radius:6px;padding:3px;padding-left:10px;margin-left:10px;text-align:center;min-width:100px;float:left;font-size:16px;color:#ffffff;">{{activity.status}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p style="font-weight:bold;font-size:16px;">Start Date & Time : {{activity.activity_start}}</p>
+                                            
+                                        </div>
+
+                                         
+
+                                        <div class="col-md-3 ">
+                                            <p style="font-weight:bold;font-size:16px;">Edited:<span ng-if="activity.modified_date!='00-00-0000 00:00' " >{{activity.modified_date}}</span><span ng-if="activity.modified_date=='00-00-0000 00:00'">{{activity.created_date}}</span></p>
+                                            
+                                            <div class="input-group date" id="change_created_date" name="change_created_date" ng-model="change_created_date"  datetimepickeractivity="" ng-click="change_created_date(activity.activity_id,change_created_date)" ng-if="hasRoles.includes('Admin')"  ng-init="change_created_date=activity.created_date ">
+                                                <input class="form-control" type="text"  >
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+
+                                            <!--input type="text" class="form-control" id="change_created_date" name="change_created_date"  placeholder="Change Created Date" ng-model="change_created_date" ng-blur="change_created_date(activity.activity_id,change_created_date)" ng-if="hasRoles.includes('Admin')"  ng-init="change_created_date=activity.created_date "-->
+                                        </div>
+                                        <!--<div class="col-md-2">-->
+                                        <!--    <a href="#/activity_edit/{{activity.activity_id}}"><p style="font-weight:bold;font-size:16px;">Activity ID_{{activity.activity_id}}</p></a>-->
+                                        <!--</div>-->
+                                        <div class="col-md-2">
+                                            <a ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('activity_update')))" href=""><p style="font-weight:bold;font-size:16px;">Activity ID_{{activity.activity_id}}</p></a>
+                                            <a ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('activity_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('activity_update') || hasRoles.includes('Admin')" href="#/activity_edit/{{activity.activity_id}}"><p style="font-weight:bold;font-size:16px;">Activity ID_{{activity.activity_id}}</p></a>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:10px;">
+                                        <div class="col-md-2 act_img" style="text-align: center;">
+                                            <img src="dist/img/no_image.jpg" ng-if="activity.filenames==null " style="width:70px; height:85px;text-align: center;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+                                            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);;border:1px solid#6c6a6a;" /> 
+                                            <img src="api/v1/uploads/employee/{{activity.filenames}}" ng-if="activity.filenames!=null " style="width:70px; height:85px;text-align: center;-webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+                                            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);;border:1px solid #6c6a6a;" /> 
+                                            <p class="" style="font-weight:bold;text-align:center;">{{activity.employee_name}}</p>
+                                        </div>
+                                        <div class="col-md-5 act_desc">
+                                            <p class="cls_name" style="font-size:16px;" ng-if="activity.enquiry_type">Enquiry:<span style="font-weight:bold;font-size:16px;">{{activity.enquiry_type}} to {{activity.enquiry_for}}</span></p>
+                                            
+                                            <!--<a href="#/contacts_edit/{{activity.client_id}}">-->
+                                            <!--    <p style="font-size:16px;" ng-if="activity.client">Client:<span style="font-weight:bold;font-size:16px;">{{activity.client}}</span></p>-->
+                                            <!--</a>-->
+                                            <!--<a href="#/contacts_edit/{{activity.contact_id}}">-->
+                                            <!--    <p style="font-size:16px;" ng-if="activity.broker">Broker:<span style="font-weight:bold;font-size:16px;">{{activity.broker}}</span></p>-->
+                                            <!--</a>-->
+                                            <!--<p class="" style="font-size:16px;" ng-if="activity.activity_sub_type">For:<span style="font-weight:bold;font-size:16px;">{{activity.activity_sub_type}}</span></p>-->
+
+                                            <!--<p class="" style="font-size:16px;" ng-if="activity.calling_count>0">Calling Count:&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;font-size:16px;">{{activity.calling_count}}</span></p>-->
+
+                                            <!--<a href="#/properties_edit/{{activity.property_id}}">-->
+                                            <!--    <p class="" style="font-size:16px;" ng-if="activity.property_id  && activity.property_id>0">For:<span style="font-weight:bold;font-size:16px;">Property ID:{{activity.property_id}}</span></p>-->
+                                            <!--</a>-->
+
+                                            <!--<a href="#/project_edit/{{activity.project_id}}">-->
+                                            <!--    <p class="" style="font-size:16px;" ng-if="activity.project_id && activity.project_id>0 ">For:<span style="font-weight:bold;font-size:16px;">Project ID:{{activity.project_id}}</span></p>-->
+                                            <!--</a>-->
+                                            <!--<a href="#/enquiries_edit/{{activity.enquiry_id}}">-->
+                                            <!--    <p class="" style="font-size:16px;" ng-if="activity.enquiry_id  && activity.enquiry_id>0">For:<span style="font-weight:bold;font-size:16px;">Enquiry ID:{{activity.enquiry_id}}</span></p>-->
+                                            <!--</a>-->
+                                            <a ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update')))" href="">
+                                                <p style="font-size:16px;" ng-if="activity.client">Client:<span style="font-weight:bold;font-size:16px;">{{activity.client}}</span></p>
+                                            </a>
+                                            <a ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('contact_update') || hasRoles.includes('Admin')" href="#/contacts_edit/{{activity.client_id}}">
+                                                <p style="font-size:16px;" ng-if="activity.client">Client:<span style="font-weight:bold;font-size:16px;">{{activity.client}}</span></p>
+                                            </a>
+                                            <a ng-if="(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update')))" href="">
+                                                <p style="font-size:16px;" ng-if="activity.broker">Broker:<span style="font-weight:bold;font-size:16px;">{{activity.broker}}</span></p>
+                                            </a>
+                                            <a ng-if="!(hasRoles.includes('Sub Admin') && !(hasPermissions.includes('contact_update'))) || !(hasRoles.includes('Sub Admin')) || hasPermissions.includes('contact_update') || hasRoles.includes('Admin')" href="#/contacts_edit/{{activity.contact_id}}">
+                                                <p style="font-size:16px;" ng-if="activity.broker">Broker:<span style="font-weight:bold;font-size:16px;">{{activity.broker}}</span></p>
+                                            </a>
+                                            <p class="" style="font-size:16px;" ng-if="activity.activity_sub_type">For:<span style="font-weight:bold;font-size:16px;">{{activity.activity_sub_type}}</span></p>
+
+                                            <p class="" style="font-size:16px;" ng-if="activity.calling_count>0">Calling Count:&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;font-size:16px;">{{activity.calling_count}}</span></p>
+
+                                            <a ng-if="hasRoles.includes('Sub Admin')" href="">
+                                                <p class="" style="font-size:16px;" ng-if="activity.property_id  && activity.property_id>0">For:<span style="font-weight:bold;font-size:16px;">Property ID:{{activity.property_id}}</span></p>
+                                            </a>
+                                            <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/properties_edit/{{activity.property_id}}">
+                                                <p class="" style="font-size:16px;" ng-if="activity.property_id  && activity.property_id>0">For:<span style="font-weight:bold;font-size:16px;">Property ID:{{activity.property_id}}</span></p>
+                                            </a>
+
+                                            <a ng-if="hasRoles.includes('Sub Admin')" href="">
+                                                <p class="" style="font-size:16px;" ng-if="activity.project_id && activity.project_id>0 ">For:<span style="font-weight:bold;font-size:16px;">Project ID:{{activity.project_id}}</span></p>
+                                            </a>
+                                            <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/project_edit/{{activity.project_id}}">
+                                                <p class="" style="font-size:16px;" ng-if="activity.project_id && activity.project_id>0 ">For:<span style="font-weight:bold;font-size:16px;">Project ID:{{activity.project_id}}</span></p>
+                                            </a>
+                                            <a ng-if="hasRoles.includes('Sub Admin')" href="">
+                                                <p class="" style="font-size:16px;" ng-if="activity.enquiry_id  && activity.enquiry_id>0">For:<span style="font-weight:bold;font-size:16px;">Enquiry ID:{{activity.enquiry_id}}</span></p>
+                                            </a>
+                                            <a ng-if="!(hasRoles.includes('Sub Admin'))" href="#/enquiries_edit/{{activity.enquiry_id}}">
+                                                <p class="" style="font-size:16px;" ng-if="activity.enquiry_id  && activity.enquiry_id>0">For:<span style="font-weight:bold;font-size:16px;">Enquiry ID:{{activity.enquiry_id}}</span></p>
+                                            </a>
+                                            
+                                            <p class="" style="font-size:16px;">Description:<span style="font-weight:bold;font-size:16px;">{{activity.description}}</span></p>
+                                            
+                                            <p class="" style="font-size:16px;" ng-if="activity.closure_comment">Closure Comment:<span style="font-weight:bold;font-size:16px;">{{activity.closure_comment}}</span></p>
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row footer_menu">
+                                        <div class="col-md-12 " style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="col-md-3 ">
+                                                <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#scheduled_{{activity.activity_id}}" ng-click="scheduled_visits(activity.activity_id)" ng-if="view_rights">Scheduled Visit &nbsp;<i class="fa fa-angle-down"></i></a>
+                                                
+                                            </div>
+                                            <div class="col-md-9 buttombtn" >
+                                                <!--<div style="float:right;">-->
+                                                <!--    <a class="btn btn-primary" ng-if="view_rights &&activity.enquiry_id" href="#/enquiries_edit/{{activity.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Enquiry</a>-->
+                                                <!--    <a class="btn btn-primary" href="#/activity_edit/{{activity.activity_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" ><i class="glyphicon glyphicon-pencil" ng-if="update_rights"></i>&nbsp;Edit</a>-->
+                                                <!--</div>  -->
+                                                <div style="float:right;">
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin')) && view_rights && activity.enquiry_id" href="#/enquiries_edit/{{activity.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Enquiry</a>
+                                                    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;margin-top:6px;margin-right:2px;" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit</a>
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin')) && update_rights" href="#/activity_edit/{{activity.activity_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit</a>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="row footer_menu_mobile">
+                                        <div class="col-md-12 " style="background-color:#c6cbd6;;height:45px;margin-left:7px;width:99%;margin-top:15px;">
+                                            <div class="dropdown">
+                                                <a class="dropbtn" href="javascript:void(0)" style="background-color:transparent;">
+                                                    <i class="fa fa-ellipsis-v" style="margin-top:10px;font-size:20px;"></i>
+                                                </a>
+                                                <div class="dropdown-content">
+                                                    <a href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#scheduled_{{activity.activity_id}}" ng-click="scheduled_visits(activity.activity_id)" ng-if="view_rights">Scheduled Visit &nbsp;<i class="fa fa-angle-down"></i></a>
+                                                    <a class="btn btn-primary " ng-if="view_rights &&activity.enquiry_id" href="#/enquiries_edit/{{activity.enquiry_id}}" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" ><i class="glyphicon glyphicon-pencil"></i>&nbsp;Enquiry</a>
+                                                    <a href="#/activity_edit/{{activity.activity_id}}" style="margin:10px;margin-top:6px;margin-right:2px;" ><i class="glyphicon glyphicon-pencil" ng-if="update_rights"></i>&nbsp;Edit</a>
+                                                </div>  
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div id="scheduled_{{activity.activity_id}}" class="panel-collapse collapse html_content" compile-html="visittrustedHtml_{{activity.activity_id}}">Nothing to show</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--/tbody>
+                    </table-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="exportdetails" class="modal" role="dialog">    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Export Data</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" id="listofvalues">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="option_value" id="option_value" value="current_page" checked="checked" ng-model="option_value">
+                                            Current Page
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="option_value" id="option_value" value="selected" ng-model="option_value">
+                                            Selected
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="option_value" id="option_value" value="all_records" ng-model="option_value">
+                                            All Records
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">	
+                        <div class="form-group">
+                            <button class="btn btn-primary" ng-click="exportdata()">Export</button>
+                            <button class="btn btn-primary" ng-click="configurecolumns()">Configure Columns</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="upload" >
+    <form novalidate name="UAddNewForm" id="Uadd-new-form" role="form" autocomplete="off" >
+        <div class="row" >
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Import Activities </h3>
+                    </div>
+                    <div class="box-body"> 
+                        <div class="row">  
+                            <div class="col-md-12" style="margin-top:20%;"> 
+                                <div class="form-group" >
+                                    <input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1" required>
+                                    <input type="hidden" name="file_name" id="file_name" value="" ng-model="convertdata.file_name"/>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" ng-disabled="UAddNewForm.$invalid || isUnchanged(convertdata)" id="Uadd-new-btn" ng-click="uploadactivity_data(convertdata)">Import</button>
+                                    <a href="#/activity_list/" class="btn">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div> 
+
+<style>
+.modal-dialog {
+
+    width:25%;
+}
+.bottomborder{
+    border-bottom:1px solid #959191;
+}
+
+@media (max-width:991px){
+    .bottomborder{
+        border-bottom:0px;
+    }
+
+     div.dataTables_wrapper div.dataTables_filter {
+     text-align: left; 
+     float: left; 
+     margin-left: -15px;
+     margin-top:-35px;
+    }
+    div.dataTables_wrapper div.dataTables_filter input 
+    {
+        width: 150px;
+    }
+     .btndiv{
+        position: absolute;
+        top: -2px;
+        width:100%;
+    }
+    .act_desc{
+        left: 150px;
+        height: 100px;
+       
+    }
+    .act_img{
+        margin-bottom: -120px;
+    }
+    .buttombtn{
+        margin-top: -48px;
+    }
+  
+    .right-side{
+        height: 50px;
+    } 
+   .cls_name{
+ margin-top: 30px;
+   } 
+   .cls_width{
+    width: 45%;
+   }
+}
+</style>
+<style>
+    #pagination
+    {
+        position:fixed;
+        right:35px;
+        margin-top:7px;
+        color:#000000;
+        font-size:18px;
+    }
+    #page_range
+    {
+        float:left;
+        
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+    }
+    #total_records
+    {
+        float:left;
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:6px;
+        
+    }
+    #previous_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        color:#ffffff;
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+    }
+    #upload
+    {
+        display: none;    
+    }
+    #next_page
+    {
+        float:left;
+        width:30px;
+        height:30px;
+        /*border:1px solid #ffffff;
+        border-radius:16px;*/
+        margin-left:10px;
+        margin-top:3px;
+        padding:4px;
+        padding-left:5px;
+        color:#ffffff;
+    }
+    #previous_page:hover
+    {
+        /*border:1px solid #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #next_page:hover
+    {
+        /*border:1px solid  #1a1919;*/
+        border-radius:16px;
+        background-color:  #1a1919;
+        opacity:0.6;
+    }
+    #top_menu_div
+    {
+        display:block;
+    }
+    #top_menu_div_mobile
+    {
+        display:none;
+    }
+    .footer_menu
+    {
+        display: block;
+    }
+    .footer_menu_mobile
+    {
+        display: none;
+    }
+
+    @media screen and (max-width: 991px)  {
+        .act_desc{
+            left: 5px;
+            height: 100%;
+        
+        }
+        
+        .act_img{
+            margin-bottom: 0px;
+        }
+        #top_menu_div
+        {
+            display:none;
+        }
+        #top_menu_div_mobile
+        {
+            display:block;
+        }
+        .footer_menu
+        {
+            display: none;
+        }
+        .footer_menu_mobile
+        {
+            display: block;
+        }
+        
+    }
+
+</style>
+<script>
+        $("#file-1").fileinput({
+            uploadAsync: false,
+            showUpload: false,
+            uploadUrl: './api/v1/uploadactivity_files',
+            allowedFileExtensions : ['csv','xls','xlsx'],
+            overwriteInitial: false,
+            maxFileSize: 1500000,
+            maxFilesNum: 1,
+            maxFileCount:1,
+            slugCallback: function(filename) {
+                return filename.replace('(', '_').replace(']', '_');
+            }
+        }).on("filebatchselected", function(event, files) 
+        {
+            $("#file-1").fileinput("upload");
+        });
+        
+        $('#file-1').on('fileloaded', function(event, file, previewId, index, reader) {
+            $("#file_name").val(file.name);
+            console.log("fileloaded");
+        });
+</script>

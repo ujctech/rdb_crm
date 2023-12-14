@@ -1,0 +1,72 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="sub_teams_info"  style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+
+		<div class="row" id="sub_teams_data">
+
+			<div class="col-md-6">
+
+				<div class="box box-primary">
+
+					<div class="box-header">
+
+						<h3 class="box-title">Add Sub Team</h3>
+
+					</div>
+
+					<div class="box-body">
+
+						<div class="row">
+
+							<div class="col-md-12">
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+
+                                            <label for="sub_team_name">Name<span class="required">*</span></label>
+
+                                            <input type="text" class="form-control" id="sub_team_name" name="sub_team_name"  placeholder="Name" ng-model="sub_team.sub_team_name"  required  />
+
+										</div>
+
+										<div class="form-group">
+
+											<label for="sub_team_description">Sub Team Description</label>
+											<textarea class="form-control" id="sub_team_description" name="sub_team_description"  placeholder="Description" ng-model="sub_team.sub_team_description"></textarea>
+
+										</div>
+
+                                        <div class="form-group">
+
+                                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(sub_team)" id="add-new-btn" ng-click="sub_teams_add_new(sub_team)">Save </button>
+
+                                            <a href="#/sub_teams_list" class="btn">Cancel</a>
+
+                                        </div>
+
+                                    </div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+</div>

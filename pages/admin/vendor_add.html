@@ -1,0 +1,137 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div id="resume_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="resume_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Vendor Registration Form</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+										<div class="form-group">
+											<label for="employee_name">Name of the Firm / Organization:</label>
+											<input type="text" class="form-control" id="employee_name" name="employee_name"  placeholder="Name of the Firm / Organization" ng-model="resume.employee_name"  />
+										</div>
+										<div class="form-group">
+											<label for="mobile_no">Contact No : Office</label>
+											<input type="text" class="form-control" id="mobile_no" name="mobile_no"  placeholder="Contact No : Office" ng-model="resume.mobile_no"  />
+										</div>
+										<div class="form-group">
+											<label for="mobile_no">Contact No : Mobile</label>
+											<input type="text" class="form-control" id="mobile_no" name="mobile_no"  placeholder="Contact No : Office" ng-model="resume.mobile_no"  />
+										</div>
+										<div class="form-group">
+											<label for="email">E- Mail id</label>
+											<input type="text" class="form-control" id="email" name="email"  placeholder="E- Mail id" ng-model="resume.email"  />
+										</div>
+										<div class="form-group">
+											<label for="remarks">Registered Office Address:</label>
+											<textarea class="form-control"  id="remarks" name="remarks" rows="5" placeholder="Registered Office Address" ng-model="resume.remarks" ></textarea>
+										</div>
+										<div class="form-group">
+											<label for="remarks">Communication Address:</label>
+											<textarea class="form-control"  id="remarks" name="remarks" rows="5" placeholder="Communication Address" ng-model="resume.remarks" ></textarea>
+										</div>
+										<!-- <div class="form-group">
+											<label for="status">Status</label>
+											<select class="select2 form-control"  id="status" name="status" ng-model="resume.status" ng-init="resume.status='Active'" data-placeholder="Select Status" style="width:100%;">
+												<option value="Active" >Active</option>
+												<option value="InActive" >InActive</option>
+											</select>
+										</div>  -->
+									</div>
+								
+									<div class="col-md-6">
+										<!-- <div class="form-group">
+											<label for="file-1">Resume</label>
+											<input id="file-1" name="file-1[]" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">
+											<input type="hidden" name="filename" id="filename" value="" ng-model="resume.filename" />
+										</div> -->
+										<div class="row">
+											
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label for="employee_name">Bank Name :</label>
+													<input type="text" class="form-control" id="employee_name" name="employee_name"  placeholder="Bank Name" ng-model="resume.employee_name"  />
+												</div>
+											</div>
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label for="employee_name">Account No :</label>
+													<input type="text" class="form-control" id="employee_name" name="employee_name"  placeholder="Account No" ng-model="resume.employee_name"  />
+												</div>
+											</div>
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label for="employee_name">Account Type:</label>
+													<input type="text" class="form-control" id="employee_name" name="employee_name"  placeholder="Account Type" ng-model="resume.employee_name"  />
+												</div>
+											</div>
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label for="employee_name">Bank Name:</label>
+													<input type="text" class="form-control" id="employee_name" name="employee_name"  placeholder="Bank Name" ng-model="resume.employee_name"  />
+												</div>
+											</div>
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label for="employee_name">Branch:</label>
+													<input type="text" class="form-control" id="employee_name" name="employee_name"  placeholder="Branch" ng-model="resume.employee_name"  />
+												</div>
+											</div>
+											<div class="col-12 col-md-6">
+												<div class="form-group">
+													<label for="employee_name">IFSC Code:</label>
+													<input type="text" class="form-control" id="employee_name" name="employee_name"  placeholder="IFSC Code" ng-model="resume.employee_name"  />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">                    
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(resume)" id="add-new-btn" ng-click="resume_add_new(resume)">Save </button>
+                                            <a href="#/resume_list" class="btn">Cancel</a>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+
+	$("#file-1").fileinput({
+		uploadAsync: false,
+		showUpload: false,
+		uploadUrl: './api/v1/resume_uploads',
+		allowedFileExtensions : ['jpg','jpeg', 'png','gif','image','3gp','xlsx','docx','pdf','pptx'],
+		overwriteInitial: false,
+		maxFileSize: 15000000,
+		maxFilesNum: 25,
+		maxFileCount:100,
+		slugCallback: function(filename) {
+			return filename.replace('(', '_').replace(']', '_');
+		}
+	});
+	$('#file-1').on('fileloaded', function(event, file, previewId, index, reader) 
+	{
+		$("#filename").val(file.name);
+		console.log("fileloaded");
+	});
+
+</script>
+	
+	

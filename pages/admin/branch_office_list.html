@@ -1,0 +1,68 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <!--<a class="btn btn-primary" href="#/branch_office_add" style="margin:10px;">Add Branch Office</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;">Add Branch Office</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/branch_office_add" style="margin:10px;">Add Branch Office</a>
+</div>
+<div class="clearfix"></div>
+<div class="row" id="bu" style="margin-top:114px;">
+    <div class="col-md-12">
+        <div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active" ><a data-target="#branchtab" data-toggle="tab">Branch</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="branchtab">
+                            <div class="box-body table-responsive">
+                                <table class="table table-bordered table-striped" datatable-setup="" data-page-length='10'>
+                                    <thead>
+                                        <tr>
+                                            <th>Branch Name</th>
+                                            <th>Description</th>
+                                            <th>Office Lead</th>
+                                            <th>Address</th>
+                                            <th>Locality</th>
+                                            <th>Area</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Country</th>
+                                            <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="branch_office in branch_offices track by branch_office.bo_id">
+                                            <td>{{branch_office.bo_name}}</td>
+                                            <td>{{branch_office.office_description}}</td>
+                                            <td>{{branch_office.office_leading}}</td>
+                                            <td>{{branch_office.address1}}</td>
+                                            <td>{{branch_office.locality}}</td>
+                                            <td>{{branch_office.area_name}}</td>
+                                            <td>{{branch_office.city}}</td>
+                                            <td>{{branch_office.state}}</td>
+                                            <td>{{branch_office.country}}</td>
+                                            <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/branch_office_edit/{{branch_office.bo_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Branch Name</th>
+                                            <th>Description</th>
+                                            <th>Office Lead</th>
+                                            <th>Address</th>
+                                            <th>Locality</th>
+                                            <th>Area</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Country</th>
+                                            <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

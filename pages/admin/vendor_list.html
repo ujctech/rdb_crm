@@ -1,0 +1,152 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <!--<a class="btn btn-primary" href="#/resume_add" style="margin:10px;" >Upload Resume</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;" >Add Vendor</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/vendor_add" style="margin:10px;" >Add Vendor</a>
+</div>
+<div class="clearfix"></div>
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#resumetab" data-toggle="tab">Resume</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="resumetab">
+                
+                <div class="box-body table-responsive">
+                    <div class="row">
+                        <div class="right-side"  style="text-align:right;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;margin-top:6px;" data-toggle="collapse" data-target="#searchoptions" ng-click="open_search()">More Search  &nbsp;<i class="fa fa-angle-down"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-default" style="background-color: #f3f1f1;-webkit-box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5);box-shadow: 0 8px 13px rgba(0, 0, 0, 0.5); border:0px;">
+                                <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                                    <div id="searchoptions" class="panel-collapse collapse" style="border:1px solid #b3aeae;padding:10px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="employee_name">Name</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.employee_name" id= "employee_name" name= "employee_name" ng-options="employee_name.employee_name as employee_name.employee_name for employee_name in employee_names" style="width:100%;"></select>
+        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="designation_id">Designation</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.designation_id" id= "designation_id" name= "designation_id" ng-options="designation.designation_id as designation.designation for designation in designations" style="width:100%;"></select>
+        
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="mobile_no">Mobile No</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.mobile_no" id= "mobile_no" name= "mobile_no" ng-options="mobile_no.mobile_no as mobile_no.mobile_no for mobile_no in mobile_nos" style="width:100%;"></select>
+        
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="email">Email ID</label>
+                                                        <select class="select2 form-control" select2 multiple="multiple" ng-model="searchdata.email" id= "email" name= "email" ng-options="email.email as email.email for email in emails" style="width:100%;"></select>
+        
+                                                    </div>
+                                                </div>
+
+                                                <!--div class="col-md-2">       
+                                                    <div class="form-group">
+                                                        <label for="created_date_from">Created Date from</label>
+                                                        <div class="input-group date" id="created_date_from" date-directive="">
+                                                            <input class="form-control" type="text" ng-model="searchdata.created_date_from" >
+                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">       
+                                                    <div class="form-group">
+                                                        <label for="created_date_to">To</label>
+                                                        <div class="input-group date" id="created_date_to" date-directive="">
+                                                            <input class="form-control" type="text" ng-model="searchdata.created_date_to" >
+                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                    </div>
+                                                </div-->
+                                                 
+                                            </div>
+                                        </div>
+                
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12">                                            
+                                                <div class="col-md-2" style="margin-top:25px;">        
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_resumes(searchdata)">Search Now </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="margin-top:25px;">       
+                                                    <div class="form-group">
+                                                        <a href="javascript:void(0);" class="btn" data-toggle="collapse" data-target="#searchoptions">Cancel</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="margin-top:25px;">       
+                                                    <div class="form-group">
+                                                    <a href="javascript:void(0)" class="btn" style="color:#ff000c;" ng-click="resetForm()">Clear Filters</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>   
+                    <table class="table table-bordered table-striped" datatable-setupnosort1=""  >
+                        <thead>
+                            <tr>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                <th>Name</th>
+                                <th>Designation</th>
+                                <th>Mobile No.</th>
+                                <th>Email ID</th>
+                                <th>Remarks</th>
+                                <th>Status</th>
+                                <th>Attachment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="resume in resumes">
+                                <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/vendor_edit/{{resume.resume_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                <td>{{resume.employee_name}}</td>
+                                <td>{{resume.designation}}</td>
+                                <td>{{resume.mobile_no}}</td>
+                                <td>{{resume.email}}</td>
+                                <td>{{resume.remarks}}</td>
+                                <td>{{resume.status}}</td>
+                                <td><a href="api/v1/uploads/resumes/{{resume.filename}}" title="Click to View or Download" alt="Click to View or Download" target="_blank" download>{{resume.filename}}</a></td>
+                                
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                <th>Name</th>
+                                <th>Designation</th>
+                                <th>Mobile No.</th>
+                                <th>Email ID</th>
+                                <th>Remarks</th>
+                                <th>Status</th>
+                                <th>Attachment</th>
+                                
+                            </tr>
+                        </tfoot>
+                    </table>   
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

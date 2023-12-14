@@ -1,0 +1,57 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;" ng-if="view_rights">
+    
+    <!--<a class="btn btn-primary" href="#/employee_asset_add" style="margin:10px;">Add Employee Asset</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;">Add Employee Asset</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/employee_asset_add" style="margin:10px;">Add Employee Asset</a>
+    <!--<a href="javascript:void(0)" style="float:right;margin-right:20px;" ng-click="import_enquiries()">Import</a>-->
+</div>
+<div class="clearfix"></div>
+<div class="row" id="des" style="margin-top:115px;" ng-if="view_rights">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#rolestab" data-toggle="tab">Employee Assets</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="rolestab">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-striped" datatable-setup="" data-page-length='10'>
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Asset Title</th>
+                                        <th>Specifications</th>
+                                        <th>Issued Date</th>
+                                        <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="employee_asset in employee_assets">
+                                        <td>{{employee_asset.employee_name}}</td>
+                                        <td>{{employee_asset.asset_title}}</td>
+                                        <td>{{employee_asset.asset_spec}}</td>
+                                        <td>{{employee_asset.issued_date}}</td>
+                                        <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/employee_asset_edit/{{employee_asset.employee_asset_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Asset Title</th>
+                                        <th>Specifications</th>
+                                        <th>Issued Date</th>
+                                        <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,84 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+
+</div>
+<div class="clearfix"></div>
+
+<div id="dropdowns_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="dropdowns_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Edit Email Accounts</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="email_account">Email Account</label>
+											<input type="text" class="form-control" id="email_account" name="email_account"  placeholder="Email Account" ng-model="email_accounts.email_account" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+										</div>
+										<div class="form-group">
+											<label for="smtp_host">SMTP Host</label>
+											<input type="text" class="form-control" id="smtp_host" name="smtp_host"  placeholder="SMTP Host" ng-model="email_accounts.smtp_host" pattern="[A-Za-z0-9 .@_-]+" hide-zero title="Only Alpha numeric Allowed.." />
+										</div>
+										<div class="form-group">
+											<label for="smtp_username">SMTP Username</label>
+											<input type="text" class="form-control" id="smtp_username" name="smtp_username"  placeholder="SMTP Username" ng-model="email_accounts.smtp_username" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Valid Email ID..!!"/>
+										</div>
+										
+										<div class="form-group">
+											<label for="smtp_username">Mail Properties</label>
+											<textarea class="form-control" id="mail_properties" name="mail_properties"  placeholder="Mail Properties" ng-model="email_accounts.mail_properties" ></textarea>
+										</div>
+										<div class="form-group">
+											<label for="from_name">From Name</label>
+											<input type="text" class="form-control " id="from_name" name="from_name"  placeholder="From Name" ng-model="email_accounts.from_name" pattern="[A-Za-z ]+" hide-zero title="Only Alphabates Allowed.." />
+										</div>
+										<div class="form-group">
+											<label for="smtp_port">SMTP Port</label>
+											<input type="text" class="form-control" id="smtp_port" name="smtp_port"  placeholder="SMTP Port" ng-model="email_accounts.smtp_port" pattern="[0-9 .]+" hide-zero title="Only Numbers Allowed.." />
+										</div>
+										<div class="form-group">
+											<label for="password">Password</label>
+											<input type="password" class="form-control" id="password" name="password"  placeholder="Password" ng-model="email_accounts.password" hide-zero />
+										</div>
+										<div class="form-group">
+											<label for="confirm_password">Confirm Password</label>
+											<input type="password" class="form-control" id="confirm_password" name="confirm_password"  placeholder="Confirm Password" ng-model="email_accounts.confirm_password" hide-zero />
+										</div>
+										<div class="form-group">
+											<label for="teams">Teams<span class="required">*</span></label>
+											<select class="select2 form-control" multiple="multiple"  id = "teams" name = "teams" select2 ng-model="email_accounts.teams" ng-options="team.team_id as team.team_name for team in listteams" style="width:100%;" required>
+											</select>
+										</div>
+										<div class="form-group">
+											<label for="assign_to">Assign to<span class="required">*</span></label>
+											<select class="select2 form-control" multiple="multiple"  id = "assign_to" name = "assign_to" select2 ng-model="email_accounts.assign_to" ng-options="user.user_id as user.name for user in listusers"   style="width:100%;" required>
+											</select>
+										</div>
+										<div class="form-group">
+											<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(email_accounts)" id="add-new-btn" ng-click="email_accounts_update(email_accounts)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+											<button class="btn btn-danger" ng-click="email_accounts_delete(email_accounts)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+											<a href="#/email_accounts_list" class="btn">Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+	$(function () {
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+</script>

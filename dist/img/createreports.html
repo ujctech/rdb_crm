@@ -1,0 +1,418 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('pptx')">Export to PPT</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('pdf')">Export to PDF</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('docx')">Export to DOC</a>
+    <a class="btn btn-primary" href="javascript:void(0)" style="margin:10px;margin-right:2px;" ng-click="export_report('xlsx')">Export to EXCEL</a>
+</div>
+<div class="clearfix"></div>
+
+<div class="box" style="margin:5px;padding:10px;border-top:0px;border-radius:0px;margin-top:115px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3" style="height:500px;overflow-x:scroll;border:4px solid #d2aa4c;">
+                <div class="row">
+                    <a href="javascript:void(0)" ng-click="show_slide_view('top_slide_view_',1) ">
+                    <div class="col-md-12 page_links" id="top_slide" >
+                        <p>Top Slide</p>
+                        <img class="page_links_img" src="dist/img/ppt_main.jpg"/>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0)" ng-click="show_slide_view('details_slide_view_',1) ">
+                    <div class="col-md-12 page_links" id="details_slide" >
+                        <p>Details Slide</p>
+                        <img class="page_links_img" src="dist/img/no_image.jpg"/>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0)"  ng-repeat="property_image in property_images_slide">
+                    <div class="col-md-12 page_links" ng-click="show_slide_view('image_slide_view_',property_image.attachment_id)">
+                        <p><div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;float: left;" value="{{property.property_id}}"/></label></div>
+
+                            <input type="text" class="form-control" id="slide_no" name="slide_no"  placeholder="Slide No " ng-model="slide_no" ng-init="slide_no=3"/>
+                            
+                            <input type="text" class="form-control" id="description" name="description"  placeholder="File Title" ng-model="property_image.description" />
+
+                        </p>	
+                        <img  class="page_links_img" src="dist/img/no_image.jpg" ng-if="property_image.filenames==null " />
+                        <img class="page_links_img" src="api/v1/uploads/property/{{property_image.filenames}}" ng-if="property_image.filenames!=null " /> 
+                    </div>
+                    </a>
+                    <a href="javascript:void(0)" ng-click="show_slide_view('location_slide_view_',1) ">
+                    <div class="col-md-12 page_links" style="margin-bottom:10px;" id="location_slide">
+                        <p>Location</p>
+                        <img class="page_links_img" src="dist/img/no_image.jpg"/>
+                    </div>
+                    </a>
+                    <a href="javascript:void(0)" ng-click="show_slide_view('last_slide_view_',1) ">
+                    <div class="col-md-12 page_links" style="margin-bottom:10px;" id="last_slide"  >
+                        <p>Last Slide</p>
+                        <img class="page_links_img" src="dist/img/thanks.jpg"/>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9" style="height:500px;overflow-x:scroll;border:4px solid #d2aa4c;">
+                <div class="col-md-12 page_view all" id="top_slide_view_1" >
+                    <p>Top Slide</p>
+                    <img class="page_view_img" src="dist/img/ppt_main.jpg"/>
+                </div>
+                <div class="col-md-12 page_view all" id="details_slide_view_1">
+                    <p>Details</p>
+                    <div class="row">
+                        <div class="col-md-12" style="margin:0 auto;">
+                            <table style="width:80%;margin:0 auto;" >
+                                <tr style="border:1px solid #000000;"><td style="width:50%;">Carpet Area (sqft)</td>
+                                    <td style="width:50%;"><input type="text" class="form-control" id="con_area" name="con_area" placeholder="Construction Area" ng-model="property.con_area" pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Built Up Area (sqft)</td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Proposed  Floors</td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Car Park</td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Quoted Rent  </td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Security Deposit</td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Lock in period  </td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Lease Tenure </td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Rent Escalation</td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Location</td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                                <tr style="border:1px solid #000000;"><td>Furnishing Details </td>
+                                    <td><input type="text" class="form-control" id="con_area" name="con_area"  placeholder="Construction Area" ng-model="property.con_area"  pattern="[0-9 .]+"  hide-zero title="Only Numbers Allowed"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 page_view all" ng-repeat="property_image in property_images_slide" id="image_slide_view_{{property_image.attachment_id}}">
+                    <p>Image Slide</p>
+                    <img  class="page_view_img" src="dist/img/no_image.jpg" ng-if="property_image.filenames==null " />
+                    <img class="page_view_img" src="api/v1/uploads/property/{{property_image.filenames}}" ng-if="property_image.filenames!=null " />
+                </div>
+                <div class="col-md-12 page_view all" id="location_slide_view_1" >
+                    <p>Location</p>
+                    <div id="map" style="height:400px;overflow:auto;" ></div>
+					<div id="address"></div>
+                </div>
+                <div class="col-md-12 page_view all" id="last_slide_view_1">
+                    <p>Last Slide</p>
+                    <img class="page_view_img" src="dist/img/thanks.jpg"/>
+                </div>
+            </div>
+            <!--table class="table" datatable-setupnosort="" > 
+                <thead>
+                    <tr>
+                        <th>Property ID</th>
+                        <th>Property</th>
+                        <th>Select Images</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr ng-repeat="property in properties | filter: projectsearch"  style="height:260px;min-height:260px;">-->
+                    <!--tr ng-repeat="property in properties" style="height:260px;min-height:260px;">
+                        <td>
+                            {{property.property_id}}
+                        </td>
+                        <td>
+                            <span ng-if="property.project_name">{{property.project_name}}</span>
+                            <span ng-if="!property.project_name">{{property.building_name}}</span>
+                            <span ng-if="property.project_name || property.building_name">:</span>{{property.propsubtype}} for {{property.property_for}}
+                            <p class="hidden-xs hidden-sm" style="font-size:14px;line-height:normal;";>
+                                <span ng-if="property.wing">{{property.wing}},&nbsp;</span><span ng-if="property.unit">{{property.unit}},&nbsp;</span><span ng-if="property.floor">{{property.floor}},&nbsp;</span><span ng-if="property.road_no">{{property.road_no}},&nbsp;</span><span ng-if="!property.project_name">{{property.building_name}},&nbsp;</span><span ng-if="property.landmark">{{property.landmark}},&nbsp;</span><span ng-if="property.locality">{{property.locality}},&nbsp;</span><span ng-if="property.area_name">{{property.area_name}},&nbsp;</span><span ng-if="property.city">{{property.city}}</span>
+                            </p>
+                            
+                            <p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom:10px;";>
+                                <span style="font-weight:bold;margin-right:5px;">Assigned To:</span>{{property.assign_to}} 
+                            </p> 
+                            <p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom:10px;">
+                                <span style="font-weight:bold;margin-right:5px;text-overflow: ellipsis;line-height:normal;">Teams:</span>{{property.team}}
+                            </p>
+                            <p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom: 10px;">
+                                {{(property.exp_price)}}&nbsp;&nbsp;{{property.exp_price_para}}&nbsp;&nbsp;&nbsp;&nbsp;@{{property.price_unit}}/sqft
+                            </p>
+                            <p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom: 10px;">
+                                {{property.sale_area}}&nbsp;-&nbsp;{{property.pro_sale_para}}
+                            </p>
+                            <p class="hidden-xs hidden-sm" style="font-size:14px;border-bottom:1px solid #e8e5e5;padding-bottom: 10px;">
+                                {{property.carp_area}}&nbsp;-&nbsp;{{property.carp_area_para}}
+                            
+                            </p>
+                            <p class="hidden-xs hidden-sm" style="font-size:15px;line-height: normal;" >
+                                <span ng-if="property.floor" >{{property.floor}}&nbsp;</span>
+                                <span ng-if="property.area_name" >{{property.area_name}},&nbsp;</span>
+                            </p>
+                            <p class="hidden-xs hidden-sm" style="font-size:15px;line-height: normal;" >
+                                <span ng-if="property.door_fdir" class="showbullet">Door Facing:{{property.door_fdir}}&nbsp;&nbsp;</span><span ng-if="property.furniture" class="showbullet">{{property.furniture}}&nbsp;&nbsp;&nbsp;</span><span ng-if="property.pro_inspect" class="showbullet">Inspected &nbsp;&nbsp;&nbsp;</span><span ng-if="property.numof_floor" class="showbullet">Floor :{{property.numof_floor}}&nbsp;&nbsp;</span><span ng-if="property.washrooms" class="showbullet">Washrooms :{{property.washrooms}}&nbsp;&nbsp;</span><span ng-if="property.keywith" class="showbullet">Keys:{{property.keywith}}&nbsp;&nbsp;</span><span ng-if="property.parking" class="showbullet">Parking :{{property.parking}}&nbsp;&nbsp;</span><span ng-if="property.car_park" >{{property.car_park}}&nbsp;&nbsp;</span>
+                                <span ng-if="property.occu_certi" class="showbullet">OC :{{property.occu_certi}}&nbsp;&nbsp;</span>
+                            </p>
+
+                            
+
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-4" style="margin-bottom:10px;" ng-repeat="property_image in property_images">
+                                    <p><div class="checkbox hidden-xs hidden-sm"><label><input type="checkbox" class="check_element" name="assign_all" id="assign_all" ng-model="assign_all" style="width:20px;height:20px;" value="{{property.property_id}}"/></label></div><input type="text" class="form-control" id="description" name="description"  placeholder="File Title" ng-model="property_image.description" /></p>	
+                                    <img class="zoom" src="dist/img/no_image.jpg" ng-if="property_image.filenames==null " style="width:145px; height:85px;transition: transform .5s; /* Animation */" />
+                                    <img class="zoom" src="api/v1/uploads/property/thumb/{{property_image.filenames}}" ng-if="property_image.filenames!=null " style="width:145px; height:85px;transition: transform .5s;" /> 
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--<div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active " style="border-top-color: #f3f0f0;text-transform: capitalize;"><a data-target="#reports" data-toggle="tab" >{{module_name}}</a></li>
+        </ul>
+        <div class="tab-content">
+            <h3>{{main_heading}}</h3>
+            <div class="tab-pane active" id="reports">
+                <div id="showreport" class=" html_content" compile-html="trustedHtml_show_report">Nothing to show</div>
+            </div>
+        </div>
+    </div>-->
+
+    <!--<div class="item" ng-if="property_images.length>0">            
+        <div class="clearfix" style="max-width:900px;">
+            <ul id="image-gallery" class="gallery list-unstyled"  light-slider=""> <!--cS-hidden-->
+                <!--li ng-repeat="property_image in property_images" data-thumb="api/v1/uploads/property/{{property_image.filenames}}">
+                        <p style="font-weight:bold;font-size:20px;color:#000000;margin-bottom:20px;text-align:center;">{{project_image.description}}</p>
+                    <img src="api/v1/uploads/property/{{property_image.filenames}}" style="width:700px;height:300px;" />
+                </li>
+                
+            </ul>
+        </div>
+    </div>-->
+    <!--div class="flexslider html_content" id="flexslider3" flex-sliderrep="" style="max-width:1015px;" compile-html="trustedHtml_pages">
+        <!--ul class="slides">
+            <li>
+                <div class="slider " id="lpage_1"  >
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_2"  compile-html="trustedHtml_page_2">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_3"  compile-html="trustedHtml_page_3">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_4"  compile-html="trustedHtml_page_4">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_5"  compile-html="trustedHtml_page_5">
+                </div>
+            </li>
+            <li>
+                <div class="slider html_content" id="lpage_6"  compile-html="trustedHtml_page_6">
+                </div>
+            </li>
+        </ul-->
+    <!--/div>
+
+    <!--div class="item" >            
+        <div class="clearfix" style="max-width:988px;">
+            <ul id="image-gallery" class="gallery list-unstyled cS-hidden" light-slider="">
+                <li id="lpage_1" class=" html_content" compile-html="trustedHtml_page_1" >  
+                </li>
+                <li id="lpage_1" class=" html_content" compile-html="trustedHtml_page_1" >  
+                </li>
+                <li  id="lpage_2" class=" html_content" compile-html="trustedHtml_page_2">  
+                </li>
+                <li id="lpage_3" class=" html_content" compile-html="trustedHtml_page_3"> 
+                </li>
+                <li  id="lpage_4" class=" html_content" compile-html="trustedHtml_page_4">   
+                </li>
+                <li id="lpage_5" class=" html_content" compile-html="trustedHtml_page_5"> 
+                </li>
+                <li id="lpage_6" class=" html_content" compile-html="trustedHtml_page_6">   
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    <!--div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_1" class=" html_content" compile-html="trustedHtml_page_1">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_2" class=" html_content" compile-html="trustedHtml_page_2">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_3" class=" html_content" compile-html="trustedHtml_page_3">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_4" class=" html_content" compile-html="trustedHtml_page_4">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_5" class=" html_content" compile-html="trustedHtml_page_5">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="lpage_6" class=" html_content" compile-html="trustedHtml_page_6">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_1">Page 1</label>
+                                <textarea class="form-control"  id="fpage_1" rows="30" name="fpage_1" ng-model="fpage_1" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_2">Page 2</label>
+                                <textarea class="form-control"  id="fpage_2" rows="30" name="fpage_2" ng-model="fpage_2" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_3">Page 3</label>
+                                <textarea class="form-control"  id="fpage_3" rows="30" name="fpage_3" ng-model="fpage_3" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_4">Page 4</label>
+                                <textarea class="form-control"  id="fpage_4" rows="30" name="fpage_4" ng-model="fpage_4" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_5">Page 5</label>
+                                <textarea class="form-control"  id="fpage_5" rows="30" name="fpage_5" ng-model="fpage_5" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="fpage_6">Page 6</label>
+                                <textarea class="form-control"  id="fpage_6" rows="30" name="fpage_6" ng-model="fpage_6" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+<style>
+.lSAction > .lSNext {
+   
+    background-color: #383434;
+    border-radius: 20px;
+}
+
+.lSAction > .lSPrev {
+   
+    background-color: #383434;
+    border-radius: 20px;
+    margin-left:18px;
+}
+.page_links
+{
+    margin-bottom:15px;
+    -webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    border:1px solid #a39f9f;
+    padding:10px;
+}
+.page_links_img
+{
+    width:210px;
+    height: 162px;
+
+}
+
+.page_view
+{
+    -webkit-box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 27px 34px rgba(0, 0, 0, 0.5);
+    border:1px solid #a39f9f;
+    width:773px;
+    height: 465px;
+    padding:10px;
+}
+.page_view_img
+{
+    
+    width:750px;
+    height: 413px; 
+
+}
+
+.all
+{
+    display:none;
+}
+
+
+</style>
+
+<script>
+    var geocoder;
+	var map;
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2O6m-6CywgRBPeMmg4Fl_sU6U4DCTTKg&callback=myMap&libraries=places"
+async defer type="text/javascript"> </script>
+
+                

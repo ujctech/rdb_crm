@@ -1,0 +1,212 @@
+<div class="hidden-xs hidden-sm" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;"  ng-if="hasPermissions.includes('View')"> </div>
+<div class="clearfix"></div>
+<div class="box boxpadding" id="properties" style="border-top:0px;" ng-if="hasPermissions.includes('View')">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active hidden-xs hidden-sm" ><a data-target="#mybatchupdate" data-toggle="tab">Batch Update</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="batchupdate">
+                <div class="box-body table-responsive" style="overflow:hidden">
+                    <div class="row">
+                        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" >
+                        <div id="searchoptions"  style="border:1px solid #b3aeae;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="proj_status">Prop. Status</label>
+                                            <select class="select2 form-control" select2 ng-model="batchdata.proj_status" ng-options="dropdown.value as dropdown.display_value for dropdown in prop_statuss" style="width:100%;">
+                                                <option value="" disabled selected>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="source_channel">Source Channel</label>
+                                            <select class="select2 form-control" multiple="multiple" select2 ng-model="batchdata.source_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in client_sources" style="width:100%;" ng-change="change_sub_source(batchdata.source_channel)" >
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">    
+                                        <div class="form-group">
+                                            <label for="subsource_channel">Sub source Channel</label>
+                                            <select class="select2 form-control" multiple="multiple" select2 ng-model="batchdata.subsource_channel" ng-options="dropdown.value as dropdown.display_value for dropdown in sub_sources" style="width:100%;">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">  
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-controller="SelectLocality">
+                                            <label for="locality_id">Locality</label>
+                                            <select class="select2 form-control" select2 multiple="multiple" ng-model="batchdata.locality_id" id= "locality_id" ng-options="locality.locality_id as locality.locality for locality in localities" style="width:100%;">
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-controller="SelectArea">
+                                            <label for="area_id">Area</label>
+                                            <select class="select2 form-control" id = "area_id" select2 multiple="multiple"   ng-model="batchdata.area_id" ng-options="area.area_id as area.area_name for area in areas" style="width:100%;">
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-controller="SelectTeams">
+                                            <label for="teams">Teams</label>
+                                            <select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="batchdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group" ng-controller="SelectUsers">
+                                            <label for="assign_to">Assign to</label>
+                                            <select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="batchdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" >
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="con_status">Possession Status</label>
+                                            <select class="select2 form-control"  id="con_status" name="con_status" select2 ng-model="batchdata.con_status"  style="width:100%;">
+                                                <option value="Not Specified" selected="selected">Not Specified</option>
+                                                <option value="Under Construction">Under Construction</option>
+                                                <option value="Completed">Completed</option>
+                                                <option value="Upcoming">Upcoming</option>
+                                                <option value="Postponed">Postponed</option>
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="exp_rent" >Exp. Price</label>
+                                            <div class="col-md-12"  style="padding-left:0px;" >
+                                                <div class="col-md-3" style="padding-left:0px;">
+                                                    <input type="text" class="form-control numbers" id="exp_price" name="exp_price"  placeholder="Exp. Price" ng-model="batchdata.exp_price" />
+                                                </div>
+                                                <div class="col-md-3" style="padding-left:0px;">
+                                                    <select  class="select2 form-control" id="exp_price_para" name="exp_price_para" select2 ng-model="batchdata.exp_price_para"  data-placeholder="Select exp_price_para"  ng-init="batchdata.exp_price_para='Abs'">
+                                                        <option value="Abs" >Abs</option>
+                                                        <option value="Th" >Th</option>
+                                                        <option value="Lac" >Lac</option>
+                                                        <option value="Cr" >Cr</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="col-md-6" style="padding-left:0px;">
+                                            <div class="form-group">
+                                                <label for="sale_area">Saleable / Built Up Area </label>
+                                                <input type="text" class="form-control" id="sale_area" name="sale_area" placeholder="From" ng-model="batchdata.sale_area"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <select  class="select2 form-control" id="pro_sale_para" name="pro_sale_para" select2 ng-model="batchdata.pro_sale_para"  data-placeholder="Select pro_sale_para" >
+                                                    <option value="">Not Specified</option>
+                                                    <option value="Sq Ft" selected="selected">Sq Ft</option>
+                                                    <option value="Sq Mt" >Sq Mt</option>
+                                                    <option value="Acres">Acres</option>
+                                                    <option value="Bigha I">Bigha I</option>
+                                                    <option value="Bigha II">Bigha II</option>
+                                                    <option value="Kottah (B)">Kottah (B)</option>
+                                                    <option value="Marla">Marla</option>
+                                                    <option value="Cents">Cents</option>
+                                                    <option value="Perch">Perch</option>
+                                                    <option value="Guntha">Guntha</option>
+                                                    <option value="Area">Area</option>
+                                                    <option value="Chataks">Chataks</option>
+                                                    <option value="Rood">Rood</option>
+                                                    <option value="Aankadam">Aankadam</option>
+                                                    <option value="Grounds">Grounds</option>
+                                                    <option value="Kanal">Kanal</option>
+                                                    <option value="Hectares">Hectares</option>
+                                                    <option value="Biswa I">Biswa I</option>
+                                                    <option value="Biswa II">Biswa II</option>
+                                                    <option value="Sq Yards">Sq Yards</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+<!--featured 
+property hot or not
+rating
+lead stage
+total bathrooms
+-->
+                            
+                                    <div class="col-md-4">
+                                        <div class="col-md-6" style="padding-left:0px;">
+                                            <div class="form-group">
+                                                <label for="carp_area">Carpet Area</label>
+                                                <input type="text" class="form-control" id="carp_area" name="carp_area"  placeholder="Carpet Area " ng-model="batchdata.carp_area"/> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <select  class="select2 form-control" id="carp_area_para" name="carp_area_para" select2 ng-model="batchdata.carp_area_para"  data-placeholder="Select carp_area_para">
+                                                    <option value="">Not Specified</option>
+                                                    <option value="Sq Ft" selected="selected">Sq Ft</option>
+                                                    <option value="Sq Mt" >Sq Mt</option>
+                                                    <option value="Acres">Acres</option>
+                                                    <option value="Bigha I">Bigha I</option>
+                                                    <option value="Bigha II">Bigha II</option>
+                                                    <option value="Kottah (B)">Kottah (B)</option>
+                                                    <option value="Marla">Marla</option>
+                                                    <option value="Cents">Cents</option>
+                                                    <option value="Perch">Perch</option>
+                                                    <option value="Guntha">Guntha</option>
+                                                    <option value="Area">Area</option>
+                                                    <option value="Chataks">Chataks</option>
+                                                    <option value="Rood">Rood</option>
+                                                    <option value="Aankadam">Aankadam</option>
+                                                    <option value="Grounds">Grounds</option>
+                                                    <option value="Kanal">Kanal</option>
+                                                    <option value="Hectares">Hectares</option>
+                                                    <option value="Biswa I">Biswa I</option>
+                                                    <option value="Biswa II">Biswa II</option>
+                                                    <option value="Sq Yards">Sq Yards</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="bedrooms">Total Bedrooms</label>
+                                            <input type="text" class="form-control" id="bedrooms" name="bedrooms"  placeholder="Bedrooms" ng-model="property.bedrooms"  pattern="[A-Z0-9a-z .,_+-]+" title="Only Alpha Numeric Allowed "/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="bathrooms">Total Bathrooms</label>
+                                            <input type="text" class="form-control" id="bathrooms" name="bathrooms"  placeholder="Bathrooms" ng-model="property.bathrooms"  pattern="[A-Z0-9a-z .,_+-]+" title="Only Alpha Numeric Allowed "/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="margin-top:25px;">
+                                        <button class="btn btn-primary" id="add-new-btn"  ng-click="batch_update(batchdata)" >Update</button>
+                                        <a href="javascript:void(0);" class="btn" >Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                    

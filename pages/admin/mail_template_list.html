@@ -1,0 +1,55 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    
+    <!--<a class="btn btn-primary" href="#/mail_template_add" style="margin:10px;" >Add Mail Template</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;" >Add Mail Template</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/mail_template_add" style="margin:10px;" >Add Mail Template</a>
+</div>
+<div class="clearfix"></div>
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#mail_templatetab" data-toggle="tab">Mail Template</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="mail_templatetab">
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped" datatable-setup=""  >
+                        <thead>
+                            <tr>
+                                <th>Module Name</th>
+                                <th>Seq.Number</th>
+                                <th>Template Title</th>
+                                <th>Subject</th>
+                                <th>Text Message</th>
+                                <th>Footer Note</th>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="mail_template in mail_templates">
+                                <td>{{mail_template.module_name}}</td>
+                                <td>{{mail_template.sequence_number}}</td>
+                                <td>{{mail_template.template_title}}</td>
+                                <td>{{mail_template.subject}}</td>
+                                <td>{{mail_template.text_message}}</td>
+                                <td>{{mail_template.footer_note}}</td>
+                                <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/mail_template_edit/{{mail_template.mail_template_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Module Name</th>
+                                <th>Seq.Number</th>
+                                <th>Template Title</th>
+                                <th>Subject</th>
+                                <th>Text Message</th>
+                                <th>Footer Note</th>
+                                <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                            </tr>
+                        </tfoot>
+                    </table>   
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

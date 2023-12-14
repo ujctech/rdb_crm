@@ -1,0 +1,99 @@
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Alerts</h3> 
+    </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-target="#birthday" data-toggle="tab">Birthday / Anniversaries</a></li>
+            <li><a data-target="#lease" data-toggle="tab">Expiring Lease Agreements</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="birthday">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-striped"  datatable-setup=""  >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email ID</th>
+                                        <th>Mobile No</th>
+                                        <th>Event</th>
+                                        <th>Event Date</th>
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                    <tr ng-repeat="birthdayalert in birthdayalerts">
+                                        <td>{{birthdayalert.name}}</td>
+                                        <td>{{birthdayalert.email}}</td>
+                                        <td>{{birthdayalert.mob_no}}</td>
+                                        <td>Birthday</td>
+                                        <td>{{birthdayalert.birth_date}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email ID</th>
+                                        <th>Mobile No</th>
+                                        <th>Event</th>
+                                        <th>Event Date</th>
+                                        </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="lease">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-striped" datatable-setup=""  >
+                                <thead>
+                                    <tr>
+                                        <th>Property ID</th>
+                                        <th>Building Name</th>
+                                        <th>Buyer</th>
+                                        <th>Owner</th>
+                                        <th>Saleable Area</th>
+                                        <th>Agreement Rent</th>
+                                        <th>Agreement Until</th>
+                                        <th>Property Free Date</th>
+                                        <th>Agreement ID</th>
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                    <tr ng-repeat="leasealert in leasealerts">
+                                        <td>{{leasealert.property_id}}</td>
+                                        <td>{{leasealert.name}}</td>
+                                        <td>{{leasealert.dev_owner}}</td>
+                                        <td>{{leasealert.dev_owner}}</td>
+                                        <td>{{leasealert.sale_area}}</td>
+                                        <td>{{leasealert.rent}}</td>
+                                        <td>{{leasealert.agreement_until_date}}</td>
+                                        <td>{{leasealert.agreement_until_date}}</td>
+                                        <td>{{leasealert.agreement_id}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Property ID</th>
+                                        <th>Building Name</th>
+                                        <th>Buyer</th>
+                                        <th>Owner</th>
+                                        <th>Saleable Area</th>
+                                        <th>Agreement Rent</th>
+                                        <th>Agreement Until</th>
+                                        <th>Property Free Date</th>
+                                        <th>Agreement ID</th>
+                                    </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

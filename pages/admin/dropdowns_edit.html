@@ -1,0 +1,77 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		
+</div>
+<div class="clearfix"></div>
+<div id="dropdowns_info" style="padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;">
+		<form ng-repeat="dropdown in datadropdowns" novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+			<div class="row" id="dropdowns_data">
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">Edit Option</h3>
+						</div>
+						<div class="box-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="type">Type<span class="required">*</span></label>
+											<!--	<select class="select2 form-control"  id="type" name="type" ng-model="dropdown.type"  required  data-placeholder="Select type" style="width:100%;">
+													<option value="Not Specified" selected="selected">Not Specified</option>
+													<option value="Not Specified1" >Not Specified1</option>
+													<option value="Not Specified2" >Not Specified2</option>
+												</select>-->
+												<select class="select2 form-control" select2  ng-model="dropdown.type" ng-options="typelist.type as typelist.type for typelist in typelists" style="width:100%;" required>
+												<option value="" disabled selected>Select Type</option>
+											</select>
+											</div>        
+											<div class="form-group">
+												<label for="value">Value<span class="required">*</span></label>
+												<input type="text" class="form-control" id="value" name="value"  placeholder="Value" ng-model="dropdown.value"  required  />
+											</div>
+											<div class="form-group">
+												<label for="display_value">Display Value<span class="required">*</span></label>
+												<input type="text" class="form-control" id="display_value" name="display_value"  placeholder="Display Value" ng-model="dropdown.display_value"  required  />
+											</div>
+											<div class="form-group">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" id="isdefault" name="isdefault" ng-model="dropdown.isdefault" >Is Default 
+													</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="depth">Depth</label>
+												<input type="text" class="form-control" id="depth" name="depth"  placeholder="Depth" ng-model="dropdown.depth"  />
+											</div>
+											<div class="form-group">
+												<label for="parent_type">Parent Type</label>
+											    <!--<select class="select2 form-control"  id="parent_type" name="parent_type" ng-model="dropdown.parent_type"  data-placeholder="Select parent_type" style="width:100%;">
+													<option value="Not Specified" selected="selected">Not Specified</option>
+													<option value="Not Specified1" >Not Specified1</option>
+													<option value="Not Specified2" >Not Specified2</option>
+												</select>-->
+												<select class="select2 form-control" select2  ng-model="dropdown.parent_type" ng-options="parentlist.display_value as parentlist.parent_type for parentlist in parentlists" style="width:100%;">
+												<option value="" disabled selected>Select Parent Value</option>
+											</select>
+											</div>        
+											<div class="form-group">
+												<label for="sequence_number">Sequence Number</label>
+												<input type="text" class="form-control" id="sequence_number" name="sequence_number"  placeholder="Sequence Number" ng-model="dropdown.sequence_number"  />
+											</div>
+											<div class="form-group">
+													<button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(dropdown)" id="add-new-btn" ng-click="dropdowns_update(dropdown)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+													<button class="btn btn-danger" ng-click="dropdowns_delete(dropdown)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+													<a href="#/dropdowns_list" class="btn">Cancel</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>

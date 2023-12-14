@@ -1,0 +1,237 @@
+[
+    {
+        "name": "pclzip/pclzip",
+        "version": "2.8.2",
+        "version_normalized": "2.8.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ivanlanin/pclzip.git",
+            "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ivanlanin/pclzip/zipball/19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
+            "reference": "19dd1de9d3f5fc4d7d70175b4c344dee329f45fd",
+            "shasum": ""
+        },
+        "time": "2014-06-05T11:42:24+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "pclzip.lib.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-2.1"
+        ],
+        "authors": [
+            {
+                "name": "Vincent Blavet"
+            }
+        ],
+        "description": "A PHP library that offers compression and extraction functions for Zip formatted archives",
+        "homepage": "http://www.phpconcept.net/pclzip",
+        "keywords": [
+            "php",
+            "zip"
+        ]
+    },
+    {
+        "name": "phpoffice/common",
+        "version": "0.2.7",
+        "version_normalized": "0.2.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPOffice/Common.git",
+            "reference": "d5992c95f199842fa8ba6329bb15d02716265d5b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPOffice/Common/zipball/d5992c95f199842fa8ba6329bb15d02716265d5b",
+            "reference": "d5992c95f199842fa8ba6329bb15d02716265d5b",
+            "shasum": ""
+        },
+        "require": {
+            "pclzip/pclzip": "^2.8",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpdocumentor/phpdocumentor": "2.*",
+            "phploc/phploc": "2.*",
+            "phpmd/phpmd": "2.*",
+            "phpunit/phpunit": "3.7.*",
+            "sebastian/phpcpd": "2.*",
+            "squizlabs/php_codesniffer": "2.*"
+        },
+        "time": "2017-11-23T14:13:25+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "PhpOffice\\Common\\": "src/Common/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Mark Baker"
+            },
+            {
+                "name": "Franck Lefevre",
+                "homepage": "http://rootslabs.net"
+            }
+        ],
+        "description": "PHPOffice Common",
+        "homepage": "http://phpoffice.github.io",
+        "keywords": [
+            "common",
+            "component",
+            "office",
+            "php"
+        ]
+    },
+    {
+        "name": "phpoffice/phppresentation",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPOffice/PHPPresentation.git",
+            "reference": "1fcc84072ee0061f8991b8f83050a99e706fe5ce"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPOffice/PHPPresentation/zipball/1fcc84072ee0061f8991b8f83050a99e706fe5ce",
+            "reference": "1fcc84072ee0061f8991b8f83050a99e706fe5ce",
+            "shasum": ""
+        },
+        "require": {
+            "ext-xml": "*",
+            "ext-zip": "*",
+            "php": ">=5.3.0",
+            "phpoffice/common": "0.2.*"
+        },
+        "require-dev": {
+            "codeclimate/php-test-reporter": "dev-master",
+            "phpdocumentor/phpdocumentor": "2.*",
+            "phploc/phploc": "2.*",
+            "phpmd/phpmd": "2.*",
+            "phpunit/phpunit": "3.7.*",
+            "sebastian/phpcpd": "2.*",
+            "squizlabs/php_codesniffer": "2.*",
+            "twig/twig": "1.27"
+        },
+        "suggest": {
+            "ext-gd2": "Required to add images"
+        },
+        "time": "2017-07-05T12:13:02+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "PhpOffice\\PhpPresentation\\": "src/PhpPresentation/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Mark Baker"
+            },
+            {
+                "name": "Ivan Lanin",
+                "homepage": "http://ivan.lanin.org"
+            },
+            {
+                "name": "Franck Lefevre",
+                "homepage": "http://rootslabs.net"
+            }
+        ],
+        "description": "PHPPresentation - Read, Create and Write Presentations documents in PHP",
+        "homepage": "http://phpoffice.github.io",
+        "keywords": [
+            "LibreOffice",
+            "PowerPoint",
+            "odp",
+            "php",
+            "ppt",
+            "pptx",
+            "presentations"
+        ]
+    },
+    {
+        "name": "mpdf/mpdf",
+        "type": "library",
+        "description": "PHP library generating PDF files from UTF-8 encoded HTML",
+        "keywords": ["php", "pdf", "utf-8"],
+        "homepage": "https://mpdf.github.io",
+        "license": ["GPL-2.0-only"],
+        "authors": [
+            {
+                "name": "Matěj Humpál",
+                "role": "Developer, maintainer"
+            },
+            {
+                "name": "Ian Back",
+                "role": "Developer (retired)"
+            }
+        ],
+        "support": {
+            "issues": "https://github.com/mpdf/mpdf/issues",
+            "source": "https://github.com/mpdf/mpdf",
+            "docs": "http://mpdf.github.io"
+        },
+        "require": {
+            "php": "^5.6 || ^7.0 || ~8.0.0 || ~8.1.0",
+            "ext-gd": "*",
+            "ext-mbstring": "*",
+            "myclabs/deep-copy": "^1.7",
+            "paragonie/random_compat": "^1.4|^2.0|^9.99.99",
+            "psr/log": "^1.0 || ^2.0",
+            "setasign/fpdi": "^2.1"
+        },
+        "require-dev": {
+            "mockery/mockery": "^1.3.0",
+            "mpdf/qrcode": "^1.1.0",
+            "squizlabs/php_codesniffer": "^3.5.0",
+            "tracy/tracy": "^2.4",
+            "yoast/phpunit-polyfills": "^1.0"
+        },
+        "suggest": {
+            "ext-bcmath": "Needed for generation of some types of barcodes",
+            "ext-zlib": "Needed for compression of embedded resources, such as fonts",
+            "ext-xml": "Needed mainly for SVG manipulation"
+        },
+        "autoload": {
+            "psr-4": {
+                "Mpdf\\": "src/"
+            }
+        },
+        "autoload-dev": {
+            "psr-4": {
+                "Mpdf\\": "tests/Mpdf"
+            },
+            "files": [
+                "src/functions-dev.php"
+            ]
+        },
+        "scripts": {
+            "post-install-cmd": [
+                "php -r \"chmod('./tmp', 0777);\""
+            ],
+            "cs": "@php vendor/bin/phpcs -v --report-width=160 --standard=ruleset.xml --severity=1 --warning-severity=0 --extensions=php src utils tests",
+            "test": "@php vendor/bin/phpunit",
+            "coverage": "@php vendor/bin/phpunit --coverage-text"
+        },
+        "config": {
+            "sort-packages": true
+        }
+    }
+]

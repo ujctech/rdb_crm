@@ -1,0 +1,63 @@
+<div class="hidden-sm hidden-xs" style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+    <a class="btn btn-primary" href="#/email_accounts_add" style="margin:10px;" ng-if="hasPermissions.includes('Create')">Add Email Account</a>
+</div>
+<div class="clearfix"></div>
+
+<div class="row" id="email_accounts" style="margin-top:115px;">
+    <div class="col-md-12">
+        <div class="box"  style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a data-target="#email_accountstab" data-toggle="tab">Email Accounts</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="email_accountstab">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-striped" datatable-setup="" data-page-length='10'>
+                                <thead>
+                                    <tr>
+                                        <th>Email Account</th>
+                                        <th>SMTP Host</th>
+                                        <th>SMTP Username</th>
+                                        <th>Mail Properties</th>
+                                        <th>From Name</th>
+                                        <th>SMTP Port</th>
+                                        <th>Teams</th>
+                                        <th>Assign To</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="email_accounts in listemail_accounts">
+                                        <td>{{email_accounts.email_account}}</td>
+                                        <td>{{email_accounts.smtp_host}}</td>
+                                        <td>{{email_accounts.smtp_username}}</td>
+                                        <td>{{email_accounts.mail_properties}}</td>
+                                        <td>{{email_accounts.from_name}}</td>
+                                        <td>{{email_accounts.smtp_port}}</td>
+                                        <td>{{email_accounts.teams}}</td>
+                                        <td>{{email_accounts.assign_to}}</td>
+                                        <td><a href="#/email_accounts_edit/{{email_accounts.email_accounts_id}}" class="btn btn-default btn-sm" ><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Email Account</th>
+                                        <th>SMTP Host</th>
+                                        <th>SMTP Username</th>
+                                        <th>Mail Properties</th>
+                                        <th>From Name</th>
+                                        <th>SMTP Port</th>
+                                        <th>Teams</th>
+                                        <th>Assign To</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

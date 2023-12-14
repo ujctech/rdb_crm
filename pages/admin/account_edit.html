@@ -1,0 +1,208 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+		 
+</div>
+<div class="clearfix"></div>
+<div id="agreement_info" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" ng-if="create_rights">
+	<form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off" enctype="multipart/form-data">
+		<div class="row" id="account_data">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Add Account</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="nav-tabs-custom">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-target="#account" data-toggle="tab">Account</a></li>
+										<li><a data-target="#cheques" data-toggle="tab">Cheque Details</a></li>
+										<li><a data-target="#receipts" data-toggle="tab">Receipt Details</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="account">
+											<div class="row">
+												<div class="col-md-6"  style="padding-left: 0px;">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="agreement_id">Agreement ID<span class="required">*</span></label>
+															<select class="select2 form-control" id="agreement_id" name="agreement_id" ng-model="accountdata.agreement_id" ng-options="agreement.agreement_id as agreement.agreement_title for agreement in agreements" ng-change="getpaymentids(accountdata.agreement_id)" required style="width:100%;">
+															</select>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="payment_id">Payment ID<span class="required">*</span></label>
+															<select class="select2 form-control"  id="payments_id" name="payments_id"  ng-model="accountdata.payments_id" ng-options="payment.payments_id as payment.payments_title for payment in payments" required   style="width:100%;" ng-change="getclientids(accountdata.payments_id)">
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="client_id">Client Name<span class="required">*</span></label>
+														<select class="select2 form-control" id="client_id" name="client_id" ng-model="accountdata.client_id" ng-options="client.contact_id as client.name for client in clients"  required style="width:100%;">
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6"  style="padding-left: 0px;">
+													<div class="col-md-6">	     
+														<div class="form-group">
+															<label for="amount">Amount<span class="required">*</span></label>
+															<input type="text" class="form-control numbers" id="amount" name="amount"  placeholder="Amount" ng-model="accountdata.amount"  required  />
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="transaction_date">Transaction Date<span class="required">*</span></label><div class="input-group date" id="transaction_date" date-directive="">
+															<input class="form-control" type="text" ng-model="accountdata.transaction_date" required>
+															<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6" style="padding-left: 0px;">
+													<div class="col-md-6" >
+														<div class="form-group">
+															<label for="adjustment_type">Adjustment type<span class="required">*</span></label>
+															<select class="select2 form-control" select2 ng-model="accountdata.adjustment_type" id="adjustment_type" name="adjustment_type" ng-options="dropdown.value as dropdown.display_value for dropdown in adjustment_typelist" style="width:100%;" required></select>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="payment_type">Payment Type<span class="required">*</span></label>
+															<select class="select2 form-control" select2 ng-model="accountdata.payment_type" id="payment_type" name="payment_type" ng-options="dropdown.value as dropdown.display_value for dropdown in payment_typelist" style="width:100%;" required></select>
+														</div>
+													</div>
+												</div>
+											</div>			
+											
+										</div>
+										<div class="tab-pane" id="cheques">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="instrument_no">Instrument No</label>
+														<input type="text" class="form-control" id="instrument_no" name="instrument_no"  placeholder="Instrument No" ng-model="accountdata.instrument_no"  />
+													</div>
+													<div class="form-group" ng-if="accountdata.payment_type=='Cheque'">
+														<label for="cheque_no">Cheque No<span class="required">*</span></label>
+														<input type="text" class="form-control" id="cheque_no" name="cheque_no"  placeholder="Cheque No" ng-model="accountdata.cheque_no"  required/>
+													</div>
+													<div class="form-group"  ng-if="accountdata.payment_type=='Cheque'">
+														<label for="cheque_date">Cheque Date<span class="required">*</span></label><div class="input-group date" id="cheque_date" date-directive="">
+														<input class="form-control" type="text" ng-model="accountdata.cheque_date" required>
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+
+													<div class="form-group"  ng-if="accountdata.payment_type!='Cheque'">
+														<label for="cheque_no">Cheque No</label>
+														<input type="text" class="form-control" id="cheque_no" name="cheque_no"  placeholder="Cheque No" ng-model="accountdata.cheque_no"  />
+													</div>
+													<div class="form-group"  ng-if="accountdata.payment_type!='Cheque'">
+														<label for="cheque_date">Cheque Date</label><div class="input-group date" id="cheque_date" date-directive="">
+														<input class="form-control" type="text" ng-model="accountdata.cheque_date" >
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="drawn_on">Drawn On</label>
+														<input type="text" class="form-control" id="drawn_on" name="drawn_on"  placeholder="Drawn On" ng-model="accountdata.drawn_on"  />
+													</div>
+															
+													<div class="form-group">
+														<label for="branch">Branch</label>
+														<input type="text" class="form-control" id="branch" name="branch"  placeholder="Branch" ng-model="accountdata.branch"  />
+													</div>
+															
+													<div class="form-group">
+														<label for="cheque_status">Cheque Status</label>
+														<select class="select2 form-control" select2 ng-model="accountdata.cheque_status" id="cheque_status" name="cheque_status" ng-options="dropdown.value as dropdown.display_value for dropdown in cheque_statuslist" style="width:100%;"></select>
+															
+													</div>        
+													<div class="form-group">
+														<label for="comments">Comments</label>
+														<textarea class="form-control" id="comments" name="comments"  placeholder="Comments" ng-model="accountdata.comments" ></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="tab-pane" id="receipts">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="receipt_no">Receipt No</label>
+														<input type="text" class="form-control" id="receipt_no" name="receipt_no"  placeholder="Receipt No" ng-model="accountdata.receipt_no"  />
+													</div>
+													
+													<div class="form-group">
+														<label for="receipt_date">Receipt Date</label><div class="input-group date" id="receipt_date" date-directive="">
+														<input class="form-control" type="text" ng-model="accountdata.receipt_date" >
+														<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+														</div>
+													</div>
+													<div class="form-group" ng-controller="SelectUsers">
+														<label for="assign_to">Assign to<span class="required">*</span></label>
+														<select class="select2 form-control" multiple="multiple"  id = "assign_to" select2 ng-model="accountdata.assign_to" ng-options="user.user_id as user.name for user in users"   style="width:100%;" required>
+															<!--option value="" disabled selected>Select Assign to</option-->
+														</select>
+													</div>
+													<div class="form-group" ng-controller="SelectTeams">
+														<label for="teams">Teams<span class="required">*</span></label>
+														<div class="input-group">
+															<select class="select2 form-control" multiple="multiple"  id = "teams" select2 ng-model="accountdata.teams" ng-options="team.team_id as team.team_name for team in teams"   style="width:100%;" required>
+																<!--option value="" disabled selected>Select Team</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addteam" ng-click="Addteam()"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+													<div class="form-group" ng-controller="Sub_Teams_List_Ctrl">
+														<label for="sub_teams">Sub Teams<span class="required">*</span></label>
+														<div class="input-group">
+															<select class="select2 form-control" multiple="multiple"  id = "subteams" select2  name = "subteams" ng-model="accountdata.subteams" ng-options="sub_team.sub_team_id as sub_team.sub_team_name for sub_team in sub_teams_list"   style="width:100%;" required>
+																<!--option value="" disabled selected>Select Team</option-->
+															</select>
+															<div class="input-group-addon">
+																<a href="javascript:void(0)"  data-toggle="modal" data-target="#addsubteam" ng-click="AddSubteam()"><i class="fa fa-plus"></i></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>						                         
+										
+									</div>
+								</div>
+								<div class="form-group"> <!--ng-disabled="AddNewForm.$invalid || isUnchanged(accountdata)" -->
+									<button class="btn btn-primary" id="add-new-btn" ng-click="account_update(accountdata)">Update <span class="glyphicon glyphicon-floppy-disk"></span></button>
+									<button class="btn btn-danger" ng-click="account_delete(accountdata)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+									<a href="#/account_list" class="btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(function () {
+		//Initialize Select2 Elements
+		$('.select2').select2();
+
+		$('.textarea').wysihtml5();
+
+	});
+</script>

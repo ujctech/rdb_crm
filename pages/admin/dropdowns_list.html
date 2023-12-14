@@ -1,0 +1,58 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+
+    <!--<a class="btn btn-primary" href="#/dropdowns_add" style="margin:10px;" >Add Dropdowns</a>-->
+    <a class="btn btn-primary" ng-if="hasRoles.includes('Sub Admin')" href="" style="margin:10px;">Add Dropdowns</a>
+    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/dropdowns_add" style="margin:10px;">Add Dropdowns</a>
+    <!--<a href="javascript:void(0)" style="float:right;margin-right:20px;" ng-click="import_enquiries()">Import</a>-->
+</div>
+<div class="clearfix"></div>
+<div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-target="#dropdownstab" data-toggle="tab">Dropdowns</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="dropdownstab">
+                <div class="box-body table-responsive" >
+        <table class="table table-bordered table-striped" datatable-setup=""> <!--data-page-length='100'-->
+        
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Display Value</th>
+                    <th>Is Default?</th>
+                    <th>Depth</th>
+                    <th>Parent List Of Value</th>
+                    <th>Sequence Number</th>
+                    <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                </tr>
+            </thead>
+             <tbody>
+                <tr ng-repeat="dropdown in dropdowns">
+                    <td>{{dropdown.type}}</td>
+                    <td>{{dropdown.value}}</td>
+                    <td>{{dropdown.display_value}}</td>
+                    <td>{{dropdown.isdefault}}</td>
+                    <td>{{dropdown.depth}}</td>
+                    <td>{{dropdown.parent_type}}</td>
+                    <td>{{dropdown.sequence_number}}</td>
+                    <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/dropdowns_edit/{{dropdown.dropdowns_id}}" class="btn btn-default btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Display Value</th>
+                    <th>Is Default?</th>
+                    <th>Depth</th>
+                    <th>Parent List Of Value</th>
+                    <th>Sequence Number</th>
+                    <th ng-if="!(hasRoles.includes('Sub Admin'))"></th>
+                </tr>
+            </tfoot>
+        </table>    
+   </div>
+</div>
+    

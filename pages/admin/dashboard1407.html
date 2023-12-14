@@ -1,0 +1,868 @@
+﻿<!-- <h3 style="padding-left:10px;">ADMIN DASHBOARD</h3> -->
+<!-- <div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div> -->
+<div class="clearfix"></div>
+<div style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;">
+<section class="content" style="padding:20px;min-height:150px;margin-top:50px;" id="topsheet">
+    <!-- Small boxes (Stat box) -->
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box" style="background-color:#2cb5ab">
+          <div class="inner">
+            <h3>{{enquiry_count}}</h3>
+            <p>Enquiries</p>
+            <p>({{enquiry_goal}})</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a href="#/goals_report/enquiry" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box"  style="background-color:#21c3eb">
+            <div class="inner">
+            <h3>{{site_visit_count}}</h3>
+
+            <p>Site Visit</p>
+            <p>({{site_visit_goal}})</p>
+            </div>
+            <div class="icon">
+            <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#/goals_report/site_visit" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+        </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box"  style="background-color:#18a55e">
+          <div class="inner">
+            <h3>{{client_meeting_count}}</h3>
+
+            <p>Client Meeting</p>
+            <p>({{client_meeting_goal}})</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a href="#/goals_report/client_meeting" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box"  style="background-color:#f05b90">
+          <div class="inner">
+            <h3>{{deal_count}}</h3>
+
+            <p>Deal</p>
+            <p>({{deal_goal}})</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href="#/goals_report/deal" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+</section><hr style="margin-top: 0px;margin-bottom: 0px;">
+
+
+<div style="background-color:#fefef2;color:#605f5f;width:100%;height:320px;margin-top:0px;padding:20px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ed3237;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Total New Listings</h1>
+    <p style="font-weight:bold;margin-left: 30px;">These are total properties from the current date range</p>
+    <div class="flexslider" id="flexslider1" flex-slider1="">
+        <ul class="slides">
+            <li ng-repeat="total_listing in total_listings" >
+                <a href="#/properties_edit/{{total_listing.property_id}}">
+                    <div class="slider">
+                        <div class="cornerno">1</div>
+                        <p><img src="dist/img/no_image.jpg" ng-if="total_listing.filenames==null " style="width:188px;height:126px;" />
+                            <img src="api/v1/uploads/property/{{total_listing.filenames}}"  style="width:188px;height:126px;" ng-if="total_listing.filenames!=null " /> </p>
+
+                            <!--<img src="dist/img/properties/properties_{{total_listing.property_id}}.jpg" style="width:188px;height:126px;"/></p>-->
+                        <p style="font-weight:bold;">{{total_listing.project_name}}:{{total_listing.propsubtype}} for {{total_listing.property_for}}</p>
+                        <p>{{total_listing.sale_area}} Sq.Ft @ {{total_listing.exp_price}}</p>
+                        <p></p><br>
+                        <p>{{total_listing.project_contact}}</p>
+                        <p>{{total_listing.usermobileno}}</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:{{total_list_residential}}</p></a>
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p>Commercial  &nbsp;&nbsp;&nbsp;:{{total_list_commercial}}</p></a>
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p></a>
+        </div></a>
+    </div>
+</div>
+<hr style="margin-top: 0px;margin-bottom: 0px;">
+<div style="background-color:#ffffff;color:#605f5f;width:100%;height:320px;margin-top:6px;padding:10px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ed3237;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Branch Wise New Listings</h1>
+    <p style="font-weight:bold; margin-left: 30px;">These are total properties from the current date range</p>
+    <div class="flexslider" id="flexslider2" flex-slider2="">
+        <ul class="slides">
+            <li ng-repeat="branch_listing in branch_listings  | limitTo:10" >
+                <a href="#/properties_edit/{{branch_listing.property_id}}">
+                    <div class="slider">
+                        <div class="cornerno">1</div>
+                        <p><img src="dist/img/no_image.jpg" ng-if="branch_listing.filenames==null " style="width:188px;height:126px;" /> 
+                            <img src="api/v1/uploads/property/{{branch_listing.filenames}}" ng-if="branch_listing.filenames!=null " style="width:188px;height:126px;" /> 
+                        </p>
+                        <!--<p style="font-weight:bold;">{{branch_listing.project_name}}:{{branch_listing.propsubtype}} for {{branch_listing.property_for}}</p>-->
+                        <p style="font-weight:bold;">{{branch_listing.teams}}</p>
+                        <p>{{branch_listing.sale_area}} Sq.Ft @ {{branch_listing.exp_price}}</p>
+                        <p></p><br>
+                        <p>{{branch_listing.project_contact}}</p>
+                        <p>{{branch_listing.usermobileno}}</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <!--<ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Goa Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Macbeth Dias</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Ajay Thakur</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Gandhinagar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Sushil Shinde</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Pune Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Shripad Kulkarni</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Ahmadabad Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Dahisar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>-->
+        <div id="viewmore">
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:{{branch_list_residential}}</p></a>
+            <a href="#/properties_list/commercial" style="color:#ffffff;"><p>Commercial  &nbsp;&nbsp;&nbsp;:{{branch_list_commercial}}</p></a>
+            <a href="#/properties_list/residential" style="color:#ffffff;"><p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p></a>
+        </div>
+    </div>
+</div>
+<hr style="margin-top: 0px;margin-bottom: 0px;">
+<div style="background-color:#fefef2;color:#605f5f;width:100%;height:320px;margin-top:0px;padding:10px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ed3237;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Transactions Completed</h1>
+    <p style="font-weight:bold;margin-left: 30px; ">These are total properties from the current date range</p>
+    <div class="flexslider"  id="flexslider3" flex-slider3="">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Hiteshbhai Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Holidays Resort 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Mangesh Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Villa Holidays 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Suresh Patil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Sanjay Shinde</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Babasaheb PAtil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Arjun Patel</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, Gandinagar</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Hiteshbhai Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<hr style="margin-top: 0px;margin-bottom: 0px;">
+<div style="background-color:#ffffff;color:#605f5f;width:100%;height:320px;margin-top:6px;padding:10px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ed3237;margin-top:0px;margin-bottom:0px;margin-left: 30px;">Total Billing</h1>
+    <p style="font-weight:bold;margin-left: 30px; ">These are total properties from the current date range</p>
+    <div class="flexslider" id="flexslider4" flex-slider4="">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Goregaon (East)</p>
+                    <p></p><br>
+                    <p>Mr. Mangesh Patil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Om Apartment Flat</p>
+                    <p>Malad</p>
+                    <p></p><br>
+                    <p>Mr. Sridhar Deshpande</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 3 BHK Vila Apartment Flat</p>
+                    <p>Dahisar</p>
+                    <p></p><br>
+                    <p>Mr. Nagraj Borse</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Boriwali</p>
+                    <p></p><br>
+                    <p>Mr. Nayan Shelke</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 2 BHK Vila Apartment Flat</p>
+                    <p>Andheri</p>
+                    <p></p><br>
+                    <p>Mr. Shardul Bhargav</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Palghar</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Pune</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Buy &nbsp;&nbsp;&nbsp;&nbsp;:12</p>
+            <p>Rent  &nbsp;&nbsp;&nbsp;:118</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!--<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Total new listings</h1>
+    <p style="font-weight:bold;">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                    <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, 3 BHK, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                    <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Saffrony holidays Resort 2 BHK residential</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                    <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Capital Flora, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                    <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha Flat - sale</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Saffrony holidays Resort</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Capital Flora, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, Gandinagar</p>
+                    <p>7.5 Th @ 7.58 Sq.Ft.</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Branch wise new listings</h1>
+    <p style="font-weight:bold; ">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Goa Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Macbeth Dias</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Mumbai Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Ajay Thakur</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Gandhinagar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Sushil Shinde</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Pune Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Shripad Kulkarni</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Ahmadabad Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Dahisar Branch</p>
+                    <p>Branch ID: 89898989</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Transactions Completed</h1>
+    <p style="font-weight:bold; ">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Hiteshbhai Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Holidays Resort 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Mangesh Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/enquiries1.jpg"/></p>
+                    <p style="font-weight:bold;">Villa Holidays 2BHK</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Suresh Patil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/enquiries4.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Sanjay Shinde</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Babasaheb PAtil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Land 100 Bigha: Land/Plot</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Arjun Patel</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Siddhi Dhata Alay, Gandinagar</p>
+                    <p>Taluka: Sami Sami</p>
+                    <p></p><br>
+                    <p>Mr. Hiteshbhai Chaudhari</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Residential &nbsp;&nbsp;&nbsp;&nbsp;:182</p>
+            <p>Commercial  &nbsp;&nbsp;&nbsp;:108</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>
+<div style="background-color:#f5f4fd;color:#605f5f;width:100%;height:394px;margin-top:6px;padding:60px;padding-top:42px;font-family:Helvetica Neue Thin;">
+    <h1 style="color:#ff0000;margin-top:0px;margin-bottom:0px;">Total billing</h1>
+    <p style="font-weight:bold; ">These are total properties from the current date range</p>
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <div class="slider">
+                        <div class="cornerno">1</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Goregaon (East)</p>
+                    <p></p><br>
+                    <p>Mr. Mangesh Patil</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>       
+                <div class="slider">
+                        <div class="cornerno">2</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Om Apartment Flat</p>
+                    <p>Malad</p>
+                    <p></p><br>
+                    <p>Mr. Sridhar Deshpande</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="slider">
+                        <div class="cornerno">3</div>
+                    <p><img src="dist/img/properties3.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 3 BHK Vila Apartment Flat</p>
+                    <p>Dahisar</p>
+                    <p></p><br>
+                    <p>Mr. Nagraj Borse</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">4</div>
+                    <p><img src="dist/img/properties4.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Boriwali</p>
+                    <p></p><br>
+                    <p>Mr. Nayan Shelke</p>
+                    <p>8401064164</p>
+                    </div>
+                </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">5</div>
+                    <p><img src="dist/img/properties5.jpg"/></p>
+                    <p style="font-weight:bold;">Sale 2 BHK Vila Apartment Flat</p>
+                    <p>Andheri</p>
+                    <p></p><br>
+                    <p>Mr. Shardul Bhargav</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">6</div>
+                    <p><img src="dist/img/properties1.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Palghar</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+            <li>
+                <div class="slider">
+                        <div class="cornerno">7</div>
+                    <p><img src="dist/img/properties2.jpg"/></p>
+                    <p style="font-weight:bold;">Rent 2 BHK Vila Apartment Flat</p>
+                    <p>Pune</p>
+                    <p></p><br>
+                    <p>Mr. Parth Thakkar</p>
+                    <p>8401064164</p>
+                </div>
+            </li>
+        </ul>
+        <div id="viewmore">
+            <p>Buy &nbsp;&nbsp;&nbsp;&nbsp;:12</p>
+            <p>Rent  &nbsp;&nbsp;&nbsp;:118</p>
+            <p style="margin-top:40px;font-size:20px;font-weight:500;">MORE <i class="fa fa-angle-double-right"></i>&nbsp;</p>
+        </div>
+    </div>
+</div>-->
+
+<style>
+    .slider
+    {
+        height:264px;
+        width:192px;
+        float: left;
+        margin-left:2px;
+    }
+    .slider p
+    {
+        margin: 0 0 5px 0;
+        line-height: 1.2em;
+    }
+
+
+    .flexslider
+    {
+        background:none;
+        border:0px;
+        /*width:97%;*/
+        margin-left: 30px;
+        margin-right: 40px;
+    }
+    .flex-control-nav
+    {
+        display: none;
+    }
+    .flex-direction-nav a
+    {
+        height:45px;
+        top:20%;
+    }
+    .flexslider:hover .flex-direction-nav .flex-prev
+    {
+        margin-left:-45px;
+    }
+    .flexslider:hover .flex-direction-nav .flex-next
+    {
+        right:-45px;
+    }
+    #viewmore
+    {
+        background-color:#ff0000;
+        width:192px;
+        height:128px;
+        position:absolute;
+        z-index:2;
+        opacity:0.7;
+        color:#ffffff;
+        font-size:20px;
+        right:0px;
+        padding:20px;
+    }
+    #viewmore p{
+        font-size:14px;
+        line-height: 0.9;
+
+    }
+    .cornerno
+    {
+        background-color: #ff0000;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        z-index: 4;
+        color: #ffffff;
+        padding: 3px;
+        padding-left: 8px;
+        margin-left: 163px;
+    }
+    .slides a
+    {
+        color:#000000;
+
+    }
+    #topsheet p
+    {
+        margin-bottom:0px;
+    }
+  
+    
+    
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $(this).toggleClass('active');
+        });
+        /*$('.flexslider').flexslider({
+                slideshow:true,
+                animation: "slide",
+                itemWidth: 192,
+                itemMargin: 2
+
+        });*/
+
+    });
+</script>

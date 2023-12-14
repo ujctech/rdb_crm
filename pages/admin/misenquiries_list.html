@@ -1,0 +1,117 @@
+<div style="background-color:#cecece;margin-top:45px;height:70px;position:fixed;z-index:1000;width:100%;padding:10px;">
+</div>
+<div class="clearfix"></div>
+
+<div class="box"  style="margin:20px;padding:10px;width:97%;margin-top:115px;" ng-if="hasPermissions.includes('View')">
+    <div class="box-header">
+        <h3 class="box-title">MIS Reports</h3> 
+    </div>
+    <aside class="right-side">
+        <form novalidate name="AddNewForm" id="add-new-form" role="form" autocomplete="off">
+            <div class="row" style="margin-left:0px;">
+                <div class="col-md-3">
+                    <div class="form-group" ng-controller="SelectUsers">
+                        <label for="assign_to">Assign to</label>
+                        <select class="select2 form-control" id = "assign_to" select2 ng-model="misreport.assign_to" ng-options="user.user_id as user.name for user in users" style="width:100%;" >
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="start_date">Start Date</label>
+                        <div class="input-group date" id="start_date" date-directive="">
+                            <input class="form-control" type="text" ng-model="misreport.start_date" >
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="end_date">End Date</label>
+                        <div class="input-group date" id="end_date" date-directive="">
+                            <input class="form-control" type="text" ng-model="misreport.end_date" >
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(misreport)" id="add-new-btn" ng-click="showmisreport(misreport)" style="margin-top:24px;">Show Report</button>
+                        <a href="#/enquiries/residential" class="btn" style="margin-top:24px;">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row" id="show">
+            <div class="col-md-12">
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped" datatable-setup="">
+                        <thead>
+                            <tr>
+                                <th>Client Mobile No</th>
+                                <th>Client Registered On</th>
+                                <th>Client Email-Id</th>
+                                <th>Client Organization</th>
+                                <th>Enquiry ID</th>
+                                <th>Enquiry For</th>
+                                <th>Enquiry Status</th>
+                                <th>Enquiry Stage</th>
+                                <th>Source Channel</th>
+                                <th>Sub Source</th>
+                                <th>Preferences</th>
+                                <th>Assigned To</th>
+                                <th>First Interaction Date</th>		
+                                <th>Date</th>
+                                <th>Comments</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="select_enquiry in select_enquiries">
+                                <td>{{select_enquiry.mob_no}}</td>
+                                <td>{{select_enquiry.reg_date}}</td>
+                                <td>{{select_enquiry.email}}</td>
+                                <td>{{select_enquiry.company_name}}</td>
+                                <td>{{select_enquiry.enquiry_id}}</td>
+                                <td>{{select_enquiry.enquiry_for}}</td>
+                                <td>{{select_enquiry.status}}</td>
+                                <td>{{select_enquiry.stage}}</td>
+                                <td>{{select_enquiry.source_channel}}</td>
+                                <td>{{select_enquiry.source_sub_channel}}</td>
+                                <td>Budget:{{select_enquiry.budget_range1}}-{{select_enquiry.budget_range2}} Area:{{select_enquiry.sale_area1}}-{{select_enquiry.sale_area2}}</td>
+                                <td>{{select_enquiry.assign_to}}</td>
+                                <td><!--{{select_enquiry.First Interaction Date}}--></td>		
+                                <td><!--{{select_enquiry.Date}}--></td>
+                                <td><!--{{select_enquiry.Comments}}--></td>
+                                <td><!--{{select_enquiry.Date}}--></td>
+                                <td><!--{{select_enquiry.Description}}--></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Client Mobile No</th>
+                                <th>Client Registered On</th>
+                                <th>Client Email-Id</th>
+                                <th>Client Organization</th>
+                                <th>Enquiry ID</th>
+                                <th>Enquiry For</th>
+                                <th>Enquiry Status</th>
+                                <th>Enquiry Stage</th>
+                                <th>Source Channel</th>
+                                <th>Sub Source</th>
+                                <th>Preferences</th>
+                                <th>Assigned To</th>
+                                <th>First Interaction Date</th>		
+                                <th>Date</th>
+                                <th>Comments</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>

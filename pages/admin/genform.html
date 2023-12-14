@@ -1,0 +1,146 @@
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Generate Form</h3> 
+    </div>
+    <aside class="right-side">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="table_name">Select Table</label>
+                        <select class="selectpicker form-control" ng-model="table_name" ng-options="tablelist.table_name as tablelist.table_name for tablelist in tablelists">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary" ng-click="showcolumns(table_name)" style="margin-top:22px;">Show Columns</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="show">
+
+            <div class="col-md-12">
+                <div class="row" ng-if="columnlists.length">
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" ng-click="generateform(table_name)" style="margin-right:10px;float:right;">Generate Form</a>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered table-striped" ng-if="columnlists.length"><!-- datatable-setup="">-->
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Data Type</th>
+                                <th style="text-align:right">Width</th>
+                                <th>Element Type</th>
+                                <th>Column Heading</th>
+                                <th>Link Table</th>
+                                <th>Required Field</th>
+                                <th>Show On Form</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr ng-repeat="columnlist in columnlists">
+                                    <td>{{columnlist.column_name}}</td>
+                                    <td>{{columnlist.data_type}}</td>
+                                    <td  style="text-align:right">{{columnlist.character_maximum_length}}</td>
+                                    <td>
+                                        <select class="selectpicker form-control" id="element_type" name="element_type" ng-model="columnlist.element_type" ng-change="update_direct('element_type',columnlist.genforms_id,columnlist.element_type)" >
+                                            <option value="Input">Input</option>
+                                            <option value="Textarea">Textarea</option>
+                                            <option value="Date">Date</option>
+                                            <option value="Checkbox">Checkbox</option>
+                                            <option value="Select">Select</option>
+                                            <option value="Select [Multiple]">Select [Multiple]</option>
+                                            <option value="Select From Table">Select From Table</option>
+                                            <option value="Select From Table [Multiple]">Select From Table [Multiple]</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="column_heading" name="column_heading"  placeholder="Column Heading" ng-model="columnlist.column_heading" ng-change="update_direct('column_heading',columnlist.genforms_id,columnlist.column_heading)" ng-model-options="{updateOn: 'blur'}"/>
+                                    </td>
+                                    <td>
+                                        <select class="selectpicker form-control" ng-model="columnlist.link_table" ng-options="tablelist.table_name as tablelist.table_name for tablelist in tablelists" ng-change="update_direct('link_table',columnlist.genforms_id,columnlist.link_table)">
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="selectpicker form-control" id="required_field" name="required_field" ng-model="columnlist.required_field" ng-change="update_direct('required_field',columnlist.genforms_id,columnlist.required_field)">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="selectpicker form-control" id="show_on_form" name="show_on_form" ng-model="columnlist.show_on_form" ng-change="update_direct('show_on_form',columnlist.genforms_id,columnlist.show_on_form)">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </td>                                  
+                                </tr>
+                            </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Data Type</th>
+                                <th>Width</th>
+                                <th>Element Type</th>
+                                <th>Column Heading</th>
+                                <th>Link Table</th>
+                                <th>Required Field</th>
+                                <th>Show On Form</th>
+                            </tr>
+                        </tfoot>
+                    </table>    
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="row" id="showhtml">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-target="#html" data-toggle="tab">HTML Code</a></li>
+                    <li><a data-target="#jsscript" data-toggle="tab">Java Script</a></li>
+                    <li><a data-target="#phpcode" data-toggle="tab">PHP Code</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="html">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="html">Copy & Paste to your Project</label>
+                                    <textarea class="form-control" ng-model="html" id="html" rows="15"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="jsscript">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="jsscript">Copy & Paste to your Project</label>
+                                    <textarea class="form-control" ng-model="jsscript" id="jsscript" rows="15"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="phpcode">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="phpcode">Copy & Paste to your Project</label>
+                                    <textarea class="form-control" ng-model="phpcode" id="phpcode" rows="15"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <style>
+        #showhtml
+        {
+            display: none;
+        }
+    </style>
