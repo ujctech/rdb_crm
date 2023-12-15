@@ -11848,18 +11848,18 @@ app.controller('Activity_Add_Ctrl', function ($scope, $rootScope, $routeParams, 
         });
     }, 1000);
 
-    /*Data.get('selectenquiry_with_broker').then(function (results) {
-        $scope.selectenquiries = results;
-    });*/
+    // Data.get('selectenquiry_with_broker').then(function (results) {
+    //     $scope.selectenquiries = results;
+    // });
 
     // new comment for testing , due to this page stuck
 
-    // $timeout(function () {
-    //     Data.get('getassignedenquiries').then(function (results) {
-    //         $scope.selectenquiries = results;
-    //         console.log('resultsresults',results);
-    //     }); 
-    // }, 1000);
+    $timeout(function () {
+        Data.get('getassignedenquiries').then(function (results) {
+            $scope.selectenquiries = results;
+            console.log('resultsresults',results);
+        }); 
+    }, 1000);
     $timeout(function () {
         Data.get('getassignedproperties').then(function (results) {
             $scope.m_properties = results;
@@ -12217,33 +12217,42 @@ app.controller('Activity_Add_Ctrl', function ($scope, $rootScope, $routeParams, 
         console.log("starting")
         console.log(activitydata.activity_type);
         console.log(activitydata.property_id);
-        if ((activitydata.activity_type == 'Site Visit' || activitydata.activity_type == 'Property Visit') && (!activitydata.property_id)) {
-            // if (activitydata.project_id)
-            if (activitydata.project_id || activitydata.enquiry_id || activitydata.property_id) {
 
+        if ((activitydata.activity_type == 'Site Visit' || activitydata.activity_type == 'Property Visit')) {
+            console.log('Site Visit')
+            console.log(activitydata)
+            if (activitydata.project_id || (activitydata.enquiry_id && activitydata.property_id)) {
             }
             else {
                 alert("Selection of Property or Project or Enquary is mandatory.. !!!");
-                // alert("Selection of Property or Project is mandatory.. !!!");
+                // alert('site visit')
                 return;
             }
         }
         if (activitydata.activity_type == 'Meeting') {
             if (activitydata.client_id || activitydata.broker_id || activitydata.developer_id) {
-
             }
             else {
                 alert("Selection of Client or Broker or Developer in mandatory.. !!!");
+                // alert('meeting')
+                return;
+            }
+        }
+        if (activitydata.activity_type == 'Follow Up') {
+            if (activitydata?.project_id || activitydata?.enquiry_id || activitydata?.property_id) {
+
+            }
+            else {
+                alert("Selection of Property or Project or Enquary is mandatory.. !!!");
+                // alert('follow up')
                 return;
             }
         }
         // $("#add-new-btn").css("display","none");
 
-        if (activitydata.activity_type !== "" && activitydata.project_id !== "" && activitydata.
-            enquiry_id !== "" && activitydata.property_id !== "") {
-            alert("Selection of Property or Project or Enquary is mandatory.. !!!");
-        } else {
-            console.log("else block")
+        if (activitydata?.activity_type && activitydata?.activity_type !== "") {
+            // console.log(activitydata)
+            // console.log("else block")
             Data.post('activity_add_new', {
                 activitydata: activitydata
             }).then(function (results) {
@@ -12253,6 +12262,8 @@ app.controller('Activity_Add_Ctrl', function ($scope, $rootScope, $routeParams, 
                     $location.path('activity_list/direct/0');
                 }
             });
+        } else {
+            alert("Selection of Property or Project or Enquary is mandatory.. !!!");
         }
     };
 
@@ -12763,24 +12774,51 @@ app.controller('Activity_Edit_Ctrl', function ($scope, $rootScope, $routeParams,
     }, 100);
 
     $scope.activity_update = function (activity) {
-        if (activity.activity_type == 'Meeting') {
-            if (activity.client_id || activity.broker_id || activity.developer_id) {
-
+        if ((activitydata.activity_type == 'Site Visit' || activitydata.activity_type == 'Property Visit')) {
+            console.log('Site Visit')
+            if (activitydata.project_id || (activitydata.enquiry_id && activitydata.property_id)) {
             }
             else {
-                alert("Selection of Client or Broker or Developer in mandatory.. !!!");
+                alert("Selection of Property or Project or Enquary is mandatory.. !!!");
+                // alert('site visit')
                 return;
             }
         }
-        Data.post('activity_update', {
-            activity: activity
-        }).then(function (results) {
-            Data.toast(results);
-            if (results.status == "success") {
-                $('#file_activity').fileinput('upload');
-                $location.path('activity_list/direct/0');
+        if (activitydata.activity_type == 'Meeting') {
+            if (activitydata.client_id || activitydata.broker_id || activitydata.developer_id) {
             }
-        });
+            else {
+                alert("Selection of Client or Broker or Developer in mandatory.. !!!");
+                // alert('meeting')
+                return;
+            }
+        }
+        if (activitydata.activity_type == 'Follow Up') {
+            if (activitydata?.project_id || activitydata?.enquiry_id || activitydata?.property_id) {
+
+            }
+            else {
+                alert("Selection of Property or Project or Enquary is mandatory.. !!!");
+                // alert('follow up')
+                return;
+            }
+        }
+        // $("#add-new-btn").css("display","none");
+
+        if (activitydata?.activity_type && activitydata?.activity_type !== "") {
+            Data.post('activity_update', {
+                activity: activity
+            }).then(function (results) {
+                Data.toast(results);
+                if (results.status == "success") {
+                    $('#file_activity').fileinput('upload');
+                    $location.path('activity_list/direct/0');
+                }
+            });
+        } else {
+            alert("Selection of Property Type is mandatory.. !!!");
+        }
+        
     };
 
     $scope.activity_delete = function (activity) {

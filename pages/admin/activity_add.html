@@ -34,6 +34,14 @@
 														<select class="select2 form-control" select2 name="activity_sub_type" id="activity_sub_type" name="activity_sub_type"  ng-model="activitydata.activity_sub_type" ng-options="dropdown.value as dropdown.display_value for dropdown in activity_sub_types" style="width:100%;">
 														</select>
 													</div>
+													<div class="form-group" ng-if="activitydata.activity_type=='Site Visit'">
+														<label for="activity_sub_type">Category</label>
+														<select class="select2 form-control" select2 name="activity_sub_type" id="activity_sub_type" name="activity_sub_type"  ng-model="activitydata.activity_sub_type"style="width:100%;">
+															<option value="Visit">Visit</option>
+															<option value="Revisit">Revisit</option>
+															<option value="Closer">Closer</option>
+														</select>
+													</div>
 													<div class="form-group" ng-if="activitydata.activity_type=='Task' && activitydata.activity_sub_type=='Data Calling'">
 														<label for="calling_count" >Calling Count</label>
 														<input type="text" class="form-control" id="calling_count" name="calling_count"  placeholder="Calling Count" ng-model="activitydata.calling_count"  />

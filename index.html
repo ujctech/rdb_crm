@@ -428,7 +428,7 @@ desired effect
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar" style="" ng-show="authenticated">
     <ul ng-show="authenticated" id="left_menu">
-      <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_alerts_view') || hasRoles.includes('Sub Admin')" href="#/goals_report/direct" title="MIS Report"><li><i class="fa fa-pie-chart"></i></li></a>
+      <!-- <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_alerts_view') || hasRoles.includes('Sub Admin')" href="#/goals_report/direct" title="MIS Report"><li><i class="fa fa-pie-chart"></i></li></a> -->
       <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_alerts_view') || hasRoles.includes('Sub Admin')" href="#/goals_report/direct" title="Goals Report"><li><i class="fa fa-bell"></i></li></a>
       <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_projects_view') || hasRoles.includes('Sub Admin')" href="#/project_list/0" title="Projects"><li><i class="fa fa-building"></i></li></a>
       <a ng-if="hasRoles.includes('Admin') || hasPermissions.includes('top_properties_view') || hasRoles.includes('Sub Admin')" href="#/properties_list/residential/0/0" title="Properties"><li><i class="fa fa-key"></i></li></a>
