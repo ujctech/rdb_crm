@@ -420,7 +420,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <a class="btn btn-primary" ng-if="(hasRoles.includes('Sub Admin'))" href="">Activity History</a>
-                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/activity_list/direct/0">Activity History</a>
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/activity_list/direct/{{contact.contact_id}}">Activity History</a>
                                                 </div>
                                             </div>                                   
                                         </td>

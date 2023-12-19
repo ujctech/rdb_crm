@@ -11854,12 +11854,12 @@ app.controller('Activity_Add_Ctrl', function ($scope, $rootScope, $routeParams, 
 
     // new comment for testing , due to this page stuck
 
-    $timeout(function () {
-        Data.get('getassignedenquiries').then(function (results) {
-            $scope.selectenquiries = results;
-            console.log('resultsresults',results);
-        }); 
-    }, 1000);
+    // $timeout(function () {
+    //     Data.get('getassignedenquiries').then(function (results) {
+    //         $scope.selectenquiries = results;
+    //         console.log('resultsresults',results);
+    //     }); 
+    // }, 1000);
     $timeout(function () {
         Data.get('getassignedproperties').then(function (results) {
             $scope.m_properties = results;

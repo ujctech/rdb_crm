@@ -890,8 +890,20 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="deal_closed">Deal Closed</label>
+                                                    <select class="select2 form-control"
+                                                        id="deal_closed" name="deal_closed"
+                                                        ng-model="searchdata.deal_closed"
+                                                        style="width:100%;">
+                                                    <option value="yes">yes</option>
+                                                    <option value="no">no</option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                            <div class="col-md-4" style="margin-top:25px;">
+                                            <div class="col-md-2" style="margin-top:25px;">
                                                 <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse"
                                                     data-target="#searchoptions"
                                                     ng-click="newsearch_properties(searchdata,'form')">Search Now

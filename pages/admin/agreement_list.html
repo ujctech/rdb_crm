@@ -231,6 +231,9 @@
                 <div class="box-body table-responsive">                    
                     <table class="table"> <!--table-bordered table-striped"   >-->
                         <tbody>
+                            <div class="loading-main-div">
+                                <div id="loading" ng-if="agreements && !agreements.length>0"></div>
+                            </div> 
                             <tr ng-repeat="agreement in agreements track by agreement.agreement_id"  style="height:260px;min-height:260px;">
                                 <td style="width:100%">
                                     <div class="row">
