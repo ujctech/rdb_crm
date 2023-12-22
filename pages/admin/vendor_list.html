@@ -7,7 +7,7 @@
 <div class="box" style="margin:5px;padding:10px;border-top:0px;background-color:#f1f1f1;border-radius:0px;margin-top:115px;" >
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <li class="active" ><a data-target="#resumetab" data-toggle="tab">Resume</a></li>
+            <li class="active" ><a data-target="#resumetab" data-toggle="tab">Vendor</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="resumetab">
@@ -85,7 +85,7 @@
                                             <div class="col-md-12">                                            
                                                 <div class="col-md-2" style="margin-top:25px;">        
                                                     <div class="form-group">
-                                                        <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_resumes(searchdata)">Search Now </button>
+                                                        <button class="btn btn-primary" id="add-new-btn" data-toggle="collapse" data-target="#searchoptions" ng-click="search_vendors(searchdata)">Search Now </button>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2" style="margin-top:25px;">       
@@ -120,7 +120,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="resume in resumes">
+                            <tr ng-repeat="resume in vendors">
                                 <td ng-if="!(hasRoles.includes('Sub Admin'))"><a href="#/vendor_edit/{{resume.resume_id}}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></td>
                                 <td>{{resume.employee_name}}</td>
                                 <td>{{resume.designation}}</td>

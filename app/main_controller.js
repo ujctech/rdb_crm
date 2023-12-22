@@ -995,7 +995,6 @@ app.controller('SelectMail_Template', function ($scope, $rootScope, $routeParams
 // RESUMES
 
 app.controller('Resume_List_Ctrl', function ($scope, $rootScope, $routeParams, $location, $http, Data, $timeout) {
-
     $timeout(function () {
         Data.get('resume_list_ctrl').then(function (results) {
             $scope.resumes = results;
@@ -1056,6 +1055,74 @@ app.controller('Resume_List_Ctrl', function ($scope, $rootScope, $routeParams, $
 
         Data.get('resume_list_ctrl').then(function (results) {
             $scope.resumes = results;
+        });
+    }
+
+
+});
+app.controller('vendor_List_Ctrl', function ($scope, $rootScope, $routeParams, $location, $http, Data, $timeout) {
+    
+    $timeout(function () {
+        Data.get('resume_list_ctrl').then(function (results) {
+            $scope.vendors = results;
+            console.log('vendor')
+        });
+    }, 100);
+
+    var values_loaded = "false";
+    $scope.open_search = function () {
+        if (values_loaded == "false") {
+            values_loaded = "true";
+            console.log("opening");
+            $timeout(function () {
+                Data.get('getdatavalues_resumes/employee_name').then(function (results) {
+                    $scope.employee_names = results;
+                });
+            }, 100);
+            $timeout(function () {
+                Data.get('getdatavalues_resumes/designation_id').then(function (results) {
+                    $scope.designations = results;
+                });
+            }, 100);
+
+            $timeout(function () {
+                Data.get('getdatavalues_resumes/mobile_no').then(function (results) {
+                    $scope.mobile_nos = results;
+                });
+            }, 100);
+            $timeout(function () {
+                Data.get('getdatavalues_resumes/email').then(function (results) {
+                    $scope.emails = results;
+                });
+            }, 100);
+
+        }
+    };
+
+    $scope.search_vendors = function (searchdata) {
+        Data.post('search_resumes', {
+            searchdata: searchdata
+        }).then(function (results) {
+            $scope.$watch($scope.vendors, function () {
+                $scope.vendors = {};
+                $scope.vendors = results;
+
+            }, true);
+        });
+    };
+
+    $scope.resetForm = function () {
+
+        $scope.searchdata = {};
+        $scope.$watch($scope.searchdata, function () {
+            $scope.searchdata = {
+            }
+        });
+        $("li.select2-selection__choice").remove();
+        $(".select2").each(function () { $(this).val([]); });
+
+        Data.get('resume_list_ctrl').then(function (results) {
+            $scope.vendors = results;
         });
     }
 
@@ -5188,6 +5255,7 @@ app.controller('Agreement_List_Ctrl', function ($scope, $rootScope, $routeParams
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
+    // khalid mantis ID 0000061
     $timeout(function() {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("agreement_view")) != -1) {
@@ -5590,6 +5658,7 @@ app.controller('Agreement_Add_Ctrl', function ($scope, $rootScope, $routeParams,
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
+    // khalid mantis ID 0000061
     $timeout(function() {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("agreement_view")) != -1) {
@@ -5992,6 +6061,7 @@ app.controller('Agreement_Edit_Ctrl', function ($scope, $rootScope, $routeParams
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
+    // khalid mantisID 0000061
     $timeout(function() {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("agreement_view")) != -1) {
@@ -6567,6 +6637,7 @@ app.controller('Contributions_Edit_Ctrl', function ($scope, $rootScope, $routePa
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
+    // khalid mantis ID 0000061
     $timeout(function() {
         $str = ($("#permission_string").val());
     if ((($str).indexOf("agreement_view")) != -1) {
@@ -6750,6 +6821,7 @@ app.controller('Collections_Ctrl', function ($scope, $rootScope, $routeParams, $
     $scope.view_rights = false;
     $scope.export_rights = false;
     
+    // khalid mantis ID 0000061
     $timeout(function() {
        $str = ($("#permission_string").val());
     if ((($str).indexOf("collections_view")) != -1) {
@@ -7368,28 +7440,33 @@ app.controller('Contributions_Ctrl', function ($scope, $rootScope, $routeParams,
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
-    $str = ($("#permission_string").val());
-    if ((($str).indexOf("contributions_view")) != -1) {
+
+    // khalid mantis ID 0000061
+    
+    $timeout(function () {
+        $str = ($("#permission_string").val());
+        if ((($str).indexOf("contributions_view")) != -1) {
+            $scope.view_rights = true;
+            console.log($scope.view_rights);
+        }
+        if ((($str).indexOf("contributions_create")) != -1) {
+            $scope.create_rights = true;
+            console.log($scope.create_rights);
+        }
+        if ((($str).indexOf("contributions_update")) != -1) {
+            $scope.update_rights = true;
+            console.log($scope.update_rights);
+        }
+        if ((($str).indexOf("contributions_delete")) != -1) {
+            $scope.delete_rights = true;
+            console.log($scope.delete_rights);
+        }
         $scope.view_rights = true;
-        console.log($scope.view_rights);
-    }
-    if ((($str).indexOf("contributions_create")) != -1) {
-        $scope.create_rights = true;
-        console.log($scope.create_rights);
-    }
-    if ((($str).indexOf("contributions_update")) != -1) {
-        $scope.update_rights = true;
-        console.log($scope.update_rights);
-    }
-    if ((($str).indexOf("contributions_delete")) != -1) {
-        $scope.delete_rights = true;
-        console.log($scope.delete_rights);
-    }
-    $scope.view_rights = true;
-    if (!$scope.view_rights) {
-        //alert("You don't have rights to use this option..");
-        //return;
-    }
+        if (!$scope.view_rights) {
+            alert("You don't have rights to use this option..");
+            return;
+        }
+    }, 2000);
     $timeout(function () {
         Data.get('selectdropdowns/PAYMENT_TYPE').then(function (results) {
             $scope.payment_typelist = results;
@@ -7497,7 +7574,7 @@ app.controller('Account_List_Ctrl', function ($scope, $rootScope, $routeParams, 
     $scope.export_rights = false;
     $scope.accountlist = {};
     
-    
+     // khalid mantis ID 0000061
     $timeout(function () {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("account_view")) != -1) {
@@ -7622,7 +7699,7 @@ app.controller('Account_Add_Ctrl', function ($scope, $rootScope, $routeParams, $
     $scope.view_rights = false;
     $scope.export_rights = false;
     
-    
+     // khalid mantis ID 0000061
     $timeout(function () {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("account_view")) != -1) {
@@ -7774,7 +7851,7 @@ app.controller('Account_Edit_Ctrl', function ($scope, $rootScope, $routeParams, 
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
-    
+     // khalid mantis ID 0000061
     $timeout(function () {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("account_view")) != -1) {
@@ -7943,7 +8020,7 @@ app.controller('Voucher_List_Ctrl', function ($scope, $rootScope, $routeParams, 
     $scope.view_rights = false;
     $scope.export_rights = false;
     $scope.vouchers = {};
-    
+     // khalid mantis ID 0000061
     $timeout(function () {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("Voucher_view")) != -1) {
@@ -8068,30 +8145,33 @@ app.controller('Voucher_Add_Ctrl', function ($scope, $rootScope, $routeParams, $
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
-    $str = ($("#permission_string").val());
-    if ((($str).indexOf("Voucher_view")) != -1) {
-        $scope.view_rights = true;
-        console.log($scope.view_rights);
-    }
-    if ((($str).indexOf("Voucher_create")) != -1) {
-        $scope.create_rights = true;
-        console.log($scope.create_rights);
-    }
-    if ((($str).indexOf("Voucher_update")) != -1) {
-        $scope.update_rights = true;
-        console.log($scope.update_rights);
-    }
-    if ((($str).indexOf("Voucher_delete")) != -1) {
-        $scope.delete_rights = true;
-        console.log($scope.delete_rights);
-    }
 
-    if (!$scope.create_rights) {
-        $scope.voucherdata = {};
-        alert("You don't have rights to use this option..");
-        return;
-    }
-
+     // khalid mantis ID 0000061
+    $timeout(function () {
+        $str = ($("#permission_string").val());
+        if ((($str).indexOf("Voucher_view")) != -1) {
+            $scope.view_rights = true;
+            console.log($scope.view_rights);
+        }
+        if ((($str).indexOf("Voucher_create")) != -1) {
+            $scope.create_rights = true;
+            console.log($scope.create_rights);
+        }
+        if ((($str).indexOf("Voucher_update")) != -1) {
+            $scope.update_rights = true;
+            console.log($scope.update_rights);
+        }
+        if ((($str).indexOf("Voucher_delete")) != -1) {
+            $scope.delete_rights = true;
+            console.log($scope.delete_rights);
+        }
+    
+        if (!$scope.create_rights) {
+            $scope.voucherdata = {};
+            alert("You don't have rights to use this option..");
+            return;
+        }
+    }, 2000);
     $timeout(function () {
         Data.get('selectagreement').then(function (results) {
             $scope.agreements = results;
@@ -8195,7 +8275,10 @@ app.controller('Voucher_Edit_Ctrl', function ($scope, $rootScope, $routeParams, 
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
-    $str = ($("#permission_string").val());
+
+    // khalid mantis ID 0000061
+    $timeout(function () {
+        $str = ($("#permission_string").val());
     if ((($str).indexOf("Voucher_view")) != -1) {
         $scope.view_rights = true;
         console.log($scope.view_rights);
@@ -8217,7 +8300,7 @@ app.controller('Voucher_Edit_Ctrl', function ($scope, $rootScope, $routeParams, 
         alert("You don't have rights to use this option..");
         return;
     }
-
+    }, 2000);
     $timeout(function () {
         Data.get('selectcontact/Client').then(function (results) {
             $scope.clients = results;
@@ -11782,6 +11865,7 @@ app.controller('Activity_Add_Ctrl', function ($scope, $rootScope, $routeParams, 
     $scope.delete_rights = true;
     $scope.view_rights = true;
     $scope.export_rights = true;
+    // khalid mantisID 0000059
     $timeout(function() {
         $str = ($("#permission_string").val());
         if ((($str).indexOf("activity_view")) != -1) {
@@ -11854,12 +11938,12 @@ app.controller('Activity_Add_Ctrl', function ($scope, $rootScope, $routeParams, 
 
     // new comment for testing , due to this page stuck
 
-    // $timeout(function () {
-    //     Data.get('getassignedenquiries').then(function (results) {
-    //         $scope.selectenquiries = results;
-    //         console.log('resultsresults',results);
-    //     }); 
-    // }, 1000);
+    $timeout(function () {
+        Data.get('getassignedenquiries').then(function (results) {
+            $scope.selectenquiries = results;
+            console.log('resultsresults',results);
+        }); 
+    }, 1000);
     $timeout(function () {
         Data.get('getassignedproperties').then(function (results) {
             $scope.m_properties = results;
@@ -12217,7 +12301,7 @@ app.controller('Activity_Add_Ctrl', function ($scope, $rootScope, $routeParams, 
         console.log("starting")
         console.log(activitydata.activity_type);
         console.log(activitydata.property_id);
-
+// khalid mantisID 0000016
         if ((activitydata.activity_type == 'Site Visit' || activitydata.activity_type == 'Property Visit')) {
             console.log('Site Visit')
             console.log(activitydata)
@@ -12444,6 +12528,7 @@ app.controller('Activity_Edit_Ctrl', function ($scope, $rootScope, $routeParams,
     $scope.delete_rights = false;
     $scope.view_rights = false;
     $scope.export_rights = false;
+    // khalid mantisID 0000059
     $timeout(function() {
        $str = ($("#permission_string").val());
     if ((($str).indexOf("activity_view")) != -1) {

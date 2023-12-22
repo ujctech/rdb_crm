@@ -292,6 +292,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- khalid mantis ID 0000038 -->
                                     <div class="loading-main-div">
                                         <div id="loading" ng-if="contacts && !contacts.length>0"></div>
                                     </div> 
@@ -420,7 +421,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <a class="btn btn-primary" ng-if="(hasRoles.includes('Sub Admin'))" href="">Activity History</a>
-                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/activity_list/direct/{{contact.contact_id}}">Activity History</a>
+                                                    <a class="btn btn-primary" ng-if="!(hasRoles.includes('Sub Admin'))" href="#/activity_list/property/{{contact.contact_id}}">Activity History</a>
                                                 </div>
                                             </div>                                   
                                         </td>

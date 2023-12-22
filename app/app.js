@@ -59,7 +59,7 @@ app.config(function ($routeProvider) {
     // Vendor
     .when("/vendor_add", { controller: 'Resume_Add_Ctrl', templateUrl: 'pages/admin/vendor_add.html?nd=' + Date.now() })
     .when("/vendor_edit/:resume_id", { controller: 'Resume_Edit_Ctrl', templateUrl: 'pages/admin/vendor_edit.html?nd=' + Date.now() })
-    .when('/vendor_list', { controller: 'Resume_List_Ctrl', templateUrl: 'pages/admin/vendor_list.html?nd=' + Date.now() })
+    .when('/vendor_list', { controller: 'vendor_List_Ctrl', templateUrl: 'pages/admin/vendor_list.html?nd=' + Date.now() })
 
 
     // SMS TEMPLATE
